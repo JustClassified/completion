@@ -1,0 +1,49 @@
+## Interface: 120100, 120007, 120005
+## Title: Completion
+## Notes: Zone completion book for Midnight - storyline, side quests, achievements, treasures, rares, collectibles, dungeons, delves, reputation and professions per zone, with an arrow that guides you, plus a guided page for every holiday.
+## Author: Laszlo Romsics
+## X-Website: romsics.com
+## X-Contact: Discord: ozonysx
+## X-Discord: https://discord.gg/V2YsKAcux5
+## Version: 1.4.5
+## SavedVariables: CompletionDB
+## SavedVariablesPerCharacter: CompletionCharDB
+## IconTexture: Interface\Icons\inv_misc_book_16
+## AddonCompartmentFunc: Completion_OnAddonCompartmentClick
+## AddonCompartmentFuncOnEnter: Completion_OnAddonCompartmentEnter
+## AddonCompartmentFuncOnLeave: Completion_OnAddonCompartmentLeave
+
+Data\Zones.lua
+Data\Points.lua
+Data\Overrides.lua
+Data\Lore.lua
+Data\Achievements.lua
+Data\Collections.lua
+Data\Vendors.lua
+Data\Sources.lua
+Data\Walkthroughs.lua
+Data\Notes.lua
+Data\Delves.lua
+Data\Expansions.lua
+Data\Events.lua
+Data\EventGuides.lua
+Core.lua
+Model.lua
+Guide.lua
+Seasonal.lua
+Farm.lua
+WorldPins.lua
+MinimapPins.lua
+Route.lua
+Patrol.lua
+Watch.lua
+Tracker.lua
+UpNow.lua
+Showcase.lua
+UI.lua
+About.lua
+Pages.lua
+Report.lua
+Hover.lua
+Integration.lua
+Main.lua

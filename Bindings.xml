@@ -1,0 +1,8 @@
+<!-- Completion key bindings: Key Bindings > AddOns > Completion. The names are set in Integration.lua. -->
+<Bindings>
+    <Binding name="COMPLETION_TOGGLE" header="COMPLETION" category="ADDONS">SlashCmdList.COMPLETION("")</Binding>
+    <Binding name="COMPLETION_NEXT" category="ADDONS">SlashCmdList.COMPLETION("next")</Binding>
+    <Binding name="COMPLETION_CLEAR" category="ADDONS">SlashCmdList.COMPLETION("clear")</Binding>
+    <Binding name="COMPLETION_ROUTE" category="ADDONS">SlashCmdList.COMPLETION("route")</Binding>
+    <Binding name="COMPLETION_WATCH" category="ADDONS">SlashCmdList.COMPLETION("watch")</Binding>
+</Bindings>

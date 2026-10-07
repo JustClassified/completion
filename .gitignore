@@ -1,0 +1,9 @@
+# Only the addon itself and the description images are published.
+# Everything below stays on this computer.
+Tools/
+images_you_asked/
+README.md
+CHANGELOG.md
+.pkgmeta
+.DS_Store
+*.heic
