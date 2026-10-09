@@ -52,7 +52,7 @@ local TWW = {
         instances = { "Ara-Kara, City of Echoes", "City of Threads", "Nerub-ar Palace", "The Underkeep", "Tak-Rethan Abyss", "The Spiral Weave" },
     },
     {
-        key = "siren", name = "Siren Isle", short = "Siren Isle", map = 2369, maps = { 2369 },
+        key = "siren", name = "Siren Isle", short = "Siren Isle", map = 2369, maps = { 2369, 2375 },
         iconAch = 41131,
         desc = "Patch 11.0.7: a storm-wrapped island of shipwrecks, Naga and the Kul Tiran excavation.",
         story = { 41042 }, side = {},

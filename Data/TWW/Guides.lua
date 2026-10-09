@@ -1084,6 +1084,103 @@ G[41812] = {
 }
 
 ------------------------------------------------------------------------
+-- More quests, reputation and PvP
+------------------------------------------------------------------------
+
+local redDawn = {
+    steps = {
+        { t = "At level 80, find Faerin Lothar outside Stonelight Rest in Dornogal and pick up Trouble in the Highlands.", at = { DORNOGAL, 46.2, 50.1 } },
+        { t = "Follow the Rise of the Red Dawn campaign in the Arathi Highlands to its end, Past Glory." },
+    },
+    tips = { "Finishing it on one faction also unlocks the other faction's title for your warband." },
+}
+G[41818] = redDawn
+G[41820] = redDawn
+
+G[41996] = {
+    steps = {
+        { t = "Join the Nightfall scenario in Hallowfall; a new run starts every hour (check the map)." },
+        { t = "Complete one run." },
+    },
+    tips = { "Each run also gives a large amount of Flame's Radiance reputation." },
+}
+G[40250] = {
+    steps = { { t = "Join any Worldsoul Memory in Khaz Algar and stay until its final enemy dies (about a minute before the end)." } },
+}
+G[42737] = {
+    steps = {
+        { t = "Finish the K'aresh story so the capstone Special Assignments unlock." },
+        { t = "Complete Special Assignment: Overshadowed and Special Assignment: Aligned Views when they are up." },
+    },
+}
+G[42742] = {
+    steps = {
+        { t = "Get the Reshii Wraps from the K'aresh story." },
+        { t = "Upgrade them rank by rank with the materials from K'aresh activities (phase diving, world quests, the Oasis) until fully upgraded." },
+    },
+}
+G[42677] = { tips = { "The Delver's Mana-Skimmer came from the delve questline of season 3. If it's no longer offered, check the delve vendors in Dornogal for it." } }
+G[19414] = { tips = { "Raise Khaz Algar Cooking to 100: cook each recipe once for first-craft skill, and buy recipes from the cooking supplies vendor in Dornogal." } }
+
+local renown = function(faction, rank)
+    return { tips = { "Reach rank " .. rank .. " with " .. faction .. ": world quests, the zone's weekly quest and its events give renown. Progress is shared by your warband." } }
+end
+G[41161] = renown("the Council of Dornogal", 15)
+G[41162] = renown("the Council of Dornogal", 25)
+G[41165] = renown("the Assembly of the Deeps", 15)
+G[41166] = renown("the Assembly of the Deeps", 25)
+G[41167] = renown("the Hallowfall Arathi", 15)
+G[41168] = renown("the Hallowfall Arathi", 25)
+G[41149] = renown("the Severed Threads", 15)
+G[41164] = renown("the Severed Threads", 25)
+G[41349] = { tips = { "Honored with all four Undermine cartels. Pick a different cartel as your weekly choice so each one rises." } }
+
+G[40087] = {
+    steps = {
+        { t = "Turn on War Mode." },
+        { t = "Do each of the listed War Within world PvP world quests as they appear (expand the achievement to see which are left)." },
+    },
+}
+G[40088] = { tips = { "Each listed world PvP world quest five times, with War Mode on. They rotate, so do every one you see." } }
+local ravine = { tips = { "Deephaul Ravine is a random battleground. Queue for random battlegrounds or play it when it's the weekly featured one." } }
+for _, id in ipairs({ 40211, 40215, 40608, 40612 }) do G[id] = ravine end
+
+------------------------------------------------------------------------
+-- Dungeons and raid wings
+------------------------------------------------------------------------
+
+local function dungeon(zone, ids)
+    local g = { tips = {
+        "The entrance is in " .. zone .. "; track the achievement and the arrow takes you there.",
+        "Normal and Heroic can be queued in the dungeon finder; Mythic needs a group or a keystone.",
+    } }
+    for _, id in ipairs(ids) do G[id] = g end
+end
+dungeon("the Isle of Dorn", { 40361, 40363, 40366 })                     -- Cinderbrew Meadery
+dungeon("the Isle of Dorn", { 40621, 40637, 40642 })                     -- The Rookery
+dungeon("the Ringing Deeps", { 40643, 40644, 40648 })                    -- The Stonevault
+dungeon("the Ringing Deeps", { 40427, 40428, 40429 })                    -- Darkflame Cleft
+dungeon("Hallowfall", { 40590, 40592, 40596 })                           -- Priory of the Sacred Flame
+dungeon("Hallowfall", { 40599, 40601, 40604 })                           -- The Dawnbreaker
+dungeon("Azj-Kahet", { 40370, 40374, 40375 })                            -- Ara-Kara, City of Echoes
+dungeon("the City of Threads in Azj-Kahet", { 40376, 40377, 40379 })    -- City of Threads
+dungeon("Undermine", { 41339, 41340, 41341 })                            -- Operation: Floodgate
+dungeon("K'aresh", { 42780, 42781, 42782 })                              -- Eco-Dome Al'dani
+
+local function raid(name, ids)
+    local g = { tips = {
+        "Any difficulty counts, Raid Finder included: queue for the Raid Finder wing that holds these bosses.",
+        "The raid entrance for " .. name .. " is marked when you track it.",
+    } }
+    for _, id in ipairs(ids) do G[id] = g end
+end
+raid("Nerub-ar Palace", { 40244, 40247, 40248, 40249 })
+raid("the Liberation of Undermine", { 41222, 41225, 41226, 41227, 41228 })
+raid("Manaforge Omega", { 41598, 41601, 41602, 41603 })
+
+G[41587] = { tips = { "Unexplored parts of Undermine are fogged on the world map; fly low through each until its name shows on screen. Expand the achievement for what's left." } }
+
+------------------------------------------------------------------------
 -- Feature notes, shown on every War Within achievement of that group
 ------------------------------------------------------------------------
 
