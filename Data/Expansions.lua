@@ -37,7 +37,7 @@ ns.EXPANSIONS = {
     { key = "df", short = "DF", name = "Dragonflight",
       plan = { "Dragon Isles exploration, treasures and rares", "Dragonriding glyphs and races",
                "Zaralek Cavern, the Emerald Dream, Time Rifts", "Dragonflight dungeons, raids and collectibles" } },
-    { key = "tww", short = "TWW", name = "The War Within",
+    { key = "tww", short = "TWW", name = "The War Within", ready = true,
       plan = { "Khaz Algar exploration, treasures and rares", "Delves, Undermine, Siren Isle, K'aresh",
                "Worldsoul Saga storylines", "War Within dungeons, raids and collectibles" } },
     { key = "midnight", short = "Midnight", name = "Midnight", ready = true },

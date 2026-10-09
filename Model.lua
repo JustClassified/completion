@@ -112,6 +112,7 @@ end
 -- Sorts every point: achievement spots and vendors are kept for later, Sturdy Chests wait for their
 -- delve, and the rest go to the treasure, rare or knowledge section of their zone.
 local function BuildPoints(midnight)
+    local function fallback(p) return (p.exp and ns.overviews[p.exp]) or midnight end
     local all = {}
     for _, p in ipairs(ns.POINTS) do all[#all + 1] = p end
     for _, p in ipairs(ns.EXTRA_POINTS or {}) do all[#all + 1] = p end
@@ -126,7 +127,7 @@ local function BuildPoints(midnight)
             end
             if p.loot then achvLoot[#achvLoot + 1] = p end
         else
-            local it, zone = BuildPoint(p, midnight)
+            local it, zone = BuildPoint(p, fallback(p))
             if p.k == "delve" then
                 local dname = ns.DELVE_MAPS[p.m] or ("Delve " .. p.m)
                 delveChests[dname] = delveChests[dname] or {}
@@ -177,6 +178,9 @@ local function BuildLore(zone, secKey, ids)
                 AddItem(zone, secKey, { key = "a:lore:" .. id, kind = "ach", id = id, name = a.name, groupAch = id, spots = {} })
             end
             if a.note then zone.loreNotes = zone.loreNotes or {}; zone.loreNotes[id] = a.note end
+        else
+            -- no questline data for it (another expansion's storyline): the plain achievement with its criteria
+            AddItem(zone, secKey, { key = "a:lore:" .. id, kind = "ach", id = id, groupAch = id, spots = {} })
         end
     end
 end
@@ -563,10 +567,12 @@ local function BuildAchievements(midnight)
             end
         end
     end
-    local groupOf = {}
+    local groupOf, expOf = {}, {}
     for _, g in ipairs(ns.ACH_GROUPS or {}) do
-        for _, id in ipairs(g[2]) do groupOf[id] = g[1] end
+        for _, id in ipairs(g[2]) do groupOf[id] = g[1]; expOf[id] = g.exp end
     end
+    -- the overview page an achievement falls back to: its expansion's
+    local function home(aid) return (expOf[aid] and ns.overviews[expOf[aid]]) or midnight end
     local side = PlayerSide()
     local placed, zoneOfAch = {}, {}
     for id in pairs(loreIDs) do placed[id] = true; zoneOfAch[id] = loreZone[id] end
@@ -581,7 +587,7 @@ local function BuildAchievements(midnight)
             placed[aid] = true
             local byZone, order = {}, {}
             for _, p in ipairs(pts) do
-                local z = ZoneForMap(p.m) or midnight
+                local z = ZoneForMap(p.m) or home(aid)
                 if not byZone[z] then byZone[z] = {}; order[#order + 1] = z end
                 table.insert(byZone[z], p)
             end
@@ -636,6 +642,9 @@ local function BuildAchievements(midnight)
     -- first pass: what the text says
     for _, t in ipairs(todo) do
         t.zone, t.container = MatchAch(t.id, t.sub)
+        -- a zone hint from the data (Data/TWW/Points.lua) wins over a guess from the text, never over an instance
+        local hint = ns.ACH_ZONE and ns.ACH_ZONE[t.id]
+        if hint and not t.container and ns.zoneByKey[hint] then t.zone = ns.zoneByKey[hint] end
         if t.zone and not t.container then zoneOfAch[t.id] = t.zone end
     end
     -- parts of a zone meta follow the meta
@@ -647,7 +656,7 @@ local function BuildAchievements(midnight)
                                      spots = {}, parent = t.container, group = t.group })
             table.insert(t.container.children, child)
         else
-            local z = meta[t.id] or t.zone or SpotZone(t.id) or midnight
+            local z = meta[t.id] or t.zone or SpotZone(t.id) or home(t.id)
             AddItem(z, "achv", { key = "a:" .. z.key .. ":" .. t.id, kind = "ach", id = t.id, group = t.group, spots = {} })
         end
     end
@@ -948,13 +957,16 @@ function ns.Build()
         for _, p in ipairs(pts) do if p.n then ns.achvByName[aid][norm(p.n)] = p end end
     end
     local midnight
+    ns.overviews = {}
     for _, z in ipairs(ns.ZONES) do
+        z.exp = z.exp or "midnight"
         ns.zoneByKey[z.key] = z
         z.sections = {}
         for _, s in ipairs(ns.SECTIONS) do z.sections[s.key] = { key = s.key, name = s.name, items = {}, cur = 0, max = 0 } end
         for _, m in ipairs(z.maps or {}) do ns.zoneByMap[m] = z end
-        if z.overview then midnight = z end
+        if z.overview then ns.overviews[z.exp] = z end
     end
+    midnight = ns.overviews.midnight
     ns.midnight = midnight
     ns.Bump()
     BuildPoints(midnight)
@@ -1174,7 +1186,7 @@ function ns.EvaluateAll()
     ns.Bump()
     local newly = {}
     local first = ns.firstEval
-    local total = { cur = 0, max = 0 }
+    local totals = {}
     for _, z in ipairs(ns.ZONES) do
         z.cur, z.max = 0, 0
         for _, s in ipairs(ns.SECTIONS) do
@@ -1197,13 +1209,16 @@ function ns.EvaluateAll()
             end
             z.cur, z.max = z.cur + sec.cur, z.max + sec.max
         end
-        total.cur, total.max = total.cur + z.cur, total.max + z.max
+        local t = totals[z.exp] or { cur = 0, max = 0 }
+        totals[z.exp] = t
+        t.cur, t.max = t.cur + z.cur, t.max + z.max
     end
     -- holiday pages count on their own, never toward Midnight
     if ns.EvaluateEvents then ns.EvaluateEvents(newly, first, prevDone) end
     -- keep the Midnight page's own counts; its headline is the whole expansion (see ZoneTotals)
-    if ns.midnight then ns.midnight.ownCur, ns.midnight.ownMax = ns.midnight.cur, ns.midnight.max end
-    ns.total = total
+    for _, ov in pairs(ns.overviews or {}) do ov.ownCur, ov.ownMax = ov.cur, ov.max end
+    ns.totals = totals
+    ns.total = totals.midnight or { cur = 0, max = 0 }
     ns.firstEval = false
     return newly
 end
@@ -1214,8 +1229,9 @@ function ns.Pct(cur, max)
     return math.floor(cur / max * 100 + 0.0001)
 end
 
--- Headline cur, max for a zone page; the Midnight page shows the whole expansion.
+-- Headline cur, max for a zone page; an expansion's overview page shows the whole expansion.
 function ns.ZoneTotals(z)
-    if z.overview and ns.total then return ns.total.cur, ns.total.max end
+    local t = z.overview and ns.totals and ns.totals[z.exp]
+    if t then return t.cur, t.max end
     return z.cur or 0, z.max or 0
 end

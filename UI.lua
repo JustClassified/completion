@@ -57,7 +57,17 @@ local function Zone()
         local z = ns.eventByKey and ns.eventByKey[ns.cdb.lastEvent or ""] or DefaultEvent()
         if z then return z end
     end
-    return ns.zoneByKey[ns.cdb.lastZone or ""] or ns.ZONES[1]
+    -- a zone of the open expansion: the last one opened there, else its first
+    local exp = ns.cdb.lastExpansion or "midnight"
+    local z = ns.zoneByKey[ns.cdb.lastZone or ""]
+    if z and (z.exp or "midnight") == exp then return z end
+    ns.cdb.lastZoneByExp = ns.cdb.lastZoneByExp or {}
+    z = ns.zoneByKey[ns.cdb.lastZoneByExp[exp] or ""]
+    if z then return z end
+    for _, zz in ipairs(ns.ZONES) do
+        if (zz.exp or "midnight") == exp then return zz end
+    end
+    return ns.ZONES[1]
 end
 -- The open section's key, or nil while the Chronicle is showing (or the saved one isn't on this page).
 local function Section()
@@ -651,7 +661,7 @@ local function RefreshLeft()
         r.sel:SetShown(sec == r.key)
     end
     local cur, max = ns.ZoneTotals(z)
-    L.total:SetText(string.format(z.overview and "Midnight: %d / %d" or "Total: %d / %d", cur, max))
+    L.total:SetText(string.format("%s: %d / %d", z.overview and z.name or "Total", cur, max))
     L.totalPct:SetText(ns.Pct(cur, max) .. "%")
     L.bar:SetFrac(cur, max)
 end
@@ -690,8 +700,11 @@ local function ChronicleText(z)
     local parts = {}
     if z.overview then
         local secs = 0
-        for _, v in pairs(ns.cdb.chronicle) do secs = secs + (v.secs or 0) end
-        parts[#parts + 1] = string.format("Across Quel'Thalas and beyond you have spent %s in Midnight's zones and finished %d of the %d things this book tracks.", ns.Duration(secs), cur, max)
+        for k, v in pairs(ns.cdb.chronicle) do
+            local zz = ns.zoneByKey[k]
+            if zz and zz.exp == z.exp then secs = secs + (v.secs or 0) end
+        end
+        parts[#parts + 1] = string.format("You have spent %s in %s's zones and finished %d of the %d things this book tracks for it.", ns.Duration(secs), z.name, cur, max)
     elseif not c or not c.firstTime then
         parts[#parts + 1] = string.format("You have not set foot in %s since this book was opened.", z.name)
         if cur > 0 then parts[#parts + 1] = string.format("Still, %d of its %d pages are already written, many by your warband.", cur, max) end
@@ -1011,7 +1024,7 @@ function ns.JumpTo(it)
         ns.cdb.lastExpansion = "seasonal"
         ns.cdb.lastEvent = host.zone.key
     else
-        ns.cdb.lastExpansion = "midnight"
+        ns.cdb.lastExpansion = host.zone.exp or "midnight"
         ns.cdb.lastZone = host.zone.key
     end
     ns.cdb.lastSection = host.sec
@@ -1044,7 +1057,8 @@ local function RefreshChronicle()
     -- the log is newest first
     for _, e in ipairs(ns.cdb.log) do
         if shown >= #R.adv then break end
-        if z.overview or e.zone == z.key then
+        local ez = ns.zoneByKey[e.zone or ""]
+        if e.zone == z.key or (z.overview and ez and ez.exp == z.exp) then
             shown = shown + 1
             local a = R.adv[shown]
             a:ClearAllPoints()
@@ -1633,6 +1647,8 @@ local aboutTab        -- the gear: options and about
 local pageTabs = {}   -- This Week and Warband
 local eventTabs = {}  -- one per holiday, shown on the Seasonal pages
 local gearY = {}      -- the gear's place: under the zone tabs, or under the holiday tabs
+local tabRule         -- the thin rule above the small tabs
+local SMALL, SMALL_GAP = 36, 5
 
 -- Builds a tab per zone, then the gear and, under it, the This Week and Warband tabs.
 -- Clicking the gear or a page tab a second time closes that page again.
@@ -1642,6 +1658,8 @@ local function BuildTabs()
         local t = MakeTab(i, nil, function(self)
             if ns.cdb.lastZone ~= self.zone.key then Sound("IG_ABILITY_PAGE_TURN") end
             ns.cdb.lastZone = self.zone.key
+            ns.cdb.lastZoneByExp = ns.cdb.lastZoneByExp or {}
+            ns.cdb.lastZoneByExp[self.zone.exp or "midnight"] = self.zone.key
             ns.showAbout = false
             ns.showPage = nil
             wipe(history)
@@ -1660,9 +1678,9 @@ local function BuildTabs()
     end
     -- the gear: toggles the options and about page
     -- This Week, Warband and the gear: smaller tabs in a group of their own under the zones, after a thin rule
-    local SMALL, SMALL_GAP = 36, 5
-    local top = -30 - #ns.ZONES * (TAB_SIZE + TAB_GAP) - 12
+    local top = -30 - 7 * (TAB_SIZE + TAB_GAP) - 12   -- moved under the zone tabs of the open expansion by RefreshTabs
     local rule = main:CreateTexture(nil, "ARTWORK")
+    tabRule = rule
     rule:SetColorTexture(0.72, 0.56, 0.30, 0.6)
     rule:SetSize(SMALL - 6, 1)
     rule:SetPoint("TOPLEFT", main, "TOPRIGHT", 3, top + 7)
@@ -1686,6 +1704,7 @@ local function BuildTabs()
         end, SMALL, top - (n - 1) * (SMALL + SMALL_GAP))
         t.pctBg:Hide()
         t.page = def[1]
+        t.slot = n
         t:SetSelected(false)
         pageTabs[#pageTabs + 1] = t
     end
@@ -1753,18 +1772,41 @@ local function RefreshTabs()
             end
         end
     end
-    aboutTab.y = seasonal and gearY.events or gearY.zones
     if seasonal then
+        aboutTab.y = gearY.events
+        tabRule:ClearAllPoints()
+        tabRule:SetPoint("TOPLEFT", main, "TOPRIGHT", 3, gearY.events + 7)
         aboutTab:SetSelected(ns.showAbout and true or false)
         return
     end
+    -- only the open expansion's zones, one under the other; the small tabs follow them
+    local exp = cur.exp or "midnight"
+    local n = 0
     for _, t in ipairs(tabs) do
+        local mine = (t.zone.exp or "midnight") == exp
+        t:SetShown(mine)
+        if mine then
+            n = n + 1
+            t.y = -30 - (n - 1) * (TAB_SIZE + TAB_GAP)
+        end
+    end
+    local top = -30 - n * (TAB_SIZE + TAB_GAP) - 12
+    tabRule:ClearAllPoints()
+    tabRule:SetPoint("TOPLEFT", main, "TOPRIGHT", 3, top + 7)
+    for _, t in ipairs(pageTabs) do t.y = top - (t.slot - 1) * (SMALL + SMALL_GAP) end
+    gearY.zones = top - #pageTabs * (SMALL + SMALL_GAP)
+    aboutTab.y = gearY.zones
+    for _, t in ipairs(tabs) do
+        if not t:IsShown() then
+            -- hidden tabs of another expansion keep their old place
+        else
         t.icon:SetTexture(TabIcon(t.zone))
         t:SetSelected(t.zone == cur and not ns.showAbout and not ns.showPage)
         local c, m = ns.ZoneTotals(t.zone)
         local p = ns.Pct(c, m)
         t.pct:SetText(p .. "%")
         if p >= 100 then t.pct:SetTextColor(0.4, 1, 0.4) else t.pct:SetTextColor(1, 1, 1) end
+        end
     end
     aboutTab:SetSelected(ns.showAbout and true or false)
     for _, t in ipairs(pageTabs) do t:SetSelected(ns.showPage == t.page) end

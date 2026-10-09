@@ -14,15 +14,19 @@
 ## AddonCompartmentFuncOnLeave: Completion_OnAddonCompartmentLeave
 
 Data\Zones.lua
+Data\TWW\Zones.lua
 Data\Points.lua
+Data\TWW\Points.lua
 Data\Overrides.lua
 Data\Lore.lua
 Data\Achievements.lua
+Data\TWW\Achievements.lua
 Data\Collections.lua
 Data\Vendors.lua
 Data\Sources.lua
 Data\Walkthroughs.lua
 Data\Notes.lua
+Data\TWW\Notes.lua
 Data\Delves.lua
 Data\Expansions.lua
 Data\Events.lua

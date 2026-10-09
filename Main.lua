@@ -56,7 +56,11 @@ function ns.OnShow()
     end
     if ns.db.settings.follow then
         local z = ns.PlayerZone()
-        if z then ns.cdb.lastZone = z.key end
+        if z then
+            ns.cdb.lastZone = z.key
+            -- open the expansion you are standing in (not while the Seasonal pages are open)
+            if ns.cdb.lastExpansion ~= "seasonal" then ns.cdb.lastExpansion = z.exp or "midnight" end
+        end
     end
     Evaluate()
 end
@@ -371,7 +375,11 @@ f:SetScript("OnEvent", function(_, event, arg1)
         for _, m in ipairs(ns.playerChain) do ns.AskQuestLines(m) end
         if event ~= "ZONE_CHANGED" and ns.db and ns.db.settings.follow and ns.IsShown() then
             local z = ns.PlayerZone()
-            if z and z.key ~= ns.cdb.lastZone then ns.cdb.lastZone = z.key; ns.RefreshUI() end
+            if z and z.key ~= ns.cdb.lastZone then
+                ns.cdb.lastZone = z.key
+                if ns.cdb.lastExpansion ~= "seasonal" then ns.cdb.lastExpansion = z.exp or "midnight" end
+                ns.RefreshUI()
+            end
         end
         if ns.built then ns.UpdateTarget() end
     elseif event == "BAG_UPDATE_DELAYED" then
