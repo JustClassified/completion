@@ -241,7 +241,7 @@ local function Repeatables(out)
     end
     for _, g in ipairs(REPEATABLE) do
         if ns.Counts(g) and (open[g] or 0) > 0 then
-            local note = ns.GROUP_NOTES and ns.GROUP_NOTES[g]
+            local note = ns.GroupNote(first[g])
             out[#out + 1] = { text = g, right = open[g] .. (open[g] == 1 and " achievement left" or " achievements left"),
                               tip = note, hint = "Click: open the first one in the book.",
                               click = function() ns.JumpTo(first[g]) end }

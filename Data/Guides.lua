@@ -55,13 +55,22 @@ G[61961] = {
     },
 }
 
--- Li Li's questline
-G[61442] = {
-    steps = {
-        { t = "Talk to Li Li Stormstout (book icon) in Silvermoon to start." },
-        { t = "Follow her objectives. Some take a minute to appear; if a step shows nothing, wait or relog." },
-    },
-}
+-- Lorewalking with Li Li
+local function lorewalk(story, volumes, where)
+    return {
+        steps = {
+            { t = "Talk to Assistant Lorewalker Li Li in Silvermoon, east of the Sanctum of Light (book icon).", at = { SILVERMOON, 58.7, 70.8 } },
+            { t = "Ask what stories she can tell and choose " .. story .. "." },
+            { t = "Play through all " .. volumes .. " volumes: " .. where .. "." },
+        },
+        tips = {
+            "Some objectives take a minute to appear; if a step shows nothing, wait or relog.",
+            "Only one saved Lorewalking story at a time: starting another deletes the saved one.",
+        },
+    }
+end
+G[61442] = lorewalk("the Loa", 4, "Zandalar, Zul'Drak, the Swamp of Sorrows and the Echo Isles")
+G[61467] = lorewalk("the Elves of Quel'Thalas", 2, "the fall of Silvermoon and the Sunwell, then the Void Elves")
 
 -- Small Red Button
 G[60888] = {

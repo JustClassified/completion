@@ -684,6 +684,9 @@ G[41337] = {
     },
 }
 
+G[41120] = { tips = { "One-Armed Bandit with two casino chips in their slot machines (see One Rank Higher for where the chips are)." } }
+G[41121] = { tips = { "One-Armed Bandit with three casino chips in their slot machines (see One Rank Higher for where the chips are)." } }
+
 -- Chrome King Gallywix: Scheming on a Thing
 G[41347] = {
     steps = {
@@ -770,6 +773,359 @@ G[41619] = {
         { t = "On the first Reverse Gravity, everyone except the two Excess Mass players stands in the circles and gets knocked up." },
         { t = "On the next cycle, two other players take Excess Mass so the first two can be knocked up too." },
         { t = "When the whole raid has been hit, push to phase 2 and kill the boss." },
+    },
+}
+
+------------------------------------------------------------------------
+-- Revisited Horrific Visions
+------------------------------------------------------------------------
+
+local function vision(city, boss)
+    return {
+        steps = {
+            { t = "Wait for the week the " .. city .. " vision is open (one city a week)." },
+            { t = "Queue at the Portal to Horrific Visions in Dornogal, south of the Coreway tunnel." },
+            { t = "In the starting room, talk to the Image of Wrathion to begin." },
+            { t = "Defeat " .. boss .. ", the main objective, in the first area (skull on the map). This ends the vision." },
+        },
+    }
+end
+G[41853] = vision("Stormwind", "Alleria")
+G[41875] = vision("Orgrimmar", "Thrall")
+
+local function allObjectives(city)
+    return {
+        steps = {
+            { t = "Buy Hourglass upgrades with Mementos first; more sanity and time make a full clear possible." },
+            { t = "In the " .. city .. " vision, finish the four bonus objectives first: two in the Corrupted areas, then two in the harder Lost areas." },
+            { t = "Sanity is your timer: grab Sanity Restoration Orbs, check each area's Madness on the map, and don't overpull." },
+            { t = "Defeat the main boss in the first area last; killing it ends the vision." },
+        },
+    }
+end
+G[41854] = allObjectives("Stormwind")
+G[41876] = allObjectives("Orgrimmar")
+
+G[41873] = {
+    steps = {
+        { t = "In any vision, finish at least two bonus objectives (the Corrupted areas are the easier ones)." },
+        { t = "Then defeat the main boss in the first area; it ends the vision." },
+    },
+}
+
+-- the masks
+G[41883] = {   -- Long Night
+    steps = { { t = "Complete all five objectives in a single visit of either vision. The mask unlocks on the way out." } },
+}
+G[41881] = {   -- Burned Bridge
+    steps = { { t = "With one mask on, complete the Valley of Wisdom objective in the Orgrimmar vision." } },
+}
+G[41882] = {   -- Daredevil
+    steps = { { t = "With one mask on, complete the Valley of Honor objective in the Orgrimmar vision." } },
+}
+G[41856] = {   -- Pained
+    steps = { { t = "With one mask on, complete the Old Town objective in the Stormwind vision." } },
+}
+G[41880] = {   -- Dark Imagination
+    steps = { { t = "With one mask on, complete the Mage Quarter objective in the Stormwind vision." } },
+}
+G[41884] = {   -- Vengeance
+    steps = {
+        { t = "Put on one mask and enter the Stormwind vision." },
+        { t = "Go to the canals between the Trade District and Old Town." },
+        { t = "Defeat the Vengeful Voidspeakers revering the mask and loot the Faceless Mask of Vengeance." },
+    },
+}
+G[41710] = {   -- Nemesis
+    steps = {
+        { t = "With one mask on, in the Stormwind vision: click Hogger's WANTED poster right of the Mage Quarter entrance, defeat him and loot his Nemesis Shard." },
+        { t = "With one mask on, in the Orgrimmar vision: click Gamon's axe on the table on the right of the Broken Tusk inn's ground floor (Valley of Strength), defeat him and loot his Nemesis Shard." },
+        { t = "Combine the two shards into the mask." },
+    },
+    tips = { "The two cities alternate weekly, so this takes at least two weeks." },
+}
+G[41885] = {   -- Multitudes
+    steps = { { t = "With at least one mask on, complete every objective and kill every enemy in one visit." } },
+    tips = { "The hardest mask to earn: plan a full route and bring a group." },
+}
+G[41889] = {
+    steps = {
+        { t = "Long Night first: all five objectives in one visit." },
+        { t = "Wearing it, earn Burned Bridge and Daredevil (Orgrimmar weeks) and Pained, Dark Imagination and Vengeance (Stormwind weeks)." },
+        { t = "Nemesis: Hogger's and Gamon's shards, one per city." },
+        { t = "Multitudes last: every objective and every enemy in one visit." },
+    },
+    tips = { "Only one player in the group needs a mask for everyone to use it." },
+}
+
+G[41857] = { tips = { "Complete every objective in any vision with one mask on. Burned Bridge is a gentle first mask." } }
+G[41890] = { tips = { "Every objective with two masks on. A good order to add masks: Burned Bridge, Dark Imagination, Nemesis, Vengeance, Daredevil, Long Night, Pained, Multitudes." } }
+G[41891] = G[41890]
+G[41893] = G[41890]
+G[41874] = G[41890]
+G[41858] = G[41890]
+G[41894] = G[41890]
+G[41895] = { tips = { "Every objective with all eight masks on: enemies have three times their health and damage. Full Hourglass upgrades and a practised group are a must." } }
+
+local function mostHorrific(city, n)
+    return {
+        steps = {
+            { t = "Earn at least " .. n .. " masks and buy the full Hourglass upgrades first." },
+            { t = "In a " .. city .. " week, put on " .. n .. " masks in the starting room." },
+            { t = "Finish the four bonus objectives, then the main boss last, in one visit." },
+        },
+    }
+end
+G[41855] = mostHorrific("Stormwind", 5)
+G[41879] = mostHorrific("Orgrimmar", 5)
+G[41964] = mostHorrific("Stormwind", 8)
+G[41965] = mostHorrific("Orgrimmar", 8)
+
+G[41725] = {
+    steps = {
+        { t = "Earn Displaced Corrupted Mementos from vision runs." },
+        { t = "Buy Echoes of N'Zoth with them (limited each week) and research every item in the Hourglass of Horrific Visions. It takes at least three weeks." },
+    },
+}
+
+-- Mementos
+G[41859] = { tips = { "Displaced Corrupted Mementos come from every vision run; masks raise the amount by 20% each." } }
+G[41896] = G[41859]
+G[41897] = G[41859]
+G[41898] = G[41859]
+G[41983] = G[41859]
+
+------------------------------------------------------------------------
+-- Lorewalking
+------------------------------------------------------------------------
+
+local function lorewalk(story, volumes, where)
+    return {
+        steps = {
+            { t = "Talk to Assistant Lorewalker Li Li on the Keeper's Terrace in Dornogal (she's also in Stormwind, Orgrimmar and Silvermoon).", at = { DORNOGAL, 49.7, 31.5 } },
+            { t = "Ask what stories she can tell and choose " .. story .. "." },
+            { t = "Play through all " .. volumes .. " volumes: " .. where .. "." },
+        },
+        tips = {
+            "You can pause with the chat bubble on the Lorewalking panel and continue later from Li Li.",
+            "Only one saved Lorewalking story at a time: starting another deletes the saved one.",
+        },
+    }
+end
+G[42187] = lorewalk("the Ethereals", 3, "Netherstorm and Dimensius, Alleria and Locus Walker in Legion, then the Brokers and Tazavesh in the Shadowlands")
+G[42188] = lorewalk("Xal'atath", 3, "the blade in Legion, how she gained a body in Battle for Azeroth, and the Black Empire")
+G[42189] = lorewalk("the Lich King", 2, "the Culling of Stratholme and Wrath of the Lich King, then playing as the Lich King")
+
+------------------------------------------------------------------------
+-- Delve system
+------------------------------------------------------------------------
+
+local brann = {
+    steps = {
+        { t = "Run delves with Brann (or your current delve companion); every finished delve gives him experience." },
+        { t = "Higher tiers and bountiful delves give more. Enemies killed inside count too." },
+    },
+    tips = { "A quick boost: in the Dread Pit on a Smashing Skardyn day, stun and blow up the Skardyn packs; each gives about 10 companion experience." },
+}
+for _, id in ipairs({ 40455, 40450, 40451, 40456, 40457, 40461, 41537, 41723, 61342, 42676, 40538 }) do G[id] = brann end
+
+local runs = { tips = { "Any delve on any tier counts. Bountiful delves (marked on the map) give the best rewards for the same time." } }
+for _, id in ipairs({ 40436, 40460, 40462, 40463, 41095, 41096 }) do G[id] = runs end
+
+G[40512] = { tips = { "Finish any Tier 2 delve (or higher). Each tier unlocks after the one below it." } }
+G[40514] = { tips = { "Finish any Tier 3 delve (or higher)." } }
+
+local keys = {
+    steps = {
+        { t = "Earn Restored Coffer Keys from weekly activities and world content; Coffer Key Shards combine into keys too." },
+        { t = "Run a bountiful delve (gold icon on the map) and open the Bountiful Coffer at the end with a key." },
+    },
+}
+for _, id in ipairs({ 40819, 40788, 40882, 40885 }) do G[id] = keys end
+
+G[40817] = {
+    steps = {
+        { t = "Get a Delver's Bounty map; it drops inside delves (Tier 8 or higher is reported as most reliable)." },
+        { t = "Use it inside a delve to reveal a Hidden Trove, and open the trove. Ten in all." },
+    },
+    tips = { "Some players go many runs without a map; it's luck." },
+}
+local curios = { tips = { "Mislaid Curiosities are small treasures hidden inside delves; loot every one you see. Higher tiers and some stories have more." } }
+G[40763] = curios
+G[41097] = curios
+local puzzles = { tips = { "Some delve stories have a puzzle in them (for example the Dread Pit's Lost Gems story has one in the middle). Solving it counts." } }
+for _, id in ipairs({ 40863, 40864, 41105 }) do G[id] = puzzles end
+local flicker = { tips = { "Bountiful delves always have a Flickergate; Sanctified Banners and Dundun also count. Interact with each one you pass." } }
+G[42778] = flicker
+G[42779] = flicker
+G[40458] = { tips = { "Strange disturbances are rare enemies that sometimes appear in delves. Defeat 10 of them; the more delves you run, the more you meet." } }
+G[42771] = { tips = { "Archival Assault always uses one fixed story on Tiers 1 to 3: run it on Tier 4 or higher to see the other stories.", "In the drake rescue story, freed drakes can turn hostile; stay ready to fight." } }
+G[40448] = { tips = { "Every War Within delve on Tier 8 or higher without running out of lives. Pick days with easy stories." } }
+G[40438] = { tips = { "A seasonal meta: the Tier 8 and nemesis parts are tied to the season they came from, so check which parts can still be done." } }
+G[41532] = {
+    steps = { { t = "Buy the Delver's Gob-Trotter from Reno Jackson, the delve vendor in Dornogal, for 10,000 Resonance Crystals." } },
+}
+
+------------------------------------------------------------------------
+-- World PvP and Deephaul Ravine
+------------------------------------------------------------------------
+
+G[40089] = {
+    steps = {
+        { t = "Turn on War Mode." },
+        { t = "An Unbound Spoils chest appears four times a day, once in every six-hour window from the daily reset, in the open PvP area of one Khaz Algar zone (it shows on the map like an air drop)." },
+        { t = "Capture it before the other faction does." },
+    },
+}
+G[40090] = G[40089]
+G[40091] = { tips = { "The Unbound Spoils spawn always at the same spot in each zone's free-for-all area; the zone changes every six hours. Capture one in each listed zone." } }
+G[40466] = {
+    steps = {
+        { t = "With War Mode on, watch for a War Supply Crate plane (it shows on the map)." },
+        { t = "Be the first to open the crate when it lands; looting a chest someone else opened doesn't count." },
+    },
+}
+G[40467] = G[40466]
+G[40464] = { tips = { "With War Mode on, kill 10 players in a row without dying to become an Assassin; killing an Assassin drops a bounty to loot.", "Players in your party don't count, nor do targets that give no honor." } }
+G[40465] = G[40464]
+G[40613] = { tips = { "In one Deephaul Ravine match, capture the crystal three times, never die all game, and win." } }
+G[40616] = { tips = { "Kill players right after they leave an Earthen mine cart in Deephaul Ravine. Hard to arrange in random games; premade groups make it far easier." } }
+local tour = { tips = { "Earn 1000 honor in this zone with War Mode on: kill players, world PvP quests and the air drops all give honor." } }
+for _, id in ipairs({ 40083, 40084, 40085, 40086, 41522, 42131 }) do G[id] = tour end
+
+------------------------------------------------------------------------
+-- Reputation
+------------------------------------------------------------------------
+
+G[41997] = { tips = { "Flame's Radiance renown comes from the Nightfall scenario in Hallowfall (about 1000 reputation per run, and it can be run every hour) plus its three daily quests." } }
+G[60939] = { tips = { "Gallagio Loyalty Rewards Club renown only comes from the Liberation of Undermine raid: about two renown per weekly clear, on any difficulty." } }
+G[60940] = { tips = { "Manaforge Vandals renown comes from clearing Manaforge Omega each week." } }
+G[42022] = { tips = { "The K'aresh Trust renown: K'aresh world quests, the weekly quests and the Oasis and phase diving activities." } }
+G[41086] = { tips = { "Cartels of Undermine renown: Undermine world quests, weeklies, S.C.R.A.P. jobs and Undermine events." } }
+
+------------------------------------------------------------------------
+-- Quests and odd ones
+------------------------------------------------------------------------
+
+G[40309] = {
+    steps = {
+        { t = "Create a new earthen character and level it to 50." },
+        { t = "Relog if the heritage armor quest doesn't appear." },
+        { t = "Go to Dornogal (the Orgrimmar or Stormwind portal room has a portal) and upload your experience at the archives; the achievement pops then." },
+    },
+}
+G[42736] = { tips = { "Loot Ixthar's Favorite Crystal and defeat Ixthar the Unblinking in K'aresh. You don't need cloak upgrades to see him; he has a long respawn timer." } }
+G[40503] = { tips = { "Algari Anglerthread goes onto your fishing pole after the Algari Weaverline. The threads count per character." } }
+
+-- Explore the Ringing Deeps (positions moved to the 11.1 map)
+G[40825] = {
+    tips = { "The Rumbling Wastes can still look fogged on the map after it counts; check the achievement instead." },
+    crit = {
+        ["The Earthenworks"] = { t = "Fly over this area", at = { { DEEPS, 42.95, 18.30 } } },
+        ["Shadowvein Extraction Site"] = { t = "Fly over this area", at = { { DEEPS, 57.48, 41.82 } } },
+        ["The Waterworks"] = { t = "Fly over this area", at = { { DEEPS, 41.73, 43.89 } } },
+        ["The Living Grotto"] = { t = "Fly over this area", at = { { DEEPS, 51.48, 67.17 } } },
+        ["The Hallowfall Gate"] = { t = "Fly over this area", at = { { DEEPS, 36.68, 23.80 } } },
+        ["Lost Mines"] = { t = "Fly over this area", at = { { DEEPS, 55.17, 24.56 } } },
+        ["The Rumbling Wastes"] = { t = "Fly over this area", at = { { DEEPS, 59.80, 51.80 } } },
+        ["Taelloch"] = { t = "Fly over this area", at = { { DEEPS, 58.11, 60.25 } } },
+        ["Opportunity Point"] = { t = "Fly over this area", at = { { DEEPS, 60.52, 78.21 } } },
+        ["Gundargaz"] = { t = "Fly over this area", at = { { DEEPS, 42.90, 33.46 } } },
+    },
+}
+
+-- A Choir of Citrines
+G[41050] = {
+    steps = {
+        { t = "Do the Siren Isle story: Windsinger's Runed Citrine comes from the Reforged Anew questline (Angorla)." },
+        { t = "Buy the vendor citrines at the island's camp; drops from enemies and chests also give them." },
+        { t = "Run the island's events and excavations for the event citrines (see each gem below)." },
+        { t = "Do the Siren Isle weekly quests for the last two gems." },
+    },
+    tips = { "If a gem you own doesn't count, keep a spare in your bags and hand in a weekly quest; that triggers the credit." },
+    crit = {
+        ["Windsinger's Runed Citrine"] = { t = "From the Reforged Anew questline (Angorla)" },
+        ["Mariner's Hallowed Citrine"] = { t = "Drops from enemies and chests, or buy it from Apprentice Tanmar" },
+        ["Roaring War-Queen's Citrine"] = { t = "Drops from enemies and chests, or buy it from Taljori" },
+        ["Thunderlord's Crackling Citrine"] = { t = "Drops from enemies and chests, or buy it from Didi the Wrench" },
+        ["Old Salt's Bardic Citrine"] = { t = "Weekly event reward (players got it from Nerathor in the Drowned Lair)" },
+        ["Stormbringer's Runed Citrine"] = { t = "Weekly event reward (players got it from Stalagnarok in the Shuddering Hollow)" },
+        ["Fathomdweller's Runed Citrine"] = { t = "Drops in island events (the Shuddering Hollow)" },
+        ["Undersea Overseer's Citrine"] = { t = "Drops from a major excavation (the Drain)" },
+        ["Storm Sewer's Citrine"] = { t = "Drops from the Drowned Lair excavation" },
+        ["Squall Sailor's Citrine"] = { t = "Drops from the Drain excavation" },
+        ["Seabed Leviathan's Citrine"] = { t = "From a Siren Isle weekly quest", quest = 84850 },
+        ["Legendary Skipper's Citrine"] = { t = "From a Siren Isle weekly quest", quest = 84851 },
+    },
+}
+
+-- Worm Theory
+G[40869] = {
+    steps = {
+        { t = "Finish the Azj-Kahet campaign and choose a pact in the Weaver's Lair; that opens the zone's world quests." },
+        { t = "Do the listed world quests as they come up: Grub Run in the north-west, the others in Rak-Ush in the south-east." },
+    },
+}
+
+-- The General's Salute and friends
+G[40833] = {
+    steps = {
+        { t = "Reach rank 7 with the General (about Severed Threads renown 20)." },
+        { t = "Pick up the breadcrumb from Anub'azal in the Weaver's Lair." },
+        { t = "Do Demand Satisfaction, Duel of the Fates and The General's Conviction." },
+    },
+}
+G[41812] = {
+    steps = {
+        { t = "Start the Oasis questline in K'aresh.", at = { KARESH, 39.57, 24.23 }, quest = 87290 },
+        { t = "Continue with the quest givers at the Oasis.", at = { KARESH, 75.9, 34.2 } },
+        { t = "Parts are weekly gated: each week, do every quest the map shows in the Oasis until the experts have joined." },
+    },
+}
+
+------------------------------------------------------------------------
+-- Feature notes, shown on every War Within achievement of that group
+------------------------------------------------------------------------
+
+ns.GROUP_NOTES_EXP = ns.GROUP_NOTES_EXP or {}
+ns.GROUP_NOTES_EXP.tww = {
+    ["Delves"] = {
+        "Tier achievements accept that tier or higher.",
+        "A delve's story changes daily; the tier menu shows today's. Stories and chest achievements take several visits.",
+        "Brann levels up from every delve you finish; the companion achievements follow his level.",
+    },
+    ["Skyriding"] = {
+        "Every course has a normal, advanced and reverse version, each with bronze, silver and gold times.",
+        "Tracking a race takes the arrow to its start; a zone's race metas list every course of that zone.",
+    },
+    ["Dungeons"] = {
+        "Heroic and Mythic achievements need that difficulty or higher; Mythic Keystone counts as Mythic.",
+        "Dungeon finder groups work for Normal and Heroic.",
+    },
+    ["Raids"] = {
+        "Boss achievements count on Normal or higher unless the name says Heroic or Mythic.",
+        "Most Glory achievements need 10 or more players; the steps say when.",
+    },
+    ["Reputation"] = {
+        "Renown rises from world quests, weekly quests and zone events of that faction. Warband-wide reputation helps alts.",
+    },
+    ["Horrific Visions"] = {
+        "Queue at the Portal to Horrific Visions in Dornogal, just south of the Coreway tunnel, after its short intro questline. Runs are unlimited.",
+        "One city is open each week, Stormwind or Orgrimmar, for everyone. Groups of 1 to 5; Soridormi can join you as tank, healer or damage.",
+        "Displaced Corrupted Mementos from each run buy permanent upgrades (the Hourglass) that make later runs and the mask achievements easier.",
+        "Masks are chosen in the starting room before you talk to Wrathion; each one makes enemies 25% stronger.",
+    },
+    ["Pet Battles"] = {
+        "Tamers can be fought again whenever they're up, even after their world quest is done.",
+    },
+    ["PvP"] = {
+        "World PvP achievements need War Mode on (switch it in a rested area of Dornogal).",
+    },
+    ["Professions"] = {
+        "Skill comes from first-time crafts, gathering and the weekly profession quests in Dornogal.",
+    },
+    ["Fishing"] = {
+        "Turn on Find Fish on the minimap to see pools. Each pool type gives different fish.",
     },
 }
 

@@ -65,7 +65,7 @@ ns.ACH_GROUPS = {
     { "Void Assaults", Join(62498, 62499, R(62507, 62513), 62518, 62563, R(62568, 62574), R(62606, 62610),
         62873, 62874, R(62880, 62883), 62887, 62896, R(62898, 62901), 62903, 62904, 62905, 62909, 62917,
         62919, 62944, 62945, 62949, 63264, 63323, 63325, 63348, 63349, R(63383, 63386)) },
-    { "Lorewalking", { 61442 } },
+    { "Lorewalking", { 61442, 61467 } },
     { "Professions", Join(R(42786, 42798), 60888, R(61438, 61441), 62223, R(62232, 62252)) },
     { "Pet Battles", { 61091, 62492 } },
     { "Collections", { 61586, 61843, 61858, 62096, 62103, 63472, 63473, 63608 } },
@@ -101,4 +101,6 @@ ns.SCOPE_DEFAULTS = {
 
 -- Hard modes: Mythic raid and dungeon achievements, Glory metas, Nightmare Prey, Hall of Fame.
 -- Matched against the achievement's live name. Collectibles whose source says Mythic follow the same switch.
-ns.HARD_PATTERNS = { "^Mythic:", "^Glory of", "Nightmare", "Hall of Fame" }
+ns.HARD_PATTERNS = { "^Mythic:", "^Glory of", "Nightmare", "Hall of Fame",
+    -- Revisited Horrific Visions with several masks on
+    "^Masked ", "of Masks$", "^Horrific Masquerade", "Most Horrific Vision", "^Mastering the Visions", "Through the Depths of Visions" }

@@ -257,6 +257,15 @@ local function AttachAchSteps(it)
 end
 ns.AttachAchSteps = AttachAchSteps
 
+-- The feature note for an achievement's group (Delves, Fishing, ...), from its own expansion:
+-- ns.GROUP_NOTES holds Midnight's, ns.GROUP_NOTES_EXP[exp] the other expansions'.
+function ns.GroupNote(it)
+    if not (it and it.group) then return end
+    local exp = (it.zone and it.zone.exp) or "midnight"
+    if exp ~= "midnight" then return ns.GROUP_NOTES_EXP and ns.GROUP_NOTES_EXP[exp] and ns.GROUP_NOTES_EXP[exp][it.group] end
+    return ns.GROUP_NOTES and ns.GROUP_NOTES[it.group]
+end
+
 -- A note as a list of short points: a table is used as written, a string is split at its sentences
 -- (a full stop, ! or ? followed by a space and a capital letter).
 function ns.NotePoints(note)

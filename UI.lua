@@ -303,7 +303,7 @@ local function ItemTooltip(owner, it, row)
     if it.kind == "rep" and it.rep then GameTooltip:AddLine(it.rep.text, 1, 1, 1) end
     -- walkthrough notes, for achievements and lore only
     if it.kind == "ach" or it.kind == "lore" then
-        local groupNote = it.kind == "ach" and it.group and ns.GROUP_NOTES and ns.GROUP_NOTES[it.group]
+        local groupNote = it.kind == "ach" and ns.GroupNote(it)
         ns.AddGuide(GameTooltip, it.id or it.ach or 0, it.kind == "ach" and it or nil, groupNote)
     end
     if it.kind == "ach" and ns.ACH_STEPS and ns.ACH_STEPS[it.id] then
