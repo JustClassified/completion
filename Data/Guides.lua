@@ -1107,7 +1107,7 @@ local seeker = function(class)
     return {
         steps = {
             { t = "Join Decor Duel; at the start of a round as a tagger, choose Seeker: " .. class .. "." },
-            { t = "Tag five hiders in the round." },
+            { t = "Tag hiders in that role until the achievement completes (players report five in a round)." },
         },
     }
 end
