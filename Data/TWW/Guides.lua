@@ -355,7 +355,13 @@ G[41626] = {
     },
     tips = { "After the first list, new ones come from C.H.E.T.T. Cards dropped by enemies in Undermine (a stack of them buys a list), plus one free list each week." },
 }
-G[41627] = { tips = { "Same as C.H.E.T.T. a Look, twice. Cards for a second list drop from enemies in Undermine." } }
+G[41627] = {
+    steps = {
+        { t = "Hand in your first C.H.E.T.T. list (see C.H.E.T.T. a Look)." },
+        { t = "Collect C.H.E.T.T. Cards from enemies in Undermine, or wait for next week's free list." },
+        { t = "Finish four tasks on the second list and hand it in." },
+    },
+}
 
 -- Nine-Tenths of the Law: Muff's Auto-Lockers
 G[40948] = {
@@ -413,8 +419,8 @@ G[41980] = {
     },
     tips = { "The keys can be bought on the Auction House and still count, which skips the weekly wait." },
 }
-G[41978] = { tips = { "Two warrants: see Vigilante for the steps. Keys from the Auction House count." } }
-G[41979] = { tips = { "Four warrants: see Vigilante for the steps. Keys from the Auction House count." } }
+G[41978] = G[41980]
+G[41979] = G[41980]
 
 -- Jump, Jump, and Away!
 G[42730] = {
@@ -640,6 +646,11 @@ G[41596] = {
 
 -- Sprocketmonger Lockenstock: Conveyor Slayer
 G[41711] = {
+    steps = {
+        { t = "Learn where Blazing Beam, Rocket Barrage, Mega Magnetize and the other listed abilities land before the attempt." },
+        { t = "During the kill, don't get hit by any of them; the tracked achievement turns red if you are." },
+        { t = "Kill Sprocketmonger Lockenstock." },
+    },
     tips = {
         "Don't get hit by Blazing Beam, Rocket Barrage, Mega Magnetize or the other listed abilities during the kill.",
         "Dying counts as fine, as long as you weren't hit before you died.",
@@ -689,8 +700,17 @@ G[41337] = {
     },
 }
 
-G[41120] = { tips = { "One-Armed Bandit with two casino chips in their slot machines (see One Rank Higher for where the chips are)." } }
-G[41121] = { tips = { "One-Armed Bandit with three casino chips in their slot machines (see One Rank Higher for where the chips are)." } }
+local function chips(n)
+    return {
+        steps = {
+            { t = "In the casino area before the One-Armed Bandit, pick up " .. n .. " casino chips from the floor (red, purple, blue or gold)." },
+            { t = "Put each into its slot machine just outside the boss room." },
+            { t = "Kill the boss with those " .. n .. " extra mechanics active." },
+        },
+    }
+end
+G[41120] = chips(2)
+G[41121] = chips(3)
 
 -- Chrome King Gallywix: Scheming on a Thing
 G[41347] = {
@@ -863,14 +883,25 @@ G[41889] = {
     tips = { "Only one player in the group needs a mask for everyone to use it." },
 }
 
-G[41857] = { tips = { "Complete every objective in any vision with one mask on. Burned Bridge is a gentle first mask." } }
-G[41890] = { tips = { "Every objective with two masks on. A good order to add masks: Burned Bridge, Dark Imagination, Nemesis, Vengeance, Daredevil, Long Night, Pained, Multitudes." } }
-G[41891] = G[41890]
-G[41893] = G[41890]
-G[41874] = G[41890]
-G[41858] = G[41890]
-G[41894] = G[41890]
-G[41895] = { tips = { "Every objective with all eight masks on: enemies have three times their health and damage. Full Hourglass upgrades and a practised group are a must." } }
+local function masks(n)
+    return {
+        steps = {
+            { t = n == 1 and "Earn your first mask (Long Night: all five objectives in one visit)." or ("Have at least " .. n .. " masks earned (anyone in the group can bring them)." ) },
+            { t = "Buy Hourglass upgrades with Mementos; more sanity and time make full clears possible." },
+            { t = "In the starting room, put on " .. n .. (n == 1 and " mask" or " masks") .. " before talking to Wrathion." },
+            { t = "Finish all four bonus objectives, then defeat the main boss last, in one visit." },
+        },
+        tips = { "A good order to add masks: Burned Bridge, Dark Imagination, Nemesis, Vengeance, Daredevil, Long Night, Pained, Multitudes." },
+    }
+end
+G[41857] = masks(1)
+G[41890] = masks(2)
+G[41891] = masks(3)
+G[41893] = masks(4)
+G[41874] = masks(5)
+G[41858] = masks(6)
+G[41894] = masks(7)
+G[41895] = masks(8)
 
 local function mostHorrific(city, n)
     return {
@@ -894,7 +925,13 @@ G[41725] = {
 }
 
 -- Mementos
-G[41859] = { tips = { "Displaced Corrupted Mementos come from every vision run; masks raise the amount by 20% each." } }
+G[41859] = {
+    steps = {
+        { t = "Run Revisited Horrific Visions; every run gives Displaced Corrupted Mementos." },
+        { t = "Wear masks once you can: each one raises the Mementos you get by 20%." },
+        { t = "Keep running visions until the total is reached." },
+    },
+}
 G[41896] = G[41859]
 G[41897] = G[41859]
 G[41898] = G[41859]
@@ -934,11 +971,17 @@ local brann = {
 }
 for _, id in ipairs({ 40455, 40450, 40451, 40456, 40457, 40461, 41537, 41723, 61342, 42676, 40538 }) do G[id] = brann end
 
-local runs = { tips = { "Any delve on any tier counts. Bountiful delves (marked on the map) give the best rewards for the same time." } }
+local runs = {
+    steps = {
+        { t = "Enter any delve (each zone page lists them with entrances) and pick a tier you clear comfortably." },
+        { t = "Finish it; every completed delve counts, on any tier." },
+        { t = "Repeat until the count is reached. Bountiful delves (gold on the map) give the best rewards for the same time." },
+    },
+}
 for _, id in ipairs({ 40436, 40460, 40462, 40463, 41095, 41096 }) do G[id] = runs end
 
-G[40512] = { tips = { "Finish any Tier 2 delve (or higher). Each tier unlocks after the one below it." } }
-G[40514] = { tips = { "Finish any Tier 3 delve (or higher)." } }
+G[40512] = { steps = { { t = "Finish a Tier 1 delve to unlock Tier 2." }, { t = "Finish any delve on Tier 2 or higher." } } }
+G[40514] = { steps = { { t = "Finish a Tier 2 delve to unlock Tier 3." }, { t = "Finish any delve on Tier 3 or higher." } } }
 
 local keys = {
     steps = {
@@ -955,18 +998,42 @@ G[40817] = {
     },
     tips = { "Some players go many runs without a map; it's luck." },
 }
-local curios = { tips = { "Mislaid Curiosities are small treasures hidden inside delves; loot every one you see. Higher tiers and some stories have more." } }
+local curios = {
+    steps = {
+        { t = "Run delves and look out for Mislaid Curiosities, small treasures tucked away inside." },
+        { t = "Loot every one you see; higher tiers and some stories have more." },
+    },
+}
 G[40763] = curios
 G[41097] = curios
-local puzzles = { tips = { "Some delve stories have a puzzle in them (for example the Dread Pit's Lost Gems story has one in the middle). Solving it counts." } }
+local puzzles = {
+    steps = {
+        { t = "Run delve stories that contain a puzzle; the Dread Pit's Lost Gems story has one in the middle." },
+        { t = "Solve each puzzle you find; every solved puzzle counts toward the total." },
+    },
+}
 for _, id in ipairs({ 40863, 40864, 41105 }) do G[id] = puzzles end
-local flicker = { tips = { "Bountiful delves always have a Flickergate; Sanctified Banners and Dundun also count. Interact with each one you pass." } }
+local flicker = {
+    steps = {
+        { t = "Run bountiful delves (gold on the map); each always has a Flickergate." },
+        { t = "Interact with every Flickergate, Sanctified Banner and Dundun you pass inside a delve." },
+    },
+}
 G[42778] = flicker
 G[42779] = flicker
-G[40458] = { tips = { "Strange disturbances are rare enemies that sometimes appear in delves. Defeat 10 of them; the more delves you run, the more you meet." } }
+G[40458] = {
+    steps = {
+        { t = "Run delves; now and then a strange disturbance (a rare enemy) appears inside." },
+        { t = "Defeat each one you meet until you have 10." },
+    },
+}
 G[42771] = { tips = { "Archival Assault always uses one fixed story on Tiers 1 to 3: run it on Tier 4 or higher to see the other stories.", "In the drake rescue story, freed drakes can turn hostile; stay ready to fight." } }
-G[40448] = { tips = { "Every War Within delve on Tier 8 or higher without running out of lives. Pick days with easy stories." } }
-G[40438] = { tips = { "A seasonal meta: the Tier 8 and nemesis parts are tied to the season they came from, so check which parts can still be done." } }
+G[40438] = {
+    steps = {
+        { t = "Expand the achievement: it lists the delve achievements needed." },
+        { t = "Finish each part; some were tied to the season they came from, so check which can still be done." },
+    },
+}
 G[41532] = {
     steps = { { t = "Buy the Delver's Gob-Trotter from Reno Jackson, the delve vendor in Dornogal, for 10,000 Resonance Crystals." } },
 }
@@ -983,7 +1050,13 @@ G[40089] = {
     },
 }
 G[40090] = G[40089]
-G[40091] = { tips = { "The Unbound Spoils spawn always at the same spot in each zone's free-for-all area; the zone changes every six hours. Capture one in each listed zone." } }
+G[40091] = {
+    steps = {
+        { t = "Turn on War Mode." },
+        { t = "Every six hours the Unbound Spoils appear in one zone, always at the same spot in its free-for-all area." },
+        { t = "Capture one in each listed zone." },
+    },
+}
 G[40466] = {
     steps = {
         { t = "With War Mode on, watch for a War Supply Crate plane (it shows on the map)." },
@@ -991,22 +1064,73 @@ G[40466] = {
     },
 }
 G[40467] = G[40466]
-G[40464] = { tips = { "With War Mode on, kill 10 players in a row without dying to become an Assassin; killing an Assassin drops a bounty to loot.", "Players in your party don't count, nor do targets that give no honor." } }
+G[40464] = {
+    steps = {
+        { t = "Turn on War Mode." },
+        { t = "Find an enemy Assassin (a player who killed 10 in a row without dying; marked on the map) and kill them." },
+        { t = "Loot the bounty they drop. Repeat until the count is reached." },
+    },
+    tips = { "Players in your party don't count, nor do targets that give no honor." },
+}
 G[40465] = G[40464]
-G[40613] = { tips = { "In one Deephaul Ravine match, capture the crystal three times, never die all game, and win." } }
-G[40616] = { tips = { "Kill players right after they leave an Earthen mine cart in Deephaul Ravine. Hard to arrange in random games; premade groups make it far easier." } }
-local tour = { tips = { "Earn 1000 honor in this zone with War Mode on: kill players, world PvP quests and the air drops all give honor." } }
+G[40613] = {
+    steps = {
+        { t = "Queue for Deephaul Ravine." },
+        { t = "In one match, capture the crystal three times and don't die once all game." },
+        { t = "Win the match." },
+    },
+}
+G[40616] = {
+    steps = {
+        { t = "Queue for Deephaul Ravine." },
+        { t = "Wait by the mine cart exits and kill players right after they step out of an Earthen mine cart." },
+        { t = "Repeat over matches until 20." },
+    },
+    tips = { "Hard in random games; a premade group makes it far easier." },
+}
+local tour = {
+    steps = {
+        { t = "Turn on War Mode in Dornogal." },
+        { t = "Earn 1000 honor in this zone: kill enemy players, do world PvP quests and capture air drops here." },
+    },
+}
 for _, id in ipairs({ 40083, 40084, 40085, 40086, 41522, 42131 }) do G[id] = tour end
 
 ------------------------------------------------------------------------
 -- Reputation
 ------------------------------------------------------------------------
 
-G[41997] = { tips = { "Flame's Radiance renown comes from the Nightfall scenario in Hallowfall (about 1000 reputation per run, and it can be run every hour) plus its three daily quests." } }
-G[60939] = { tips = { "Gallagio Loyalty Rewards Club renown only comes from the Liberation of Undermine raid: about two renown per weekly clear, on any difficulty." } }
-G[60940] = { tips = { "Manaforge Vandals renown comes from clearing Manaforge Omega each week." } }
-G[42022] = { tips = { "The K'aresh Trust renown: K'aresh world quests, the weekly quests and the Oasis and phase diving activities." } }
-G[41086] = { tips = { "Cartels of Undermine renown: Undermine world quests, weeklies, S.C.R.A.P. jobs and Undermine events." } }
+G[41997] = {
+    steps = {
+        { t = "Join the Nightfall scenario in Hallowfall: about 1000 Flame's Radiance reputation per run, and a run starts every hour." },
+        { t = "Do its three daily quests each day." },
+        { t = "Repeat until renown 10." },
+    },
+}
+G[60939] = {
+    steps = {
+        { t = "Clear the Liberation of Undermine raid each week, on any difficulty." },
+        { t = "Each weekly clear gives about two renown; keep going until rank 20." },
+    },
+}
+G[60940] = {
+    steps = {
+        { t = "Clear Manaforge Omega each week." },
+        { t = "Keep going until renown 15 with the Manaforge Vandals." },
+    },
+}
+G[42022] = {
+    steps = {
+        { t = "Do K'aresh world quests, the weekly quests, the Oasis and phase diving for K'aresh Trust renown." },
+        { t = "Keep going until rank 20." },
+    },
+}
+G[41086] = {
+    steps = {
+        { t = "Do Undermine world quests, weeklies, S.C.R.A.P. jobs and events for Cartels of Undermine renown." },
+        { t = "Keep going until rank 20." },
+    },
+}
 
 ------------------------------------------------------------------------
 -- Quests and odd ones
@@ -1019,8 +1143,12 @@ G[40309] = {
         { t = "Go to Dornogal (the Orgrimmar or Stormwind portal room has a portal) and upload your experience at the archives; the achievement pops then." },
     },
 }
-G[42736] = { tips = { "Loot Ixthar's Favorite Crystal and defeat Ixthar the Unblinking in K'aresh. You don't need cloak upgrades to see him; he has a long respawn timer." } }
-G[40503] = { tips = { "Algari Anglerthread goes onto your fishing pole after the Algari Weaverline. The threads count per character." } }
+G[42736] = {
+    steps = {
+        { t = "Find and loot Ixthar's Favorite Crystal in K'aresh." },
+        { t = "Defeat Ixthar the Unblinking; you don't need cloak upgrades to see him, but he has a long respawn timer." },
+    },
+}
 
 
 -- A Choir of Citrines
@@ -1050,6 +1178,11 @@ G[41050] = {
 
 -- The Missing Lynx: pet every cat in Hallowfall
 G[40625] = {
+    steps = {
+        { t = "Expand the achievement: each cat has its spot; follow the arrow cat to cat." },
+        { t = "Target each cat and /pet it." },
+        { t = "For the Keyflame cats, light the lesser Keyflame at 63.3, 29.4 (Nightclaw) and help light the Light's Blooming Keyflame (Purrlock and Shadowpouncer)." },
+    },
     tips = {
         "Expand the achievement: each cat has its spot. Some only appear while a Keyflame is lit: Nightclaw with the lesser Keyflame at 63.3, 29.4, Purrlock and Shadowpouncer once the Light's Blooming Keyflame is fully lit.",
         "Gobbo only counts after Jinx has ambushed him: wait for it, then pet him the moment he gets up.",
@@ -1062,6 +1195,12 @@ G[40625] = {
 
 -- Undermine Safari: three of the pets live elsewhere
 G[41092] = {
+    steps = {
+        { t = "Turn on Track Pets on the minimap." },
+        { t = "Catch the Undermine pets (expand the achievement for which are left)." },
+        { t = "Fly to Gutterville in the far south-east of the Ringing Deeps for its two pets." },
+        { t = "Take the tunnel to the Kaja Coast in south-west Zuldazar for the Kaja Crab and Tropical Frog." },
+    },
     tips = {
         "Two pets live on the Kaja Coast in south-west Zuldazar (a tunnel connects it to Undermine once unlocked), two in Gutterville in the far south-east of the Ringing Deeps.",
         "The Spring-Loaded Ribbitron only appears as a backline pet in Undermine battles.",
@@ -1157,11 +1296,27 @@ G[42742] = {
         { t = "Upgrade them rank by rank with the materials from K'aresh activities (phase diving, world quests, the Oasis) until fully upgraded." },
     },
 }
-G[42677] = { tips = { "The Delver's Mana-Skimmer came from the delve questline of season 3. If it's no longer offered, check the delve vendors in Dornogal for it." } }
-G[19414] = { tips = { "Raise Khaz Algar Cooking to 100: cook each recipe once for first-craft skill, and buy recipes from the cooking supplies vendor in Dornogal." } }
+G[42677] = {
+    steps = {
+        { t = "Do the season 3 delve questline, which rewards the Delver's Mana-Skimmer." },
+        { t = "If the questline is no longer offered, check the delve vendors in Dornogal for it." },
+    },
+}
+G[19414] = {
+    steps = {
+        { t = "Learn Khaz Algar Cooking from the cooking trainer in Dornogal and buy the recipes sold there." },
+        { t = "Cook each recipe once: first crafts give the most skill." },
+        { t = "Keep cooking until 100 skill." },
+    },
+}
 
 local renown = function(faction, rank)
-    return { tips = { "Reach rank " .. rank .. " with " .. faction .. ": world quests, the zone's weekly quest and its events give renown. Progress is shared by your warband." } }
+    return {
+        steps = {
+            { t = "Do the zone's world quests, its weekly quest and its events for " .. faction .. " renown." },
+            { t = "Keep going until renown " .. rank .. "; progress is shared by your warband, so alts help." },
+        },
+    }
 end
 G[41161] = renown("the Council of Dornogal", 15)
 G[41162] = renown("the Council of Dornogal", 25)
@@ -1171,7 +1326,12 @@ G[41167] = renown("the Hallowfall Arathi", 15)
 G[41168] = renown("the Hallowfall Arathi", 25)
 G[41149] = renown("the Severed Threads", 15)
 G[41164] = renown("the Severed Threads", 25)
-G[41349] = { tips = { "Honored with all four Undermine cartels. Pick a different cartel as your weekly choice so each one rises." } }
+G[41349] = {
+    steps = {
+        { t = "Each week, choose a cartel to work for in Undermine; it gains the most reputation." },
+        { t = "Rotate your choice until all four cartels are Honored." },
+    },
+}
 
 G[40087] = {
     steps = {
@@ -1179,8 +1339,18 @@ G[40087] = {
         { t = "Do each of the listed War Within world PvP world quests as they appear (expand the achievement to see which are left)." },
     },
 }
-G[40088] = { tips = { "Each listed world PvP world quest five times, with War Mode on. They rotate, so do every one you see." } }
-local ravine = { tips = { "Deephaul Ravine is a random battleground. Queue for random battlegrounds or play it when it's the weekly featured one." } }
+G[40088] = {
+    steps = {
+        { t = "Turn on War Mode." },
+        { t = "Do each listed world PvP world quest five times; they rotate, so do every one you see." },
+    },
+}
+local ravine = {
+    steps = {
+        { t = "Open the PvP window and queue for random battlegrounds, or for Deephaul Ravine when it's the featured battleground." },
+        { t = "Play Deephaul Ravine matches until the count is reached; capturing the crystal counts for the crystal achievements." },
+    },
+}
 for _, id in ipairs({ 40211, 40215, 40608, 40612 }) do G[id] = ravine end
 
 ------------------------------------------------------------------------
@@ -1188,11 +1358,20 @@ for _, id in ipairs({ 40211, 40215, 40608, 40612 }) do G[id] = ravine end
 ------------------------------------------------------------------------
 
 local function dungeon(zone, ids)
-    local g = { tips = {
-        "The entrance is in " .. zone .. "; track the achievement and the arrow takes you there.",
-        "Normal and Heroic can be queued in the dungeon finder; Mythic needs a group or a keystone.",
-    } }
-    for _, id in ipairs(ids) do G[id] = g end
+    local diff = { "Normal", "Heroic", "Mythic" }
+    for n, id in ipairs(ids) do
+        local d = diff[n]
+        local find = (d == "Mythic")
+            and "Form a Mythic group in the Premade Groups finder (Group Finder), or run the dungeon on a keystone."
+            or ("Open the Group Finder and queue for the dungeon on " .. d .. ", or enter with a group.")
+        G[id] = {
+            steps = {
+                { t = "Track the achievement: the arrow leads to the dungeon entrance in " .. zone .. "." },
+                { t = find },
+                { t = "Clear the dungeon on " .. d .. (d == "Mythic" and " (a keystone run counts)" or " or higher") .. " and defeat its final boss." },
+            },
+        }
+    end
 end
 dungeon("the Isle of Dorn", { 40361, 40363, 40366 })                     -- Cinderbrew Meadery
 dungeon("the Isle of Dorn", { 40621, 40637, 40642 })                     -- The Rookery
@@ -1206,22 +1385,35 @@ dungeon("Undermine", { 41339, 41340, 41341 })                            -- Oper
 dungeon("K'aresh", { 42780, 42781, 42782 })                              -- Eco-Dome Al'dani
 
 local function raid(name, ids)
-    local g = { tips = {
-        "Any difficulty counts, Raid Finder included: queue for the Raid Finder wing that holds these bosses.",
-        "The raid entrance for " .. name .. " is marked when you track it.",
-    } }
+    local g = {
+        steps = {
+            { t = "Open the Group Finder and queue for the Raid Finder wing of " .. name .. " that holds these bosses, or join a Normal or Heroic group." },
+            { t = "Defeat each listed boss (expand the achievement to see which are left); any difficulty counts." },
+            { t = "Bosses killed in different weeks or on different difficulties all count." },
+        },
+    }
     for _, id in ipairs(ids) do G[id] = g end
 end
 raid("Nerub-ar Palace", { 40244, 40247, 40248, 40249 })
 raid("the Liberation of Undermine", { 41222, 41225, 41226, 41227, 41228 })
 raid("Manaforge Omega", { 41598, 41601, 41602, 41603 })
-local heroicRaid = { tips = { "Every boss on Heroic difficulty or higher. Group finder Heroic groups clear it weekly; kills from different weeks all count." } }
+local heroicRaid = {
+    steps = {
+        { t = "Join a Heroic group for the raid through the Premade Groups finder (or your guild)." },
+        { t = "Defeat every boss on Heroic or Mythic; expand the achievement to see which are left." },
+        { t = "Kills from different weeks all count, so you can finish it over several lockouts." },
+    },
+}
 for _, id in ipairs({ 40245, 41223, 41599 }) do G[id] = heroicRaid end
 
 
 -- Delve stories: what each story asks, on its row in the Stories achievement
 G[40525] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["Lost Miners"] = { t = "Drop into the pit and free 10 captured earthen scouts, then defeat Spinshroom." },
         ["Explorer's Competition"] = { t = "Beat the five Explorer's League challenges (duels, fishing, a mirror test, a running pattern), then defeat Spinshroom." },
@@ -1230,7 +1422,11 @@ G[40525] = {
     },
 }
 G[40526] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["Lost Keepsakes"] = { t = "Take an Enchanted Candle, talk to Kuvkel, take back 11 keepsakes from the kobolds and Kriegval's Helm, then defeat Tomb-Raider Drywhisker." },
         ["Dagran's Day Out"] = { t = "Talk to Dagran, collect 10 suspicious candles and the Gigantic Candle, beat the kobold swarm and two guardians, then Drywhisker." },
@@ -1239,7 +1435,11 @@ G[40526] = {
     },
 }
 G[40527] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["Kidnapped Earthen"] = { t = "Talk to Foreman Pivk for the Webbed Hookshot, push the cart on, rescue 5 miners and beat the ambushes, then defeat Web General Ab'enar." },
         ["Fiery Grounds"] = { t = "Take the Holy Flamethrower Torch from Lamplighter Rathling, burn the webs, rescue 9 lamplighters, then defeat Web General Ab'enar." },
@@ -1249,7 +1449,11 @@ G[40527] = {
     },
 }
 G[40528] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["Captured Engineers"] = { t = "Get the Air Totem from Foreman Bruknar, rescue 5 workers from the kobolds, then defeat Waxface." },
         ["Stomping Some Sense"] = { t = "Use the Stomping Shoes to restart the Air Purifier, stomp slain kobolds for 50 Lost Gear, then defeat Waxface." },
@@ -1258,7 +1462,11 @@ G[40528] = {
     },
 }
 G[40529] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["Lost Gems"] = { t = "Recover the memory gems for Vant, kill 3 Gem Hoarders using the Magnetic Burst, then defeat Under-Lord Vik'tis. A puzzle in the middle counts for the puzzle achievements." },
         ["Kobold Kidnapping"] = { t = "Free Skurro and Luch, get tossed across the chasm, cut 10 kobolds out of cocoons, then defeat Under-Lord Vik'tis." },
@@ -1267,7 +1475,11 @@ G[40529] = {
     },
 }
 G[40530] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["Dark Ritual"] = { t = "Destroy 11 Darkfire Braziers, then defeat Speaker Halven." },
         ["Signal Noise"] = { t = "Take the Signal Flare, rescue 5 captives and recover 7 stolen relics, then slay Speaker Davenruth." },
@@ -1276,7 +1488,11 @@ G[40530] = {
     },
 }
 G[40531] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["Missing Pigs"] = { t = "Talk to Aliya Hillhelm, save 10 pigs, then defeat Bogpiper." },
         ["Mushroom Morsel"] = { t = "Defeat Bogpiper and take the mushroom from its head, help Alekk collect 5 fuel glyphs and beat 4 bad guys, then talk to his final form." },
@@ -1284,7 +1500,11 @@ G[40531] = {
     },
 }
 G[40532] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["Illusory Rescue"] = { t = "Rescue 8 Arathi captives and destroy 12 illusory clones, then defeat Mirror Master Murkna." },
         ["Lurking Terror"] = { t = "Push in, slay 5 Leviathan Manipulators and destroy 7 Leviathan Bait, then defeat the Leviathan Caller." },
@@ -1293,7 +1513,11 @@ G[40532] = {
     },
 }
 G[40533] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["Old Rituals"] = { t = "Talk to Lamplighter Havrik Chayvn, kill the 3 Nerubian Ritualists and the Faceless Devotees, then defeat Nerl'athekk the Skulking." },
         ["Shadow Realm"] = { t = "Enter the void portal, recover the Light's Mantle, destroy 5 Shadow Totems, then defeat Nerl'athekk." },
@@ -1302,7 +1526,11 @@ G[40533] = {
     },
 }
 G[40534] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["Torture Victims"] = { t = "Clear the 3 groups at the entrance, rescue 13 prisoners, then defeat Researcher Ven'kex." },
         ["Evolved Research"] = { t = "Confront the researcher, kill the Failed Ascended and 3 waves, chase him through the barrier field, then slay Researcher Xik'vik." },
@@ -1312,7 +1540,11 @@ G[40534] = {
     },
 }
 G[40535] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["Goblin Mischief"] = { t = "Collect 6 repair kits to fix the Kobyss Killer mech, smash the kobyss horde in it, then defeat the Undersea Abomination." },
         ["Pheromone Fury"] = { t = "Destroy every pheromone crate, then defeat the Undersea Abomination." },
@@ -1321,7 +1553,11 @@ G[40535] = {
     },
 }
 G[40536] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["Tortured Hostages"] = { t = "Kill 6 nerubian groups and free 7 webbed hostages, then defeat Overseer Kaskel." },
         ["Strange Disturbances"] = { t = "Slay the Peculiar Nerubian, clear the treasure room's swarm, rescue 8 puppets, then defeat the Puppetmaster." },
@@ -1330,7 +1566,11 @@ G[40536] = {
     },
 }
 G[41098] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["Lost Excavators"] = { t = "Wake Assessor McGravy, kill monsters and rescue the missing goblins, then defeat Xel'anegh the Many." },
         ["Rowdy Rifts"] = { t = "Close 7 Dark Tears by killing Old God forces, then defeat Harbinger Ul'thul." },
@@ -1338,7 +1578,11 @@ G[41098] = {
     },
 }
 G[41099] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["All That Glitters"] = { t = "Destroy 4 enchanted gold piles and slay 7 Golden Shamans, then weaken and slay the Gold Elemental." },
         ["Teleporter Tantrums"] = { t = "Disrupt the Darkfuse and recover the Remote Teleporter, then slay Dr. Clavus Geargrave." },
@@ -1346,7 +1590,11 @@ G[41099] = {
     },
 }
 G[42771] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    steps = {
+        { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+        { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+        { t = "Come back on other days for the other stories; they change daily." },
+    },
     crit = {
         ["Relic Retrieval"] = { t = "Talk to Vaultwarden Falnor and recover the artifacts (named ones give buffs), then defeat Captain Nil'hitan." },
         ["Smash and Jab"] = { t = "Talk to Vaultwarden Gandrus, smash energy coils and barrels, then slay 3 Ethereal Commanders." },
@@ -1460,6 +1708,459 @@ G[42740] = {
         { t = "The Tempest Fields: the open storm plains; if it's the last one left, sweep the fogged part of the map." },
     },
     tips = { "Vanquisher's Wake is the one players miss: fly up to the island at the top edge of the map." },
+}
+
+------------------------------------------------------------------------
+-- Professions and fishing
+------------------------------------------------------------------------
+
+local profSkill = {
+    steps = {
+        { t = "Learn the profession from its trainer in Dornogal." },
+        { t = "Craft every new recipe once: first crafts give the most skill. Gatherers: gather nodes all over Khaz Algar." },
+        { t = "Do the weekly profession quests in Dornogal each week for extra skill and knowledge." },
+        { t = "Spend knowledge points in the specialisations as they come in; repeat until Khaz Algar skill is maxed." },
+    },
+}
+G[19409] = profSkill
+G[19515] = {
+    steps = profSkill.steps,
+    tips = { "Quickest to max in one go with gold: Enchanting, Inscription, Jewelcrafting, Alchemy and any gathering profession. Engineering needs a daily craft for a while." },
+}
+G[19410] = {
+    steps = profSkill.steps,
+    tips = { "Every primary profession: plan it over several characters, levelling one profession on each and switching." },
+}
+G[19415] = {
+    steps = {
+        { t = "Learn Khaz Algar Fishing from the fishing trainer in Dornogal." },
+        { t = "Fish anywhere in Khaz Algar (pools give more) until your Khaz Algar fishing skill is maxed." },
+    },
+    tips = { "Undermine's green canals are a good spot: they also give the catch that buys three fishing toys." },
+}
+local cauldron = function(kind)
+    return {
+        steps = {
+            { t = "Learn every listed " .. kind .. " recipe (trainer, vendors and specialisation unlocks)." },
+            { t = "Then learn the Algari " .. (kind == "flask" and "Flask" or "Potion") .. " Cauldron." },
+            { t = "If the achievement doesn't pop, log out and back in." },
+        },
+    }
+end
+G[19704] = cauldron("flask")
+G[19716] = cauldron("potion")
+local thread = function(name)
+    return {
+        steps = {
+            { t = "Attach an Algari Weaverline to your fishing pole first (the Aqirite Fisherfriend is the best pole for it)." },
+            { t = "Then attach each " .. name .. " you collect to the same pole." },
+        },
+        tips = { "The threads count per character, so stay on one fisher." },
+    }
+end
+for _, id in ipairs({ 40476, 40480, 40488, 40492 }) do G[id] = thread("Algari Seekerthread") end
+for _, id in ipairs({ 40494, 40496, 40498, 40500, 40501, 40502, 40503 }) do G[id] = thread("Algari Anglerthread") end
+
+------------------------------------------------------------------------
+-- Story metas
+------------------------------------------------------------------------
+
+G[20596] = {
+    steps = {
+        { t = "Open each Khaz Algar zone page in the book; its Storyline section lists the zone's quest achievement." },
+        { t = "Follow the storylines there: the arrow takes you to each next quest." },
+        { t = "When every zone's quest achievement is done, this one completes." },
+    },
+}
+G[20597] = {
+    steps = {
+        { t = "Start the War Within campaign in Dornogal and play it chapter by chapter." },
+        { t = "Later patches added chapters; expand the achievement to see which are still open and follow them." },
+    },
+}
+G[20595] = {
+    steps = {
+        { t = "Do each optional Isle of Dorn storyline (expand the achievement; each row leads to its first quest)." },
+        { t = "Brotherhood in the Skolzgal Wood unlocks after the main campaign, from Peacekeeper Lief in Dornogal." },
+    },
+    tips = { "They can be done before max level and give Council of Dornogal reputation once per warband." },
+}
+G[40636] = {
+    steps = {
+        { t = "Finish the Azj-Kahet campaign on the character doing these; some need it." },
+        { t = "Do each optional Azj-Kahet storyline (expand the achievement; each row leads to its first quest)." },
+    },
+}
+G[40725] = {
+    steps = {
+        { t = "Reach level 80." },
+        { t = "Finish the main Khaz Algar story campaign; it counts for your whole warband." },
+    },
+}
+
+------------------------------------------------------------------------
+-- Mythic dungeons by role
+------------------------------------------------------------------------
+
+local function roleRun(role)
+    return {
+        steps = {
+            { t = "Join a Mythic or Mythic Keystone run of each War Within dungeon." },
+            { t = "Be in your " .. role .. " role when the final boss dies. Only that kill counts, so you can switch spec just before it." },
+            { t = "Expand the achievement to see which dungeons are still open." },
+        },
+    }
+end
+G[40139] = roleRun("tank")
+G[40140] = roleRun("healer")
+G[40141] = roleRun("damage dealer")
+G[40138] = {
+    steps = {
+        { t = "Finish the three role achievements: every War Within dungeon on Mythic as tank, as healer and as damage dealer." },
+        { t = "Only the final boss counts, so one run can serve a role you switch into before the last boss." },
+    },
+}
+
+------------------------------------------------------------------------
+-- Pet battles
+------------------------------------------------------------------------
+
+G[40153] = {
+    steps = {
+        { t = "Expand the achievement: each tamer has a spot. Their world quests rotate." },
+        { t = "Beat each tamer once. You can fight a tamer whenever they are up, even after their world quest." },
+    },
+}
+local family = function(kind, hint)
+    return {
+        steps = {
+            { t = "Level a team of three " .. kind .. " pets to 25." },
+            { t = "Fight each listed tamer with only " .. kind .. " pets; tamers can be fought again whenever they're up." },
+        },
+        tips = hint and { hint } or nil,
+    }
+end
+G[40154] = { steps = { { t = "Earn each family achievement below: beat all the Khaz Algar tamers with a team of one family each time." } } }
+G[40161] = family("flying", "Credit for one family can arrive late, together with the next family's win.")
+G[40162] = family("humanoid", "If credit doesn't come, finish another family's win; both may be granted together.")
+G[40163] = family("magic", "Magic pets with aquatic attacks make the aquatic tamer easy; fast pets with a blind combo handle the critter tamer.")
+G[40164] = family("mechanical", "Mechanical frogs with Supercharge and water attacks carry most fights; the elemental tamer is the hardest.")
+G[40165] = family("undead", "A strong dragon-breath undead pet and a spider with webs and swarms do well; heal on cooldown.")
+G[41542] = family("aquatic", "The tamer whose parrot turns into a robot is the toughest; open with a frog that can kiss and water-jet.")
+G[41548] = family("magic", "If a win doesn't count, log out and in, or try on another character.")
+G[41543] = family("beast")
+G[41546] = family("flying")
+G[40194] = {
+    steps = {
+        { t = "Turn on Track Pets on the minimap." },
+        { t = "Expand the achievement and catch each pet at its spot (rare quality is best)." },
+        { t = "For the two oozelings, go to the Maddening Deep in south-east Azj-Kahet and build about 20 stacks of Unseeming Shift first; only then do they show." },
+    },
+    tips = { "Four rare backline-only pets roam the zones; they are not needed." },
+}
+
+------------------------------------------------------------------------
+-- Worldsoul Memories and Keyflames (more)
+------------------------------------------------------------------------
+
+G[40252] = {
+    steps = {
+        { t = "Worldsoul Memories rotate between the places listed; expand the achievement to see which are left (each row has its spot)." },
+        { t = "When one of yours is up, join it and kill the big enemy that appears near the end." },
+    },
+}
+G[40314] = {
+    steps = {
+        { t = "Get Echoing Fragments: from Worldsoul Memories, from the lowest-tier ones, or from the Auction House." },
+        { t = "Shatter one in each Khaz Algar zone." },
+    },
+}
+G[40312] = {
+    steps = {
+        { t = "Collect Radiant Remnants; anything in Hallowfall can drop them." },
+        { t = "Hand 10 to any Keyflames in Hallowfall (lesser or large)." },
+    },
+}
+G[40313] = { steps = { { t = "Keep handing Radiant Remnants to Hallowfall Keyflames until you've given 100." } } }
+
+------------------------------------------------------------------------
+-- Glyphs
+------------------------------------------------------------------------
+
+G[40166] = {
+    steps = {
+        { t = "Expand the achievement: each glyph has its spot." },
+        { t = "Fly to each and touch it on your skyriding mount." },
+    },
+}
+G[40702] = {
+    steps = {
+        { t = "Finish each zone's Glyph Hunter achievement; each lists its glyphs with places." },
+        { t = "The Khaz Algar Glyph Hunter reward is a skyriding mount." },
+    },
+}
+
+------------------------------------------------------------------------
+-- Lists with spots
+------------------------------------------------------------------------
+
+G[40475] = {
+    steps = {
+        { t = "Expand the achievement: every critter has its spot." },
+        { t = "At each one, target the critter and type /love." },
+    },
+    tips = { "Several live in the same caves; the Oozeling sits at a cave entrance." },
+}
+G[40473] = {
+    steps = {
+        { t = "Expand the achievement: each of the six consoles has its spot." },
+        { t = "Click each broken console to fix it." },
+    },
+}
+G[40622] = {
+    steps = {
+        { t = "Expand the achievement: each of the eleven books has its spot." },
+        { t = "Click each book to read it; the arrow moves on to the next one." },
+    },
+}
+G[40624] = {
+    steps = {
+        { t = "Expand the achievement: the rats with a fixed home have a spot." },
+        { t = "Target each weave-rat and /wave." },
+        { t = "The others only appear during Azj-Kahet rumor events or in particular quests; an alt can redo those quests if you missed them." },
+    },
+}
+G[40843] = {
+    steps = {
+        { t = "Fly over Azj-Kahet and destroy the nerubian mines you come across (balloon and hanging mines both count)." },
+        { t = "Keep going until 500." },
+    },
+}
+G[40840] = {
+    steps = {
+        { t = "Expand the achievement: each rare and encounter has its spot; some are in the City of Threads or the lower caves." },
+        { t = "Defeat ten of them." },
+    },
+    tips = { "Players report the Kaheti Bladeguard criterion is credited by a different enemy; if it won't tick, kill the others nearby." },
+}
+G[40851] = {
+    steps = {
+        { t = "Expand the achievement: each rare and encounter has its spot." },
+        { t = "Defeat ten of them. One patrols, so look around its marked spot." },
+    },
+}
+G[41708] = {
+    steps = {
+        { t = "Under the stands, on a dumpster.", at = { UNDERMINE, 43.59, 11.31 } },
+        { t = "One floor up, on a trash can.", at = { UNDERMINE, 28.48, 55.79 } },
+        { t = "On a railing.", at = { UNDERMINE, 35.95, 85.63 } },
+        { t = "In a burrow.", at = { UNDERMINE, 65.26, 88.26 } },
+        { t = "By a fake palm tree.", at = { UNDERMINE, 65.86, 43.95 } },
+    },
+    tips = { "Click each rat to pick it up and make friends." },
+}
+G[41589] = {
+    steps = {
+        { t = "Track the achievement: the arrow points to the nearest known can." },
+        { t = "Kick each can you reach; two always sit together in the south." },
+    },
+}
+
+------------------------------------------------------------------------
+-- Delves (more)
+------------------------------------------------------------------------
+
+local chests = {
+    steps = {
+        { t = "Enter the delve; each chest has its spot inside (the arrow leads chest to chest)." },
+        { t = "Open every Sturdy Chest you can reach in this run." },
+        { t = "Some chests only exist in particular stories: come back on other days for the rest." },
+    },
+}
+for _, id in ipairs({ 40803, 40806, 40807, 40808, 40809, 40810, 40811, 40812, 40813, 40814, 40815, 40816, 41100, 41101, 42679 }) do G[id] = chests end
+G[40506] = {
+    steps = {
+        { t = "Finish each delve's Discoveries achievement (expand this one to see them)." },
+        { t = "Each delve has four or five chests; the story on the delve entrance decides which you can get." },
+    },
+}
+G[40437] = {
+    steps = {
+        { t = "Expand the achievement: each delve is on its zone page with its entrance." },
+        { t = "Finish each once, on any tier." },
+    },
+}
+local tiers = function(tier, role)
+    return {
+        steps = {
+            { t = "Check each delve's story on the tier menu and pick an easy one." },
+            { t = "Finish every delve on Tier " .. tier .. (tier == 11 and "" or " or higher") .. " without running out of lives" .. (role and (", as a " .. role) or "") .. "." },
+            { t = "Expand the achievement to see which delves are left." },
+        },
+        tips = role and { "Only your role at the end seems to count." } or nil,
+    }
+end
+G[40447] = tiers(4)
+G[40449] = tiers(11)
+G[40448] = tiers(8)
+G[41106] = tiers(4, "damage dealer")
+G[41107] = tiers(4, "healer")
+G[41108] = tiers(4, "tank")
+G[41109] = tiers(8, "damage dealer")
+G[41110] = tiers(11, "damage dealer")
+G[41111] = tiers(8, "healer")
+G[41112] = tiers(11, "healer")
+G[41113] = tiers(8, "tank")
+G[41114] = tiers(11, "tank")
+G[40631] = { steps = { { t = "Enter any delve and choose Tier 1." }, { t = "Finish it." } } }
+G[40445] = {
+    steps = {
+        { t = "Pick a delve full of fungarians (Fungal Folly, for example) on Tier 8 or higher." },
+        { t = "Never get hit by Explosive Spores: stay away from spore clusters and let Brann pull." },
+        { t = "Finish the delve." },
+    },
+}
+G[40453] = {
+    steps = {
+        { t = "Pick a Nerubian delve on Tier 8 or higher." },
+        { t = "Avoid every web (they spawn ambushers) and every egg; move slowly through webbed corridors." },
+        { t = "Finish the delve." },
+    },
+}
+G[40454] = {
+    steps = {
+        { t = "Pick an Order of Night delve on Tier 8 or higher." },
+        { t = "Never get targeted by the artillery: keep to cover and move between barrages." },
+        { t = "Finish the delve." },
+    },
+}
+G[40524] = {
+    steps = {
+        { t = "Inside any delve, pick up its Delver's Call quest." },
+        { t = "Finish it; do this in five different delves." },
+    },
+}
+G[40523] = {
+    steps = {
+        { t = "Collect every curio for Brann; they come from delves." },
+        { t = "Upgrade them as needed; if the list shows complete but nothing pops, one curio may still need a rank." },
+    },
+}
+G[40635] = G[40523]
+G[40732] = {
+    steps = {
+        { t = "Find the delve nemesis (Zekvir): in his own delve, or when he invades a normal delve." },
+        { t = "Let him kill you." },
+    },
+}
+local vendorCosmetics = function(what, how)
+    return {
+        steps = {
+            { t = "Go to the delve vendors in Dornogal." },
+            { t = "Buy each " .. what .. " schematic (" .. how .. ") and learn it." },
+        },
+    }
+end
+G[40789] = vendorCosmetics("Delver's Dirigible", "delve currencies; some came from earlier seasons, so check which are still sold")
+G[41714] = vendorCosmetics("Gob-Trotter", "unlocked by your warband's season 2 delve journey")
+G[42678] = vendorCosmetics("Mana-Skimmer", "if Energy Thrusters won't count, learn the other thruster schematic too")
+
+------------------------------------------------------------------------
+-- Siren Isle, Undermine, K'aresh (more)
+------------------------------------------------------------------------
+
+G[41042] = {
+    steps = {
+        { t = "Each week, do the Siren Isle weekly quests; they depend on that week's invasion (vrykul, naga or pirates)." },
+        { t = "Over three weeks every invasion comes round; expand the achievement to see which quests are left." },
+    },
+}
+G[41131] = {
+    steps = {
+        { t = "Ride around Siren Isle; when wind gusts start pointing from your character, a Runed Storm Cache is near." },
+        { t = "Follow the gusts and open it. Repeat until ten." },
+    },
+    tips = { "The caches move around. A Go-Pack helps reach high ones." },
+}
+G[41629] = {
+    steps = {
+        { t = "Hand in C.H.E.T.T. lists as in C.H.E.T.T. a Look: one free list a week plus lists bought with cards." },
+        { t = "Keep going to 100 lists (or earn Employee of the Month)." },
+    },
+}
+G[41591] = { steps = { { t = "Do S.C.R.A.P. jobs as in No Littering until you have 25; the active site rotates." } } }
+G[41592] = { steps = { { t = "Do S.C.R.A.P. jobs until you have 50." } } }
+G[41214] = {
+    steps = {
+        { t = "If you're on a Shipping and Handling contract, clock out in your car; the memories don't show otherwise." },
+        { t = "Join each of Undermine's two Worldsoul Memories when it's up and kill the final enemy." },
+    },
+}
+G[41350] = {
+    steps = {
+        { t = "Do Undermine's weeklies, S.C.R.A.P. jobs and chests for Darkfuse Solutions reputation." },
+        { t = "Use any reputation bonus you can; it's a long grind to Exalted." },
+    },
+}
+G[41351] = {
+    steps = {
+        { t = "Each week choose one cartel; it gains the most reputation." },
+        { t = "Rotate the choice so all four reach Revered." },
+    },
+}
+G[41352] = {
+    steps = {
+        { t = "Keep rotating your weekly cartel choice." },
+        { t = "Continue until all four cartels are Exalted." },
+    },
+}
+G[41169] = {
+    steps = {
+        { t = "Raise the Council of Dornogal, the Assembly of the Deeps, the Hallowfall Arathi and the Severed Threads to max renown." },
+        { t = "World quests, weeklies and zone events of each give renown; it's shared by your warband." },
+    },
+}
+local azjRep = function(who)
+    return {
+        steps = {
+            { t = "Choose " .. who .. "'s pact in the Weaver's Lair; it speeds up their reputation." },
+            { t = "Do Azj-Kahet world quests and weeklies until " .. who .. " is at max rank." },
+        },
+    }
+end
+G[40874] = azjRep("the Weaver")
+G[40875] = azjRep("the General")
+G[40876] = azjRep("the Vizier")
+G[41809] = {
+    steps = {
+        { t = "Unlock the Oasis repeatable quests through the Oasis campaign." },
+        { t = "Do one repeatable quest for each species. They rotate with the weekly and mid-week resets, so each is up for only a few days." },
+    },
+}
+G[41811] = {
+    steps = {
+        { t = "Follow the Oasis campaign and do the species' repeatable quests." },
+        { t = "Keep going until every species is fully integrated (expand the achievement)." },
+    },
+    tips = { "If a species was maxed before a hotfix, do one more of its quests to get credit." },
+}
+G[41209] = {
+    steps = {
+        { t = "Pick four Battle for Azeroth appearance achievements from the list." },
+        { t = "The quickest: a season's PvP honor set, and raid sets from solo Raid Finder wings." },
+    },
+}
+G[40507] = {
+    steps = {
+        { t = "Wait for the climbing world quest (it isn't up every week)." },
+        { t = "Climb the handholds in an order that reaches all seven crystals. Slippery rocks make you fall, and some rocks are dead ends: plan the route before you start." },
+    },
+}
+G[40430] = {
+    steps = {
+        { t = "Expand the achievement: each missing flight master is listed, and the arrow points at the nearest." },
+        { t = "Talk to each once; the discovery counts for your whole warband." },
+    },
 }
 
 ------------------------------------------------------------------------

@@ -266,6 +266,20 @@ function ns.GroupNote(it)
     return ns.GROUP_NOTES and ns.GROUP_NOTES[it.group]
 end
 
+-- Splits a guide's steps: a process (any step with a place, quest or item, or one that doesn't start by
+-- pointing at the achievement's own list) is followed with the arrow (ns.ACH_STEPS); a list achievement's
+-- explanation is only read in the tooltip (ns.ACH_READ), so its criteria rows keep guiding the arrow.
+function ns.SetGuideSteps(id, steps)
+    ns.ACH_READ = ns.ACH_READ or {}
+    local follow = false
+    for _, st in ipairs(steps) do
+        if st.at or st.quest or st.item then follow = true; break end
+    end
+    if not follow and not (steps[1] and steps[1].t and steps[1].t:find("^Expand the achievement")) then follow = true end
+    if follow then ns.ACH_STEPS[id], ns.ACH_READ[id] = steps, nil
+    else ns.ACH_READ[id], ns.ACH_STEPS[id] = steps, nil end
+end
+
 -- A note as a list of short points: a table is used as written, a string is split at its sentences
 -- (a full stop, ! or ? followed by a space and a capital letter).
 function ns.NotePoints(note)
@@ -285,13 +299,13 @@ end
 -- Adds an achievement's guide to a tooltip: the numbered steps (done ones greyed when `it` is given),
 -- then the notes and the group's note as bullet points.
 function ns.AddGuide(tooltip, id, it, groupNote)
-    local steps = ns.ACH_STEPS and ns.ACH_STEPS[id]
+    local steps = (ns.ACH_STEPS and ns.ACH_STEPS[id]) or (ns.ACH_READ and ns.ACH_READ[id])
     local note = ns.ACH_NOTES and ns.ACH_NOTES[id]
     if not (steps or note or groupNote) then return end
     tooltip:AddLine(" ")
     if steps then
         tooltip:AddLine("Step by step", 1, 0.82, 0.3)
-        if it then AttachAchSteps(it) end
+        if it and ns.ACH_STEPS and ns.ACH_STEPS[id] then AttachAchSteps(it) end
         for i, st in ipairs(steps) do
             local done = it and it.steps and ns.StepDone(it, i)
             local c = done and 0.5 or 0.95
@@ -520,6 +534,58 @@ function ns.ItemDistance(it)
     return d
 end
 
+-- Where an achievement points without a step of its own: the nearest open criterion or part, a single
+-- glyph's spot, its whole-achievement spot, or its delve. Fills and returns t.
+function ns.ResolveAchParts(it, t)
+    -- the nearest open criterion; spot tables can be shared between rows, so the text comes from the row
+    local pinst, pwx, pwy = ns.PlayerWorld()
+    local best, bestD, bestSpot, bestText
+    it.resolving = true   -- a meta achievement asks its parts; this stops a loop if two ever point at each other
+    for _, row in ipairs(ns.Children(it)) do
+        local spot, text
+        if row.step then
+            -- walkthrough steps are not places to go here
+        elseif not row.done and row.spot then
+            spot, text = row.spot, row.how or row.note or row.name
+        elseif not row.done and row.item and not row.item.done and not row.item.resolving then
+            local r = ns.Resolve(row.item)
+            if r.spot then spot, text = r.spot, (row.item.liveName or row.item.name or "") .. ": " .. (r.text or "") end
+        end
+        if spot then
+            local d = pinst and Distance(spot, pinst, pwx, pwy)
+            if not best or (d and (not bestD or d < bestD)) then best, bestD, bestSpot, bestText = row, d, spot, text end
+        end
+    end
+    it.resolving = nil
+    if best then t.spot = bestSpot; t.text = bestText; return t end
+    -- single-glyph achievements ("Skyriding Glyphs: Brightwing Estate"): use the Glyph Hunter spot of that name
+    local a = ns.Ach(it.id)
+    local glyph = a and a.name and a.name:match("^Sky%a+ Glyphs?:%s*(.+)$")   -- also "Skydiving Glyphs", "Skyriding Glyph"
+    if glyph then
+        local want = ns.norm(glyph)
+        for _, p in ipairs(ns.POINTS) do
+            if p.k == "achv" and p.n and ns.norm(p.n) == want and p.x then
+                t.spot, t.text = { map = p.m, x = p.x, y = p.y }, "Fly through the skyriding glyph" .. (p.note and (" - " .. p.note) or "")
+                return t
+            end
+        end
+    end
+    -- the whole achievement happens in one place (ns.ACH_SPOTS in Data/Notes.lua)
+    local where = ns.ACH_SPOTS and ns.ACH_SPOTS[it.id]
+    if where then
+        local spots = {}
+        for _, at in ipairs(where.at) do spots[#spots + 1] = { map = at[1], x = at[2], y = at[3] } end
+        t.spot, t.text = Nearest(spots) or spots[1], where.t
+        return t
+    end
+    -- an achievement of a delve or dungeon (Discoveries and the like): its delve's next chest or entrance
+    if it.parent and it.parent.kind == "container" then
+        local r = ns.Resolve(it.parent)
+        t.spot, t.text = r.spot, r.text
+    end
+    return t
+end
+
 -- Returns { spot, title, text, step, stepCount } for an item, or for one of its child rows. spot is nil when
 -- there is nowhere to point; an unknown childKey falls back to the whole item.
 function ns.Resolve(it, childKey)
@@ -553,9 +619,16 @@ function ns.Resolve(it, childKey)
     if it.kind == "ach" and it.steps and not it.done then
         local i = ns.CurrentStep(it)
         local st = it.steps[i]
-        t.step, t.text, t.stepCount = i, st.text, #it.steps
-        t.spot = st.x and { map = st.map, x = st.x, y = st.y }
-        return t
+        if st.x then
+            t.step, t.text, t.stepCount = i, st.text, #it.steps
+            t.spot = { map = st.map, x = st.x, y = st.y }
+            return t
+        end
+        -- a step with no place of its own: the step says what to do, the nearest open part says where
+        local r = ns.ResolveAchParts(it, { title = t.title })
+        r.step, r.stepCount = i, #it.steps
+        r.text = st.text .. ((r.spot and r.text and r.text ~= "") and ("  |cffaaaaaa(" .. r.text .. ")|r") or "")
+        return r
     end
     if it.kind == "point" then
         if it.steps and not it.done then
@@ -603,53 +676,7 @@ function ns.Resolve(it, childKey)
         end
         return t
     end
-    if it.kind == "ach" then
-        -- the nearest open criterion; spot tables can be shared between rows, so the text comes from the row
-        local pinst, pwx, pwy = ns.PlayerWorld()
-        local best, bestD, bestSpot, bestText
-        it.resolving = true   -- a meta achievement asks its parts; this stops a loop if two ever point at each other
-        for _, row in ipairs(ns.Children(it)) do
-            local spot, text
-            if not row.done and row.spot then
-                spot, text = row.spot, row.how or row.note or row.name
-            elseif not row.done and row.item and not row.item.done and not row.item.resolving then
-                local r = ns.Resolve(row.item)
-                if r.spot then spot, text = r.spot, (row.item.liveName or row.item.name or "") .. ": " .. (r.text or "") end
-            end
-            if spot then
-                local d = pinst and Distance(spot, pinst, pwx, pwy)
-                if not best or (d and (not bestD or d < bestD)) then best, bestD, bestSpot, bestText = row, d, spot, text end
-            end
-        end
-        it.resolving = nil
-        if best then t.spot = bestSpot; t.text = bestText; return t end
-        -- single-glyph achievements ("Skyriding Glyphs: Brightwing Estate"): use the Glyph Hunter spot of that name
-        local a = ns.Ach(it.id)
-        local glyph = a and a.name and a.name:match("^Sky%a+ Glyphs?:%s*(.+)$")   -- also "Skydiving Glyphs", "Skyriding Glyph"
-        if glyph then
-            local want = ns.norm(glyph)
-            for _, p in ipairs(ns.POINTS) do
-                if p.k == "achv" and p.n and ns.norm(p.n) == want and p.x then
-                    t.spot, t.text = { map = p.m, x = p.x, y = p.y }, "Fly through the skyriding glyph" .. (p.note and (" - " .. p.note) or "")
-                    return t
-                end
-            end
-        end
-        -- the whole achievement happens in one place (ns.ACH_SPOTS in Data/Notes.lua)
-        local where = ns.ACH_SPOTS and ns.ACH_SPOTS[it.id]
-        if where then
-            local spots = {}
-            for _, at in ipairs(where.at) do spots[#spots + 1] = { map = at[1], x = at[2], y = at[3] } end
-            t.spot, t.text = Nearest(spots) or spots[1], where.t
-            return t
-        end
-        -- an achievement of a delve or dungeon (Discoveries and the like): its delve's next chest or entrance
-        if it.parent and it.parent.kind == "container" then
-            local r = ns.Resolve(it.parent)
-            t.spot, t.text = r.spot, r.text
-        end
-        return t
-    end
+    if it.kind == "ach" then return ns.ResolveAchParts(it, t) end
     if it.kind == "collect" then
         t.spot = Nearest(it.spots or {})
         t.text = it.sourceText
@@ -1060,4 +1087,11 @@ function ns.RestorePos(frame, key, dPoint, dx, dy)
     else
         frame:SetPoint(dPoint, UIParent, dPoint, dx, dy)
     end
+end
+
+-- The data files load before this one: sort every guide into followed steps or read-only explanation.
+do
+    local ids = {}
+    for id in pairs(ns.ACH_STEPS or {}) do ids[#ids + 1] = id end
+    for _, id in ipairs(ids) do ns.SetGuideSteps(id, ns.ACH_STEPS[id]) end
 end

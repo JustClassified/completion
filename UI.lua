@@ -1448,7 +1448,7 @@ local function FillRow(r, ln)
         end
         -- a small book marks achievements that have a walkthrough or notes
         local aid = it.id or it.ach
-        if (it.kind == "ach" or it.kind == "lore") and aid and ((ns.ACH_STEPS and ns.ACH_STEPS[aid]) or (ns.ACH_NOTES and ns.ACH_NOTES[aid])
+        if (it.kind == "ach" or it.kind == "lore") and aid and ((ns.ACH_STEPS and ns.ACH_STEPS[aid]) or (ns.ACH_READ and ns.ACH_READ[aid]) or (ns.ACH_NOTES and ns.ACH_NOTES[aid])
             or (ns.CRIT_NOTES and ns.CRIT_NOTES[aid])) then
             name = name .. " |TInterface\\Icons\\INV_Misc_Book_09:12:12:2:0|t"
         end

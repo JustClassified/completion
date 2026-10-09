@@ -13,7 +13,7 @@ function ns.AuditList(z)
     local function check(it)
         if it.kind ~= "ach" or it.done or it.hidden then return end
         local id = it.id
-        if (ns.ACH_NOTES and ns.ACH_NOTES[id]) or (ns.ACH_STEPS and ns.ACH_STEPS[id]) or (ns.ACH_SPOTS and ns.ACH_SPOTS[id]) then return end
+        if (ns.ACH_NOTES and ns.ACH_NOTES[id]) or (ns.ACH_STEPS and ns.ACH_STEPS[id]) or (ns.ACH_READ and ns.ACH_READ[id]) or (ns.ACH_SPOTS and ns.ACH_SPOTS[id]) then return end
         for _, row in ipairs(ns.Children(it)) do if row.spot or row.how or row.note or row.item then return end end
         if ns.Resolve(it).spot then return end
         bare[#bare + 1] = string.format("%s (%d)", it.liveName or it.name or "?", id)
