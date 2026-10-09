@@ -28,6 +28,7 @@ Data\Sources.lua
 Data\Walkthroughs.lua
 Data\Notes.lua
 Data\Guides.lua
+Data\AutoGuides.lua
 Data\TWW\Notes.lua
 Data\TWW\Guides.lua
 Data\TWW\AutoGuides.lua
