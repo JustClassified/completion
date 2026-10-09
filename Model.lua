@@ -891,48 +891,57 @@ local function RewardOutOfScope(itemID)
     return ns.IsHard(ds.t and ds.t:match("achievement (.+)$"))
 end
 
--- Midnight mounts, pets and toys from Data/Collections.lua that no zone source claimed yet. Each goes
--- to the zone its journal source names, else where it is sold or drops, else the Midnight page.
+-- Each expansion's mounts, pets and toys (Data/Collections.lua, Data/TWW/Collections.lua) that no zone source
+-- claimed yet. Each goes to the zone its journal source names, else where it is sold or drops, else its
+-- expansion's overview page.
 local function BuildJournalCollect(midnight)
     local mySide = UnitFactionGroup and UnitFactionGroup("player")
-    -- extraKey is the same collectible under another key (a mount by mount ID)
-    local function add(zone, key, extraKey, it)
-        if collectSeen[key] or (extraKey and collectSeen[extraKey]) then return end
-        if RewardOutOfScope(it.itemID) then return end
-        if extraKey then collectSeen[extraKey] = true end
-        AddCollect(zone or VendorZone(VendorsFor(it.itemID)) or SourceZone(it.itemID) or midnight, key, it)
-    end
-    if C_MountJournal and C_MountJournal.GetMountFromItem then
-        for _, itemID in ipairs(ns.MIDNIGHT_MOUNT_ITEMS or {}) do
-            local ok, mid = pcall(C_MountJournal.GetMountFromItem, itemID)
-            if ok and mid then
-                local r = { pcall(C_MountJournal.GetMountInfoByID, mid) }
-                local name, factionSpecific, faction, hide = r[2], r[9], r[10], r[11]
-                local wrongSide = factionSpecific and mySide and ((faction == 0 and mySide ~= "Horde") or (faction == 1 and mySide ~= "Alliance"))
-                if r[1] and name and not hide and not wrongSide then
-                    local okx, _, _, source = pcall(C_MountJournal.GetMountInfoExtraByID, mid)
-                    local text, zone, excluded, inst = SourceInfo(okx and source)
-                    if not excluded then
-                        add(zone, "i" .. itemID, "m" .. mid, { itemID = itemID, flag = "m", sourceText = text,
-                                                              spots = inst and { unpack(inst.spots) }, instance = inst })
+    local sets = { { exp = "midnight", name = "Midnight", mounts = ns.MIDNIGHT_MOUNT_ITEMS, pets = ns.MIDNIGHT_PET_ITEMS,
+                     toys = ns.MIDNIGHT_TOY_ITEMS } }
+    for _, set in ipairs(ns.COLLECT_SETS or {}) do sets[#sets + 1] = set end
+    for _, set in ipairs(sets) do
+        local home = ns.overviews[set.exp] or midnight
+        -- extraKey is the same collectible under another key (a mount by mount ID)
+        local function add(zone, key, extraKey, it)
+            if collectSeen[key] or (extraKey and collectSeen[extraKey]) then return end
+            if RewardOutOfScope(it.itemID) then return end
+            if extraKey then collectSeen[extraKey] = true end
+            -- a zone of another expansion named in the source text doesn't count: stay in this expansion
+            if zone and zone.exp ~= set.exp then zone = nil end
+            AddCollect(zone or VendorZone(VendorsFor(it.itemID)) or SourceZone(it.itemID) or home, key, it)
+        end
+        if C_MountJournal and C_MountJournal.GetMountFromItem then
+            for _, itemID in ipairs(set.mounts or {}) do
+                local ok, mid = pcall(C_MountJournal.GetMountFromItem, itemID)
+                if ok and mid then
+                    local r = { pcall(C_MountJournal.GetMountInfoByID, mid) }
+                    local name, factionSpecific, faction, hide = r[2], r[9], r[10], r[11]
+                    local wrongSide = factionSpecific and mySide and ((faction == 0 and mySide ~= "Horde") or (faction == 1 and mySide ~= "Alliance"))
+                    if r[1] and name and not hide and not wrongSide then
+                        local okx, _, _, source = pcall(C_MountJournal.GetMountInfoExtraByID, mid)
+                        local text, zone, excluded, inst = SourceInfo(okx and source)
+                        if not excluded then
+                            add(zone, "i" .. itemID, "m" .. mid, { itemID = itemID, flag = "m", sourceText = text,
+                                                                  spots = inst and { unpack(inst.spots) }, instance = inst })
+                        end
                     end
                 end
             end
         end
-    end
-    if C_PetJournal and C_PetJournal.GetPetInfoByItemID then
-        for _, itemID in ipairs(ns.MIDNIGHT_PET_ITEMS or {}) do
-            local r = { pcall(C_PetJournal.GetPetInfoByItemID, itemID) }
-            if r[1] and r[2] and r[12] ~= false then
-                local text, zone, excluded, inst = SourceInfo(r[6])
-                if not excluded then
-                    add(zone, "i" .. itemID, nil, { itemID = itemID, flag = "p", sourceText = text, spots = inst and { unpack(inst.spots) }, instance = inst })
+        if C_PetJournal and C_PetJournal.GetPetInfoByItemID then
+            for _, itemID in ipairs(set.pets or {}) do
+                local r = { pcall(C_PetJournal.GetPetInfoByItemID, itemID) }
+                if r[1] and r[2] and r[12] ~= false then
+                    local text, zone, excluded, inst = SourceInfo(r[6])
+                    if not excluded then
+                        add(zone, "i" .. itemID, nil, { itemID = itemID, flag = "p", sourceText = text, spots = inst and { unpack(inst.spots) }, instance = inst })
+                    end
                 end
             end
         end
-    end
-    for _, itemID in ipairs(ns.MIDNIGHT_TOY_ITEMS or {}) do
-        add(nil, "i" .. itemID, nil, { itemID = itemID, flag = "t", sourceText = "Toy added in Midnight" })
+        for _, itemID in ipairs(set.toys or {}) do
+            add(nil, "i" .. itemID, nil, { itemID = itemID, flag = "t", sourceText = "Toy added in " .. set.name })
+        end
     end
 end
 

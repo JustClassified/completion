@@ -1897,10 +1897,10 @@ local function BuildExpansions()
     SR.text:SetWidth(PAGE_W - 60)
     SR.text:SetSpacing(4)
     SR.text:SetTextColor(CREAM[1], CREAM[2], CREAM[3])
-    SR.text:SetText("Midnight is the first expansion in the book. Every other expansion gets the same pages: "
+    SR.text:SetText("Midnight and The War Within have their books already. Every other expansion gets the same pages: "
         .. "a tab per zone with its storyline, side quests, achievements, treasures, rares, collectibles, "
         .. "dungeons, reputation and professions, the arrow guide, map pins and hover hints.\n\n"
-        .. "Until then, the Midnight bookmark on the right of this row takes you back.")
+        .. "Until then, the Midnight and TWW bookmarks along the top take you back.")
 end
 
 -- Raises the current expansion's bookmark and dims the ones without data. Returns the current expansion.
@@ -1943,7 +1943,7 @@ function ns.RefreshUI()
         end
         aboutTab:SetSelected(ns.showAbout and true or false)
         SL.title:SetText(exp.name)
-        SL.sub:SetText("Coming later. Midnight comes first; this expansion gets its own pages once its data is in.")
+        SL.sub:SetText("Coming later: this expansion gets its own pages once its data is in.")
         local lines = {}   -- the plan's bullet lines (shadows the list's lines)
         for _, p in ipairs(exp.plan or {}) do lines[#lines + 1] = "|cffc8a060*|r  " .. p end
         SL.plan:SetText(table.concat(lines, "\n"))

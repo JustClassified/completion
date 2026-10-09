@@ -22,6 +22,7 @@ Data\Lore.lua
 Data\Achievements.lua
 Data\TWW\Achievements.lua
 Data\Collections.lua
+Data\TWW\Collections.lua
 Data\Vendors.lua
 Data\Sources.lua
 Data\Walkthroughs.lua
