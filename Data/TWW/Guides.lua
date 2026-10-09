@@ -2164,6 +2164,215 @@ G[40430] = {
 }
 
 ------------------------------------------------------------------------
+-- Researched: Mereldar, Ringing Deeps plaques, nerubian books, Arathi's End
+------------------------------------------------------------------------
+
+-- Children's Entertainer: the orphans' games
+G[40150] = {
+    steps = {
+        { t = "Play the games through the campaign quest Mereldar's Light (three games) and the world quest Work Hard, Play Hard (it has the challenge versions)." },
+        { t = "Who is scariest? Talk to the three kids upstairs in the orphanage and pick an answer." },
+        { t = "Scary Monster: talk to the three kids by the climbing frame and press each of the four action buttons." },
+        { t = "Hit the Target: talk to the kids in front of the target and throw a rock at it." },
+        { t = "Tag: click one of the two running kids." },
+        { t = "Floor is Undersea: talk to the kid by the fence, walk along it, jump each gap and click the kid at the end." },
+        { t = "Hide and Seek: talk to the kid by the doorway and follow the pings to the hider." },
+        { t = "The two challenge versions (world quest only): the same games, harder. Wyllam runs around in Hide and Seek; the Floor is Undersea challenge adds barrels and a barrier." },
+    },
+    tips = {
+        "Don't start with a challenge: a challenge counts as the fourth game. Do three normal games first, then one challenge.",
+        "Progress is shared by your characters, so dropping and retaking the campaign quest gives more tries.",
+        "Teleport abilities (Demonic Circle, Transcendence, Alter Time) make the Floor is Undersea games easier.",
+    },
+}
+
+-- Mereldar Menace: throwing stones
+G[40151] = {
+    steps = {
+        { t = "Click the throwing stone by the orphanage (you can't move while using it).", at = { HALLOWFALL, 41.89, 55.52 } },
+        { t = "From there, throw at the Orphanage Window, the Fountain, the Spice Stall, the Food Stall and the Notice Board." },
+        { t = "Click the throwing stone at the training ground.", at = { HALLOWFALL, 42.26, 52.54 } },
+        { t = "Throw at the Barracks Doorway, Light and Flame, and the Lamplighter Doorway." },
+        { t = "Click the throwing stone by the Steelstrike residence.", at = { HALLOWFALL, 44.24, 51.23 } },
+        { t = "Throw at the Holy Oil and the Airship Drafting Board." },
+    },
+    tips = {
+        "If a hit doesn't count, leave the stone and use it again from another angle.",
+        "Each target has a throw target you can mark: /tar throw near it, set a raid marker, then aim at the marker.",
+    },
+    crit = {
+        ["Orphanage Window"] = { t = "From the orphanage stone", at = { { HALLOWFALL, 41.82, 55.61 } } },
+        ["Fountain"] = { t = "From the orphanage stone", at = { { HALLOWFALL, 42.33, 54.92 } } },
+        ["Spice Stall"] = { t = "From the orphanage stone", at = { { HALLOWFALL, 42.28, 54.38 } } },
+        ["Food Stall"] = { t = "From the orphanage stone", at = { { HALLOWFALL, 42.45, 54.39 } } },
+        ["Notice Board"] = { t = "From the orphanage stone", at = { { HALLOWFALL, 42.55, 55.50 } } },
+        ["Barracks Doorway"] = { t = "From the training ground stone", at = { { HALLOWFALL, 41.33, 52.97 } } },
+        ["Light and Flame"] = { t = "From the training ground stone", at = { { HALLOWFALL, 42.98, 52.69 } } },
+        ["Lamplighter Doorway"] = { t = "From the training ground stone", at = { { HALLOWFALL, 43.03, 52.36 } } },
+        ["Holy Oil"] = { t = "From the Steelstrike residence stone", at = { { HALLOWFALL, 43.51, 50.78 } } },
+        ["Airship Drafting Board"] = { t = "From the Steelstrike residence stone", at = { { HALLOWFALL, 44.68, 51.78 } } },
+    },
+}
+
+-- Rocked to Sleep: the inert earthen plaques (positions after patch 11.1)
+G[40504] = {
+    steps = {
+        { t = "Expand the achievement: each of the ten inert earthen has its spot." },
+        { t = "At each statue, find and click its plaque to read it. Look up: several stand on cliffs, rocks or pipes." },
+    },
+    tips = { "Some only become visible after their area's quests in the Ringing Deeps are done." },
+    crit = {
+        ["Hathlaz"] = { t = "Read the plaque", at = { { DEEPS, 40.20, 13.55 } } },
+        ["Venedaz"] = { t = "By the red light, behind a pipe", at = { { DEEPS, 44.42, 31.75 } } },
+        ["Uisgaz"] = { t = "Read the plaque", at = { { DEEPS, 50.89, 30.23 } } },
+        ["Attwogaz"] = { t = "Up on a high ledge", at = { { DEEPS, 58.70, 36.34 } } },
+        ["Krattdaz"] = { t = "Read the plaque", at = { { DEEPS, 38.97, 40.87 } } },
+        ["Varerko"] = { t = "Read the plaque", at = { { DEEPS, 45.22, 49.03 } } },
+        ["Sathilga"] = { t = "Read the plaque", at = { { DEEPS, 59.91, 55.76 } } },
+        ["Alfritha"] = { t = "Read the plaque", at = { { DEEPS, 44.38, 70.67 } } },
+        ["Gundrig"] = { t = "Read the plaque", at = { { DEEPS, 61.26, 83.78 } } },
+        ["Merunth"] = { t = "Read the plaque", at = { { DEEPS, 55.04, 93.71 } } },
+    },
+}
+
+-- Smelling History and Bookworm: books you can only read as a nerubian
+local translate = { t = "Buy a Potion of Polymorphic Translation: Nerubian from Siesbarg in the City of Threads. It lasts 10 minutes.", at = { THREADS, 45.5, 12.7 } }
+G[40542] = {
+    steps = {
+        translate,
+        { t = "Fly to the first book before drinking it, then drink and read each book in turn (let the cast finish)." },
+        { t = "Expand the achievement: every book and scroll has its spot; the arrow goes from one to the next." },
+    },
+    tips = { "One potion is enough for this and Bookworm together if you plan the route first." },
+    crit = {
+        ["Strands of Memory"] = { t = "Read as a nerubian", at = { { THREADS, 27.71, 54.60 } } },
+        ["Treatise on Forms: Skitterlings"] = { t = "Read as a nerubian", at = { { THREADS, 38.54, 37.74 } } },
+        ["Treatise on Forms: Sages"] = { t = "Read as a nerubian", at = { { THREADS, 38.22, 39.02 } } },
+        ["Treatise on Forms: Ascended"] = { t = "Read as a nerubian", at = { { THREADS, 77.98, 41.03 } } },
+        ["Treatise on Forms: Lords"] = { t = "Read as a nerubian", at = { { THREADS, 23.64, 51.07 } } },
+        ["Ethos of War, Part 1"] = { t = "Read as a nerubian", at = { { AZJ, 62.96, 31.17 } } },
+        ["Ethos of War, Part 2"] = { t = "Read as a nerubian", at = { { AZJ, 66.69, 31.28 } } },
+        ["Ethos of War, Part 3"] = { t = "Read as a nerubian", at = { { AZJ, 48.85, 24.00 } } },
+        ["Ethos of War, Part 4"] = { t = "Read as a nerubian", at = { { AZJ, 43.25, 25.55 } } },
+        ["Queen Anub'izek"] = { t = "Read as a nerubian", at = { { THREADS, 37.10, 32.75 } } },
+        ["Queen Xekatha"] = { t = "Read as a nerubian", at = { { THREADS, 38.26, 35.55 } } },
+        ["Queen Zaltra"] = { t = "Read as a nerubian", at = { { THREADS, 38.42, 32.27 } } },
+    },
+}
+G[40629] = {
+    steps = {
+        translate,
+        { t = "Enter the cave in Azj-Kahet and drink the potion; the three volumes lie almost in a row straight ahead.", at = { AZJ, 39.95, 39.9 } },
+        { t = "Read each volume." },
+    },
+    crit = {
+        ["Entomological Essay on Grubs, Volume 1"] = { t = "Read as a nerubian", at = { { AZJ, 40.10, 39.80 } } },
+        ["Entomological Essay on Grubs, Volume 2"] = { t = "Read as a nerubian", at = { { AZJ, 39.79, 40.50 } } },
+        ["Entomological Essay on Grubs, Volume 3"] = { t = "Read as a nerubian", at = { { AZJ, 39.10, 42.59 } } },
+    },
+}
+
+-- Back to the Wall: Arathi prisoners
+G[40620] = {
+    steps = {
+        { t = "Go to Arathi's End in north-east Azj-Kahet, ideally during the Invasion Disruption side quest (Faerin taunts the enemies there).", at = { AZJ, 64.9, 9.0 } },
+        { t = "Free the webbed Arathi prisoners; eight stand around the area and they respawn after 2-3 minutes." },
+        { t = "Keep rescuing until 50." },
+    },
+    tips = { "Several prisoners sit next to tough charging enemies; pull them away first. Progress is shared by your warband." },
+}
+
+-- Echoes of Danger: rares inside Worldsoul Memories
+G[40222] = {
+    steps = {
+        { t = "Join Worldsoul Memories on Radiant Discord difficulty." },
+        { t = "Each memory spawns rares from its own list; kill the ones you still need (expand the achievement)." },
+        { t = "Players report the achievement completes after about 20 of the listed rares." },
+    },
+}
+
+-- Notable Machines: the note fragments (positions after patch 11.1)
+G[40628] = {
+    steps = {
+        { t = "Expand the achievement: each of the six fragments has its spot." },
+        { t = "Click each fragment to read it. Fragment IV lies on a wooden frame." },
+    },
+    crit = {
+        ["Notes On The Machine Speakers: Fragment I"] = { t = "Read the note", at = { { DEEPS, 41.7, 28.8 } } },
+        ["Notes On The Machine Speakers: Fragment II"] = { t = "Read the note", at = { { DEEPS, 44.7, 25.9 } } },
+        ["Notes On The Machine Speakers: Fragment III"] = { t = "Read the note", at = { { DEEPS, 46.9, 14.5 } } },
+        ["Notes On The Machine Speakers: Fragment IV"] = { t = "On a wooden frame", at = { { DEEPS, 35.7, 21.0 } } },
+        ["Notes On The Machine Speakers: Fragment V"] = { t = "Read the note", at = { { DEEPS, 59.5, 58.8 } } },
+        ["Notes On The Machine Speakers: Fragment VI"] = { t = "Read the note", at = { { DEEPS, 60.9, 79.6 } } },
+    },
+}
+
+-- Dangerous Prowlers of K'aresh: /pet the purrkins
+G[42729] = {
+    steps = {
+        { t = "Expand the achievement: each purrkin has its spot; the arrow goes cat to cat." },
+        { t = "Target each one and type /pet (the /pet emote, not a spell)." },
+    },
+    tips = { "Little Ms. Phaser and K'aresh'ire flicker in and out every 15-20 seconds: wait for them. Empurror sits high up; The King in Silver is in untethered space." },
+    crit = {
+        ["Mar"] = { t = "In Tazavesh", at = { { TAZAVESH, 61.00, 55.52 } } },
+        ["Little Ms. Phaser"] = { t = "Phases in and out; wait for her", at = { { KARESH, 50.35, 59.20 } } },
+        ["C.T."] = { t = "Patrols the north half of the Atrium eco-dome", at = { { KARESH, 48.00, 61.50 } } },
+        ["K'aresh'ire"] = { t = "On a tree; visible for about 15 seconds at a time", at = { { KARESH, 70.24, 54.26 } } },
+        ["Empurror"] = { t = "Fly up to the top", at = { { KARESH, 73.17, 23.74 } } },
+        ["The King in Silver"] = { t = "In untethered space", at = { { KARESH, 47.61, 37.38 } } },
+    },
+}
+
+-- Can You Believe What People Throw Away?
+G[41594] = {
+    steps = {
+        { t = "Start a S.C.R.A.P. job in Undermine." },
+        { t = "Fill the bar to 500; the Gallagio Garbage rare appears the moment it's full (not when the timer ends)." },
+        { t = "Defeat it." },
+    },
+}
+
+-- Fighter of the Nightman
+G[41999] = {
+    steps = {
+        { t = "Look for Suspicious Documents (a scroll on the ground) in the Nightfall areas of Hallowfall and Azj-Kahet; clicking one summons an elite." },
+        { t = "Some of the elites also appear on their own now and then; each location has fixed spawn points." },
+        { t = "Defeat at least five of the listed elites." },
+    },
+}
+
+-- Echoes of Deeper Dangers: Undermine memories
+G[41215] = {
+    steps = {
+        { t = "Clock out of any Shipping and Handling contract; you can't enter a memory while driving one." },
+        { t = "Early Cartel Wars memory: defeat the Prototype Shredder Unit, Peet the Wheedler, Vynnie Samophlangus, Madam Colada and Mookcenary Captain Freg." },
+        { t = "Kaja'mite Contact memory: defeat Deep-King Grobrosh, Roxarix the Caveborer, Geomancer Keeri, the Massive Kaja'mental and Taskmaster Zendu." },
+    },
+    tips = { "Both on Radiant Discord difficulty." },
+}
+
+-- Visions of a Shadowed Sun and Ready for Midnight
+local finale = {
+    steps = {
+        { t = "Pick up the final War Within chapter from Arator (see the Adventure Guide's suggested content)." },
+        { t = "Play the chapter through. If the last quest of the first part doesn't show, relog on the spot and Arator offers it." },
+        { t = "Finishing it gives both achievements and the title Azeroth's Vanguard." },
+    },
+}
+G[42299] = finale
+G[61498] = finale
+
+-- Fate of the Kirin Tor
+G[40791] = {
+    steps = {
+        { t = "Expand the achievement: it lists the two storylines; each row leads to its first quest." },
+        { t = "Arcane Desolation runs from Survivor's Guilt to Somehow We Survived, eleven quests in all." },
+    },
+    tips = { "The title can take a while to show up in your titles list." },
+}
+
+------------------------------------------------------------------------
 -- Feature notes, shown on every War Within achievement of that group
 ------------------------------------------------------------------------
 
