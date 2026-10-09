@@ -387,6 +387,11 @@ G[41593] = {
 
 -- Excavation Projects
 G[41043] = {
+    crit = {
+        ["The Drowned Lair"] = { t = "Contribute at the command map", at = { { SIREN, 69.48, 43.44 } } },
+        ["Shuddering Hollow"] = { t = "Contribute at the command map", at = { { SIREN, 69.48, 43.44 } } },
+        ["The Drain"] = { t = "Contribute at the command map", at = { { SIREN, 69.48, 43.44 } } },
+    },
     steps = {
         { t = "Collect at least 15 Flame-Blessed Iron on Siren Isle." },
         { t = "At the command map in the middle of the island, contribute to each of the three excavations once.", at = { SIREN, 69.48, 43.44 } },
@@ -1056,6 +1061,32 @@ G[41050] = {
         ["Squall Sailor's Citrine"] = { t = "Drops from the Drain excavation" },
         ["Seabed Leviathan's Citrine"] = { t = "From a Siren Isle weekly quest", quest = 84850 },
         ["Legendary Skipper's Citrine"] = { t = "From a Siren Isle weekly quest", quest = 84851 },
+    },
+}
+
+-- The Missing Lynx: pet every cat in Hallowfall
+G[40625] = {
+    tips = {
+        "Expand the achievement: each cat has its spot. Some only appear while a Keyflame is lit: Nightclaw with the lesser Keyflame at 63.3, 29.4, Purrlock and Shadowpouncer once the Light's Blooming Keyflame is fully lit.",
+        "Gobbo only counts after Jinx has ambushed him: wait for it, then pet him the moment he gets up.",
+    },
+    crit = {
+        ["Fuzzy"] = { t = "With Furball", at = { { HALLOWFALL, 64.44, 18.57 } } },
+        ["Furball"] = { t = "With Fuzzy", at = { { HALLOWFALL, 64.44, 18.57 } } },
+    },
+}
+
+-- Undermine Safari: three of the pets live elsewhere
+G[41092] = {
+    tips = {
+        "Two pets live on the Kaja Coast in south-west Zuldazar (a tunnel connects it to Undermine once unlocked), two in Gutterville in the far south-east of the Ringing Deeps.",
+        "The Spring-Loaded Ribbitron only appears as a backline pet in Undermine battles.",
+        "If a pet won't show, kill the critter versions nearby; the battle version then spawns.",
+    },
+    crit = {
+        ["Kaja Crab"] = { t = "Just inside the cave on the Kaja Coast", at = { { 862, 23.69, 60.20 } } },
+        ["Tropical Frog"] = { t = "Kaja Coast", at = { { 862, 21.93, 56.09 } } },
+        ["Spring-Loaded Ribbitron"] = { t = "Only as a backline pet in Undermine battles: battle anything there until it shows up" },
     },
 }
 

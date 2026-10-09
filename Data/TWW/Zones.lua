@@ -65,7 +65,7 @@ local TWW = {
         iconAch = 42740,
         desc = "Patch 11.2: the ethereals' broken homeworld. Tazavesh counts as part of this page.",
         story = { 42299 }, side = { 42739 },
-        factions = { 2658 },                            -- The K'aresh Trust
+        factions = { 2658, 2736 },                      -- The K'aresh Trust, the Manaforge Vandals
         keywords = { "K'aresh", "Tazavesh" },
         instances = { "Eco-Dome Al'dani", "Manaforge Omega", "Archival Assault" },
     },
