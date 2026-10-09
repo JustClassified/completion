@@ -1180,6 +1180,142 @@ raid("Manaforge Omega", { 41598, 41601, 41602, 41603 })
 
 G[41587] = { tips = { "Unexplored parts of Undermine are fogged on the world map; fly low through each until its name shows on screen. Expand the achievement for what's left." } }
 
+-- Delve stories: what each story asks, on its row in the Stories achievement
+G[40525] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest.", "Also seen here but not needed: Teleporter Tremors." },
+    crit = {
+        ["Lost Miners"] = { t = "Drop into the pit and free 10 captured earthen scouts, then defeat Spinshroom." },
+        ["Explorer's Competition"] = { t = "Beat the five Explorer's League challenges (duels, fishing, a mirror test, a running pattern), then defeat Spinshroom." },
+        ["Spreading Decay"] = { t = "Help Lethnal: pick up the Dispersal Crystal, use it on 5 decaying mushrooms, then defeat Spinshroom." },
+        ["Oversparked Operation"] = { t = "Defend the gnome drill site from the Darkfuse: carry 9 batteries to power three drills, then defeat Maulspike." },
+    },
+}
+G[40526] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest.", "Also seen here but not needed: Funny Candles." },
+    crit = {
+        ["Lost Keepsakes"] = { t = "Take an Enchanted Candle, talk to Kuvkel, take back 11 keepsakes from the kobolds and Kriegval's Helm, then defeat Tomb-Raider Drywhisker." },
+        ["Dagran's Day Out"] = { t = "Talk to Dagran, collect 10 suspicious candles and the Gigantic Candle, beat the kobold swarm and two guardians, then Drywhisker." },
+        ["Swarming Kobolds"] = { t = "Take an Enchanted Candle, kill the kobold invaders, survive the ambush in the central chamber, then defeat Drywhisker." },
+        ["Corrupted Candles"] = { t = "Talk to Balga Wicksfix, defeat the Darkfuse and purify 6 candles, then defeat Torque Clankfire and Sprok." },
+    },
+}
+G[40527] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    crit = {
+        ["Kidnapped Earthen"] = { t = "Talk to Foreman Pivk for the Webbed Hookshot, push the cart on, rescue 5 miners and beat the ambushes, then defeat Web General Ab'enar." },
+        ["Fiery Grounds"] = { t = "Take the Holy Flamethrower Torch from Lamplighter Rathling, burn the webs, rescue 9 lamplighters, then defeat Web General Ab'enar." },
+        ["Precious Ores"] = { t = "Recover 7 precious ores and feed 7 weakened miners, then defeat Web General Ab'enar. Mine carts on the track hurt anyone they hit." },
+        ["Looking for Treasure"] = { t = "Ride Maklin Drillstab's mole machine: kill 3 haulers, find 8 lost treasures and dig 8 coal piles, then defeat Maklin." },
+        ["Bugs and Grubs"] = { t = "Take the Grappling-Grabber from Exterminator Janx, rescue 7 webbed goblins, squish all the grubs, then slay The Biggest Bug." },
+    },
+}
+G[40528] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    crit = {
+        ["Captured Engineers"] = { t = "Get the Air Totem from Foreman Bruknar, rescue 5 workers from the kobolds, then defeat Waxface." },
+        ["Stomping Some Sense"] = { t = "Use the Stomping Shoes to restart the Air Purifier, stomp slain kobolds for 50 Lost Gear, then defeat Waxface." },
+        ["Trust Issues"] = { t = "Get the Air Totem from Pagsly, find 4 treasure piles while defending him, then defeat Waxface." },
+        ["Put a Wrench on It!"] = { t = "Take the Fix-It Wrench from Prospera Cogwail, clear the fungarians and fix 18 leaking valves, then defeat Shroomsprew." },
+    },
+}
+G[40529] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    crit = {
+        ["Lost Gems"] = { t = "Recover the memory gems for Vant, kill 3 Gem Hoarders using the Magnetic Burst, then defeat Under-Lord Vik'tis. A puzzle in the middle counts for the puzzle achievements." },
+        ["Kobold Kidnapping"] = { t = "Free Skurro and Luch, get tossed across the chasm, cut 10 kobolds out of cocoons, then defeat Under-Lord Vik'tis." },
+        ["Smashing Skardyn"] = { t = "Rescue 5 Machine Speakers and use the Skardyn Lure, recover the repair kits, then defeat Under-Lord Vik'tis. Great for Brann experience." },
+        ["Darkfuse Disruption"] = { t = "Meet Prospera Cogwail, blow up 30 Darkfuse supplies and switch off 3 power controls, then defeat Geargrave." },
+    },
+}
+G[40530] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    crit = {
+        ["Dark Ritual"] = { t = "Destroy 11 Darkfire Braziers, then defeat Speaker Halven." },
+        ["Signal Noise"] = { t = "Take the Signal Flare, rescue 5 captives and recover 7 stolen relics, then slay Speaker Davenruth." },
+        ["Kyron's Assault"] = { t = "Talk to Great Kyron, launch across the chasm by ballista, recover the supplies, dispel 6 Shadow Barriers, then slay the cult leaders." },
+        ["Aiming to get Even"] = { t = "Meet Nimsi Loosefire, reclaim 8 stockpiles and clear the enemies (an Arathi Cannon helps), then slay Speaker Wicke and the Reformed Fury." },
+    },
+}
+G[40531] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    crit = {
+        ["Missing Pigs"] = { t = "Talk to Aliya Hillhelm, save 10 pigs, then defeat Bogpiper." },
+        ["Mushroom Morsel"] = { t = "Defeat Bogpiper and take the mushroom from its head, help Alekk collect 5 fuel glyphs and beat 4 bad guys, then talk to his final form." },
+        ["The Great Scavenger Hunt"] = { t = "For Chef Dinaire: 4 mussel crates underwater, 7 spice sacks, rescue the contestant, 4 pumpkins; bring them back, then defeat Bogpiper." },
+    },
+}
+G[40532] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    crit = {
+        ["Illusory Rescue"] = { t = "Rescue 8 Arathi captives and destroy 12 illusory clones, then defeat Mirror Master Murkna." },
+        ["Lurking Terror"] = { t = "Push in, slay 5 Leviathan Manipulators and destroy 7 Leviathan Bait, then defeat the Leviathan Caller." },
+        ["Raen's Gambit"] = { t = "Talk to Raen Dawncavalyr, kill the kobyss and recover the stolen relics, then defeat Cragpie." },
+        ["Orphan's Holiday"] = { t = "Talk to Alyza Bowblaze, collect her diving gear, clear the kobyss, then defeat Cragpie and recover her stewpot." },
+    },
+}
+G[40533] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    crit = {
+        ["Old Rituals"] = { t = "Talk to Lamplighter Havrik Chayvn, kill the 3 Nerubian Ritualists and the Faceless Devotees, then defeat Nerl'athekk the Skulking." },
+        ["Shadow Realm"] = { t = "Enter the void portal, recover the Light's Mantle, destroy 5 Shadow Totems, then defeat Nerl'athekk." },
+        ["Renilash Beckons"] = { t = "Confront Speaker Xanventh, beat 3 ambushes, chase him, repel the Order of Night, then defeat him." },
+        ["Relics of the Old Gods"] = { t = "Talk to Lamplighter Kaerter, clear the threats and seal 12 Dark-Tainted Relics, then defeat Nerl'athekk." },
+    },
+}
+G[40534] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    crit = {
+        ["Torture Victims"] = { t = "Clear the 3 groups at the entrance, rescue 13 prisoners, then defeat Researcher Ven'kex." },
+        ["Evolved Research"] = { t = "Confront the researcher, kill the Failed Ascended and 3 waves, chase him through the barrier field, then slay Researcher Xik'vik." },
+        ["Third Party Operation"] = { t = "Talk to Madam Goya, fill the Black Blood Collector, then defeat Torque Clankfire and Sprok." },
+        ["Weaver Rescue"] = { t = "Follow the objectives shown inside the delve, then defeat its boss." },
+        ["Runaway Evolution"] = { t = "Read the Weaver's note, use the Strange Pheromone, collect 8 Volatile Pheromones, then weaken and kill the 3 Crazed Abominations." },
+    },
+}
+G[40535] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    crit = {
+        ["Goblin Mischief"] = { t = "Collect 6 repair kits to fix the Kobyss Killer mech, smash the kobyss horde in it, then defeat the Undersea Abomination." },
+        ["Pheromone Fury"] = { t = "Destroy every pheromone crate, then defeat the Undersea Abomination." },
+        ["Niffen Napping"] = { t = "Talk to Vetiverian, rescue 5 niffen and kill 5 suspicious ones, then slay the Undersea Abomination." },
+        ["Pump the Brakes"] = { t = "Talk to Pamsy, grab the dive gear, rescue her 3 crew, freeze 8 goblin pumps with the Chillburst, then defeat Vindle Snapcrank." },
+    },
+}
+G[40536] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    crit = {
+        ["Tortured Hostages"] = { t = "Kill 6 nerubian groups and free 7 webbed hostages, then defeat Overseer Kaskel." },
+        ["Strange Disturbances"] = { t = "Slay the Peculiar Nerubian, clear the treasure room's swarm, rescue 8 puppets, then defeat the Puppetmaster." },
+        ["From the Weaver with Love"] = { t = "Read the Weaver's scroll, collect 6 explosives from nerubians, sabotage 35 supplies, then defeat Overseer Kaskel." },
+        ["Down to Size"] = { t = "Get a Web Bomb from the nerubian scout and fire the ballista, kill 12 reinforcements and recover 15 artifacts, then slay Geargrave." },
+    },
+}
+G[41098] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest.", "Also seen here but not needed: A Knightly Quest, Culinary Catastrophe." },
+    crit = {
+        ["Lost Excavators"] = { t = "Wake Assessor McGravy, kill monsters and rescue the missing goblins, then defeat Xel'anegh the Many." },
+        ["Rowdy Rifts"] = { t = "Close 7 Dark Tears by killing Old God forces, then defeat Harbinger Ul'thul." },
+        ["Black Blood Profits"] = { t = "Talk to Craggle Fritzbrains, place and defend 6 extractors while collecting Black Blood, then defeat Craggle when he turns." },
+    },
+}
+G[41099] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest.", "Also seen here but not needed: Crocolisk Reintroduction, Explosive Demolition." },
+    crit = {
+        ["All That Glitters"] = { t = "Destroy 4 enchanted gold piles and slay 7 Golden Shamans, then weaken and slay the Gold Elemental." },
+        ["Teleporter Tantrums"] = { t = "Disrupt the Darkfuse and recover the Remote Teleporter, then slay Dr. Clavus Geargrave." },
+        ["Mr. DELVER"] = { t = "Switch on Mr. DELVER to turn off the hazards, rescue 7 mechanics, then slay Vindle Snapcrank." },
+    },
+}
+G[42771] = {
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
+    crit = {
+        ["Relic Retrieval"] = { t = "Talk to Vaultwarden Falnor and recover the artifacts (named ones give buffs), then defeat Captain Nil'hitan." },
+        ["Smash and Jab"] = { t = "Talk to Vaultwarden Gandrus, smash energy coils and barrels, then slay 3 Ethereal Commanders." },
+        ["Shadowed Wings"] = { t = "Talk to Xeronia, rescue 5 Siphoned Drakes, ride her and slay 100 reinforcements, then defeat Voidrider Challnax." },
+        ["Waygate Wiles"] = { t = "Talk to Spymaster Casnegosa, recover 6 waygate parts and build the waygates, destroy 6 Field Dampeners, then defeat Portalmaster Halsan." },
+    },
+}
+
 ------------------------------------------------------------------------
 -- Feature notes, shown on every War Within achievement of that group
 ------------------------------------------------------------------------

@@ -537,4 +537,5 @@ for name, at in pairs({
     ["Tak-Rethan Abyss"] = { 2255, 54.8, 72.6 }, ["The Underkeep"] = { 2216, 57.3, 64.9 },
     ["Sidestreet Sluice"] = { 2346, 34.95, 53.14 },   -- under the ramp by the Dornogal portal
     ["Excavation Site 9"] = { 2214, 76.25, 95.85 },   -- far south-east
+    ["Archival Assault"] = { 2371, 55.0, 48.0 },
 }) do ns.DELVE_ENTRANCES[name] = ns.DELVE_ENTRANCES[name] or at end
