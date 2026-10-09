@@ -392,7 +392,8 @@ local function AttachDelveAchievements()
 end
 
 -- Sturdy Chests and their Discoveries achievements go under the delve they belong to. A delve the
--- map did not list (and Data/Delves.lua doesn't know) is added to the Midnight page.
+-- map did not list (and Data/Delves.lua doesn't know) is added to the zone of its entrance, else to the
+-- page its chests were filed on, else to the Midnight page.
 local function AttachDelveChests(midnight)
     for dname, chests in pairs(delveChests) do
         local target
@@ -405,9 +406,11 @@ local function AttachDelveChests(midnight)
             if target then break end
         end
         if not target then
-            target = AddItem(midnight, "delve", { key = "d:" .. dn, kind = "container", ctype = "delve", name = dname,
-                                                  children = {}, spots = {} })
-            AddKeyword(dname, midnight, target)
+            local at = DelveEntrance(dname)
+            local home = (at and ZoneForMap(at[1])) or (chests[1] and chests[1].zoneHint) or midnight
+            target = AddItem(home, "delve", { key = "d:" .. dn, kind = "container", ctype = "delve", name = dname,
+                                              children = {}, spots = {} })
+            AddKeyword(dname, home, target)
         end
         if #target.spots == 0 and ns.DELVE_ENTRANCES then
             for name, at in pairs(ns.DELVE_ENTRANCES) do

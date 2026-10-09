@@ -87,13 +87,13 @@ ns.ACH_SIDE = {
 -- The "What counts" page in Options changes these; hard modes are one switch of their own.
 ns.SCOPE_ORDER = {
     "Quests", "Exploration", "Abundance", "Abyss Anglers", "Fishing", "Skyriding", "Reputation", "Delves",
-    "Prey", "Ritual Sites", "Void Assaults", "Lorewalking", "Dungeons", "Raids", "Professions", "Pet Battles",
+    "Prey", "Ritual Sites", "Void Assaults", "Horrific Visions", "Lorewalking", "Dungeons", "Raids", "Professions", "Pet Battles",
     "Collections", "Housing", "PvP", "World Events",
 }
 ns.SCOPE_DEFAULTS = {
     Quests = true, Exploration = true, Abundance = true, ["Abyss Anglers"] = true, Fishing = true,
     Skyriding = true, Reputation = true, Delves = true, Prey = true, ["Ritual Sites"] = true,
-    ["Void Assaults"] = true, Lorewalking = true, Dungeons = true, Raids = true, Professions = true,
+    ["Void Assaults"] = true, ["Horrific Visions"] = true, Lorewalking = true, Dungeons = true, Raids = true, Professions = true,
     ["Pet Battles"] = true, Collections = true, Housing = true,
     PvP = false,              -- rated play, honor grinds
     ["World Events"] = false, -- only doable a few weeks a year

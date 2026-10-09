@@ -84,3 +84,13 @@ for _, z in ipairs(TWW) do
     z.exp = "tww"
     ns.ZONES[#ns.ZONES + 1] = z
 end
+
+-- War Within delve maps, so Sturdy Chests find their delve.
+for m, name in pairs({
+    [2249] = "Fungal Folly", [2250] = "Kriegval's Rest", [2251] = "The Waterworks", [2259] = "Tak-Rethan Abyss",
+    [2269] = "Earthcrawl Mines", [2277] = "Nightfall Sanctum", [2299] = "The Underkeep", [2301] = "The Sinkhole",
+    [2302] = "The Dread Pit", [2310] = "Skittering Breach", [2312] = "Mycomancer Cavern", [2347] = "The Spiral Weave",
+    [2396] = "Excavation Site 9", [2420] = "Sidestreet Sluice", [2422] = "Sidestreet Sluice",
+    [2452] = "Archival Assault", [2455] = "Archival Assault", [2476] = "Archival Assault",
+}) do ns.DELVE_MAPS[m] = name end
+

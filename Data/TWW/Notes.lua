@@ -599,3 +599,14 @@ for id, list in pairs(CRIT) do
     ns.CRIT_NOTES[id] = ns.CRIT_NOTES[id] or {}
     for k, v in pairs(list) do ns.CRIT_NOTES[id][k] = ns.CRIT_NOTES[id][k] or v end
 end
+
+-- War Within delve entrances, used when the game's delve markers are not loaded yet. Ringing Deeps
+-- positions are the current ones (that map moved in patch 11.1).
+for name, at in pairs({
+    ["Earthcrawl Mines"] = { 2248, 38.7, 73.6 }, ["Kriegval's Rest"] = { 2248, 62.0, 42.0 },
+    ["Fungal Folly"] = { 2248, 52.3, 66.0 }, ["Skittering Breach"] = { 2215, 66.6, 61.7 },
+    ["Nightfall Sanctum"] = { 2215, 35.1, 46.2 }, ["Mycomancer Cavern"] = { 2215, 71.2, 31.1 },
+    ["The Sinkhole"] = { 2215, 50.6, 50.7 }, ["The Waterworks"] = { 2214, 42.0, 48.0 },
+    ["The Dread Pit"] = { 2214, 69.4, 38.4 }, ["The Spiral Weave"] = { 2255, 45.5, 21.6 },
+    ["Tak-Rethan Abyss"] = { 2255, 54.8, 72.6 }, ["The Underkeep"] = { 2216, 57.3, 64.9 },
+}) do ns.DELVE_ENTRANCES[name] = ns.DELVE_ENTRANCES[name] or at end
