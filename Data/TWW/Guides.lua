@@ -1067,6 +1067,29 @@ G[40869] = {
     },
 }
 
+G[40832] = {
+    steps = {
+        { t = "Reach rank 7 with the Weaver (around Severed Threads renown 15)." },
+        { t = "Tinker, Tailor, Soldier, Spider.", quest = 79532 },
+        { t = "Wine and Die.", quest = 79627 },
+        { t = "The Weaver's Legacy.", quest = 79633 },
+    },
+}
+G[40835] = {
+    steps = {
+        { t = "Reach rank 7 with the Vizier and finish his two earlier quests." },
+        { t = "A Cordial Invitation, up in a building in the City of Threads.", at = { THREADS, 52.82, 46.12 }, quest = 82953 },
+        { t = "Knives in the Dark.", quest = 82954 },
+        { t = "The Vizier's Resolve.", quest = 82955 },
+    },
+}
+G[40459] = {
+    steps = {
+        { t = "At max level, pick up Bountiful Delves (offered once delves open up for you).", quest = 81514 },
+        { t = "Follow it to Ship It! and finish that quest for the Delver's Dirigible.", quest = 81510 },
+    },
+}
+
 -- The General's Salute and friends
 G[40833] = {
     steps = {
@@ -1177,6 +1200,8 @@ end
 raid("Nerub-ar Palace", { 40244, 40247, 40248, 40249 })
 raid("the Liberation of Undermine", { 41222, 41225, 41226, 41227, 41228 })
 raid("Manaforge Omega", { 41598, 41601, 41602, 41603 })
+local heroicRaid = { tips = { "Every boss on Heroic difficulty or higher. Group finder Heroic groups clear it weekly; kills from different weeks all count." } }
+for _, id in ipairs({ 40245, 41223, 41599 }) do G[id] = heroicRaid end
 
 G[41587] = { tips = { "Unexplored parts of Undermine are fogged on the world map; fly low through each until its name shows on screen. Expand the achievement for what's left." } }
 
