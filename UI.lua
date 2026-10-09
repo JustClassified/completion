@@ -302,16 +302,12 @@ local function ItemTooltip(owner, it, row)
     end
     if it.kind == "rep" and it.rep then GameTooltip:AddLine(it.rep.text, 1, 1, 1) end
     -- walkthrough notes, for achievements and lore only
-    local achNote = ns.ACH_NOTES and ns.ACH_NOTES[it.id or it.ach or 0]
-    local groupNote = it.kind == "ach" and it.group and ns.GROUP_NOTES and ns.GROUP_NOTES[it.group]
-    if (achNote or groupNote) and (it.kind == "ach" or it.kind == "lore") then
-        GameTooltip:AddLine(" ")
-        GameTooltip:AddLine("Walkthrough", 1, 0.82, 0.3)
-        AddWrapped(achNote)
-        if groupNote then AddWrapped(groupNote, 0.75, 0.75, 0.75) end
+    if it.kind == "ach" or it.kind == "lore" then
+        local groupNote = it.kind == "ach" and it.group and ns.GROUP_NOTES and ns.GROUP_NOTES[it.group]
+        ns.AddGuide(GameTooltip, it.id or it.ach or 0, it.kind == "ach" and it or nil, groupNote)
     end
     if it.kind == "ach" and ns.ACH_STEPS and ns.ACH_STEPS[it.id] then
-        GameTooltip:AddLine(string.format("%d-step walkthrough: click to follow it with the arrow.", #ns.ACH_STEPS[it.id]), 0.6, 0.8, 1)
+        GameTooltip:AddLine("Click to follow the steps with the arrow.", 0.6, 0.8, 1)
     end
     if it.kind == "collect" or (it.kind == "point" and (it.pkind == "rare" or it.pkind == "boss")) then
         ns.AddHowToGet(it)

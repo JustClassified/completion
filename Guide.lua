@@ -257,6 +257,46 @@ local function AttachAchSteps(it)
 end
 ns.AttachAchSteps = AttachAchSteps
 
+-- A note as a list of short points: a table is used as written, a string is split at its sentences
+-- (a full stop, ! or ? followed by a space and a capital letter).
+function ns.NotePoints(note)
+    if type(note) == "table" then return note end
+    if type(note) ~= "string" or note == "" then return {} end
+    local out, start = {}, 1
+    while true do
+        local s = note:find("[%.!?] %u", start)
+        if not s then break end
+        out[#out + 1] = note:sub(start, s)
+        start = s + 2
+    end
+    out[#out + 1] = note:sub(start)
+    return out
+end
+
+-- Adds an achievement's guide to a tooltip: the numbered steps (done ones greyed when `it` is given),
+-- then the notes and the group's note as bullet points.
+function ns.AddGuide(tooltip, id, it, groupNote)
+    local steps = ns.ACH_STEPS and ns.ACH_STEPS[id]
+    local note = ns.ACH_NOTES and ns.ACH_NOTES[id]
+    if not (steps or note or groupNote) then return end
+    tooltip:AddLine(" ")
+    if steps then
+        tooltip:AddLine("Step by step", 1, 0.82, 0.3)
+        if it then AttachAchSteps(it) end
+        for i, st in ipairs(steps) do
+            local done = it and it.steps and ns.StepDone(it, i)
+            local c = done and 0.5 or 0.95
+            tooltip:AddLine(i .. ". " .. st.t, c, done and 0.5 or 0.9, done and 0.5 or 0.8, true)
+        end
+    end
+    local points = ns.NotePoints(note)
+    if #points > 0 then
+        tooltip:AddLine(steps and "Good to know" or "How to do it", 1, 0.82, 0.3)
+        for _, p in ipairs(points) do tooltip:AddLine("- " .. p, 0.9, 0.85, 0.7, true) end
+    end
+    for _, p in ipairs(ns.NotePoints(groupNote)) do tooltip:AddLine("- " .. p, 0.7, 0.7, 0.7, true) end
+end
+
 -- Appends one row per step, with bag counts for item steps and the current step flagged.
 local function StepRows(it, rows)
     local cur = ns.CurrentStep(it)

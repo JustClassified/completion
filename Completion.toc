@@ -28,6 +28,7 @@ Data\Sources.lua
 Data\Walkthroughs.lua
 Data\Notes.lua
 Data\TWW\Notes.lua
+Data\TWW\Guides.lua
 Data\Delves.lua
 Data\Expansions.lua
 Data\Events.lua

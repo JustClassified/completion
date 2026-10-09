@@ -107,11 +107,7 @@ local function OnHyperlink(tooltip, link)
     tooltip:AddLine(" ")
     local where = host.zone and (host.zone.name .. (host.sec and (" > " .. host.zone.sections[host.sec].name) or "")) or ""
     tooltip:AddLine("Completion: " .. where, 0.9, 0.82, 0.5)
-    local note = ns.ACH_NOTES and ns.ACH_NOTES[id]
-    if note then tooltip:AddLine(note, 0.9, 0.85, 0.7, true) end
-    if ns.ACH_STEPS and ns.ACH_STEPS[id] then
-        tooltip:AddLine(string.format("%d-step walkthrough in the book", #ns.ACH_STEPS[id]), 0.6, 0.8, 1)
-    end
+    ns.AddGuide(tooltip, id, it)
     tooltip:Show()
 end
 
