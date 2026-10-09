@@ -366,6 +366,593 @@ G[63395] = {
     },
 }
 
+G[62221] = {
+    steps = {
+        { t = "Start a dive with Depthdiver Tu'nakit.", at = { ZULAMAN, 68.2, 20.2 } },
+        { t = "Swim through schools of fish (small underwater clouds with tiny fish inside); one floats above the rock formation near the start, and many sit in and around the right-hand ravine." },
+        { t = "Get 25 in a single dive, then buy the Fresh Depth Nets upgrade." },
+    },
+}
+G[62271] = {
+    steps = {
+        { t = "Start a dive with Depthdiver Tu'nakit.", at = { ZULAMAN, 68.2, 20.2 } },
+        { t = "Catch fish during dives until 100 in total." },
+    },
+    tips = { "If the count sticks just short, players report finishing it on another character." },
+}
+G[62147] = {
+    steps = {
+        { t = "Do the campaign quest Den of Nalorakk: Unforgiven, or reach level 88 on any character." },
+        { t = "If you ran the dungeon in follower mode, Zul'jarra isn't where the map marker shows: hand the quest in at 31.6, 83.9 in Zul'Aman.", at = { ZULAMAN, 31.57, 83.87 } },
+    },
+}
+G[61380] = {
+    steps = {
+        { t = "Expand the achievement: each raid achievement of The Voidspire, The Dreamrift and March on Quel'Danas has its own step guide." },
+        { t = "Easiest first: Nothing to See Here (walk off the map) and It's Treason Then (/kneel before the pull)." },
+        { t = "Most need 10 or more players; do them on Normal." },
+    },
+}
+G[61568] = {
+    steps = {
+        { t = "Finish each Midnight Mythic dungeon achievement listed (each has its own guide)." },
+        { t = "Mythic difficulty is only open for dungeons in the current season's rotation, so some parts wait for a later season." },
+    },
+}
+G[63237] = {
+    steps = {
+        { t = "Queue for Sporefall, a one-boss raid, or join a Normal group (Normal is easy)." },
+        { t = "Defeat Rotmire." },
+    },
+}
+
+local valeera = {
+    steps = {
+        { t = "Run delves with Valeera; every finished delve gives her experience." },
+        { t = "Fast way: equip the Dundun's Favor curio on her, run the Ring of Glory's Open Night story, and ride around the arena picking up Mislaid Curiosities (outline mode on High makes them easy to see; avoid the floor traps)." },
+        { t = "Repeat until she reaches the level." },
+    },
+}
+G[63435] = valeera
+G[63434] = valeera
+G[61863] = {
+    steps = {
+        { t = "Enter Atal'Aman; all its chests are around the lake altar." },
+        { t = "One is behind the eagle statue on the right when you face Akil'zon's shrine, one under the bridge in the water, and one against the wall by the southern waterfall." },
+        { t = "Some only appear in particular stories; come back on other days for any missing." },
+    },
+}
+G[63170] = {
+    steps = {
+        { t = "Enter Gnarldor Isle; each Sturdy Chest has its spot inside." },
+        { t = "Open every chest; one of them gives a mount item." },
+        { t = "Some chests only exist in particular stories; come back on other days for the rest." },
+    },
+}
+
+G[62144] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for Magister Sunbreaker or Magistrix Emberlash; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62153] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for Senior Tinker Ozwold or L-N-0R the Recycler; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62154] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for Mordril Shadowfell or Deliah Gloomsong; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62155] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for Phaseblade Talasha or Nexus-Edge Hadim; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62156] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for Jo'zolo the Breaker or Zadu, Fist of Nalorakk; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62157] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for The Talon of Jan'alai or The Wing of Akil'zon; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62158] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for Ranger Swiftglade or Lieutenant Blazewing; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62159] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for Petyoll the Razorleaf or Lamyne of the Undercroft; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62160] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for High Vindicator Vureem or Crusader Luxia Maxwell; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62161] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for Praetor Singularis or Consul Nebulor; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62162] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for Executor Kaenius or Imperator Enigmalia; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62163] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for Knight-Errant Bloodshatter or Vylenna the Defector; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62164] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for Lost Theldrin or Neydra the Starving; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62165] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for Thornspeaker Edgath or Thorn-Witch Liset; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62166] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Hard difficulty (Hard unlocks at level 90 through Astalor's quests in the Prey headquarters)." },
+        { t = "Pick the contract for Grothoz, the Burning Shadow or Dengzag, the Darkened Blaze; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62167] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for Magister Sunbreaker or Magistrix Emberlash; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62168] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for Senior Tinker Ozwold or L-N-0R the Recycler; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62169] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for Mordril Shadowfell or Deliah Gloomsong; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62173] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for Phaseblade Talasha or Nexus-Edge Hadim; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62174] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for Jo'zolo the Breaker or Zadu, Fist of Nalorakk; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62175] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for The Talon of Jan'alai or The Wing of Akil'zon; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62176] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for Ranger Swiftglade or Lieutenant Blazewing; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62177] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for Petyoll the Razorleaf or Lamyne of the Undercroft; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62178] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for High Vindicator Vureem or Crusader Luxia Maxwell; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62179] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for Praetor Singularis or Consul Nebulor; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62180] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for Executor Kaenius or Imperator Enigmalia; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62181] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for Knight-Errant Bloodshatter or Vylenna the Defector; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62182] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for Lost Theldrin or Neydra the Starving; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62183] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for Thornspeaker Edgath or Thorn-Witch Liset; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+G[62184] = {
+    steps = {
+        { t = "Pick up a hunt at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+        { t = "Choose Nightmare difficulty (unlocked after Hard)." },
+        { t = "Pick the contract for Grothoz, the Burning Shadow or Dengzag, the Darkened Blaze; either one counts. Random hunts rarely offer a specific target." },
+        { t = "Track your target down and defeat it; hand in the hunt." },
+    },
+    tips = { "Its reward item can be bought again later from Construct Ali'a near the hunt table." },
+}
+local preyMode = function(diff, how)
+    return {
+        steps = {
+            { t = "Pick up hunts at the hunt table in Silvermoon City.", at = { SILVERMOON, 55.8, 66.0 } },
+            { t = "Choose " .. diff .. " difficulty" .. (diff == "Hard" and " (level 90; unlocked through Astalor's quests in the Prey headquarters)." or " (unlocked after Hard).") },
+            { t = how },
+        },
+        tips = diff == "Nightmare" and { "Nightmare adds three mechanics from the start: copies of you that hurt if they reach you, ground effects to dodge, and more. Expect repair bills." } or nil,
+    }
+end
+G[61389] = preyMode("Hard", "Defeat any one of the listed targets on Hard and hand in the hunt.")
+G[61388] = preyMode("Hard", "Defeat 15 of the listed targets on Hard; contracts for a specific target are quicker than random hunts.")
+G[42702] = preyMode("Hard", "Defeat every listed target on Hard.")
+G[61392] = preyMode("Nightmare", "Defeat any one of the listed targets on Nightmare and hand in the hunt.")
+G[61391] = preyMode("Nightmare", "Defeat 15 of the listed targets on Nightmare. Since the Coiled Isle, Nightmare often offers its snake targets, so older ones take longer.")
+G[42703] = preyMode("Nightmare", "Defeat every listed target on Nightmare.")
+
+local nightmareCoiled = function(who, n)
+    return {
+        steps = {
+            { t = "Start a Nightmare hunt on the Coiled Isle, or turn on the Curse of the Isle (from the Image of Astalor Bloodworn at Tokka's Landing).", at = { COILED, 58.2, 48.72 } },
+            { t = "Defeat " .. who .. (n and (", " .. n .. " times in all") or "") .. "." },
+            { t = "If it doesn't pop on the kill, it does when you hand in the hunt." },
+        },
+    }
+end
+G[63451] = nightmareCoiled("Batani the Scaled or Kadani the Claw")
+G[63452] = nightmareCoiled("Janoa the Fang or Kursak the Coiled")
+G[63453] = nightmareCoiled("Ral'kala, Terror of the Isle")
+G[63454] = nightmareCoiled("Ral'kala, Terror of the Isle", "fifty")
+G[63644] = {
+    steps = {
+        { t = "Turn on the Curse of the Isle at the Image of Astalor Bloodworn in Tokka's Landing (after its quest you can toggle it any time), or run a Hard or Nightmare hunt.", at = { COILED, 58.2, 48.72 } },
+        { t = "Kill enemies in the Coiled Isle's prey world quest areas (for example the Venomhide Burrows in the west): Venom-Bloated Pythons burst out of the corpses." },
+        { t = "Kill 200 pythons; ones from other players' hunts count too." },
+    },
+}
+local ritual = function(what)
+    return {
+        steps = {
+            { t = "Go to the Ritual Site that's active (Broken Throne in south Zul'Aman or Daggerspine Point in Eversong; one at a time)." },
+            { t = what },
+            { t = "Finish the site by defeating its final boss; the achievement only pops then." },
+        },
+    }
+end
+G[62559] = ritual("Start it on Tier 5 with the Malevolent Boons challenge, and never destroy a dark obelisk. Adding Tendrils, Manifestations and Tainted Corpses keeps the paths clear of extra enemies so you can run straight to the minibosses.")
+G[62560] = ritual("Start it on Tier 5 with the Embers challenge. Skip a few trash packs near the Ember Flames: embers fade as you kill empowered enemies, so leaving some keeps one burning to the end.")
+G[62561] = ritual("Start it on Tier 5 with the Reinforced challenge and kill more than 50 enemies before the final boss. There's no counter, so count yourself or clear generously.")
+
+G[62941] = {
+    steps = {
+        { t = "When Broken Throne is the active Ritual Site, run it on Tier 6 with all 8 challenges and kill the final boss." },
+        { t = "Do the same at Daggerspine Point when it's the active site." },
+    },
+    tips = { "This becomes a Feat of Strength when Midnight ends, so finish it during the expansion." },
+}
+G[63182] = {
+    steps = {
+        { t = "Pick up the weekly Advanced Ritual Site Studies from Lady Darkglen in Silvermoon." },
+        { t = "Run Ritual Sites with the challenges each week's study asks for, and hand it in." },
+        { t = "Repeat for all six weeks." },
+    },
+}
+G[62569] = {
+    steps = {
+        { t = "During Void Strikes and Incursions, loot the mysterious items some enemies drop; each starts or completes a criterion." },
+        { t = "Seen so far: one from enemies in the first stage of While We're Down in Amani'Zar Village, one from Hal'hadar enemies in Battery Rush at the Broken Throne, one near the Temple of Jan'alai, and one at the Daggerspine Point site." },
+        { t = "Hand in what each item asks; strikes rotate weekly between Eversong and Zul'Aman, so the rest come in their week." },
+    },
+}
+local slugger = function(zone)
+    return {
+        steps = {
+            { t = "When " .. zone .. " is the active showdown, wait by its rares: they spawn about every 20 minutes in three fixed groups of three." },
+            { t = "Each group always spawns in the same order; once you know which group started, you know the next two." },
+            { t = "Defeat six of the listed rares." },
+        },
+    }
+end
+G[62881] = slugger("Val")
+G[62883] = slugger("Naigtal")
+G[63348] = {
+    steps = {
+        { t = "Switch to Heroic World Tier; heroic kills also count for the Normal slugger achievements." },
+        { t = "Kill 15 rares in Val or Naigtal; they spawn about every 20 minutes in groups of three." },
+    },
+}
+G[62901] = {
+    steps = {
+        { t = "Switch to Heroic World Tier in Val or Naigtal." },
+        { t = "Kill creatures with the listed affixes; rares and their followers carry them, so it usually completes while you farm rares." },
+    },
+}
+local pertinax = function(heroic)
+    return {
+        steps = {
+            heroic and { t = "Switch to Heroic World Tier." } or { t = "Val and Naigtal take turns as the active showdown each week." },
+            { t = "In Val, a quest sends you through the portal in the middle of the map, down to its boss: defeat it." },
+            { t = "In Naigtal, the other boss is a weekly kill: defeat it in a Naigtal week. Together they're Imperator Pertinax and Nexus-Captain Leth'ir." },
+        },
+        tips = { "After this, Zuronar in both zones sells three rewards for 150 Voidlight Marl each." },
+    }
+end
+G[62905] = pertinax(false)
+G[62909] = pertinax(true)
+G[62917] = {
+    steps = {
+        { t = "When Val is active, do the Storm Mitigation bonus objective (kill the eight storm creatures)." },
+        { t = "Trick: kill the first seven on Normal, then switch to Heroic for the last one; it counts for both." },
+        { t = "Repeat five times." },
+    },
+}
+G[62919] = {
+    steps = {
+        { t = "Switch to Heroic World Tier in Naigtal." },
+        { t = "Complete the Subdue the Spore Storm bonus objective (kill ten spore-spewing mushrooms); it spawns at several places." },
+        { t = "Repeat five times; alts can help." },
+    },
+}
+
+G[63264] = {
+    steps = {
+        { t = "Finish the six Heroic showdown achievements listed (each has its own guide); all need Heroic World Tier." },
+        { t = "Afterwards, Kifaan in the Naigtal and Val base camp sells a reward mount cheaply." },
+    },
+}
+G[63323] = {
+    steps = {
+        { t = "Defeat a world boss in Naigtal or Val (they take turns weekly)." },
+        { t = "In Val, its boss quest sends you through the portal in the middle of the map." },
+    },
+}
+G[63383] = {
+    steps = {
+        { t = "Start the Naigtal and Val introduction in Silvermoon City (the quest is automatic; its giver is around 47.6, 51.0).", at = { SILVERMOON, 47.64, 50.94 } },
+        { t = "Finish both introduction storylines on the same character; the two zones take turns weekly, so this spans two weeks." },
+    },
+}
+G[63384] = {
+    steps = {
+        { t = "Do the listed preparation quests in Val and Naigtal; the teleporter unlock quests need one week of each zone." },
+        { t = "Check back on the next rotation for any that weren't offered yet." },
+    },
+}
+G[63385] = {
+    steps = {
+        { t = "Finish the Naigtal introduction first; the next storylines need it." },
+        { t = "Do the Naigtal questlines listed; they're timegated, so a new part opens on each Naigtal week." },
+    },
+}
+G[63386] = {
+    steps = {
+        { t = "Finish the Val introduction first." },
+        { t = "Do the Val questlines listed; they're timegated (Victory Within Hindsight first, A Shot at the Dark on the next Val week, and so on)." },
+    },
+}
+G[61226] = {
+    steps = {
+        { t = "At level 90, do each Slayer's Rise world quest listed ten times." },
+        { t = "Overcoming the Unknown is a weekly world quest, so it takes ten weeks on one character; alts speed it up." },
+    },
+}
+G[61230] = {
+    steps = {
+        { t = "Fly around Slayer's Rise in Voidstorm and loot the remains marked by small skulls (2-5 each)." },
+        { t = "Hand 50 in to the collector at about 39, 82 on the Slayer's Rise map; repeat until you have done the Collecting Remains quest five times." },
+    },
+}
+G[61227] = {
+    steps = {
+        { t = "Turn on War Mode and fly to Slayer's Rise, the world PvP zone in Voidstorm." },
+        { t = "Get honorable kills there; kills in the 40v40 battleground of the same name don't count." },
+    },
+}
+G[61228] = G[61227]
+G[61229] = G[61227]
+G[61238] = {
+    steps = {
+        { t = "Turn on War Mode in the Midnight zones." },
+        { t = "Kill players with a bounty on their head (they show on the map) and loot the bounty; 20 in all." },
+    },
+    tips = { "Bounty holders often vanish quickly; be ready near busy world PvP areas." },
+}
+
+local flames = {
+    { t = "During the Midsummer Fire Festival, honor the bonfire in Eversong Woods, just north of Tranquillien.", at = { EVERSONG, 48.9, 63.9 } },
+    { t = "Silvermoon City's bonfire.", at = { SILVERMOON, 48.5, 81.0 } },
+    { t = "Zul'Aman's bonfire.", at = { ZULAMAN, 54.4, 16.9 } },
+    { t = "Harandar's bonfire.", at = { HARANDAR, 54.2, 51.6 } },
+    { t = "Voidstorm's bonfire.", at = { VOIDSTORM, 53.7, 70.2 } },
+}
+G[61335] = { steps = flames, tips = { "Only during the Midsummer Fire Festival; the bonfires show an exclamation mark." } }
+G[61336] = G[61335]
+G[63253] = {
+    steps = {
+        { t = "During Brewfest, donate at each Bar Tab Barrel: Silvermoon.", at = { SILVERMOON, 54.77, 69.76 } },
+        { t = "Tranquillien, Eversong.", at = { EVERSONG, 47.74, 67.72 } },
+        { t = "The Arcantina.", at = { ARCANTINA, 60.87, 70.2 } },
+        { t = "Har'athir, Harandar.", at = { HARANDAR, 69.05, 51.17 } },
+        { t = "The Den, Harandar (inside the cave near the portal from Silvermoon)." },
+        { t = "Locus Point, Voidstorm.", at = { VOIDSTORM, 41.64, 74.56 } },
+        { t = "Amani'Zar, Zul'Aman.", at = { ZULAMAN, 45.37, 65.05 } },
+        { t = "Witherbark Bluffs, Zul'Aman.", at = { ZULAMAN, 37.38, 22.86 } },
+    },
+    tips = { "Only during Brewfest." },
+}
+G[63400] = {
+    steps = {
+        { t = "During Hallow's End, visit the Candy Bucket in each Midnight inn: expand the achievement for the list (Arcantina, Silvermoon, Fairbreeze Village, Tranquillien, the Den, Har'alnor, Har'kuai, Har'athir, Har'mara, Amani'Zar, Witherbark Bluffs, Camp Stonewash, Slayer's Rise, Locus Point and the Ingress)." },
+        { t = "Click each bucket; the Seasonal book's Hallow's End page marks every one." },
+    },
+}
+G[61447] = {
+    steps = {
+        { t = "Turn on War Mode and join the Horde versus Alliance events in Slayer's Rise." },
+        { t = "Credit depends on where you stand: in the pillar capture, be inside one of the three pillars; in the barrel and Domanaar escort events, be at the barrel turn-in spot (about 44.9, 61.5 on the Slayer's Rise map) when your side wins." },
+        { t = "Win the event." },
+    },
+}
+G[61448] = G[61447]
+G[61449] = G[61447]
+G[61336] = G[61335]
+local tg = function(goal, extra)
+    return {
+        steps = {
+            { t = "Open the PvP window and queue for Training Grounds (battlegrounds with AI teammates)." },
+            { t = goal },
+        },
+        tips = extra and { extra } or nil,
+    }
+end
+G[62108] = tg("Win each listed map without dying once; queue for each map on its own.", "Dying in a later match of a map you already have can take its credit away again.")
+G[62111] = tg("Win 10 Arathi Basin matches while holding all five flags at once; easiest in a coordinated premade.")
+G[62112] = tg("Win 10 Battle for Gilneas matches while holding all three flags at once.")
+G[62113] = tg("Win 10 Silvershard Mines matches without the enemy capturing a mine cart.")
+G[62114] = tg("Take 50 flags in Arathi Basin: you must be the one capturing.")
+G[62115] = tg("Take 30 flags in Battle for Gilneas: you must be the one capturing.")
+G[62116] = tg("Take control of 100 carts in Silvershard Mines: credit comes when you stand in a cart's circle as it turns to your side. Standing by the central depot where carts leave gets credit for each one.")
+G[61883] = {
+    steps = {
+        { t = "Join Decor Duel as a hider." },
+        { t = "Stay untagged for the first minute, then get caught (surviving the whole round doesn't count). Do this three times." },
+    },
+    tips = { "Don't use ability 4." },
+}
+G[61265] = {
+    steps = {
+        { t = "Turn on War Mode and go to Slayer's Rise in Voidstorm." },
+        { t = "When a Spectral Battle Chest appears, capture and open it before the other side; it's contested." },
+    },
+}
+
 for id, g in pairs(G) do
     if not ns.ACH_STEPS[id] then
         if g.steps then ns.ACH_STEPS[id] = g.steps end
