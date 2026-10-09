@@ -1182,7 +1182,7 @@ G[41587] = { tips = { "Unexplored parts of Undermine are fogged on the world map
 
 -- Delve stories: what each story asks, on its row in the Stories achievement
 G[40525] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest.", "Also seen here but not needed: Teleporter Tremors." },
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
     crit = {
         ["Lost Miners"] = { t = "Drop into the pit and free 10 captured earthen scouts, then defeat Spinshroom." },
         ["Explorer's Competition"] = { t = "Beat the five Explorer's League challenges (duels, fishing, a mirror test, a running pattern), then defeat Spinshroom." },
@@ -1191,7 +1191,7 @@ G[40525] = {
     },
 }
 G[40526] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest.", "Also seen here but not needed: Funny Candles." },
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
     crit = {
         ["Lost Keepsakes"] = { t = "Take an Enchanted Candle, talk to Kuvkel, take back 11 keepsakes from the kobolds and Kriegval's Helm, then defeat Tomb-Raider Drywhisker." },
         ["Dagran's Day Out"] = { t = "Talk to Dagran, collect 10 suspicious candles and the Gigantic Candle, beat the kobold swarm and two guardians, then Drywhisker." },
@@ -1291,7 +1291,7 @@ G[40536] = {
     },
 }
 G[41098] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest.", "Also seen here but not needed: A Knightly Quest, Culinary Catastrophe." },
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
     crit = {
         ["Lost Excavators"] = { t = "Wake Assessor McGravy, kill monsters and rescue the missing goblins, then defeat Xel'anegh the Many." },
         ["Rowdy Rifts"] = { t = "Close 7 Dark Tears by killing Old God forces, then defeat Harbinger Ul'thul." },
@@ -1299,7 +1299,7 @@ G[41098] = {
     },
 }
 G[41099] = {
-    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest.", "Also seen here but not needed: Crocolisk Reintroduction, Explosive Demolition." },
+    tips = { "Today's story shows on the delve's tier menu (from Tier 4 up for Archival Assault); come back on other days for the rest." },
     crit = {
         ["All That Glitters"] = { t = "Destroy 4 enchanted gold piles and slay 7 Golden Shamans, then weaken and slay the Gold Elemental." },
         ["Teleporter Tantrums"] = { t = "Disrupt the Darkfuse and recover the Remote Teleporter, then slay Dr. Clavus Geargrave." },

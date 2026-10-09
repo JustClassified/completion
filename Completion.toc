@@ -31,6 +31,7 @@ Data\Guides.lua
 Data\TWW\Notes.lua
 Data\TWW\Guides.lua
 Data\Delves.lua
+Data\TWW\Delves.lua
 Data\Expansions.lua
 Data\Events.lua
 Data\EventGuides.lua
