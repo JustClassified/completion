@@ -425,7 +425,8 @@ local function FillRows()
                 if not (ln and (ln.tip or ln.click)) then return end
                 GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
                 GameTooltip:AddLine(ln.header or ln.text or "", 1, 1, 1, true)
-                if ln.tip then GameTooltip:AddLine(ln.tip, 0.9, 0.85, 0.7, true) end
+                local points = ns.NotePoints(ln.tip)
+                for _, p in ipairs(points) do GameTooltip:AddLine(#points > 1 and ("- " .. p) or p, 0.9, 0.85, 0.7, true) end
                 if ln.click then GameTooltip:AddLine(ln.hint or "Click: track it with the arrow.", 0.5, 0.5, 0.5) end
                 GameTooltip:Show()
             end)
