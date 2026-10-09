@@ -28,9 +28,11 @@ Data\Sources.lua
 Data\Walkthroughs.lua
 Data\Notes.lua
 Data\Guides.lua
+Data\Guides2.lua
 Data\AutoGuides.lua
 Data\TWW\Notes.lua
 Data\TWW\Guides.lua
+Data\TWW\Guides2.lua
 Data\TWW\AutoGuides.lua
 Data\Delves.lua
 Data\TWW\Delves.lua
