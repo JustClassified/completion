@@ -1022,22 +1022,6 @@ G[40309] = {
 G[42736] = { tips = { "Loot Ixthar's Favorite Crystal and defeat Ixthar the Unblinking in K'aresh. You don't need cloak upgrades to see him; he has a long respawn timer." } }
 G[40503] = { tips = { "Algari Anglerthread goes onto your fishing pole after the Algari Weaverline. The threads count per character." } }
 
--- Explore the Ringing Deeps (positions moved to the 11.1 map)
-G[40825] = {
-    tips = { "The Rumbling Wastes can still look fogged on the map after it counts; check the achievement instead." },
-    crit = {
-        ["The Earthenworks"] = { t = "Fly over this area", at = { { DEEPS, 42.95, 18.30 } } },
-        ["Shadowvein Extraction Site"] = { t = "Fly over this area", at = { { DEEPS, 57.48, 41.82 } } },
-        ["The Waterworks"] = { t = "Fly over this area", at = { { DEEPS, 41.73, 43.89 } } },
-        ["The Living Grotto"] = { t = "Fly over this area", at = { { DEEPS, 51.48, 67.17 } } },
-        ["The Hallowfall Gate"] = { t = "Fly over this area", at = { { DEEPS, 36.68, 23.80 } } },
-        ["Lost Mines"] = { t = "Fly over this area", at = { { DEEPS, 55.17, 24.56 } } },
-        ["The Rumbling Wastes"] = { t = "Fly over this area", at = { { DEEPS, 59.80, 51.80 } } },
-        ["Taelloch"] = { t = "Fly over this area", at = { { DEEPS, 58.11, 60.25 } } },
-        ["Opportunity Point"] = { t = "Fly over this area", at = { { DEEPS, 60.52, 78.21 } } },
-        ["Gundargaz"] = { t = "Fly over this area", at = { { DEEPS, 42.90, 33.46 } } },
-    },
-}
 
 -- A Choir of Citrines
 G[41050] = {
@@ -1234,7 +1218,6 @@ raid("Manaforge Omega", { 41598, 41601, 41602, 41603 })
 local heroicRaid = { tips = { "Every boss on Heroic difficulty or higher. Group finder Heroic groups clear it weekly; kills from different weeks all count." } }
 for _, id in ipairs({ 40245, 41223, 41599 }) do G[id] = heroicRaid end
 
-G[41587] = { tips = { "Unexplored parts of Undermine are fogged on the world map; fly low through each until its name shows on screen. Expand the achievement for what's left." } }
 
 -- Delve stories: what each story asks, on its row in the Stories achievement
 G[40525] = {
@@ -1370,6 +1353,113 @@ G[42771] = {
         ["Shadowed Wings"] = { t = "Talk to Xeronia, rescue 5 Siphoned Drakes, ride her and slay 100 reinforcements, then defeat Voidrider Challnax." },
         ["Waygate Wiles"] = { t = "Talk to Spymaster Casnegosa, recover 6 waygate parts and build the waygates, destroy 6 Field Dampeners, then defeat Portalmaster Halsan." },
     },
+}
+
+-- Exploration: a route through every area
+G[40831] = {
+    steps = {
+        { t = "Open the world map: unexplored areas are still fogged. Fly low through each one until its name appears on screen." },
+        { t = "Dornogal, the earthen capital in the west.", at = { DORN, 44.66, 50.9 } },
+        { t = "The Orecrag, south-west.", at = { DORN, 35.7, 75.5 } },
+        { t = "Tranquil Strand, the west coast.", at = { DORN, 30.59, 55.45 } },
+        { t = "Thunderhead Peak, north.", at = { DORN, 47.9, 27.45 } },
+        { t = "The Three Shields, far north-east.", at = { DORN, 71, 21.34 } },
+        { t = "Mourning Rise, east of centre.", at = { DORN, 64.34, 44.07 } },
+        { t = "Ironwold, east.", at = { DORN, 68.59, 48.74 } },
+        { t = "Boulder Springs, south-east of centre.", at = { DORN, 58.33, 61.46 } },
+        { t = "Boskroot Basin, south of centre.", at = { DORN, 54, 64 } },
+        { t = "Wanderer's Landing, the south coast.", at = { DORN, 54.57, 78.56 } },
+    },
+    tips = { "The route runs clockwise from Dornogal; skip any area the map already shows." },
+}
+G[40825] = {
+    steps = {
+        { t = "Open the world map: unexplored areas are still fogged. Fly low through each one until its name appears on screen." },
+        { t = "The Hallowfall Gate, north-west.", at = { DEEPS, 36.68, 23.8 } },
+        { t = "The Earthenworks, north.", at = { DEEPS, 42.95, 18.3 } },
+        { t = "Gundargaz, the earthen town north of centre.", at = { DEEPS, 42.9, 33.46 } },
+        { t = "Lost Mines, north-east of Gundargaz.", at = { DEEPS, 55.17, 24.56 } },
+        { t = "Shadowvein Extraction Site, east of centre.", at = { DEEPS, 57.48, 41.82 } },
+        { t = "The Waterworks, west of centre.", at = { DEEPS, 41.73, 43.89 } },
+        { t = "The Rumbling Wastes, centre-east.", at = { DEEPS, 59.8, 51.8 } },
+        { t = "Taelloch, south-east.", at = { DEEPS, 58.11, 60.25 } },
+        { t = "The Living Grotto, south of centre.", at = { DEEPS, 51.48, 67.17 } },
+        { t = "Opportunity Point, the goblin camp in the south.", at = { DEEPS, 60.52, 78.21 } },
+    },
+    crit = {
+        ["The Earthenworks"] = { t = "Fly over this area", at = { { DEEPS, 42.95, 18.30 } } },
+        ["Shadowvein Extraction Site"] = { t = "Fly over this area", at = { { DEEPS, 57.48, 41.82 } } },
+        ["The Waterworks"] = { t = "Fly over this area", at = { { DEEPS, 41.73, 43.89 } } },
+        ["The Living Grotto"] = { t = "Fly over this area", at = { { DEEPS, 51.48, 67.17 } } },
+        ["The Hallowfall Gate"] = { t = "Fly over this area", at = { { DEEPS, 36.68, 23.80 } } },
+        ["Lost Mines"] = { t = "Fly over this area", at = { { DEEPS, 55.17, 24.56 } } },
+        ["The Rumbling Wastes"] = { t = "Fly over this area", at = { { DEEPS, 59.80, 51.80 } } },
+        ["Taelloch"] = { t = "Fly over this area", at = { { DEEPS, 58.11, 60.25 } } },
+        ["Opportunity Point"] = { t = "Fly over this area", at = { { DEEPS, 60.52, 78.21 } } },
+        ["Gundargaz"] = { t = "Fly over this area", at = { { DEEPS, 42.90, 33.46 } } },
+    },
+    tips = { "The Rumbling Wastes can stay fogged on the map after it counts; trust the achievement." },
+}
+G[40826] = {
+    steps = {
+        { t = "Open the world map: unexplored areas are still fogged. Fly low through each one until its name appears on screen." },
+        { t = "Mereldar, the Arathi town in the west.", at = { HALLOWFALL, 41.5, 52.49 } },
+        { t = "Light's Redoubt, south-west.", at = { HALLOWFALL, 40.46, 71.2 } },
+        { t = "The Undersea, the lake shore in the far west.", at = { HALLOWFALL, 30, 42 } },
+        { t = "Priory of the Sacred Flame, north-west.", at = { HALLOWFALL, 36.36, 35.41 } },
+        { t = "Lorel's Crossing, north of centre.", at = { HALLOWFALL, 48.51, 40.45 } },
+        { t = "Light's Blooming, north-east.", at = { HALLOWFALL, 63, 28 } },
+        { t = "Dunelle's Kindness, east.", at = { HALLOWFALL, 68.52, 44.71 } },
+        { t = "The Aegis Wall, south-east.", at = { HALLOWFALL, 70.72, 58.71 } },
+        { t = "The Fangs, centre.", at = { HALLOWFALL, 57, 48.54 } },
+    },
+    tips = {  },
+}
+G[40822] = {
+    steps = {
+        { t = "Open the world map: unexplored areas are still fogged. Fly low through each one until its name appears on screen." },
+        { t = "The Weaver's Lair, the main hub.", at = { AZJ, 56, 44 } },
+        { t = "Lightless Channels, north-west of the Weaver's Lair.", at = { AZJ, 46.59, 36.14 } },
+        { t = "Ruptured Lake, far west.", at = { AZJ, 29.46, 45.12 } },
+        { t = "Twitching Gorge, south of centre.", at = { AZJ, 49.74, 61.4 } },
+        { t = "Untamed Valley, east of centre.", at = { AZJ, 65, 52 } },
+        { t = "Rak-Ush, south-east.", at = { AZJ, 74.81, 80.27 } },
+        { t = "The Skeins, inside the City of Threads (west part).", at = { THREADS, 31, 24 } },
+        { t = "Umbral Bazaar, City of Threads (north).", at = { THREADS, 62.57, 16.0 } },
+        { t = "High Hollows, City of Threads (east).", at = { THREADS, 72, 48 } },
+        { t = "Crawling Chasm, north-east, underground: its posted coordinates lead into rock, so fly through the caves around that part of the zone." },
+    },
+    tips = { "The Crawling Chasm is the one most players miss." },
+}
+G[41587] = {
+    steps = {
+        { t = "Open the world map: unexplored areas are still fogged. Fly low through each one until its name appears on screen." },
+        { t = "Slam Central Station, the train station on the far west edge." },
+        { t = "Hovel Hill, the run-down north-west quarter." },
+        { t = "Bilgewater Flats, north, around the Scrapshop and Rik Reverb's arena." },
+        { t = "Demolition Dome, the big arena in the north centre." },
+        { t = "Castaway Cove, Blackwater Marina's docks in the north-east." },
+        { t = "The Gallagio, Gallywix's giant casino on the east side." },
+        { t = "Emerald Hills Golf Course, south-east, next to the Gallagio." },
+        { t = "The Heaps, the junkyards in the south." },
+        { t = "The Vatworks, the south-west industrial district." },
+    },
+    tips = { "Ride your D.R.I.V.E. car or fly; Undermine's streets are tight, so fly over the rooftops." },
+}
+G[42740] = {
+    steps = {
+        { t = "Open the world map: unexplored areas are still fogged. Fly low through each one until its name appears on screen." },
+        { t = "Tazavesh, the Veiled Market, in the south (it has its own map)." },
+        { t = "Eco-Dome: Primus, south-west of centre." },
+        { t = "Overlook Zo'Shuul, the centre of the zone." },
+        { t = "Eco-Dome: Rhovan, east, by the Lunnall River." },
+        { t = "The Oasis, north-east." },
+        { t = "Fracture of Laacuna, north of centre." },
+        { t = "Shadow Point, north-west." },
+        { t = "Vanquisher's Wake, the floating island at the very top of the map." },
+        { t = "The Tempest Fields: the open storm plains; if it's the last one left, sweep the fogged part of the map." },
+    },
+    tips = { "Vanquisher's Wake is the one players miss: fly up to the island at the top edge of the map." },
 }
 
 ------------------------------------------------------------------------
