@@ -50,4 +50,5 @@ ns.MIDNIGHT_TOY_ITEMS = {
 }
 
 -- Source text that means "not obtainable by playing": left out of the count.
-ns.COLLECT_EXCLUDE = { "In%-Game Shop", "Blizzard Shop", "Promotion", "Trading Post", "Trading Card", "Recruit%-A%-Friend", "Twitch" }
+ns.COLLECT_EXCLUDE = { "In%-Game Shop", "Blizzard Shop", "Promotion", "Trading Post", "Trading Card", "Recruit%-A%-Friend", "Twitch",
+                       "Remix", "Timewalking", "Turbulent Timeways", "Plunderstorm", "Anniversary" }

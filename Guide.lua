@@ -576,7 +576,7 @@ function ns.Resolve(it, childKey)
         if best then t.spot = bestSpot; t.text = bestText; return t end
         -- single-glyph achievements ("Skyriding Glyphs: Brightwing Estate"): use the Glyph Hunter spot of that name
         local a = ns.Ach(it.id)
-        local glyph = a and a.name and a.name:match("^Skyriding Glyphs:%s*(.+)$")
+        local glyph = a and a.name and a.name:match("^Sky%a+ Glyphs?:%s*(.+)$")   -- also "Skydiving Glyphs", "Skyriding Glyph"
         if glyph then
             local want = ns.norm(glyph)
             for _, p in ipairs(ns.POINTS) do
