@@ -226,7 +226,7 @@ local function RatePoint(it)
     elseif it.pkind == "treasure" then
         local multi = it.steps and #it.steps > 1
         if multi or note:find("need") or note:find("key") or note:find("first") or note:find("requires") or note:find("puzzle") then
-            return R(2, "A small task or item first (see the note)", "hour")
+            return R(2, multi and "Several steps in order (see the steps)" or "A small task or item first (see the note)", "hour")
         end
         return R(1, "Go there and loot it", "quick")
     elseif it.pkind == "delve" then

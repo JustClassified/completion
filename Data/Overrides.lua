@@ -8,6 +8,18 @@
 local _, ns = ...
 
 ns.OVERRIDES = {
+    -- Unfazed Diver: a hidden pet chain over Tazavesh, Voidstorm and Naigtal (Odd Smelling Crate, quest 97099)
+    ["q97099"] = { n = "Odd Smelling Crate (Unfazed Diver pet)",
+        note = "A three-step hidden chain that ends with the Unfazed Diver pet. Do it in a Naigtal week.",
+        loot = { { 246723, "p" } },
+        tips = { "The last step is in Naigtal, so finish before the weekly reset switches the portal to Val." },
+        steps = {
+            { map = 2472, x = 46.91, y = 58.57, text = "Tazavesh, in the Untethered Space (phase-dive with your Reshii Wraps): read the Bill of Lading" },
+            { map = 2405, x = 48.18, y = 70.32, text = "Voidstorm, at the Ethereum Overcroft: open the Odd Smelling Crate and take the plaque", quest = 97099 },
+            { map = 2600, x = 71.54, y = 45.28, text = "Naigtal on normal, in the Arterial Conduits of the manaforge: kill a Hal'hadar Manatech nearby for the Specimen Container Key" },
+            { map = 2600, x = 71.54, y = 45.28, text = "Open the Specimen Container with the key: it holds the Unfazed Diver" },
+        },
+    },
     [111476] = { n = "Antique Nobleman's Signet Ring",
         note = "Ground floor.",
     },

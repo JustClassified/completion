@@ -67,8 +67,14 @@ local achvLoot = {}         -- achievement spots that hand out rewards (vendors 
 
 -- Walkthrough steps for a point: the hand-written override steps, or else its helper spots followed
 -- by the point itself. nil when it has neither.
+-- The hand override for a point: by its achievement criterion, or by its quest ("q" .. questID) for
+-- treasures that belong to no achievement.
+local function OverrideFor(p)
+    return (p.c and ns.OVERRIDES[p.c]) or (p.q and ns.OVERRIDES["q" .. p.q])
+end
+
 local function PointSteps(p, name)
-    local ov = p.c and ns.OVERRIDES[p.c]
+    local ov = OverrideFor(p)
     if ov and ov.steps then
         local steps = {}
         for i, s in ipairs(ov.steps) do
@@ -95,12 +101,12 @@ end
 -- its zone (fallbackZone when the map is not one of ours).
 local function BuildPoint(p, fallbackZone)
     local zone = ZoneForMap(p.m) or fallbackZone
-    local ov = p.c and ns.OVERRIDES[p.c] or {}
+    local ov = OverrideFor(p) or {}
     local name = ov.n or p.n
     local it = {
         key = string.format("p:%d:%s:%s:%s", p.m, tostring(p.q or p.c or ""), tostring(p.x or ""), tostring(p.y or "")),
         kind = "point", pkind = p.k, name = name, a = p.a, c = p.c, q = p.q, npc = p.npc, prof = p.prof,
-        fish = p.fish, wq = p.wq, note = ov.note or p.note, tips = ov.tips, loot = p.loot, sl = p.sl,
+        fish = p.fish, wq = p.wq, note = ov.note or p.note, tips = ov.tips, loot = ov.loot or p.loot, sl = p.sl,
         spots = {},
     }
     if p.x then it.spots[1] = { map = p.m, x = p.x, y = p.y } end
