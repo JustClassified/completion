@@ -8,6 +8,29 @@
 local _, ns = ...
 
 ns.OVERRIDES = {
+    -- Sleepy Mandrake pet: five Redcaps from around Naigtal fed to the mandrake in the Sleeper's Grotto
+    ["n:Sleepy Mandrake"] = { n = "Sleepy Mandrake",
+        note = "Collect five different Redcaps in Naigtal, then feed them to the Sleepy Mandrake. Normal world tier is fine.",
+        tips = { "Feeding counts for your whole account, so a Redcap one character can't reach can be fed by another.",
+                 "Naigtal is only open on its weeks; the portal alternates with Val." },
+        steps = {
+            { map = 2600, x = 28.90, y = 61.76, item = 276365,
+              text = "Highland Redcap: take the path up from 33.4, 59.7 to the hilltop" },
+            { map = 2600, x = 27.91, y = 49.96, item = 276366,
+              text = "Dusty Redcap: enter Vilaldoun Crypt here; it lies inside, at 22.7, 61.3 on the crypt map" },
+            { map = 2600, x = 71.42, y = 37.05, item = 276367,
+              text = "Marshy Redcap: in the Marshwalker Refuge cave, entered from the water side at 75.6, 38.1" },
+            { map = 2600, x = 78.50, y = 40.00, item = 276368,
+              text = "Partially-Digested Redcap: kill Swalewing Matriarch here (Fungal Giants can drop it too)" },
+            { map = 2600, x = 95.09, y = 26.67, item = 276369,
+              text = "Airy Redcap: from 89.3, 29.5 bounce north up the Bouncy Mushrooms to the top of the tallest one" },
+            { map = 2600, x = 68.23, y = 51.61,
+              text = "Sleeper's Grotto (cave entrance 67.7, 54.3): talk to the Sleepy Mandrake and feed it each Redcap, then pot it for the pet" },
+        },
+    },
+    ["q97092"] = { n = "Dusty Redcap",
+        note = "One of the five Redcaps for the Sleepy Mandrake pet. Inside Vilaldoun Crypt; the entrance is at 27.9, 50.0 in Naigtal.",
+    },
     -- Unfazed Diver: a hidden pet chain over Tazavesh, Voidstorm and Naigtal (Odd Smelling Crate, quest 97099)
     ["q97099"] = { n = "Odd Smelling Crate (Unfazed Diver pet)",
         note = "A three-step hidden chain that ends with the Unfazed Diver pet. Do it in a Naigtal week.",

@@ -30,7 +30,7 @@ local function Lines(it, child)
     local lines = {}
     local pinst, pwx, pwy = ns.PlayerWorld()
     local res = ns.Resolve(it, child)
-    local rows = (it.kind == "ach" or it.kind == "container" or it.kind == "lore" or (it.kind == "point" and it.steps))
+    local rows = (it.kind == "ach" or it.kind == "container" or it.kind == "lore" or ((it.kind == "point" or it.kind == "collect") and it.steps))
         and ns.Children(it) or {}
     for _, row in ipairs(rows) do
         local sub = row.item
@@ -196,7 +196,7 @@ local function Progress(it)
             end
         end
         if total > 1 then return done, total end
-    elseif it.kind == "point" and it.steps then
+    elseif (it.kind == "point" or it.kind == "collect") and it.steps then
         local done = 0
         for i = 1, #it.steps do if ns.StepDone(it, i) then done = done + 1 end end
         return done, #it.steps

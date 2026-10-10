@@ -380,16 +380,38 @@ local function AppearanceOwned(itemID)
         if ok2 and hasData then canLearn[sourceID] = canCollect and true or false end
     end
     if canLearn[sourceID] == false then return "skip" end
-    if C_TransmogCollection.GetAppearanceInfoBySource then
-        local ok3, info = pcall(C_TransmogCollection.GetAppearanceInfoBySource, sourceID)
-        if ok3 and type(info) == "table" and info.appearanceIsCollected ~= nil then
-            return info.appearanceIsCollected and true or false
+    -- known if ANY of the game's answers says so: the look can come from another item that shares it,
+    -- which checking only this exact item misses. "false" only when an answer came back and none said yes.
+    local answered = false
+    local T = C_TransmogCollection
+    if T.GetAppearanceInfoBySource then
+        local ok3, info = pcall(T.GetAppearanceInfoBySource, sourceID)
+        if ok3 and type(info) == "table" then
+            if info.appearanceIsCollected or info.sourceIsCollected then return true end
+            if info.appearanceIsCollected ~= nil then answered = true end
         end
     end
-    if C_TransmogCollection.PlayerHasTransmogItemModifiedAppearance then
-        local ok4, has = pcall(C_TransmogCollection.PlayerHasTransmogItemModifiedAppearance, sourceID)
-        if ok4 then return has and true or false end
+    if T.PlayerHasTransmogByItemInfo then
+        local ok4, has = pcall(T.PlayerHasTransmogByItemInfo, itemID)
+        if ok4 and has then return true end
     end
+    -- every item that shows this appearance
+    if T.GetAllAppearanceSources and T.GetSourceInfo then
+        local ok5, sources = pcall(T.GetAllAppearanceSources, appearanceID)
+        if ok5 and type(sources) == "table" and #sources > 0 then
+            for _, sid in ipairs(sources) do
+                local ok6, si = pcall(T.GetSourceInfo, sid)
+                if ok6 and type(si) == "table" and si.isCollected then return true end
+            end
+            answered = true
+        end
+    end
+    if T.PlayerHasTransmogItemModifiedAppearance then
+        local ok7, has = pcall(T.PlayerHasTransmogItemModifiedAppearance, sourceID)
+        if ok7 and has then return true end
+        if ok7 then answered = true end
+    end
+    if answered then return false end
 end
 
 local typeCache = {}   -- itemID -> resolved type or false (not a collectible)

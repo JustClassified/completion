@@ -357,7 +357,7 @@ function ns.Children(it)
         end
         return rows
     end
-    if it.kind == "point" and it.steps then
+    if (it.kind == "point" or it.kind == "collect") and it.steps then
         StepRows(it, rows)
         return rows
     end
@@ -629,6 +629,14 @@ function ns.Resolve(it, childKey)
         r.step, r.stepCount = i, #it.steps
         r.text = st.text .. ((r.spot and r.text and r.text ~= "") and ("  |cffaaaaaa(" .. r.text .. ")|r") or "")
         return r
+    end
+    -- a collectible with its own steps (a pet you put together from parts) follows them like a treasure
+    if it.kind == "collect" and it.steps and not it.done then
+        local i = ns.CurrentStep(it)
+        local s = it.steps[i]
+        t.step, t.text, t.stepCount = i, s.text, #it.steps
+        t.spot = s.x and { map = s.map, x = s.x, y = s.y }
+        return t
     end
     if it.kind == "point" then
         if it.steps and not it.done then

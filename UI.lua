@@ -1299,7 +1299,7 @@ end
 
 -- Whether an item can expand: dungeons and delves, achievements, lore with a quest chain, multi-step treasures.
 local function HasChildren(it)
-    return it.kind == "container" or it.kind == "ach" or (it.kind == "lore" and it.crit.chain) or (it.kind == "point" and it.steps)
+    return it.kind == "container" or it.kind == "ach" or (it.kind == "lore" and it.crit.chain) or ((it.kind == "point" or it.kind == "collect") and it.steps)
 end
 
 -- List row clicks. Right-click stops tracking; a chat-link click links it; a search hit jumps to its page;

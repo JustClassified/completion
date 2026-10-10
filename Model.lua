@@ -67,10 +67,10 @@ local achvLoot = {}         -- achievement spots that hand out rewards (vendors 
 
 -- Walkthrough steps for a point: the hand-written override steps, or else its helper spots followed
 -- by the point itself. nil when it has neither.
--- The hand override for a point: by its achievement criterion, or by its quest ("q" .. questID) for
--- treasures that belong to no achievement.
+-- The hand override for a point: by its achievement criterion, by its quest ("q" .. questID) for
+-- treasures that belong to no achievement, or by name ("n:" .. name) for spots with neither.
 local function OverrideFor(p)
-    return (p.c and ns.OVERRIDES[p.c]) or (p.q and ns.OVERRIDES["q" .. p.q])
+    return (p.c and ns.OVERRIDES[p.c]) or (p.q and ns.OVERRIDES["q" .. p.q]) or (p.n and ns.OVERRIDES["n:" .. p.n])
 end
 
 local function PointSteps(p, name)
@@ -805,8 +805,10 @@ local function BuildCollect(zone)
             local src = p.k == "vendor" and ("From " .. (p.n or "a vendor") .. (p.note and (": " .. p.note) or ""))
                 or ("Reward: " .. (p.n or (a and a.name) or "achievement"))
             for _, l in ipairs(p.loot or {}) do
+                -- the spot's own steps (helper spots or a hand-written chain) come along
                 AddCollect(zone, "i" .. l[1], { itemID = l[1], flag = l[2], sourceText = src,
-                                                spots = p.x and { { map = p.m, x = p.x, y = p.y } } or {} })
+                                                spots = p.x and { { map = p.m, x = p.x, y = p.y } } or {},
+                                                steps = PointSteps(p, p.n) })
             end
         end
     end
