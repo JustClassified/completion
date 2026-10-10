@@ -953,6 +953,137 @@ G[61265] = {
     },
 }
 
+G[61545] = {
+    steps = {
+        { t = "Progress the Harandar story until you've finished the quest Root Dash Delivery: before that the glyph vanishes as you approach." },
+        { t = "Fly to the Roots of Teldrassil glyph and fly through it on a skyriding mount." },
+    },
+}
+local roleSeason = function(role)
+    return {
+        steps = {
+            { t = "Run every Midnight dungeon on Mythic or a keystone as a " .. role .. "; only your role on the final boss counts." },
+            { t = "Mythic is only open for dungeons in the current season's rotation, so the rest wait for a season that includes them." },
+        },
+    }
+end
+G[62193] = roleSeason("damage dealer")
+G[62194] = roleSeason("healer")
+G[62195] = roleSeason("tank")
+G[61567] = {
+    steps = {
+        { t = "Finish each Midnight Heroic dungeon achievement listed (queue for Heroic in the Group Finder)." },
+        { t = "Some Heroic versions only open in a later season; check the Group Finder each season." },
+    },
+}
+G[61368] = {
+    steps = {
+        { t = "Join a Heroic group for The Voidspire through the Premade Groups finder." },
+        { t = "Defeat every boss on Heroic or Mythic; kills from different weeks count." },
+    },
+    tips = { "Players report the Lightblinded Vanguard criterion sometimes not ticking even after kills; a ticket or a later kill may be needed." },
+}
+G[62341] = {
+    steps = {
+        { t = "Finish each Abundance achievement listed (each has its own guide)." },
+    },
+    tips = { "Players have reported parts of it as not completable at times; check again after patches." },
+}
+
+local stories = function(tip)
+    return {
+        steps = {
+            { t = "Click the delve's entrance on the map: the tier menu shows today's story." },
+            { t = "If it's a story you still need (expand the achievement; each row explains the story), run it on any tier." },
+            { t = "Come back on other days for the other stories; they change daily." },
+        },
+        tips = tip and { tip } or nil,
+    }
+end
+G[61725] = stories("The entrance is around 48, 42: take the stairs down, not the closed-looking door to the west.")
+G[61726] = stories("The map may call one story An Elementary Antidote while the achievement says Academic Antitoxin; they're the same.")
+G[61727] = stories("The story Infiltrate and Ameliorate counts for the Basilisk Blitz criterion.")
+G[61731] = stories("Sporasaur Special: stand in the green circles to bounce spores back at the dinosaur and break its shield.")
+G[61732] = stories("The Gravitational Effect: 'swim' through the air to the hanging Singularity Coils; the microsingularity keeps you up as long as you don't go too far.")
+G[63436] = stories("Game Day: kick the head into the four big obelisks; after the first goal, riders circle the obelisk, so time the second kick between them.")
+G[63437] = stories("Minchi's Osseous Adventure starts with Minchi at the entrance; Odds and Ends starts with Tormunda.")
+local chests = function(tip)
+    return {
+        steps = {
+            { t = "Enter the delve; each Sturdy Chest has its spot inside, and the arrow leads chest to chest." },
+            { t = "Open every chest you can reach in this run." },
+            { t = "Some chests only exist in particular stories: come back on other days for the rest." },
+        },
+        tips = tip and { tip } or nil,
+    }
+end
+G[61895] = chests("On the Leyline Technician story all three chests are in the main circular chamber just before the boss.")
+G[61897] = chests("The chest on the mushroom can be looted from below the platform.")
+G[61898] = chests("For the high chest, walk up the branch and click it from the top; don't jump.")
+G[61899] = chests("Paste or follow positions only after teleporting to the Focal Point (the map has several levels). One chest is reached by dropping off a spike with a disengage or updraft.")
+G[61900] = chests()
+G[61893] = chests("These chests are there whatever the day's story.")
+local roleTip = "Only the role on the final boss counts: hybrids can run the delve in any spec and switch before the last boss."
+for _, id in ipairs({ 61711, 61712, 61713, 61714, 61715, 61716, 61717, 61718, 61719 }) do
+    local tier = ({ [61711] = 4, [61712] = 8, [61713] = 11, [61714] = 4, [61715] = 8, [61716] = 11, [61717] = 4, [61718] = 8, [61719] = 11 })[id]
+    local role = id <= 61713 and "damage dealer" or (id <= 61716 and "healer" or "tank")
+    G[id] = {
+        steps = {
+            { t = "Check each delve's story on the tier menu and pick an easy one." },
+            { t = "Finish every Midnight delve on Tier " .. tier .. (tier == 11 and "" or " or higher") .. " with lives left, as a " .. role .. "." },
+            { t = "Expand the achievement to see which delves are left." },
+        },
+        tips = { roleTip, tier == 11 and "Tier 11 achievements only unlock in the tracker once the lower ones are done; you can still make progress." or nil },
+    }
+end
+G[61722] = {
+    steps = {
+        { t = "Collect every curio available for Valeera; they come from delves (rank 4 ones only from Bountiful delves on Tier 7+)." },
+        { t = "If all curios show as owned but nothing pops, relog; players report delays." },
+    },
+}
+
+local UNLOCK = {
+    ["Tainted Corpses"] = "Unlock it first: loot the Tainted Bone Pile inside the site (it's in both Ritual Sites).",
+    ["Patrols!"] = "Unlock it first through the quest Misappropriated Treasures, started by picking up one of its four items at the sites.",
+}
+local challenge = function(name, expert)
+    return {
+        steps = {
+            { t = "Go to the Ritual Site that's active (Broken Throne in south Zul'Aman or Daggerspine Point in Eversong; one at a time)." },
+            { t = UNLOCK[name] or ("If the " .. name .. " challenge isn't offered yet, it's unlocked by an item or quest found inside the sites.") },
+            { t = "At the start, add the " .. name .. " challenge" .. (expert and " and choose Tier 5." or ".") },
+            { t = "Finish the site by defeating its final boss; the achievement only pops then." },
+        },
+    }
+end
+local names = { "Tendrils", "Tainted Corpses", "Manifestations", "Patrols!", "Magical Alarm Bells", "Malevolent Boons", "Reinforced", "Embers" }
+for i, n in ipairs(names) do
+    G[62539 + i] = challenge(n)
+    G[62547 + i] = challenge(n, true)
+end
+local strikes = function(zone, n)
+    return {
+        steps = {
+            { t = "Void Strikes alternate weekly between Eversong and Zul'Aman; wait for a " .. zone .. " week." },
+            { t = "Complete " .. n .. " Void Strikes in " .. zone .. ". Only strikes count, not Incursions." },
+        },
+    }
+end
+G[62507] = strikes("Eversong", 5)
+G[62508] = strikes("Eversong", 25)
+G[62509] = strikes("Eversong", 50)
+G[62510] = strikes("Zul'Aman", 5)
+G[62511] = strikes("Zul'Aman", 25)
+G[62512] = strikes("Zul'Aman", 50)
+G[62607] = {
+    steps = {
+        { t = "Pick up Seeking Knowledge: Ritualized Arcana (part of the Omnium questline)." },
+        { t = "Run Ritual Sites: the objective minibosses always drop what it needs, eight per run on any tier." },
+        { t = "Hand in the quest." },
+    },
+}
+
 for id, g in pairs(G) do
     if not ns.ACH_STEPS[id] then
         if g.steps then ns.ACH_STEPS[id] = g.steps end
@@ -1048,3 +1179,103 @@ ns.CRIT_NOTES[61739]["Silence at Fungara Village"] = ns.CRIT_NOTES[61739]["Silen
 ns.CRIT_NOTES[61739]["Hunter's Rights"] = ns.CRIT_NOTES[61739]["Hunter's Rights"] or { t = "Storyline starts here", at = { { 2413, 69.45, 52.79 } } }
 ns.CRIT_NOTES[61739]["Predator Reintroduction"] = ns.CRIT_NOTES[61739]["Predator Reintroduction"] or { t = "Storyline starts here", at = { { 2413, 69.56, 50.64 } } }
 ns.CRIT_NOTES[61739]["The Grudge Pit"] = ns.CRIT_NOTES[61739]["The Grudge Pit"] or { t = "Storyline starts here", at = { { 2413, 71.81, 64.01 } } }
+
+-- Exploration routes for the Midnight zones (replace the generic explore steps)
+ns.ACH_STEPS[61855] = {
+    { t = "Open the world map: unexplored areas are still fogged. Fly low through each one until its name shows on screen." },
+    { t = "Silvermoon City, the capital (its own map)." },
+    { t = "Sunstrider Isle, the island in the north.", at = { EVERSONG, 42.91, 20.97 } },
+    { t = "Fairbreeze Village, west of centre.", at = { EVERSONG, 46.57, 43.26 } },
+    { t = "Brightwing Estate, north-east.", at = { EVERSONG, 62.96, 34.32 } },
+    { t = "Goldenmist Village, west.", at = { EVERSONG, 39.36, 57.14 } },
+    { t = "Suncrown Village, centre-south.", at = { EVERSONG, 52.41, 61.87 } },
+    { t = "Tranquillien, south of centre.", at = { EVERSONG, 48.46, 63.39 } },
+    { t = "Windrunner Spire, south-west.", at = { EVERSONG, 36.8, 79.79 } },
+    { t = "Amani Pass, the far south.", at = { EVERSONG, 54.03, 81.16 } },
+}
+ns.CRIT_NOTES[61855] = ns.CRIT_NOTES[61855] or {}
+ns.CRIT_NOTES[61855]["Sunstrider Isle"] = { t = "Fly over this area", at = { { EVERSONG, 42.91, 20.97 } } }
+ns.CRIT_NOTES[61855]["Fairbreeze Village"] = { t = "Fly over this area", at = { { EVERSONG, 46.57, 43.26 } } }
+ns.CRIT_NOTES[61855]["Brightwing Estate"] = { t = "Fly over this area", at = { { EVERSONG, 62.96, 34.32 } } }
+ns.CRIT_NOTES[61855]["Goldenmist Village"] = { t = "Fly over this area", at = { { EVERSONG, 39.36, 57.14 } } }
+ns.CRIT_NOTES[61855]["Suncrown Village"] = { t = "Fly over this area", at = { { EVERSONG, 52.41, 61.87 } } }
+ns.CRIT_NOTES[61855]["Tranquillien"] = { t = "Fly over this area", at = { { EVERSONG, 48.46, 63.39 } } }
+ns.CRIT_NOTES[61855]["Windrunner Spire"] = { t = "Fly over this area", at = { { EVERSONG, 36.8, 79.79 } } }
+ns.CRIT_NOTES[61855]["Amani Pass"] = { t = "Fly over this area", at = { { EVERSONG, 54.03, 81.16 } } }
+ns.ACH_STEPS[61856] = {
+    { t = "Open the world map: unexplored areas are still fogged. Fly low through each one until its name shows on screen." },
+    { t = "Amani'Zar Village, the hub.", at = { ZULAMAN, 45.63, 63.17 } },
+    { t = "Strait of Hexx'alor, east of the hub.", at = { ZULAMAN, 53.27, 54.06 } },
+    { t = "Temple of Akil'zon, south-east.", at = { ZULAMAN, 50.24, 76.42 } },
+    { t = "Den of Nalorakk, south-west.", at = { ZULAMAN, 31.13, 82.34 } },
+    { t = "Broken Throne, just north of the Den of Nalorakk.", at = { ZULAMAN, 28.48, 78.1 } },
+    { t = "Maisara Deeps, centre.", at = { ZULAMAN, 42.4, 44.15 } },
+    { t = "Temple of Halazzi, north-west.", at = { ZULAMAN, 30.9, 31.61 } },
+    { t = "Atal'Aman, far north-west.", at = { ZULAMAN, 27.28, 24.2 } },
+    { t = "Witherbark Bluffs, north.", at = { ZULAMAN, 38.09, 27.84 } },
+    { t = "Temple of Jan'alai, north.", at = { ZULAMAN, 49.64, 24.58 } },
+}
+ns.CRIT_NOTES[61856] = ns.CRIT_NOTES[61856] or {}
+ns.CRIT_NOTES[61856]["Amani'Zar Village"] = { t = "Fly over this area", at = { { ZULAMAN, 45.63, 63.17 } } }
+ns.CRIT_NOTES[61856]["Strait of Hexx'alor"] = { t = "Fly over this area", at = { { ZULAMAN, 53.27, 54.06 } } }
+ns.CRIT_NOTES[61856]["Temple of Akil'zon"] = { t = "Fly over this area", at = { { ZULAMAN, 50.24, 76.42 } } }
+ns.CRIT_NOTES[61856]["Den of Nalorakk"] = { t = "Fly over this area", at = { { ZULAMAN, 31.13, 82.34 } } }
+ns.CRIT_NOTES[61856]["Broken Throne"] = { t = "Fly over this area", at = { { ZULAMAN, 28.48, 78.1 } } }
+ns.CRIT_NOTES[61856]["Maisara Deeps"] = { t = "Fly over this area", at = { { ZULAMAN, 42.4, 44.15 } } }
+ns.CRIT_NOTES[61856]["Temple of Halazzi"] = { t = "Fly over this area", at = { { ZULAMAN, 30.9, 31.61 } } }
+ns.CRIT_NOTES[61856]["Atal'Aman"] = { t = "Fly over this area", at = { { ZULAMAN, 27.28, 24.2 } } }
+ns.CRIT_NOTES[61856]["Witherbark Bluffs"] = { t = "Fly over this area", at = { { ZULAMAN, 38.09, 27.84 } } }
+ns.CRIT_NOTES[61856]["Temple of Jan'alai"] = { t = "Fly over this area", at = { { ZULAMAN, 49.64, 24.58 } } }
+ns.ACH_STEPS[61520] = {
+    { t = "Open the world map: unexplored areas are still fogged. Fly low through each one until its name shows on screen." },
+    { t = "The Den, the hub in the middle (the hut above it is at 53.5, 53.2).", at = { HARANDAR, 53.5, 53.2 } },
+    { t = "Blooming Lattice, north of the Den.", at = { HARANDAR, 54.65, 35.55 } },
+    { t = "Fungara Village, south-west of the Den.", at = { HARANDAR, 44.55, 62.81 } },
+    { t = "Har'athir, east.", at = { HARANDAR, 69.05, 51.17 } },
+    { t = "The Grudge Pit, south-east.", at = { HARANDAR, 70.5, 64.9 } },
+    { t = "Har'kuai, Har'alnor, Har'mara, Gloom Mire, the Rift of Aln, the Den of Echoes, the Vale of Mists and the Blinding Bloom: sweep the fogged parts of the map for any of these still missing." },
+}
+ns.CRIT_NOTES[61520] = ns.CRIT_NOTES[61520] or {}
+ns.CRIT_NOTES[61520]["The Den"] = { t = "Fly over this area", at = { { HARANDAR, 53.5, 53.2 } } }
+ns.CRIT_NOTES[61520]["Blooming Lattice"] = { t = "Fly over this area", at = { { HARANDAR, 54.65, 35.55 } } }
+ns.CRIT_NOTES[61520]["Fungara Village"] = { t = "Fly over this area", at = { { HARANDAR, 44.55, 62.81 } } }
+ns.CRIT_NOTES[61520]["Har'athir"] = { t = "Fly over this area", at = { { HARANDAR, 69.05, 51.17 } } }
+ns.CRIT_NOTES[61520]["The Grudge Pit"] = { t = "Fly over this area", at = { { HARANDAR, 70.5, 64.9 } } }
+ns.ACH_STEPS[61857] = {
+    { t = "Open the world map: unexplored areas are still fogged. Fly low through each one until its name shows on screen." },
+    { t = "The Ingress, west.", at = { VOIDSTORM, 35.67, 61.1 } },
+    { t = "Shadowguard Point, north-west.", at = { VOIDSTORM, 36.08, 37.25 } },
+    { t = "The Voidspire, the raid in the centre.", at = { VOIDSTORM, 51.34, 62.72 } },
+    { t = "Obscurion Citadel, south-east.", at = { VOIDSTORM, 64.97, 71.9 } },
+    { t = "Slayer's Rise, the PvP area in the north (its own map)." },
+    { t = "Nexus-Point Antius, Nexus-Point Mid'Ar, Nexus-Point Xenas, Howling Ridge and Stormarion Citadel: sweep the fogged parts of the map for any still missing." },
+}
+ns.CRIT_NOTES[61857] = ns.CRIT_NOTES[61857] or {}
+ns.CRIT_NOTES[61857]["The Ingress"] = { t = "Fly over this area", at = { { VOIDSTORM, 35.67, 61.1 } } }
+ns.CRIT_NOTES[61857]["Shadowguard Point"] = { t = "Fly over this area", at = { { VOIDSTORM, 36.08, 37.25 } } }
+ns.CRIT_NOTES[61857]["The Voidspire"] = { t = "Fly over this area", at = { { VOIDSTORM, 51.34, 62.72 } } }
+ns.CRIT_NOTES[61857]["Obscurion Citadel"] = { t = "Fly over this area", at = { { VOIDSTORM, 64.97, 71.9 } } }
+ns.ACH_STEPS[63640] = {
+    { t = "Open the world map: unexplored areas are still fogged. Fly low through each one until its name shows on screen." },
+    { t = "Tokka's Landing, the hub.", at = { COILED, 58.95, 48.91 } },
+    { t = "The Serpent's Tail, north of the hub.", at = { COILED, 52.01, 38.4 } },
+    { t = "Blistering Terrace, north-west.", at = { COILED, 42.9, 30.6 } },
+    { t = "Gate of the Serpent's Eye, centre.", at = { COILED, 43.81, 44.19 } },
+    { t = "Gate of the Eastern Fang, south of centre.", at = { COILED, 45.84, 64.94 } },
+    { t = "The Forum, west.", at = { COILED, 26.62, 63.14 } },
+    { t = "The Whispering Marsh, south-east.", at = { COILED, 64.13, 60.65 } },
+    { t = "Wreck of Paku's Talon, east.", at = { COILED, 70.29, 48.16 } },
+    { t = "Mlurkkr Mire, north-east.", at = { COILED, 71.2, 31.3 } },
+    { t = "Gnarldor Isle, the islet in the south-east.", at = { COILED, 64.45, 77.73 } },
+}
+ns.CRIT_NOTES[63640] = ns.CRIT_NOTES[63640] or {}
+ns.CRIT_NOTES[63640]["Tokka's Landing"] = { t = "Fly over this area", at = { { COILED, 58.95, 48.91 } } }
+ns.CRIT_NOTES[63640]["The Serpent's Tail"] = { t = "Fly over this area", at = { { COILED, 52.01, 38.4 } } }
+ns.CRIT_NOTES[63640]["Blistering Terrace"] = { t = "Fly over this area", at = { { COILED, 42.9, 30.6 } } }
+ns.CRIT_NOTES[63640]["Gate of the Serpent's Eye"] = { t = "Fly over this area", at = { { COILED, 43.81, 44.19 } } }
+ns.CRIT_NOTES[63640]["Gate of the Eastern Fang"] = { t = "Fly over this area", at = { { COILED, 45.84, 64.94 } } }
+ns.CRIT_NOTES[63640]["The Forum"] = { t = "Fly over this area", at = { { COILED, 26.62, 63.14 } } }
+ns.CRIT_NOTES[63640]["The Whispering Marsh"] = { t = "Fly over this area", at = { { COILED, 64.13, 60.65 } } }
+ns.CRIT_NOTES[63640]["Wreck of Paku's Talon"] = { t = "Fly over this area", at = { { COILED, 70.29, 48.16 } } }
+ns.CRIT_NOTES[63640]["Mlurkkr Mire"] = { t = "Fly over this area", at = { { COILED, 71.2, 31.3 } } }
+ns.CRIT_NOTES[63640]["Gnarldor Isle"] = { t = "Fly over this area", at = { { COILED, 64.45, 77.73 } } }
