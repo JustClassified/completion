@@ -337,19 +337,183 @@ G[41808] = {
     },
 }
 G[41815] = G[41808]
-G[41928] = { steps = { { t = "Expand the achievement: each part is a Horrific Visions Revisited achievement with its own guide." } }, tips = { "It gives no reward if you already own Reek from the original vision achievement." } }
-G[41929] = { steps = { { t = "Expand the achievement: each part is a Horrific Visions Revisited achievement with its own guide." } }, tips = { "A five-mask clear has sometimes not credited the five-mask achievement in the same run as the eight-mask one; repeat it if a row stays open." } }
-G[40232] = { steps = { { t = "Expand the achievement: each part is a Nerub-ar Palace raid achievement with its own guide." } }, tips = { "You Can't See Me, Cowabunga and Would You Still /love Me need at least ten players in the raid to give credit." } }
-G[40980] = { steps = { { t = "Expand the achievement: each part is one Khaz Algar pet tamer achievement; beat every tamer with a pet of each family." } }, tips = { "Look up a team for each tamer before you start; most fights have a known safe strategy." } }
+G[41928] = { steps = { { t = "Expand the achievement: each part is a Horrific Visions Revisited achievement with its own guide." }, { t = "Upgrade the Hourglass with Mementos as you go; each upgrade makes the next part easier." }, { t = "Do the parts as the weekly city allows: Stormwind and Orgrimmar alternate." } }, tips = { "It gives no reward if you already own Reek from the original vision achievement." } }
+G[41929] = { steps = { { t = "Expand the achievement: each part is a Horrific Visions Revisited achievement with its own guide." }, { t = "Collect the masks first (Long Night, then the city masks on their weeks); the many-mask clears need them." }, { t = "Then clear both cities with more and more masks on, ending with the full set." } }, tips = { "A five-mask clear has sometimes not credited the five-mask achievement in the same run as the eight-mask one; repeat it if a row stays open." } }
+G[40232] = { steps = { { t = "Expand the achievement: each part is a Nerub-ar Palace raid achievement with its own guide." }, { t = "Join or build a Normal or Heroic group that is doing the Glory achievements; most need the whole raid to cooperate." }, { t = "Do one or two per week as the guides describe; when every row is ticked, the mount is yours." } }, tips = { "You Can't See Me, Cowabunga and Would You Still /love Me need at least ten players in the raid to give credit." } }
+G[40980] = { steps = { { t = "Expand the achievement: each row is one pet family achievement with its own guide." }, { t = "Level three pets of a family to 25 and beat every Khaz Algar tamer with only that family." }, { t = "Repeat for all ten families." } }, tips = { "Look up a team for each tamer before you start; most fights have a known safe strategy." } }
 local elite = function(boss)
     return {
-        steps = { { t = "Expand the achievement: any one of the rows gives it, from rated PvP or Mythic+ rating to a raid kill." } },
+        steps = {
+            { t = "Expand the achievement: any one of the rows gives it." },
+            { t = "Pick the route that fits you: the PvP rating row, the Mythic+ rating row, or the Mythic raid kill." },
+            { t = "Reach that goal; the achievement and its reward come at once." },
+        },
         tips = { "It stays possible after the season ends through the Mythic " .. boss .. " kill." },
     }
 end
 G[40723] = elite("Queen Ansurek")
 G[41665] = elite("Gallywix")
-G[42325] = { steps = { { t = "Expand the achievement: any one of the rows gives it, from rated PvP or Mythic+ rating to a raid kill." } }, tips = { "It rewards a K'areshi Voidstone, which unlocks transmog appearances." } }
+G[42325] = { steps = { { t = "Expand the achievement: any one of the rows gives it." }, { t = "Pick the route that fits you: the PvP rating row, the Mythic+ rating row, or the raid row." }, { t = "Reach that goal; the achievement and its reward come at once." } }, tips = { "It rewards a K'areshi Voidstone, which unlocks transmog appearances." } }
+
+-- Khaz Algar race tiers the lists had missed
+local RACE_TIPS = {
+    bronze = "Fly through every ring to the finish; any time counts.",
+    silver = "Finish under the silver time: save vigor for the climbs and use Surge Forward on the straights.",
+    gold = "Gold needs a clean run: learn the line on a practice lap, never miss a ring (a miss costs time), and keep Whirling Surge and Second Wind for the long stretches.",
+}
+local race = function(kind, medal)
+    return {
+        steps = {
+            { t = "Expand the achievement: it lists every " .. kind .. " race it needs, each with its start." },
+            { t = "Fly to a race start and talk to the race NPC or step into the start ring; pick the " .. kind .. " version." },
+            { t = "Earn " .. medal .. " in each one: " .. RACE_TIPS[medal] },
+            { t = "Repeat for every race in the list; the arrow moves to the next start." },
+        },
+        tips = { "Your best time per race is kept, so you can come back to a single race later." },
+    }
+end
+G[40317] = race("normal", "silver")
+G[40318] = race("normal", "gold")
+G[40319] = race("advanced", "bronze")
+G[40321] = race("advanced", "gold")
+G[40323] = race("reverse", "silver")
+G[40324] = race("reverse", "gold")
+G[40329] = race("advanced", "silver")
+G[40331] = race("reverse", "bronze")
+G[40333] = race("reverse", "gold")
+G[40336] = race("normal", "gold")
+G[40337] = race("advanced", "bronze")
+G[40339] = race("advanced", "gold")
+G[40341] = race("reverse", "silver")
+G[40342] = race("reverse", "gold")
+G[40343] = race("normal", "bronze")
+G[40344] = race("normal", "silver")
+G[40346] = race("advanced", "bronze")
+G[40347] = race("advanced", "silver")
+G[40349] = race("reverse", "bronze")
+G[40350] = race("reverse", "silver")
+G[40351] = race("reverse", "gold")
+G[40354] = {
+    steps = {
+        { t = "Expand the achievement: it's every Khaz Algar race tier at gold, one row per zone achievement." },
+        { t = "Work through the zone gold achievements one at a time; each has its own guide." },
+    },
+    tips = { RACE_TIPS.gold },
+}
+local car = function(kind, medal)
+    return {
+        steps = {
+            { t = "Get the G-99 Breakneck from the Undermine questline and use it; these races need the car, not a flying mount." },
+            { t = "Expand the achievement: it lists every " .. kind .. " race in Undermine, each with its start." },
+            { t = "Drive to a start, begin the race and earn " .. medal .. ". Use boosts on the straights and stay on the road; the walls cost the most time." },
+            { t = "Repeat for every race in the list." },
+        },
+    }
+end
+G[40938] = car("Skyrocketing", "gold")
+G[41083] = car("Breakneck", "silver")
+
+-- pet battle families the lists had missed
+local family = function(kind, where)
+    return {
+        steps = {
+            { t = "Level a team of three " .. kind .. " pets to 25." },
+            { t = "Expand the achievement: every " .. where .. " has its spot." },
+            { t = "Fight each one with only " .. kind .. " pets; they can be fought again whenever they're up, even after their world quest." },
+        },
+        tips = { "Look up a team for each fight before you go; most have a known safe strategy." },
+    }
+end
+G[40155] = family("beast", "Khaz Algar tamer")
+G[40156] = family("critter", "Khaz Algar tamer")
+G[40157] = family("dragonkin", "Khaz Algar tamer")
+G[40158] = family("elemental", "Khaz Algar tamer")
+G[41541] = family("critter", "Undermine elite pet and tamer")
+G[41544] = family("dragonkin", "Undermine elite pet and tamer")
+G[41545] = family("elemental", "Undermine elite pet and tamer")
+G[41547] = family("humanoid", "Undermine elite pet and tamer")
+G[41549] = family("mechanical", "Undermine elite pet and tamer")
+G[41550] = family("undead", "Undermine elite pet and tamer")
+
+-- Deephaul Ravine
+local ravine = function(goal, tip)
+    return {
+        steps = {
+            { t = "Open the PvP window and queue for random battlegrounds, or for Deephaul Ravine when it's the featured battleground." },
+            { t = goal },
+        },
+        tips = tip and { tip } or nil,
+    }
+end
+G[40210] = ravine("Win one Deephaul Ravine match.")
+G[40216] = ravine("Win a match in under 7 minutes: the fastest way is to reach the score limit with crystal captures and carts, so join a group that plays the objective hard.", "Premade groups win fast far more often than a random queue.")
+G[40607] = ravine("Pick up the Deephaul Crystal and carry it until it's captured for your team, once.")
+G[40615] = ravine("Wait near where the Earthen Mine Carts drop players off and kill an enemy right after they step out.")
+G[40468] = {
+    steps = {
+        { t = "Turn on War Mode (in a capital, from the talents window)." },
+        { t = "Watch the Khaz Algar zones for a War Supply Crate: a plane drops it about every 15 minutes, and it shows on the map." },
+        { t = "Get there first and loot it. Repeat until you've opened 5." },
+    },
+    tips = { "Quiet zones and off-peak hours make it much easier." },
+}
+
+-- professions, fishing, appearances, dungeon metas, leveling
+G[19408] = {
+    steps = {
+        { t = "Pick one primary profession and learn its Khaz Algar skill from the trainer in Dornogal." },
+        { t = "Raise it to the maximum: craft or gather for skill, and do the weekly profession quests and treasures for knowledge." },
+    },
+    tips = { "Any one primary profession at maximum Khaz Algar skill is enough." },
+}
+local thread = function(name)
+    return {
+        steps = {
+            { t = "Attach an Algari Weaverline to your fishing pole first (the Aqirite Fisherfriend is the best pole for it)." },
+            { t = "Then attach each " .. name .. " you collect to the same pole until you reach the count." },
+        },
+        tips = { "The threads count per character, so stay on one fisher." },
+    }
+end
+for _, id in ipairs({ 40484, 40485, 40487, 40489, 40490, 40491 }) do G[id] = thread("Algari Seekerthread") end
+for _, id in ipairs({ 40495, 40497, 40499 }) do G[id] = thread("Algari Anglerthread") end
+G[40469] = {
+    steps = {
+        { t = "Run Nerub-ar Palace on any difficulty and collect the armor pieces for your class." },
+        { t = "Any one full set (all its pieces, one difficulty's look) completes it." },
+    },
+}
+G[41525] = {
+    steps = {
+        { t = "Run the Liberation of Undermine on any difficulty and collect the armor pieces for your class." },
+        { t = "Any one full set completes it." },
+    },
+}
+G[61565] = {
+    steps = {
+        { t = "Expand the achievement: it lists the Heroic achievement of every War Within dungeon." },
+        { t = "Queue for Heroic dungeons in the Dungeon Finder, or pick each one with Specific Dungeons; finish each to its last boss." },
+    },
+}
+G[61566] = {
+    steps = {
+        { t = "Expand the achievement: it lists the Mythic dungeon achievements, each with its own guide." },
+        { t = "Form or join a Mythic group for each; most need a specific task done before or during a boss." },
+    },
+}
+local mentor = function(n)
+    return {
+        steps = {
+            { t = "Reach level 80 on " .. (n == 1 and "a character" or (n .. " characters")) .. "." },
+            { t = "Any way of leveling counts: story, side quests, dungeons or delves. Warband-bound gear and experience bonuses speed up alts." },
+        },
+    }
+end
+G[19470] = mentor(1)
+G[19460] = mentor(2)
+G[19475] = mentor(3)
+G[19476] = mentor(4)
+G[19477] = mentor(5)
 
 for id, g in pairs(G) do
     if not ns.ACH_STEPS[id] then

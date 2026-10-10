@@ -21,6 +21,7 @@ Data\Overrides.lua
 Data\Lore.lua
 Data\Achievements.lua
 Data\TWW\Achievements.lua
+Data\ExtraAchievements.lua
 Data\Collections.lua
 Data\TWW\Collections.lua
 Data\Vendors.lua

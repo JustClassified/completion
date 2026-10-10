@@ -386,7 +386,10 @@ G[41590] = {
 }
 G[41593] = {
     steps = {
-        { t = "Do a S.C.R.A.P. job at each of the seven sites. Only one is active at a time and it rotates; expand the achievement to see which sites are left." },
+        { t = "Expand the achievement to see which of the seven S.C.R.A.P. sites you still need." },
+        { t = "Only one site is active at a time and it changes every hour; check the map for the current one." },
+        { t = "When a site you need is up, go there, talk to the job NPC and finish the job." },
+        { t = "Repeat over the following hours until all seven are done." },
     },
 }
 
@@ -839,21 +842,28 @@ G[41873] = {
 }
 
 -- the masks
+local function mask(city, area, extra)
+    return {
+        steps = {
+            { t = "Wait for a week with the " .. city .. " vision: Stormwind and Orgrimmar alternate weekly." },
+            { t = "Put on one mask (any one you own) before you enter the vision." },
+            { t = "Go to " .. area .. " and finish its bonus objective: clear the area and defeat its lieutenant." },
+            { t = extra or "Leave the vision or finish it; the mask unlocks when the vision ends." },
+        },
+    }
+end
 G[41883] = {   -- Long Night
-    steps = { { t = "Complete all five objectives in a single visit of either vision. The mask unlocks on the way out." } },
+    steps = {
+        { t = "Buy Hourglass upgrades with Mementos first; more sanity and time make a full clear possible." },
+        { t = "Enter either vision with no mask needed." },
+        { t = "Finish all five bonus objectives in that single visit: the Corrupted areas first, then the Lost ones." },
+        { t = "End the vision; the mask unlocks on the way out." },
+    },
 }
-G[41881] = {   -- Burned Bridge
-    steps = { { t = "With one mask on, complete the Valley of Wisdom objective in the Orgrimmar vision." } },
-}
-G[41882] = {   -- Daredevil
-    steps = { { t = "With one mask on, complete the Valley of Honor objective in the Orgrimmar vision." } },
-}
-G[41856] = {   -- Pained
-    steps = { { t = "With one mask on, complete the Old Town objective in the Stormwind vision." } },
-}
-G[41880] = {   -- Dark Imagination
-    steps = { { t = "With one mask on, complete the Mage Quarter objective in the Stormwind vision." } },
-}
+G[41881] = mask("Orgrimmar", "the Valley of Wisdom")   -- Burned Bridge
+G[41882] = mask("Orgrimmar", "the Valley of Honor")    -- Daredevil
+G[41856] = mask("Stormwind", "Old Town")               -- Pained
+G[41880] = mask("Stormwind", "the Mage Quarter")       -- Dark Imagination
 G[41884] = {   -- Vengeance
     steps = {
         { t = "Put on one mask and enter the Stormwind vision." },
@@ -870,7 +880,12 @@ G[41710] = {   -- Nemesis
     tips = { "The two cities alternate weekly, so this takes at least two weeks." },
 }
 G[41885] = {   -- Multitudes
-    steps = { { t = "With at least one mask on, complete every objective and kill every enemy in one visit." } },
+    steps = {
+        { t = "Get the Hourglass fully upgraded first; this needs every second." },
+        { t = "Put on at least one mask and enter either vision, ideally with a group that knows the route." },
+        { t = "Clear every area completely: every enemy and every bonus objective, saving the first area's boss for last." },
+        { t = "Kill the last enemy, then the main boss; the mask unlocks when the vision ends." },
+    },
     tips = { "The hardest mask to earn: plan a full route and bring a group." },
 }
 G[41889] = {
@@ -1035,7 +1050,11 @@ G[40438] = {
     },
 }
 G[41532] = {
-    steps = { { t = "Buy the Delver's Gob-Trotter from Reno Jackson, the delve vendor in Dornogal, for 10,000 Resonance Crystals." } },
+    steps = {
+        { t = "Collect 10,000 Resonance Crystals: world quests, delves and most other Khaz Algar activities give them." },
+        { t = "Go to Reno Jackson, the delve vendor in Dornogal." },
+        { t = "Buy the Delver's Gob-Trotter; the achievement comes with it." },
+    },
 }
 
 ------------------------------------------------------------------------
@@ -1282,7 +1301,11 @@ G[41996] = {
     tips = { "Each run also gives a large amount of Flame's Radiance reputation." },
 }
 G[40250] = {
-    steps = { { t = "Join any Worldsoul Memory in Khaz Algar and stay until its final enemy dies (about a minute before the end)." } },
+    steps = {
+        { t = "Watch the Khaz Algar map for an active Worldsoul Memory (they rotate between set places)." },
+        { t = "Join it and help with the event." },
+        { t = "Stay until its final big enemy dies, about a minute before the end; leaving early gives no credit." },
+    },
 }
 G[42737] = {
     steps = {
@@ -1840,7 +1863,13 @@ local family = function(kind, hint)
         tips = hint and { hint } or nil,
     }
 end
-G[40154] = { steps = { { t = "Earn each family achievement below: beat all the Khaz Algar tamers with a team of one family each time." } } }
+G[40154] = {
+    steps = {
+        { t = "Expand the achievement: each row is one pet family achievement with its own guide." },
+        { t = "Level three pets of a family to 25, then beat every Khaz Algar tamer with only that family." },
+        { t = "Repeat for every family in the list." },
+    },
+}
 G[40161] = family("flying", "Credit for one family can arrive late, together with the next family's win.")
 G[40162] = family("humanoid", "If credit doesn't come, finish another family's win; both may be granted together.")
 G[40163] = family("magic", "Magic pets with aquatic attacks make the aquatic tamer easy; fast pets with a blind combo handle the critter tamer.")
@@ -1881,7 +1910,13 @@ G[40312] = {
         { t = "Hand 10 to any Keyflames in Hallowfall (lesser or large)." },
     },
 }
-G[40313] = { steps = { { t = "Keep handing Radiant Remnants to Hallowfall Keyflames until you've given 100." } } }
+G[40313] = {
+    steps = {
+        { t = "Collect Radiant Remnants; anything in Hallowfall can drop them." },
+        { t = "Hand them to any Keyflame in Hallowfall, lesser or large." },
+        { t = "Keep going until you've given 100 in total." },
+    },
+}
 
 ------------------------------------------------------------------------
 -- Glyphs
@@ -2088,8 +2123,22 @@ G[41629] = {
         { t = "Keep going to 100 lists (or earn Employee of the Month)." },
     },
 }
-G[41591] = { steps = { { t = "Do S.C.R.A.P. jobs as in No Littering until you have 25; the active site rotates." } } }
-G[41592] = { steps = { { t = "Do S.C.R.A.P. jobs until you have 50." } } }
+G[41591] = {
+    steps = {
+        { t = "Find this hour's S.C.R.A.P. site (the map marks it) and talk to the job NPC." },
+        { t = "Right-click trash piles to shovel and fill the bar to 500 within two minutes; 100 gold buys a helper robot." },
+        { t = "Use the blue circles (double speed), dodge the green ones (knockback), walk over fires, click mines and break trash bags." },
+        { t = "Repeat until you've done 25 jobs; the site moves every hour." },
+    },
+}
+G[41592] = {
+    steps = {
+        { t = "Find this hour's S.C.R.A.P. site (the map marks it) and talk to the job NPC." },
+        { t = "Right-click trash piles to shovel and fill the bar to 500 within two minutes; 100 gold buys a helper robot." },
+        { t = "Use the blue circles (double speed), dodge the green ones (knockback), walk over fires, click mines and break trash bags." },
+        { t = "Repeat until you've done 50 jobs; the site moves every hour." },
+    },
+}
 G[41214] = {
     steps = {
         { t = "If you're on a Shipping and Handling contract, clock out in your car; the memories don't show otherwise." },

@@ -223,7 +223,9 @@ G[61941] = {
 G[62268] = {
     steps = {
         { t = "Have a Midnight profession at 25 skill or more." },
-        { t = "In an Abundance event, find a node marked Artisan for your profession and harvest it. Each spot has its own professions: Eversong (Enchanting, Jewelcrafting, Tailoring), Zul'Aman (Cooking, Leatherworking, Skinning), Harandar (Alchemy, Herbalism, Inscription), Voidstorm (Blacksmithing, Engineering, Mining)." },
+        { t = "Pick the Abundance spot that has your profession: Eversong for Enchanting, Jewelcrafting or Tailoring; Zul'Aman for Cooking, Leatherworking or Skinning; Harandar for Alchemy, Herbalism or Inscription; Voidstorm for Blacksmithing, Engineering or Mining." },
+        { t = "Join the Abundance event there." },
+        { t = "Find a node marked Artisan for your profession and harvest it." },
     },
 }
 G[62337] = {
@@ -246,8 +248,8 @@ G[62210] = {
         { t = "Collect each listed creature near the start: Finnows almost anywhere, Shallows Scamps (large fish), Brakpuffers near the floor, Zipperfish (small sharks), Porcofrills (spined fish) and an Axetooth Thresher (larger shark)." },
     },
 }
-G[62215] = { steps = { { t = "Catch each listed Shallows creature during dives." } }, tips = { "Players report this may not be implemented; it may not show in the achievement window." } }
-G[62216] = { steps = { { t = "Catch each listed Trench creature during dives." } }, tips = { "Players report this may have been removed; it may not show in the achievement window." } }
+G[62215] = { steps = { { t = "Start a dive with Depthdiver Tu'nakit off the Zul'Aman coast." }, { t = "Stay in the shallow water near the start and catch each creature listed in the achievement." } }, tips = { "Players report this may not be implemented; it may not show in the achievement window." } }
+G[62216] = { steps = { { t = "Start a dive with Depthdiver Tu'nakit off the Zul'Aman coast." }, { t = "Swim down into the trenches and catch each creature listed in the achievement." } }, tips = { "Players report this may have been removed; it may not show in the achievement window." } }
 G[62775] = {
     steps = {
         { t = "Collect Sunken Relics during dives and buy the first net upgrade (it can catch Barbed Crawlers and Thorny Seahorses)." },
@@ -305,15 +307,18 @@ G[62208] = { steps = { dive, { t = "Catch at least 25 fish in one dive." }, { t 
 G[62211] = {
     steps = {
         dive,
-        { t = "Collect each listed creature; most live around the ravines and the Champion of Pahk's area: Plecofin (small shark), Crustleech (in and near the ravines), Flitray (small manta), Cragback Sea Turtle (circles near the Champion), Dolphion (in packs), Kobiamora (small shark), Abyss Fangray and Seamare." },
-        { t = "Have the Depthdiver's Used Tank first; then this upgrade unlocks." },
+        { t = "Have the Depthdiver's Used Tank first; this upgrade unlocks after it." },
+        { t = "Swim to the ravines and the Champion of Pahk's area; most of the creatures live there." },
+        { t = "Collect each listed one: Plecofin and Kobiamora (small sharks), Crustleech (in and near the ravines), Flitray (small manta), Cragback Sea Turtle (circles near the Champion), Dolphion (in packs), Abyss Fangray and Seamare." },
     },
 }
 G[62212] = {
     steps = {
         dive,
-        { t = "Collect the deep creatures: Trench Crawlers (crabs on the ground), Murkskimmers, Sightless Skippers (fast mudskippers above the ravine), Umbramot Eels (far right ravine), Gemscale Nymphs (above the far right ravine) and a Depthbash Thresher (the shark guarding the Champion of Pahk)." },
         { t = "Have the Fathom-Tested Tank first." },
+        { t = "On the sea floor: Trench Crawlers (crabs on the ground) and Murkskimmers." },
+        { t = "Above and in the ravines: Sightless Skippers (fast mudskippers above the ravine), Umbramot Eels (far right ravine) and Gemscale Nymphs (above the far right ravine)." },
+        { t = "Last, the Depthbash Thresher: the shark guarding the Champion of Pahk." },
     },
 }
 local relics = function(what, n, eyeglass)
@@ -909,8 +914,12 @@ G[63253] = {
 }
 G[63400] = {
     steps = {
-        { t = "During Hallow's End, visit the Candy Bucket in each Midnight inn: expand the achievement for the list (Arcantina, Silvermoon, Fairbreeze Village, Tranquillien, the Den, Har'alnor, Har'kuai, Har'athir, Har'mara, Amani'Zar, Witherbark Bluffs, Camp Stonewash, Slayer's Rise, Locus Point and the Ingress)." },
-        { t = "Click each bucket; the Seasonal book's Hallow's End page marks every one." },
+        { t = "Wait for Hallow's End; the buckets only appear during the holiday." },
+        { t = "Eversong and Silvermoon: Silvermoon, Fairbreeze Village, Tranquillien and the Arcantina." },
+        { t = "Zul'Aman: Anami'Zar, Witherbark Bluffs and Camp Stonewash." },
+        { t = "Harandar: the Den, Har'alnor, Har'kuai, Har'athir and Har'mara." },
+        { t = "Voidstorm: Slayer's Rise, Locus Point and the Ingress." },
+        { t = "Click the Candy Bucket in each inn; the Seasonal book's Hallow's End page marks every one." },
     },
 }
 G[61447] = {
@@ -985,7 +994,9 @@ G[61368] = {
 }
 G[62341] = {
     steps = {
-        { t = "Finish each Abundance achievement listed (each has its own guide)." },
+        { t = "Expand the achievement: each row is an Abundance achievement with its own guide." },
+        { t = "Join Abundance events in the four zones; most rows come along naturally while you gather there." },
+        { t = "Finish the remaining rows one by one with their guides." },
     },
     tips = { "Players have reported parts of it as not completable at times; check again after patches." },
 }
@@ -1106,7 +1117,9 @@ G[62899] = power()
 G[62900] = power()
 G[63325] = {
     steps = {
-        { t = "Expand the achievement: each part is its own achievement with a guide; do them in any order." },
+        { t = "Expand the achievement: each part is an Omnium study achievement with its own guide." },
+        { t = "Most come from Seeking Knowledge quests: pick them up and hand them in as you finish each activity." },
+        { t = "Do the parts in any order until every row is ticked." },
     },
     tips = { "Finishing it unlocks a reward sold for Omnium currency by the vendor in Silvermoon." },
     crit = {},
@@ -1220,8 +1233,116 @@ G[61956] = {
         { t = "Win 250 matches. Most of the other Training Grounds achievements come along the way." },
     },
 }
-G[61464] = { steps = { { t = "Do the weekly Sparks of War PvP quests for the Midnight zones; each zone's version is a row in the achievement." } }, tips = { "The Naigtal and Coiled Isle versions of the quest have not counted." } }
+G[61464] = { steps = { { t = "Turn on War Mode." }, { t = "Each week, pick up the Sparks of War quest for a Midnight zone; each zone's version is a row in the achievement." }, { t = "Do the PvP world quests and kills it asks for in that zone and hand it in. Repeat over the weeks until every zone is done." } }, tips = { "The Naigtal and Coiled Isle versions of the quest have not counted." } }
 G[61465] = G[61464]
+
+local mentor = function(n)
+    return {
+        steps = {
+            { t = "Reach level 90 on " .. (n == 1 and "a character" or (n .. " characters")) .. "." },
+            { t = "Any way of leveling counts: story, side quests, dungeons or delves. Warband-bound gear and experience bonuses speed up alts." },
+        },
+    }
+end
+G[42328] = mentor(1)
+G[42329] = mentor(2)
+G[42330] = mentor(3)
+G[42331] = mentor(4)
+G[42332] = mentor(5)
+local gear = function(quality, ilvl)
+    return {
+        steps = {
+            { t = "Fill every gear slot (shirt and tabard don't count) with " .. quality .. " or better items of item level " .. ilvl .. " or higher." },
+            { t = "Equip them all at the same time; the achievement checks what you're wearing." },
+        },
+        tips = { "Delves, world quests, dungeons and the weekly vault all give gear at this level." },
+    }
+end
+G[61678] = gear("Superior (blue)", 220)
+G[61679] = gear("Epic (purple)", 233)
+
+local raid = function(name, diff)
+    local group = {
+        any = "Any difficulty counts: queue for it in Raid Finder from the Group Finder, or join a Normal group in Premade Groups.",
+        Heroic = "Join a Heroic group in Premade Groups > Raids, or raid with your guild.",
+        Mythic = "Mythic needs an organized 20-player group: a guild or a Mythic community.",
+    }
+    return {
+        steps = {
+            { t = "Track the achievement: the arrow leads to the entrance of " .. name .. "." },
+            { t = group[diff] },
+            { t = "Expand the achievement and kill every boss listed; each kill ticks its row." },
+            { t = "Kills from different weeks add up, so you don't need one full clear." },
+        },
+    }
+end
+G[61366] = raid("The Voidspire", "any")
+G[61367] = raid("March on Quel'Danas", "any")
+G[61369] = raid("March on Quel'Danas", "Heroic")
+G[61370] = raid("The Voidspire", "Mythic")
+G[61371] = raid("March on Quel'Danas", "Mythic")
+G[63521] = raid("The Venomous Abyss", "any")
+G[63520] = raid("The Venomous Abyss", "Heroic")
+G[63522] = raid("The Venomous Abyss", "Mythic")
+local wing = function(name)
+    return {
+        steps = {
+            { t = "Open the Group Finder and queue for the Raid Finder wing of " .. name .. " that holds these bosses, or join any Normal or Heroic group." },
+            { t = "Expand the achievement and kill each boss it lists, on any difficulty." },
+            { t = "Kills from different weeks add up." },
+        },
+    }
+end
+for _, id in ipairs({ 61635, 61636, 61637 }) do G[id] = wing("The Voidspire") end
+for _, id in ipairs({ 63530, 63531, 63532 }) do G[id] = wing("The Venomous Abyss") end
+local tier = function(season, raid)
+    return {
+        steps = {
+            { t = "Collect your class's " .. season .. " tier pieces: they drop from " .. raid .. " bosses and come from the weekly Great Vault." },
+            { t = "Once the season's Catalyst is open, it turns other gear of a tier slot into the tier piece; charges build up weekly." },
+            { t = "Collect all five tier slots at the same difficulty look. Owning the appearance is enough, you don't have to keep the items." },
+        },
+    }
+end
+G[61843] = tier("Season 1", "The Voidspire and March on Quel'Danas")
+G[63472] = tier("Season 2", "The Venomous Abyss")
+local mounts = {
+    steps = {
+        { t = "Open the Mount Journal to see your count: only mounts this character can use count." },
+        { t = "Cheap, quick mounts first: vendor mounts for gold, reputation mounts, and mounts from achievements you're already doing." },
+        { t = "Farm old raids and dungeons solo every week for their mount drops; a few clears a week add up." },
+        { t = "Keep going until you own 600." },
+    },
+    tips = { "Mounts locked to the other faction or another class don't count on this character." },
+}
+G[62096] = mounts
+G[62103] = mounts
+G[62517] = {
+    steps = {
+        { t = "Turn on War Mode and go to Slayer's Rise in Voidstorm." },
+        { t = "Wait for the enemy faction to summon their ultradon at The Husk or the Sparring Grounds during the Slayer's Rise events." },
+        { t = "Join the fight and help kill it; being part of the kill gives credit." },
+    },
+}
+
+local mythic = function(dungeon)
+    return {
+        steps = {
+            { t = "Track the achievement: the arrow leads to the entrance of " .. dungeon .. "." },
+            { t = "Join a five-player Mythic group in Premade Groups > Dungeons, or run any Mythic+ keystone of it (timed or not)." },
+            { t = "Defeat the last boss; that kill gives the achievement." },
+        },
+    }
+end
+G[41291] = mythic("Windrunner Spire")
+G[41962] = mythic("Murder Row")
+G[61214] = mythic("Magisters' Terrace")
+G[61510] = mythic("Voidscar Arena")
+G[61643] = mythic("Den of Nalorakk")
+G[61645] = mythic("Maisara Caverns")
+G[61647] = mythic("Nexus-Point Xenas")
+G[61649] = mythic("The Blinding Vale")
+G[62284] = mythic("Altar of Fangs")
 
 for id, g in pairs(G) do
     if not ns.ACH_STEPS[id] then

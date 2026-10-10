@@ -1019,7 +1019,11 @@ G[63645] = {
 }
 G[63656] = {
     steps = {
-        { t = "Four players each pick up one slime (a 60-minute buff makes it follow you): Sumptuous Soup in a hole on the left after the first boss; Jiggly Dessert on a ledge on the right in the Twin Fangs room; Tasty Blob in the green fountain in the trash room before Sszorak and Vashnik; Crunchy Appetizer on a small island in the poison sea after the Lost Explorers." },
+        { t = "Pick four players to carry one slime each; picking one up gives a 60-minute buff and it follows you." },
+        { t = "Sumptuous Soup: in a hole on the left after the first boss." },
+        { t = "Jiggly Dessert: on a ledge on the right in the Twin Fangs room." },
+        { t = "Tasty Blob: in the green fountain in the trash room before Sszorak and Vashnik." },
+        { t = "Crunchy Appetizer: on a small island in the poison sea after the Lost Explorers." },
         { t = "In the fight, those four soak the big red group soak in the order the tracked achievement lists, one after another." },
         { t = "Kill the Twin Fangs." },
     },
