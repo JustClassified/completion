@@ -887,13 +887,13 @@ local function BuildRight()
     R.sort = Tool(2, "Interface\\Icons\\INV_Misc_Spyglass_03",
         function()
             local s = ns.db.settings
-            return s.sortEasy and "Sort: easiest first" or (s.sortNearest and "Sort: nearest first" or "Sort: list order")
+            return (s.sortEasy and ns.DIFFICULTY_ENABLED) and "Sort: easiest first" or (s.sortNearest and "Sort: nearest first" or "Sort: list order")
         end,
-        "Click to switch: the list's own order, nearest to you first, or easiest first (quickest first among equals).", function()
+        "Click to switch: the list's own order or nearest to you first.", function()
             -- list order -> nearest -> easiest -> list order
             local s = ns.db.settings
             if s.sortEasy then s.sortEasy, s.sortNearest = false, false
-            elseif s.sortNearest then s.sortEasy, s.sortNearest = true, false
+            elseif s.sortNearest then s.sortEasy, s.sortNearest = ns.DIFFICULTY_ENABLED, false
             else s.sortNearest = true end
             scroll = 0
             ns.RefreshUI()
@@ -1232,7 +1232,7 @@ local function BuildLines()
         if g.key == "zzboss" and i < #order then table.remove(order, i); order[#order + 1] = g; break end
     end
     -- "Sort: nearest" reorders items within each group; ones without a known distance go last
-    if ns.db.settings.sortEasy and SORTABLE[secKey] then
+    if ns.db.settings.sortEasy and ns.DIFFICULTY_ENABLED and SORTABLE[secKey] then
         -- "Sort: easiest" puts Easy before Very hard, the quicker one first among equals; unrated ones go last
         local TIME_RANK = { quick = 1, hour = 2, hours = 3, wait = 4, days = 5, luck = 6, weeks = 7 }
         for _, g in ipairs(order) do
@@ -1604,7 +1604,7 @@ local function RefreshRight()
     R.listHead:Set(string.format("%s  %d/%d", s.name, s.cur, s.max))
     R.hide:SetActive(ns.db.settings.hidedone)
     R.footer:SetText(R.track:IsShown() and "" or (FOOTERS[sec] or ""))
-    R.sort:SetActive(ns.db.settings.sortNearest or ns.db.settings.sortEasy)
+    R.sort:SetActive(ns.db.settings.sortNearest or (ns.db.settings.sortEasy and ns.DIFFICULTY_ENABLED))
     R.route:SetActive(R.route.IsHere())
     BuildLines()
     ns.RefreshList()

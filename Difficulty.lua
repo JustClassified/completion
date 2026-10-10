@@ -8,6 +8,10 @@
 
 local _, ns = ...
 
+-- Switched off for now: the ratings judge effort but not length, so a 30-week grind can read "Easy".
+-- While false nothing shows (rows, tooltips, map pins, the easiest-first sort and its Options switch).
+ns.DIFFICULTY_ENABLED = false
+
 ns.DIFF_LABEL = { "Easy", "Medium", "Hard", "Very hard" }
 ns.DIFF_COLOR = { "55dd55", "ffd100", "ff8a30", "ff4a4a" }
 ns.TIME_LABEL = {
@@ -321,6 +325,7 @@ end
 
 -- The short coloured tag for a list row, e.g. "|cff55dd55Easy|r", or nil.
 function ns.DiffTag(it)
+    if not ns.DIFFICULTY_ENABLED then return end
     if ns.db and ns.db.settings and ns.db.settings.difficulty == false then return end
     local r = ns.Rate(it)
     if not r then return end
@@ -329,6 +334,7 @@ end
 
 -- Tooltip lines: difficulty with its reason, then the time estimate.
 function ns.AddDifficulty(tooltip, it)
+    if not ns.DIFFICULTY_ENABLED then return end
     if ns.db and ns.db.settings and ns.db.settings.difficulty == false then return end
     local r = ns.Rate(it)
     if not r then return end

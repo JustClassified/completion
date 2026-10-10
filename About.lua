@@ -174,9 +174,9 @@ function ns.BuildAbout(R, Header, Text, titleFont, pageW)
               function() return s().sound end, function(v) s().sound = v end },
             { "Chat messages", "Print a line in chat when something is finished.",
               function() return s().announce end, function(v) s().announce = v end },
-            { "Difficulty tags", "Show Easy, Medium, Hard or Very hard on each row, and in tooltips why and roughly how long it takes. "
+            ns.DIFFICULTY_ENABLED and { "Difficulty tags", "Show Easy, Medium, Hard or Very hard on each row, and in tooltips why and roughly how long it takes. "
                 .. "These are estimates.",
-              function() return s().difficulty ~= false end, function(v) s().difficulty = v; ns.RefreshUI() end },
+              function() return s().difficulty ~= false end, function(v) s().difficulty = v; ns.RefreshUI() end } or nil,
         } },
     }
     local y = -50
