@@ -386,7 +386,9 @@ f:SetScript("OnEvent", function(_, event, arg1)
         ns.ScanBags()
         if ns.built then ns.UpdateTarget(); if ns.IsShown() then ns.RefreshUI() end end
     elseif event == "GET_ITEM_INFO_RECEIVED" then
-        if ns.IsShown() and not itemInfoPending then
+        -- only worth a refresh while a collectible is still waiting for its data; otherwise every
+        -- evaluation's own item lookups would keep triggering the next one
+        if ns.IsShown() and not itemInfoPending and (ns.collectLoading or 0) > 0 then
             itemInfoPending = true
             C_Timer.After(1, function() itemInfoPending = false; MarkDirty() end)
         end

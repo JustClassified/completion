@@ -1090,7 +1090,9 @@ end
 -- Counts as one unit. A split achievement (spots in several zones) is done on a page once that page's
 -- criteria are; sub shows criteria progress, or the quantity for a single counted criterion.
 local function EvalAch(it)
-    local a = ns.Ach(it.id)
+    -- a momentary "unknown" from the client keeps the last answer instead of hiding the row
+    local a = ns.Ach(it.id) or it.lastAch
+    it.lastAch = a
     if not a then it.max, it.cur, it.done, it.hidden = 0, 0, false, true; return end
     it.hidden = nil
     it.name = a.name
@@ -1128,7 +1130,8 @@ end
 
 -- Done when ns.Rep says the faction is maxed; sub is its standing text. Hidden if the client has no data.
 local function EvalRep(it)
-    local r = ns.Rep(it.faction)
+    local r = ns.Rep(it.faction) or it.lastRep
+    it.lastRep = r
     if not r then it.max, it.cur, it.done, it.hidden = 0, 0, false, true; return end
     it.hidden = nil
     it.name, it.rep = r.name, r
@@ -1152,7 +1155,16 @@ local function EvalCollect(it)
     elseif it.titleID then t, owned = ns.TitleCollect(it.titleID)
     elseif it.setID then t, owned, name = ns.SetCollect(it.setID)
     elseif it.sourceID then t, owned, name = ns.SourceCollect(it.sourceID) end
+    -- the client drops and reloads collection data all the time; a known collectible keeps its last
+    -- definite answer while the data is away, so counts and rows don't jump on every refresh
+    if t == nil and it.lastType then t = it.lastType end
+    if t then it.lastType = t end
+    if owned == true then it.everOwned = true end
+    if it.everOwned then owned = true
+    elseif owned == nil and it.lastOwned ~= nil then owned = it.lastOwned end
+    if owned ~= nil then it.lastOwned = owned end
     it.ctype = t
+    if t == nil then ns.collectLoading = (ns.collectLoading or 0) + 1 end
     it.name = name or it.rname or it.name or (t == nil and "Loading..." or "?")
     if not t then it.max, it.cur, it.done, it.hidden = 0, 0, false, (t == false); return end
     it.hidden = nil
@@ -1203,6 +1215,7 @@ function ns.EvaluateAll()
     ns.Bump()
     local newly = {}
     local first = ns.firstEval
+    ns.collectLoading = 0   -- collectibles still waiting for item data (counted by EvalCollect)
     local totals = {}
     for _, z in ipairs(ns.ZONES) do
         z.cur, z.max = 0, 0

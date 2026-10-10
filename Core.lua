@@ -360,14 +360,18 @@ end
 
 -- Returns true or false for an appearance, "skip" when this character can't learn it,
 -- or nil when the item has no appearance or the client can't tell.
+local canLearn = {}   -- sourceID -> true/false, decided once the client has the data (it doesn't change)
 local function AppearanceOwned(itemID)
     if not (C_TransmogCollection and C_TransmogCollection.GetItemInfo) then return end
     local ok, appearanceID, sourceID = pcall(C_TransmogCollection.GetItemInfo, itemID)
     if not ok or not appearanceID or not sourceID then return end
-    if C_TransmogCollection.PlayerCanCollectSource then
+    -- whether this character can learn it is only trusted when the client has the data; asking again
+    -- while it's loading or evicted would flip the row between hidden and counted on every refresh
+    if canLearn[sourceID] == nil and C_TransmogCollection.PlayerCanCollectSource then
         local ok2, hasData, canCollect = pcall(C_TransmogCollection.PlayerCanCollectSource, sourceID)
-        if ok2 and hasData and not canCollect then return "skip" end
+        if ok2 and hasData then canLearn[sourceID] = canCollect and true or false end
     end
+    if canLearn[sourceID] == false then return "skip" end
     if C_TransmogCollection.GetAppearanceInfoBySource then
         local ok3, info = pcall(C_TransmogCollection.GetAppearanceInfoBySource, sourceID)
         if ok3 and type(info) == "table" and info.appearanceIsCollected ~= nil then
@@ -385,7 +389,24 @@ local typeCache = {}   -- itemID -> resolved type or false (not a collectible)
 -- Returns ctype, owned. ctype nil = still loading, false = not a collectible for this character.
 -- owned nil = the client can't tell (row shown, not counted).
 -- flag ("m", "p", "t", "d") forces the type from the data files; otherwise it is detected and cached.
+local lastOwned = {}   -- itemID -> last definite owned answer (true sticks: nothing gets uncollected)
+
+-- Steadies an owned answer: once collected it stays collected, and "can't tell" (the client still
+-- loading) falls back to the last definite answer, so counts don't jump while data comes and goes.
+local function Steady(itemID, owned)
+    if owned == true or (owned == false and lastOwned[itemID] ~= true) then lastOwned[itemID] = owned end
+    return lastOwned[itemID]
+end
+
 function ns.ItemCollect(itemID, flag)
+    local t, owned = ns.ItemCollectRaw(itemID, flag)
+    if t then return t, Steady(itemID, owned) end
+    -- a known collectible whose data is loading again: keep the last answer rather than hiding the row
+    if t == nil and typeCache[itemID] and lastOwned[itemID] ~= nil then return typeCache[itemID], lastOwned[itemID] end
+    return t, owned
+end
+
+function ns.ItemCollectRaw(itemID, flag)
     local t = typeCache[itemID]
     if t == nil then
         if flag == "m" then t = "mount"
