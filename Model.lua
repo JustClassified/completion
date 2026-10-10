@@ -585,8 +585,10 @@ local function BuildAchievements(midnight)
     -- achievements with spots: they live where their spots are
     for aid, pts in pairs(achvPoints) do
         local a = ns.Ach(aid)
+        -- Other (not counted) achievements are listed once on the overview page, not by their spots
+        local other = ns.OTHER_GROUPS and ns.OTHER_GROUPS[groupOf[aid]]
         if not placed[aid] and (not ns.Counts(groupOf[aid]) or (a and ns.IsHard(a.name))) then placed[aid] = true end
-        if not placed[aid] then
+        if not placed[aid] and not other then
             placed[aid] = true
             local byZone, order = {}, {}
             for _, p in ipairs(pts) do
@@ -654,7 +656,10 @@ local function BuildAchievements(midnight)
     local meta = MetaZones(zoneOfAch)
     for _, t in ipairs(todo) do
         placed[t.id] = true
-        if t.container then
+        if ns.OTHER_GROUPS and ns.OTHER_GROUPS[t.group] then
+            local z = home(t.id)
+            AddItem(z, "other", { key = "a:" .. z.key .. ":" .. t.id, kind = "ach", id = t.id, group = t.group, spots = {} })
+        elseif t.container then
             local child = Register({ key = "a:" .. t.container.key .. ":" .. t.id, kind = "ach", id = t.id,
                                      spots = {}, parent = t.container, group = t.group })
             table.insert(t.container.children, child)
@@ -1207,6 +1212,7 @@ function ns.EvaluateAll()
             for _, it in ipairs(sec.items) do
                 Eval(it)
                 sec.cur, sec.max = sec.cur + (it.cur or 0), sec.max + (it.max or 0)
+                if s.uncounted then it.uncounted = true end
                 local watch = { it }
                 if it.kind == "container" then watch = it.children end
                 for _, w in ipairs(watch) do
@@ -1219,7 +1225,8 @@ function ns.EvaluateAll()
                     end
                 end
             end
-            z.cur, z.max = z.cur + sec.cur, z.max + sec.max
+            -- Other is shown with its own count but stays out of the zone and expansion totals
+            if not s.uncounted then z.cur, z.max = z.cur + sec.cur, z.max + sec.max end
         end
         local t = totals[z.exp] or { cur = 0, max = 0 }
         totals[z.exp] = t

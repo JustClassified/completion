@@ -1344,6 +1344,80 @@ G[61647] = mythic("Nexus-Point Xenas")
 G[61649] = mythic("The Blinding Vale")
 G[62284] = mythic("Altar of Fangs")
 
+G[61211] = {
+    steps = {
+        { t = "Follow the housing introduction quests until you're offered a plot in a neighborhood." },
+        { t = "Pick a plot and move in; the achievement comes with it." },
+    },
+    tips = { "The similarly named quest Welcome Home is a different thing: it asks you to place and remove a few pieces of decor." },
+}
+local decor = function(n)
+    return {
+        steps = {
+            { t = "Collect unique decor of uncommon quality or better: vendors, quests, treasures, achievements and professions all give it." },
+            { t = "Keep going until you own " .. n .. " different pieces; duplicates don't count." },
+        },
+        tips = { "Some players got these late or early when the feature launched; if it looks stuck, relog." },
+    }
+end
+for id = 61308, 61318 do G[id] = decor(id == 61308 and 1 or (id - 61308) * 50) end
+local lumber = {
+    [62357] = { "Ironwood", "the Eastern Kingdoms and Kalimdor" },
+    [62358] = { "Olemba", "Outland" },
+    [62359] = { "Coldwind", "Northrend" },
+    [62360] = { "Ashwood", "the Cataclysm zones" },
+    [62361] = { "Bamboo", "Pandaria" },
+    [62362] = { "Shadowmoon", "Draenor" },
+    [62363] = { "Fel-Touched", "the Broken Isles" },
+    [62364] = { "Darkpine", "Kul Tiras and Zandalar" },
+    [62365] = { "Arden", "the Shadowlands" },
+    [62366] = { "Dragonpine", "the Dragon Isles" },
+    [62369] = { "Dornic Fir", "Khaz Algar (Azj-Kahet has plenty)" },
+}
+for id, l in pairs(lumber) do
+    G[id] = {
+        steps = {
+            { t = "Unlock lumber harvesting through the housing questline." },
+            { t = "Fly through " .. l[2] .. " and harvest the trees marked for lumber." },
+            { t = "Keep going until you've harvested 250 " .. l[1] .. " Lumber." },
+        },
+        tips = { "Progress is warband-wide. A druid can harvest without leaving travel form, which is much faster." },
+    }
+end
+local coupons = function(n)
+    return {
+        steps = {
+            { t = "Earn Community Coupons from your neighborhood's active endeavor: its tasks pay coupons as you finish them." },
+            { t = "Do the repeatable endeavor tasks until you've collected " .. n .. "." },
+        },
+        tips = { "Only coupons earned after the achievement appeared count, not ones you already had." },
+    }
+end
+G[62371] = coupons(50)
+G[62373] = coupons(250)
+G[62374] = coupons(500)
+G[62375] = coupons(1000)
+G[62376] = coupons(2500)
+G[62377] = coupons(5000)
+G[62378] = coupons(10000)
+local souvenir = function(place)
+    return {
+        steps = {
+            { t = "Wait for the Vacation Season endeavor (the Tortollan Seekers) to be your neighborhood's active endeavor." },
+            { t = "Go to your own " .. place .. " neighborhood; souvenirs found elsewhere or outside the active endeavor haven't counted." },
+            { t = "Search for every Secret Souvenir: they hide in racks, barrels, carts, under stairs and docks, and on rooftops." },
+            { t = "Expand the achievement to see which are left." },
+        },
+        tips = { "One souvenir falls from the sky after you run into the beach balls on the water for a while; a water-walking mount helps." },
+    }
+end
+G[63441] = souvenir("Razorwind Shores")
+G[63605] = souvenir("Founder's Point")
+G[63606] = { steps = {
+    { t = "Expand the achievement: it needs Souvenir Seeker for both Razorwind Shores and Founder's Point." },
+    { t = "Do each one during the Vacation Season endeavor; each has its own guide." },
+} }
+
 for id, g in pairs(G) do
     if not ns.ACH_STEPS[id] then
         if g.steps then ns.ACH_STEPS[id] = g.steps end

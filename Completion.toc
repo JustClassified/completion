@@ -22,6 +22,7 @@ Data\Lore.lua
 Data\Achievements.lua
 Data\TWW\Achievements.lua
 Data\ExtraAchievements.lua
+Data\Difficulty.lua
 Data\Collections.lua
 Data\TWW\Collections.lua
 Data\Vendors.lua
@@ -43,6 +44,7 @@ Data\EventGuides.lua
 Core.lua
 Model.lua
 Guide.lua
+Difficulty.lua
 Seasonal.lua
 Farm.lua
 WorldPins.lua

@@ -158,6 +158,7 @@ local function Tooltip(pin)
     local note = (row and row.note) or it.note
     if note then GameTooltip:AddLine(note, 0.9, 0.85, 0.7, true) end
     if ns.upNow[it.key] then GameTooltip:AddLine("Up now", 0.4, 1, 0.4) end
+    if not row and not it.done then ns.AddDifficulty(GameTooltip, it) end
     GameTooltip:AddLine("Completion: click to track with the arrow.", 0.5, 0.5, 0.5)
     GameTooltip:Show()
 end

@@ -148,7 +148,7 @@ local function CreateMinimapButton()
                 GameTooltip:AddDoubleLine(z.name, string.format("%d / %d  (%d%%)", cur, max, ns.Pct(cur, max)), 1, 0.82, 0.5, 1, 1, 1)
                 for _, s in ipairs(ns.SECTIONS) do
                     local sec = z.sections[s.key]
-                    if sec.max > 0 then
+                    if sec.max > 0 and not s.uncounted then
                         local done = sec.cur >= sec.max
                         GameTooltip:AddDoubleLine("  " .. s.name, sec.cur .. " / " .. sec.max, 0.8, 0.8, 0.8,
                             done and 0.4 or 1, 1, done and 0.4 or 1)
@@ -175,7 +175,7 @@ end
 local function Missing()
     local z = ns.zoneByKey[ns.cdb.lastZone or ""] or ns.PlayerZone() or ns.ZONES[1]
     ns.Print("Missing in " .. z.name .. ":")
-    for _, s in ipairs(ns.SECTIONS) do
+    for _, s in ipairs(ns.ZONE_SECTIONS) do
         local sec = z.sections[s.key]
         local open = {}
         for _, it in ipairs(sec.items) do

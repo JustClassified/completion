@@ -546,6 +546,8 @@ end
 -- Whether an achievement group counts toward 100%: the player's choice, else the default, else yes.
 function ns.Counts(group)
     if not group then return true end
+    -- Other (not counted) groups are always listed; they never count anyway
+    if ns.OTHER_GROUPS and ns.OTHER_GROUPS[group] then return true end
     local v = ns.db.settings.scope[group]
     if v == nil then v = ns.SCOPE_DEFAULTS and ns.SCOPE_DEFAULTS[group] end
     if v == nil then v = true end

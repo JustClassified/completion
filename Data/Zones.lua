@@ -91,7 +91,12 @@ ns.SECTIONS = {
     { key = "delve",    name = "Delves" },
     { key = "rep",      name = "Reputation" },
     { key = "prof",     name = "Professions" },
+    -- shown on an expansion's overview page, never counted toward 100% (housing, levelling, gear)
+    { key = "other",    name = "Other (not counted)", uncounted = true },
 }
+-- the sections a zone page lists: everything but the overview-only Other
+ns.ZONE_SECTIONS = {}
+for _, s in ipairs(ns.SECTIONS) do if not s.uncounted then ns.ZONE_SECTIONS[#ns.ZONE_SECTIONS + 1] = s end end
 
 -- Delve maps as the spot data names them, so Sturdy Chests can find their delve.
 ns.DELVE_MAPS = {

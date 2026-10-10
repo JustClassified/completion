@@ -78,7 +78,11 @@ end
 ns.BookPage = Zone
 
 -- The section list of a page: its own (holidays) or the zone sections.
-local function SectionDefs(z) return z and z.sectionDefs or ns.SECTIONS end
+local function SectionDefs(z)
+    if z and z.sectionDefs then return z.sectionDefs end
+    -- Other (not counted) only exists on an expansion's overview page
+    return (z and not z.overview) and ns.ZONE_SECTIONS or ns.SECTIONS
+end
 
 ------------------------------------------------------------------------
 -- fonts and small widgets
@@ -256,6 +260,8 @@ local function ItemTooltip(owner, it, row)
     elseif (it.max or 0) == 0 then GameTooltip:AddLine("Not counted: the game can't tell yet", 0.7, 0.7, 0.7)
     else GameTooltip:AddLine("Missing", 1, 0.5, 0.3) end
     if it.sub and it.sub ~= "" then GameTooltip:AddLine(it.sub, 0.8, 0.8, 0.8) end
+    if it.uncounted then GameTooltip:AddLine("Not part of 100%: it isn't tied to the expansion's content.", 0.7, 0.7, 0.7, true) end
+    if not it.done then ns.AddDifficulty(GameTooltip, it) end
     if it.kind == "lore" then
         local a = ns.LORE_ACH[it.ach]
         if a then GameTooltip:AddLine("Part of: " .. a.name, 0.8, 0.7, 0.5) end
@@ -879,9 +885,16 @@ local function BuildRight()
     R.hide.icon:SetTexCoord(0, 1, 0, 1)
 
     R.sort = Tool(2, "Interface\\Icons\\INV_Misc_Spyglass_03",
-        function() return ns.db.settings.sortNearest and "Sort: nearest first" or "Sort: list order" end,
-        "Nearest to you first (anything with a spot), or the list's own order.", function()
-            ns.db.settings.sortNearest = not ns.db.settings.sortNearest
+        function()
+            local s = ns.db.settings
+            return s.sortEasy and "Sort: easiest first" or (s.sortNearest and "Sort: nearest first" or "Sort: list order")
+        end,
+        "Click to switch: the list's own order, nearest to you first, or easiest first (quickest first among equals).", function()
+            -- list order -> nearest -> easiest -> list order
+            local s = ns.db.settings
+            if s.sortEasy then s.sortEasy, s.sortNearest = false, false
+            elseif s.sortNearest then s.sortEasy, s.sortNearest = true, false
+            else s.sortNearest = true end
             scroll = 0
             ns.RefreshUI()
         end)
@@ -1172,7 +1185,7 @@ local function BuildSearch()
 end
 
 -- Sections where "Sort: nearest" applies.
-local SORTABLE = { treasure = true, rare = true, collect = true, achv = true, prof = true, instance = true, delve = true }
+local SORTABLE = { treasure = true, rare = true, collect = true, achv = true, prof = true, instance = true, delve = true, other = true }
 
 -- Builds the right page list for the open section (or the book-wide search when none is open):
 -- group headings, items, and the children of expanded items, two levels deep.
@@ -1219,7 +1232,19 @@ local function BuildLines()
         if g.key == "zzboss" and i < #order then table.remove(order, i); order[#order + 1] = g; break end
     end
     -- "Sort: nearest" reorders items within each group; ones without a known distance go last
-    if ns.db.settings.sortNearest and SORTABLE[secKey] then
+    if ns.db.settings.sortEasy and SORTABLE[secKey] then
+        -- "Sort: easiest" puts Easy before Very hard, the quicker one first among equals; unrated ones go last
+        local TIME_RANK = { quick = 1, hour = 2, hours = 3, wait = 4, days = 5, luck = 6, weeks = 7 }
+        for _, g in ipairs(order) do
+            local k = {}
+            for i, it in ipairs(g.items) do
+                local r = ns.Rate(it)
+                k[it] = r and (r.lvl * 100 + (TIME_RANK[r.time] or 8) * 10) or 1000
+                k[it] = k[it] + i / 10000   -- keeps list order among equals
+            end
+            table.sort(g.items, function(a, b) return k[a] < k[b] end)
+        end
+    elseif ns.db.settings.sortNearest and SORTABLE[secKey] then
         for _, g in ipairs(order) do
             local d = {}
             for _, it in ipairs(g.items) do d[it] = ns.ItemDistance(it) or math.huge end
@@ -1476,6 +1501,9 @@ local function FillRow(r, ln)
     local c = done and DONE_C or (current and GOLD or CREAM)
     r.text:SetTextColor(c[1], c[2], c[3])
     if ln.secName then sub = ln.secName end
+    -- how hard it is, before the count or distance (finished rows don't need it)
+    local tag = not row and not done and ns.DiffTag(it)
+    if tag then sub = (sub and sub ~= "") and (tag .. "  " .. sub) or tag end
     r.right:SetText(sub or "")
     r.right:SetTextColor(GREY[1], GREY[2], GREY[3])
 end
@@ -1576,7 +1604,7 @@ local function RefreshRight()
     R.listHead:Set(string.format("%s  %d/%d", s.name, s.cur, s.max))
     R.hide:SetActive(ns.db.settings.hidedone)
     R.footer:SetText(R.track:IsShown() and "" or (FOOTERS[sec] or ""))
-    R.sort:SetActive(ns.db.settings.sortNearest)
+    R.sort:SetActive(ns.db.settings.sortNearest or ns.db.settings.sortEasy)
     R.route:SetActive(R.route.IsHere())
     BuildLines()
     ns.RefreshList()
