@@ -1165,7 +1165,9 @@ local function EvalCollect(it)
     if owned ~= nil then it.lastOwned = owned end
     it.ctype = t
     if t == nil then ns.collectLoading = (ns.collectLoading or 0) + 1 end
-    it.name = name or it.rname or it.name or (t == nil and "Loading..." or "?")
+    -- the real name wins over a renown screen's label once it's been seen, and stays
+    if name then it.realName = name end
+    it.name = it.realName or it.rname or it.name or (t == nil and "Loading..." or "?")
     if not t then it.max, it.cur, it.done, it.hidden = 0, 0, false, (t == false); return end
     it.hidden = nil
     if owned == nil then

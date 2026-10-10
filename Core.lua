@@ -291,8 +291,10 @@ local function RequestItem(id)
 end
 
 -- The item's name, or nil while the client hasn't loaded it (a load is requested then).
+local itemNames = {}   -- itemID -> name, kept once known (names don't change; the client's cache does)
 function ns.ItemName(id)
     if not id then return end
+    if itemNames[id] then return itemNames[id] end
     local name
     if C_Item and C_Item.GetItemNameByID then
         local ok, n = pcall(C_Item.GetItemNameByID, id)
@@ -302,20 +304,26 @@ function ns.ItemName(id)
         local ok, n = pcall(GetItemInfo, id)
         if ok then name = n end
     end
-    if not name then RequestItem(id) end
+    if name and name ~= "" then itemNames[id] = name else RequestItem(id) end
     return name
 end
 
 -- The item's icon file ID, or nil.
+local itemIcons = {}   -- itemID -> icon, kept once known
 function ns.ItemIcon(id)
+    if not id then return end
+    if itemIcons[id] then return itemIcons[id] end
+    local icon
     if C_Item and C_Item.GetItemIconByID then
-        local ok, icon = pcall(C_Item.GetItemIconByID, id)
-        if ok and icon then return icon end
+        local ok, i = pcall(C_Item.GetItemIconByID, id)
+        if ok then icon = i end
     end
-    if GetItemIcon then
-        local ok, icon = pcall(GetItemIcon, id)
-        if ok then return icon end
+    if not icon and GetItemIcon then
+        local ok, i = pcall(GetItemIcon, id)
+        if ok then icon = i end
     end
+    itemIcons[id] = icon
+    return icon
 end
 
 -- Returns owned, name for a mount journal ID; nil when the journal doesn't know it.
