@@ -1,11 +1,11 @@
 ## Interface: 120100, 120007, 120005
 ## Title: Completion
-## Notes: Zone completion book for Midnight - storyline, side quests, achievements, treasures, rares, collectibles, dungeons, delves, reputation and professions per zone, with an arrow that guides you, plus a guided page for every holiday.
+## Notes: Zone completion book for Midnight and The War Within - storyline, side quests, achievements, treasures, rares, collectibles, dungeons, delves, reputation and professions per zone, with an arrow that guides you, plus a guided page for every holiday.
 ## Author: Laszlo Romsics
 ## X-Website: romsics.com
 ## X-Contact: Discord: ozonysx
 ## X-Discord: https://discord.gg/V2YsKAcux5
-## Version: 1.4.5
+## Version: 1.5.0
 ## SavedVariables: CompletionDB
 ## SavedVariablesPerCharacter: CompletionCharDB
 ## IconTexture: Interface\Icons\inv_misc_book_16
