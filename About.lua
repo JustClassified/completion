@@ -174,6 +174,10 @@ function ns.BuildAbout(R, Header, Text, titleFont, pageW)
               function() return s().sound end, function(v) s().sound = v end },
             { "Chat messages", "Print a line in chat when something is finished.",
               function() return s().announce end, function(v) s().announce = v end },
+            { "Every item of a look", "For completionists: an appearance counts only when you have it from that exact item, "
+                .. "not from another item with the same look. Rares then stay on the map until every look they drop is yours.",
+              function() return s().transmogSources end,
+              function(v) s().transmogSources = v; ns.ResetCollectMemory(); ns.Build(); if ns.Evaluate then ns.Evaluate() end end },
             ns.DIFFICULTY_ENABLED and { "Difficulty tags", "Show Easy, Medium, Hard or Very hard on each row, and in tooltips why and roughly how long it takes. "
                 .. "These are estimates.",
               function() return s().difficulty ~= false end, function(v) s().difficulty = v; ns.RefreshUI() end } or nil,

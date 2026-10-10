@@ -12,16 +12,45 @@ local LABEL = { mount = "mount", pet = "pet", toy = "toy", decor = "decor", appe
 function ns.FarmWants(it)
     local out = {}
     if not (it and it.kind == "point" and (it.pkind == "rare" or it.pkind == "boss")) then return out end
+    -- appearances only keep a rare on the map for completionists (Options > Every item of a look)
+    local looks = ns.db and ns.db.settings.transmogSources
     local function check(l)
-        if not l[2] then return end
+        if not l[2] and not looks then return end
         local t, owned = ns.ItemCollect(l[1], l[2])
-        if t and owned == false then out[#out + 1] = { l[1], t } end
+        if t and owned == false and (l[2] or t == "appearance") then out[#out + 1] = { l[1], t } end
     end
     for _, l in ipairs(it.loot or {}) do check(l) end
     if it.sl and ns.SHARED_LOOT and ns.SHARED_LOOT[it.sl] then
         for _, l in ipairs(ns.SHARED_LOOT[it.sl]) do check(l) end
     end
     return out
+end
+
+-- For a rare: true when you own every collectible it can drop (appearances when they count), false when one
+-- is missing, nil when it drops nothing collectible or the game hasn't loaded them all yet.
+function ns.AllLootCollected(it)
+    local any = false
+    local function check(l)
+        local t, owned = ns.ItemCollect(l[1], l[2])
+        if t == nil then return nil end           -- still loading: can't say yet
+        if t == false then return true end         -- not a collectible (or not one for this character)
+        any = true
+        if owned == nil then return nil end
+        return owned
+    end
+    local list = {}
+    for _, l in ipairs(it.loot or {}) do list[#list + 1] = l end
+    if it.sl and ns.SHARED_LOOT and ns.SHARED_LOOT[it.sl] then
+        for _, l in ipairs(ns.SHARED_LOOT[it.sl]) do list[#list + 1] = l end
+    end
+    local unsure = false
+    for _, l in ipairs(list) do
+        local r = check(l)
+        if r == false then return false end
+        if r == nil then unsure = true end
+    end
+    if unsure or not any then return nil end
+    return true
 end
 
 -- True when the rare's daily loot is used up (its tracking quest is flagged until the daily reset).

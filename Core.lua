@@ -380,10 +380,35 @@ local function AppearanceOwned(itemID)
         if ok2 and hasData then canLearn[sourceID] = canCollect and true or false end
     end
     if canLearn[sourceID] == false then return "skip" end
+    local T = C_TransmogCollection
+    -- "Every item of a look" (completionists): only this item's own source counts, not the look from elsewhere
+    if ns.db and ns.db.settings.transmogSources then
+        local answered = false
+        if T.GetAppearanceInfoBySource then
+            local ok3, info = pcall(T.GetAppearanceInfoBySource, sourceID)
+            if ok3 and type(info) == "table" and info.sourceIsCollected ~= nil then
+                if info.sourceIsCollected then return true end
+                answered = true
+            end
+        end
+        if T.GetSourceInfo then
+            local ok6, si = pcall(T.GetSourceInfo, sourceID)
+            if ok6 and type(si) == "table" and si.isCollected ~= nil then
+                if si.isCollected then return true end
+                answered = true
+            end
+        end
+        if T.PlayerHasTransmogItemModifiedAppearance then
+            local ok7, has = pcall(T.PlayerHasTransmogItemModifiedAppearance, sourceID)
+            if ok7 and has then return true end
+            if ok7 then answered = true end
+        end
+        if answered then return false end
+        return
+    end
     -- known if ANY of the game's answers says so: the look can come from another item that shares it,
     -- which checking only this exact item misses. "false" only when an answer came back and none said yes.
     local answered = false
-    local T = C_TransmogCollection
     if T.GetAppearanceInfoBySource then
         local ok3, info = pcall(T.GetAppearanceInfoBySource, sourceID)
         if ok3 and type(info) == "table" then
@@ -420,6 +445,9 @@ local typeCache = {}   -- itemID -> resolved type or false (not a collectible)
 -- owned nil = the client can't tell (row shown, not counted).
 -- flag ("m", "p", "t", "d") forces the type from the data files; otherwise it is detected and cached.
 local lastOwned = {}   -- itemID -> last definite owned answer (true sticks: nothing gets uncollected)
+
+-- Forgets remembered answers, for when what "owned" means changes (Options > Every item of a look).
+function ns.ResetCollectMemory() wipe(lastOwned) end
 
 -- Steadies an owned answer: once collected it stays collected, and "can't tell" (the client still
 -- loading) falls back to the last definite answer, so counts don't jump while data comes and goes.
