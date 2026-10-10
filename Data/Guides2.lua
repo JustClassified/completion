@@ -1137,6 +1137,92 @@ G[62236] = orders("Jewelcrafting")
 G[62237] = orders("Leatherworking")
 G[62238] = orders("Tailoring")
 
+local tour = function(zone)
+    return {
+        steps = {
+            { t = "Turn on War Mode (in a capital, from the talents window)." },
+            { t = "Fly to " .. zone .. " and earn 1000 honor there: player kills, PvP world quests and War Supply Crates all count." },
+        },
+        tips = { "The quickest honor is the War Supply Crate that drops into the zone about every 15 minutes; loot it before the other faction does.", "If your faction is outnumbered on your realm group, an alt on the bigger faction has an easier time." },
+    }
+end
+G[61222] = tour("Zul'Aman")
+G[61223] = tour("Harandar")
+G[61224] = tour("Voidstorm")
+G[61224].tips[3] = "In Slayer's Rise, a Spectral Battle Chest also gives honor toward this."
+G[63167] = tour("the Coiled Isle")
+G[63167].tips[3] = "The Coiled Isle also has its own honor crates."
+local crates = function(n)
+    return {
+        steps = {
+            { t = "Turn on War Mode." },
+            { t = "Watch for a War Supply Crate: a plane flies over and drops it, about every 15 minutes per zone, shown on the map." },
+            { t = "Get to it first and loot it. Repeat until you've opened " .. n .. "." },
+        },
+        tips = { "Only crates you loot yourself count, and the other side contests every drop: good latency and being there early matter.", "Eversong and Zul'Aman are often quieter than the busier zones.", "A crate timer addon helps you be there when it lands." },
+    }
+end
+G[61231] = crates(5)
+G[61232] = crates(25)
+G[61266] = {
+    steps = {
+        { t = "Turn on War Mode and go to Slayer's Rise in Voidstorm.", at = { 2444, 56.6, 43.7 } },
+        { t = "Wait on the tall rock in the middle; the Spectral Battle Chest appears when a Slayer's Rise event starts, on the hour and half past." },
+        { t = "Race to it and open it. Spots: 47.8, 40.0", at = { 2444, 47.8, 40.0 } },
+        { t = "or 67.6, 55.9", at = { 2444, 67.6, 55.9 } },
+        { t = "or 69.3, 48.1. Repeat until you've opened 10.", at = { 2444, 69.3, 48.1 } },
+    },
+    tips = { "Players of your own faction can all open it, so don't fight each other over it." },
+}
+G[62516] = {
+    steps = {
+        { t = "Turn on War Mode and go to Slayer's Rise in Voidstorm." },
+        { t = "Kill an enemy player while they're still flying on their mount. If they land, or get dismounted and are falling, it doesn't count." },
+    },
+    tips = { "It's meant to happen at the Path of Predation (the road a little north of where the name is printed on the map), but reports say the honorable kill elsewhere has counted too." },
+}
+G[62107] = {
+    steps = {
+        { t = "Queue for Training Grounds in the PvP window." },
+        { t = "In each Training Grounds map, type /train at any time, even in the starting area." },
+        { t = "Keep queueing until every map in the list is ticked." },
+    },
+}
+G[63699] = {
+    steps = {
+        { t = "Queue for Training Grounds Arena in the PvP window." },
+        { t = "Win in four different arenas; the map is random, so keep queueing until you've won on four." },
+    },
+}
+local arena = function(n)
+    return {
+        steps = {
+            { t = "Queue for Training Grounds Arena in the PvP window (it may not start below level 90)." },
+            { t = "Win " .. n .. " matches. Your teammates and opponents are bots, sometimes including your healer." },
+        },
+    }
+end
+G[63696] = arena(25)
+G[63697] = arena(100)
+G[63698] = arena(250)
+local bots = {
+    steps = {
+        { t = "Queue for Training Grounds in the PvP window." },
+        { t = "Kill each named enemy bot listed in the achievement when it shows up in the enemy team." },
+    },
+    tips = { "Some named bots are very rare or haven't been seen, and kills of some have not given credit: this one may be bugged." },
+}
+G[61958] = bots
+G[61959] = bots
+G[61956] = {
+    steps = {
+        { t = "Queue for Training Grounds in the PvP window." },
+        { t = "Win 250 matches. Most of the other Training Grounds achievements come along the way." },
+    },
+}
+G[61464] = { steps = { { t = "Do the weekly Sparks of War PvP quests for the Midnight zones; each zone's version is a row in the achievement." } }, tips = { "The Naigtal and Coiled Isle versions of the quest have not counted." } }
+G[61465] = G[61464]
+
 for id, g in pairs(G) do
     if not ns.ACH_STEPS[id] then
         if g.steps then ns.ACH_STEPS[id] = g.steps end
