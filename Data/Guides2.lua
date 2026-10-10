@@ -963,3 +963,88 @@ for id, g in pairs(G) do
         end
     end
 end
+
+-- Abundance: the four locations, on each per-location criterion
+local ABUNDANCE_SPOTS = {
+    ["Eversong: Wath'anan Crypts"] = { t = "Abundance location", at = { { EVERSONG, 56.78, 65.79 } } },
+    ["Harandar: Floaret Grotto"] = { t = "Abundance location", at = { { HARANDAR, 66.14, 61.69 } } },
+    ["Zul'Aman: Loaknit Den"] = { t = "Abundance location", at = { { ZULAMAN, 31.62, 26.14 } } },
+    ["Abundant Voidburrow"] = { t = "Abundance location", at = { { VOIDSTORM, 38.82, 53.31 } } },
+    ["Eversong Woods: Watha'nan Crypts"] = { t = "Abundance location", at = { { EVERSONG, 56.78, 65.79 } } },
+    ["Voidstorm: Abundant Voidburrow"] = { t = "Abundance location", at = { { VOIDSTORM, 38.82, 53.31 } } },
+}
+for _, id in ipairs({ 62325, 62326, 62329, 62330, 62331, 61943 }) do
+    ns.CRIT_NOTES[id] = ns.CRIT_NOTES[id] or {}
+    for k, v in pairs(ABUNDANCE_SPOTS) do ns.CRIT_NOTES[id][k] = ns.CRIT_NOTES[id][k] or v end
+end
+
+-- Sojourner storylines: where each one starts
+ns.CRIT_NOTES[61957] = ns.CRIT_NOTES[61957] or {}
+ns.CRIT_NOTES[61957]["Fear and Fel"] = ns.CRIT_NOTES[61957]["Fear and Fel"] or { t = "Storyline starts here", at = { { 2393, 55.93, 63.77 } } }
+ns.CRIT_NOTES[61957]["Sunbath, Take Me Away"] = ns.CRIT_NOTES[61957]["Sunbath, Take Me Away"] or { t = "Storyline starts here", at = { { 2395, 48.73, 76.7 } } }
+ns.CRIT_NOTES[61957]["Lesser Evil"] = ns.CRIT_NOTES[61957]["Lesser Evil"] or { t = "Storyline starts here", at = { { 2393, 54.54, 61.65 } } }
+ns.CRIT_NOTES[61957]["Far Striding"] = ns.CRIT_NOTES[61957]["Far Striding"] or { t = "Storyline starts here", at = { { 2395, 45.29, 45.86 } } }
+ns.CRIT_NOTES[61957]["Blinding Sun"] = ns.CRIT_NOTES[61957]["Blinding Sun"] or { t = "Storyline starts here", at = { { 2395, 50.54, 78.19 } } }
+ns.CRIT_NOTES[61957]["Paladin Rescue"] = ns.CRIT_NOTES[61957]["Paladin Rescue"] or { t = "Storyline starts here: Requires level 90", at = { { 2393, 53.23, 69.68 } } }
+ns.CRIT_NOTES[61957]["Scootin' Through Silvermoon"] = ns.CRIT_NOTES[61957]["Scootin' Through Silvermoon"] or { t = "Storyline starts here", at = { { 2393, 35.78, 69.03 } } }
+ns.CRIT_NOTES[61957]["The Drinking Debt"] = ns.CRIT_NOTES[61957]["The Drinking Debt"] or { t = "Storyline starts here", at = { { 2393, 57.72, 68.89 } } }
+ns.CRIT_NOTES[61957]["Daggerspine Landing"] = ns.CRIT_NOTES[61957]["Daggerspine Landing"] or { t = "Storyline starts here", at = { { 2395, 38.99, 61.58 } } }
+ns.CRIT_NOTES[61957]["Flowers for Amalthea"] = ns.CRIT_NOTES[61957]["Flowers for Amalthea"] or { t = "Storyline starts here", at = { { 2395, 37.51, 72.52 } } }
+ns.CRIT_NOTES[61957]["Port Detective"] = ns.CRIT_NOTES[61957]["Port Detective"] or { t = "Storyline starts here", at = { { 2395, 46.89, 45.18 } } }
+ns.CRIT_NOTES[61957]["One Adventurous Hatchling"] = ns.CRIT_NOTES[61957]["One Adventurous Hatchling"] or { t = "Storyline starts here", at = { { 2395, 56.81, 35.56 } } }
+ns.CRIT_NOTES[61957]["Tailor Troubles"] = ns.CRIT_NOTES[61957]["Tailor Troubles"] or { t = "Storyline starts here", at = { { 2393, 48.31, 54.6 } } }
+ns.CRIT_NOTES[61957]["Runestone Rumbles"] = ns.CRIT_NOTES[61957]["Runestone Rumbles"] or { t = "Storyline starts here", at = { { 2395, 50.17, 34.26 } } }
+ns.CRIT_NOTES[61957]["How to Train Your Protege"] = ns.CRIT_NOTES[61957]["How to Train Your Protege"] or { t = "Storyline starts here", at = { { 2395, 42.57, 14.56 } } }
+ns.CRIT_NOTES[61957]["Aspiring Academic"] = ns.CRIT_NOTES[61957]["Aspiring Academic"] or { t = "Storyline starts here", at = { { 2393, 33.2, 74.17 } } }
+ns.CRIT_NOTES[61957]["Theft Tracking"] = ns.CRIT_NOTES[61957]["Theft Tracking"] or { t = "Storyline starts here", at = { { 2395, 41.13, 38.49 } } }
+ns.CRIT_NOTES[61864] = ns.CRIT_NOTES[61864] or {}
+ns.CRIT_NOTES[61864]["The Void Peers Back"] = ns.CRIT_NOTES[61864]["The Void Peers Back"] or { t = "Storyline starts here", at = { { 2405, 41.17, 61.55 } } }
+ns.CRIT_NOTES[61864]["The Nethersent"] = ns.CRIT_NOTES[61864]["The Nethersent"] or { t = "Storyline starts here", at = { { 2405, 56.18, 71.85 } } }
+ns.CRIT_NOTES[61864]["Pathogenic Problem"] = ns.CRIT_NOTES[61864]["Pathogenic Problem"] or { t = "Storyline starts here", at = { { 2405, 35.92, 48.25 } } }
+ns.CRIT_NOTES[61864]["Shadowguard's Shadow"] = ns.CRIT_NOTES[61864]["Shadowguard's Shadow"] or { t = "Storyline starts here", at = { { 2444, 39.77, 84.1 } } }
+ns.CRIT_NOTES[61864]["Breaking the Triad"] = ns.CRIT_NOTES[61864]["Breaking the Triad"] or { t = "Storyline starts here", at = { { 2444, 34.91, 80.23 } } }
+ns.CRIT_NOTES[61864]["Secrets in the Dark"] = ns.CRIT_NOTES[61864]["Secrets in the Dark"] or { t = "Storyline starts here", at = { { 2405, 36.87, 58.57 } } }
+ns.CRIT_NOTES[61864]["To Be Changed"] = ns.CRIT_NOTES[61864]["To Be Changed"] or { t = "Storyline starts here", at = { { 2405, 53.7, 69.93 } } }
+ns.CRIT_NOTES[61864]["A Domanaar's Best Friend"] = ns.CRIT_NOTES[61864]["A Domanaar's Best Friend"] or { t = "Storyline starts here", at = { { 2405, 52.06, 67.47 } } }
+ns.CRIT_NOTES[61864]["Shadow Puppets"] = ns.CRIT_NOTES[61864]["Shadow Puppets"] or { t = "Storyline starts here", at = { { 2405, 51.83, 71.96 } } }
+ns.CRIT_NOTES[61864]["The Nightbreaker"] = ns.CRIT_NOTES[61864]["The Nightbreaker"] or { t = "Storyline starts here", at = { { 2405, 42.38, 75.37 } } }
+ns.CRIT_NOTES[61864]["A Voice Inside"] = ns.CRIT_NOTES[61864]["A Voice Inside"] or { t = "Storyline starts here", at = { { 2405, 41.46, 74.02 } } }
+ns.CRIT_NOTES[61864]["A Gift, Given Freely"] = ns.CRIT_NOTES[61864]["A Gift, Given Freely"] or { t = "Storyline starts here", at = { { 2444, 39.93, 84.14 } } }
+ns.CRIT_NOTES[61864]["Go Low, Go Loud"] = ns.CRIT_NOTES[61864]["Go Low, Go Loud"] or { t = "Storyline starts here", at = { { 2405, 36.05, 59.81 } } }
+ns.CRIT_NOTES[61864]["Oaths to Family"] = ns.CRIT_NOTES[61864]["Oaths to Family"] or { t = "Storyline starts here", at = { { 2405, 44.69, 68.58 } } }
+ns.CRIT_NOTES[61864]["A Dance with the Devil"] = ns.CRIT_NOTES[61864]["A Dance with the Devil"] or { t = "Storyline starts here", at = { { 2405, 51.18, 68.43 } } }
+ns.CRIT_NOTES[61864]["A More Potent Foe"] = ns.CRIT_NOTES[61864]["A More Potent Foe"] or { t = "Storyline starts here: Requires level 90 to see the starter", at = { { 2405, 53.25, 70.39 } } }
+ns.CRIT_NOTES[61452] = ns.CRIT_NOTES[61452] or {}
+ns.CRIT_NOTES[61452]["Healing the Spirit"] = ns.CRIT_NOTES[61452]["Healing the Spirit"] or { t = "Storyline starts here", at = { { 2437, 43.15, 67.93 } } }
+ns.CRIT_NOTES[61452]["Sawdust to Sawdust"] = ns.CRIT_NOTES[61452]["Sawdust to Sawdust"] or { t = "Storyline starts here", at = { { 2437, 28.39, 27.28 } } }
+ns.CRIT_NOTES[61452]["Between Two Trolls"] = ns.CRIT_NOTES[61452]["Between Two Trolls"] or { t = "Storyline starts here", at = { { 2437, 44.08, 66.21 } } }
+ns.CRIT_NOTES[61452]["Sorrowing Kin"] = ns.CRIT_NOTES[61452]["Sorrowing Kin"] or { t = "Storyline starts here", at = { { 2437, 45.33, 69.7 } } }
+ns.CRIT_NOTES[61452]["Unlikely Friends"] = ns.CRIT_NOTES[61452]["Unlikely Friends"] or { t = "Storyline starts here", at = { { 2437, 44.17, 33.63 } } }
+ns.CRIT_NOTES[61452]["The Voice of Nalorakk"] = ns.CRIT_NOTES[61452]["The Voice of Nalorakk"] or { t = "Storyline starts here", at = { { 2437, 33.62, 78.82 } } }
+ns.CRIT_NOTES[61452]["Reclaiming de Honor"] = ns.CRIT_NOTES[61452]["Reclaiming de Honor"] or { t = "Storyline starts here", at = { { 2437, 33.61, 78.79 } } }
+ns.CRIT_NOTES[61452]["Vengeance for Tolbani"] = ns.CRIT_NOTES[61452]["Vengeance for Tolbani"] or { t = "Storyline starts here", at = { { 2437, 53.1, 62.86 } } }
+ns.CRIT_NOTES[61452]["The Loa of Murlocs"] = ns.CRIT_NOTES[61452]["The Loa of Murlocs"] or { t = "Storyline starts here", at = { { 2437, 52.85, 60.22 } } }
+ns.CRIT_NOTES[61452]["No Fear"] = ns.CRIT_NOTES[61452]["No Fear"] or { t = "Storyline starts here", at = { { 2437, 45.2, 69.76 } } }
+ns.CRIT_NOTES[61452]["Bitter Honor"] = ns.CRIT_NOTES[61452]["Bitter Honor"] or { t = "Storyline starts here", at = { { 2437, 28.92, 33.45 } } }
+ns.CRIT_NOTES[61452]["The Sound of Her Voice"] = ns.CRIT_NOTES[61452]["The Sound of Her Voice"] or { t = "Storyline starts here", at = { { 2437, 36.75, 25.12 } } }
+ns.CRIT_NOTES[61452]["A Venomous History"] = ns.CRIT_NOTES[61452]["A Venomous History"] or { t = "Storyline starts here: Needs the second boss of the area killed first", at = { { 2437, 36.12, 24.8 } } }
+ns.CRIT_NOTES[61452]["Beyond the Walls"] = ns.CRIT_NOTES[61452]["Beyond the Walls"] or { t = "Storyline starts here: First floor of the house", at = { { 2437, 45.54, 69.38 } } }
+ns.CRIT_NOTES[61452]["Something Vile This Way Comes"] = ns.CRIT_NOTES[61452]["Something Vile This Way Comes"] or { t = "Storyline starts here", at = { { 2437, 38.54, 22.43 } } }
+ns.CRIT_NOTES[61452]["River-Walkers of the Prowl"] = ns.CRIT_NOTES[61452]["River-Walkers of the Prowl"] or { t = "Storyline starts here", at = { { 2437, 45.88, 70.73 } } }
+ns.CRIT_NOTES[61452]["Bloodstains"] = ns.CRIT_NOTES[61452]["Bloodstains"] or { t = "Storyline starts here", at = { { 2437, 45.77, 65.54 } } }
+ns.CRIT_NOTES[61739] = ns.CRIT_NOTES[61739] or {}
+ns.CRIT_NOTES[61739]["A Goblin in Harandar"] = ns.CRIT_NOTES[61739]["A Goblin in Harandar"] or { t = "Storyline starts here", at = { { 2413, 47.1, 45.77 } } }
+ns.CRIT_NOTES[61739]["Late Bloomers"] = ns.CRIT_NOTES[61739]["Late Bloomers"] or { t = "Storyline starts here", at = { { 2413, 36.93, 25.98 } } }
+ns.CRIT_NOTES[61739]["Peril Among Petals"] = ns.CRIT_NOTES[61739]["Peril Among Petals"] or { t = "Storyline starts here", at = { { 2413, 65.39, 22.68 } } }
+ns.CRIT_NOTES[61739]["Harandar's Kitchen"] = ns.CRIT_NOTES[61739]["Harandar's Kitchen"] or { t = "Storyline starts here", at = { { 2413, 40.86, 23.18 } } }
+ns.CRIT_NOTES[61739]["Cultivating Hope"] = ns.CRIT_NOTES[61739]["Cultivating Hope"] or { t = "Storyline starts here", at = { { 2413, 34.9, 24.99 } } }
+ns.CRIT_NOTES[61739]["A Palette of Feelings"] = ns.CRIT_NOTES[61739]["A Palette of Feelings"] or { t = "Storyline starts here", at = { { 2413, 70.5, 51.2 } } }
+ns.CRIT_NOTES[61739]["Bloomtown"] = ns.CRIT_NOTES[61739]["Bloomtown"] or { t = "Storyline starts here", at = { { 2413, 31.44, 64.93 } } }
+ns.CRIT_NOTES[61739]["Trials of the Shul'ka"] = ns.CRIT_NOTES[61739]["Trials of the Shul'ka"] or { t = "Storyline starts here: Needs campaign progress", at = { { 2413, 52.18, 55.09 } } }
+ns.CRIT_NOTES[61739]["The Legend of Aln'sharan"] = ns.CRIT_NOTES[61739]["The Legend of Aln'sharan"] or { t = "Storyline starts here", at = { { 2413, 67.73, 27.47 } } }
+ns.CRIT_NOTES[61739]["The Greenspeaker's Vigil"] = ns.CRIT_NOTES[61739]["The Greenspeaker's Vigil"] or { t = "Storyline starts here: Needs campaign progress", at = { { 2413, 65.41, 28.08 } } }
+ns.CRIT_NOTES[61739]["Haranir Never Say Die"] = ns.CRIT_NOTES[61739]["Haranir Never Say Die"] or { t = "Storyline starts here", at = { { 2413, 48.78, 44.35 } } }
+ns.CRIT_NOTES[61739]["Silence at Fungara Village"] = ns.CRIT_NOTES[61739]["Silence at Fungara Village"] or { t = "Storyline starts here", at = { { 2413, 43.91, 71.73 } } }
+ns.CRIT_NOTES[61739]["Hunter's Rights"] = ns.CRIT_NOTES[61739]["Hunter's Rights"] or { t = "Storyline starts here", at = { { 2413, 69.45, 52.79 } } }
+ns.CRIT_NOTES[61739]["Predator Reintroduction"] = ns.CRIT_NOTES[61739]["Predator Reintroduction"] or { t = "Storyline starts here", at = { { 2413, 69.56, 50.64 } } }
+ns.CRIT_NOTES[61739]["The Grudge Pit"] = ns.CRIT_NOTES[61739]["The Grudge Pit"] or { t = "Storyline starts here", at = { { 2413, 71.81, 64.01 } } }
