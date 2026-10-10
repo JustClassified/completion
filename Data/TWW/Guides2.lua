@@ -230,6 +230,127 @@ G[41551] = {
     tips = { "Player pet guide sites have step-by-step teams for every family." },
 }
 
+local DEEPS, HALLOW = 2214, 2215
+local starts = function(map, list, dx)
+    local c = {}
+    for _, s in ipairs(list) do
+        -- most rows already have their spot; only fill the missing ones
+        c[s[1]] = { t = "Starts with " .. s[2] .. ".", at = s[5] and { { map, s[3] - (dx or 0), s[4] } } or nil }
+    end
+    return c
+end
+G[40799] = {
+    steps = {
+        { t = "Expand the achievement: each storyline row has its starting quest giver, and the arrow takes you to the nearest one you still need." },
+        { t = "Pick up the first quest there and follow the chain to its end; the row ticks when the last quest is handed in." },
+    },
+    tips = { "Each storyline also gives a one-time warband bonus of Council of Dornogal reputation.", "If Rampage at Nibelgaz Mine is stuck, look for The Glittering Shard: it's a quest item dropped by Urthgrafr Riftcaller." },
+    crit = starts(DEEPS, {
+        { "The Caretaker of Brunwin's Terrace", "Batzvara", 51.2, 30.2 },
+        { "Broken Tools", "Machinist Kittrin", 48.2, 33.4 },
+        { "Routine Maintenance", "Danagh", 58.8, 64.2 },
+        { "Dread in the Den", "Scrit", 62.7, 45.6 },
+        { "Envenomed Invasion", "Nebb", 65.8, 42.6 },
+        { "Fearbreaker", "Moira Thaurissan", 47.0, 34.0 },
+        { "Into the Fog", "Noli Marlen", 58.4, 62.4 },
+        { "Magma-nificence", "Foreman Duinth", 41.0, 21.4 },
+        { "Kobold Culture and Integration", "Skitter", 47.0, 34.0 },
+        { "Rampage at Nibelgaz Mine", "Orsenth", 51.0, 14.8, true },
+        { "Abysmal Extraction", "Prospera Cogwail", 63.8, 79.2 },
+        { "Revenge in the Rumbling Wastes", "Kagfritha", 62.2, 46.8 },
+        { "Tired of Rest", "Haimaz", 60.4, 45.7 },
+        { "Frolicking in the Fetid Grotto", "Hrandaz", 62.4, 48.0 },
+    }, 4.2),
+}
+G[40844] = {
+    steps = {
+        { t = "Expand the achievement: each storyline row has its starting quest giver, and the arrow takes you to the nearest one you still need." },
+        { t = "Pick up the first quest there and follow the chain to its end; the row ticks when the last quest is handed in." },
+    },
+    tips = {
+        "It can't be done in one week. Memories of the Sky needs nine mementos and the quest giver hands out three a week.",
+        "Striking Steel pauses when Auralia Steelstrike moves to 42.4, 55.0; the chain continues a day or a reset later.",
+        "Lost in the Darkness needs its prerequisite achievement or adventure mode; Rest at Last and Memories of the Sky need level 80.",
+        "The Priory's reputation bonus needs a run of the Priory of the Sacred Flame dungeon.",
+    },
+    crit = starts(HALLOW, {
+        { "Light to Velhan's Claim", "Aegor Irynbawnd", 49.2, 41.0 },
+        { "The Priory", "General Steelstrike", 40.6, 50.6 },
+        { "Striking Steel", "Auralia Steelstrike", 41.2, 53.0 },
+        { "Lost in the Darkness", "Aliya Hillhelm", 61.2, 30.4 },
+        { "The Sky's the Limit", "Barahl Lynflayme", 69.2, 43.8 },
+        { "Crushing Depths", "Joseph Brayvemarc", 42.5, 55.2 },
+        { "The Last Mage of Hallowfall", "General Steelstrike", 40.6, 50.6 },
+        { "The Weight of Duty", "Endiri Dawnsurge", 41.4, 52.4 },
+        { "Apart for Purpose", "Orren Masyn", 49.0, 62.0 },
+        { "Rest at Last", "Great Kyron", 43.0, 52.4 },
+        { "An Orphan's Dilemma", "Alyza Bowblaze", 41.6, 55.6 },
+        { "The Mysterious Chef", "Haelmut Aegisaxe", 48.4, 39.2 },
+        { "What Grows in the Dark", "Captain Trueflame", 70.4, 44.8 },
+        { "Suspicious Minds", "Lerrenai Fayn", 68.0, 44.2 },
+        { "Memories of the Sky", "Maera Ashyld", 60.4, 60.0 },
+    }),
+}
+G[40894] = {
+    steps = {
+        { t = "Expand the achievement: each storyline row leads the arrow to its next quest giver." },
+        { t = "Do every Undermine storyline. The last, Hard Ways at the Gallagio, opens only after you defeat Gallywix in the Liberation of Undermine raid and finish the main story; then a long chain starts for it." },
+    },
+}
+G[40900] = {
+    steps = {
+        { t = "Expand the achievement: each campaign chapter is a row, and the arrow leads to its next quest giver." },
+        { t = "Play the chapters in order; some open only at a weekly reset." },
+    },
+    tips = { "Once it's done, alts can skip the Undermine campaign: talk to the innkeeper on the first floor of the Incontinental Hotel." },
+}
+G[40307] = {
+    steps = {
+        { t = "Expand the achievement: it's the War Within campaign plus three questlines, each row leading the arrow to its quest giver." },
+        { t = "Finish all of them on any character; the Earthen allied race then unlocks for your account." },
+    },
+}
+G[40231] = {
+    steps = {
+        { t = "Expand the achievement: each row is its own achievement or Renown goal with a guide; do them in any order." },
+        { t = "When it's done you can fly with steady flight too: the Switch Flight Style spell is at the very end of the Skyriding section on the General tab of your spellbook." },
+    },
+}
+G[41217] = {
+    steps = {
+        { t = "Expand the achievement: every treasure has its spot, and tracking it leads you treasure to treasure." },
+        { t = "Loot each one; a few need a small task first, noted on the row." },
+    },
+    crit = { ["Blackened Dice"] = { t = "Climb the pipe and turn the valve; the dice appear on the platform of the building next to it." } },
+}
+G[60889] = {
+    steps = {
+        { t = "Expand the achievement: each part is a K'aresh achievement with its own guide." },
+        { t = "Upgrade your Reshii Wraps fully and reach Renown 11 with the K'aresh Trust first: some treasures and rares are only visible while phase-diving." },
+    },
+}
+G[41808] = {
+    steps = {
+        { t = "Expand the achievement: each part is a step of the Oasis ecology questline in K'aresh." },
+        { t = "Go to the Oasis in K'aresh and take every quest that shows on the map there; they appear as they open, so no start spots are needed." },
+        { t = "Some steps are weekly gated: come back after each reset and do the new quests and the daily ones it unlocks." },
+    },
+}
+G[41815] = G[41808]
+G[41928] = { steps = { { t = "Expand the achievement: each part is a Horrific Visions Revisited achievement with its own guide." } }, tips = { "It gives no reward if you already own Reek from the original vision achievement." } }
+G[41929] = { steps = { { t = "Expand the achievement: each part is a Horrific Visions Revisited achievement with its own guide." } }, tips = { "A five-mask clear has sometimes not credited the five-mask achievement in the same run as the eight-mask one; repeat it if a row stays open." } }
+G[40232] = { steps = { { t = "Expand the achievement: each part is a Nerub-ar Palace raid achievement with its own guide." } }, tips = { "You Can't See Me, Cowabunga and Would You Still /love Me need at least ten players in the raid to give credit." } }
+G[40980] = { steps = { { t = "Expand the achievement: each part is one Khaz Algar pet tamer achievement; beat every tamer with a pet of each family." } }, tips = { "Look up a team for each tamer before you start; most fights have a known safe strategy." } }
+local elite = function(boss)
+    return {
+        steps = { { t = "Expand the achievement: any one of the rows gives it, from rated PvP or Mythic+ rating to a raid kill." } },
+        tips = { "It stays possible after the season ends through the Mythic " .. boss .. " kill." },
+    }
+end
+G[40723] = elite("Queen Ansurek")
+G[41665] = elite("Gallywix")
+G[42325] = { steps = { { t = "Expand the achievement: any one of the rows gives it, from rated PvP or Mythic+ rating to a raid kill." } }, tips = { "It rewards a K'areshi Voidstone, which unlocks transmog appearances." } }
+
 for id, g in pairs(G) do
     if not ns.ACH_STEPS[id] then
         if g.steps then ns.ACH_STEPS[id] = g.steps end
