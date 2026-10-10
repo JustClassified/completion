@@ -1044,7 +1044,7 @@ G[61722] = {
 }
 
 local UNLOCK = {
-    ["Tainted Corpses"] = "Unlock it first: loot the Tainted Bone Pile inside the site (it's in both Ritual Sites).",
+    ["Tainted Corpses"] = "Unlock it first: loot the Tainted Bone Pile inside the site. In Daggerspine Point it's at 66.7, 63.7; in the Broken Throne at 48.0, 36.5 (site map coordinates).",
     ["Patrols!"] = "Unlock it first through the quest Misappropriated Treasures, started by picking up one of its four items at the sites.",
 }
 local challenge = function(name, expert)
@@ -1065,7 +1065,7 @@ end
 local strikes = function(zone, n)
     return {
         steps = {
-            { t = "Void Strikes alternate weekly between Eversong and Zul'Aman; wait for a " .. zone .. " week." },
+            { t = "Watch the " .. zone .. " map for an active Void Strike event." },
             { t = "Complete " .. n .. " Void Strikes in " .. zone .. ". Only strikes count, not Incursions." },
         },
     }
@@ -1083,6 +1083,59 @@ G[62607] = {
         { t = "Hand in the quest." },
     },
 }
+
+G[62874] = {
+    steps = {
+        { t = "Expand the achievement: each part is its own achievement with a guide." },
+        { t = "Run the Naigtal Showdown each time it's open and work through the parts." },
+    },
+    tips = { "It's time gated: it takes three rotations of Naigtal, about six weeks, so do it every time it's up." },
+}
+local power = function()
+    return {
+        steps = {
+            { t = "Run the Showdowns on the harder difficulty; rares there can spawn with a random power buff." },
+            { t = "Check each rare's buffs before you pull it. Kill one carrying each buff listed in the achievement." },
+            { t = "Missing buffs just need more runs: the buff is random per spawn, and both Showdown zones can roll it." },
+        },
+    }
+end
+G[62896] = power()
+G[62898] = power()
+G[62899] = power()
+G[62900] = power()
+G[63325] = {
+    steps = {
+        { t = "Expand the achievement: each part is its own achievement with a guide; do them in any order." },
+    },
+    tips = { "Finishing it unlocks a reward sold for Omnium currency by the vendor in Silvermoon." },
+    crit = {},
+}
+G[42795] = {
+    steps = {
+        { t = "Learn Midnight Cooking from the cooking trainer in Silvermoon." },
+        { t = "Buy a large stack of butter and spice pouches from a Midnight cooking supplies vendor." },
+        { t = "Cook Spiced Biscuits until the recipe turns grey and stops giving skill." },
+        { t = "Turn the biscuits into Hearty Food and keep cooking that until you reach 100." },
+    },
+    tips = { "Everything comes from the vendor, so it's quick and cheap." },
+}
+local orders = function(prof, extra)
+    return {
+        steps = {
+            { t = "Open the crafting orders table for " .. prof .. " and fill Midnight orders: patron, public and personal all count." },
+            { t = "Keep going until you've filled 50." },
+        },
+        tips = { "Personal orders from your own alts count, so you can feed yourself cheap orders.", extra },
+    }
+end
+G[62232] = orders("Blacksmithing")
+G[62233] = orders("Enchanting", "One of the Enchanting weekly quests asks for orders; it opens at 25 Midnight Enchanting skill. Do it on more characters to speed up.")
+G[62234] = orders("Engineering")
+G[62235] = orders("Inscription")
+G[62236] = orders("Jewelcrafting")
+G[62237] = orders("Leatherworking")
+G[62238] = orders("Tailoring")
 
 for id, g in pairs(G) do
     if not ns.ACH_STEPS[id] then
