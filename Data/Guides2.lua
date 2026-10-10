@@ -94,7 +94,7 @@ G[63641] = {
     steps = {
         { t = "Expand the achievement: each optional Coiled Isle storyline has its own row." },
         { t = "Tokka's Crew is gated by Captain Tokka's reputation: later parts open at stages 3 and 4." },
-        { t = "Fish with the crew to raise that reputation and finish the remaining storylines." },
+        { t = "Raise it with the fishing dailies on Tokka's Folly island (around 51.6, 49.8), then finish the remaining storylines." },
     },
 }
 
