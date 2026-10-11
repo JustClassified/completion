@@ -895,6 +895,87 @@ ns.ACH_STEPS[63636] = {
 ns.ACH_NOTES[63636] = { "The points are shared across your warband.", "The last point needs Renown 14 with Zul'jarra's Forces.", "These steps don't tick themselves: shift-click a step in the list once you have it." }
 ns.ACH_REVIEWED[63636] = true
 
+-- instances
+ns.ACH_STEPS[41288] = {
+    { t = "Track the achievement: the arrow leads to the entrance of Windrunner Spire." },
+    { t = "Queue for it on Heroic in the Group Finder." },
+    { t = "Defeat the Restless Heart on Heroic or higher." },
+}
+ns.ACH_NOTES[41288] = { "A Mythic or keystone kill counts too." }
+ns.ACH_REVIEWED[41288] = true
+
+-- instances
+ns.ACH_STEPS[41961] = {
+    { t = "Track the achievement: the arrow leads to the entrance of Murder Row." },
+    { t = "Queue for it on Heroic in the Group Finder." },
+    { t = "Defeat Lithiel Cinderfury on Heroic or higher." },
+}
+ns.ACH_NOTES[41961] = { "A Mythic or keystone kill counts too." }
+ns.ACH_REVIEWED[41961] = true
+
+-- instances
+ns.ACH_STEPS[61213] = {
+    { t = "Track the achievement: the arrow leads to the entrance of Magisters' Terrace." },
+    { t = "Queue for it on Heroic in the Group Finder." },
+    { t = "Defeat Degentrius on Heroic or higher." },
+}
+ns.ACH_NOTES[61213] = { "A Mythic or keystone kill counts too." }
+ns.ACH_REVIEWED[61213] = true
+
+-- instances
+ns.ACH_STEPS[61509] = {
+    { t = "Track the achievement: the arrow leads to the entrance of Voidscar Arena." },
+    { t = "Queue for it on Heroic in the Group Finder." },
+    { t = "Defeat Charonus on Heroic or higher." },
+}
+ns.ACH_NOTES[61509] = { "A Mythic or keystone kill counts too." }
+ns.ACH_REVIEWED[61509] = true
+
+-- instances
+ns.ACH_STEPS[61642] = {
+    { t = "Track the achievement: the arrow leads to the entrance of Den of Nalorakk." },
+    { t = "Queue for it on Heroic in the Group Finder." },
+    { t = "Defeat Nalorakk on Heroic or higher." },
+}
+ns.ACH_NOTES[61642] = { "A Mythic or keystone kill counts too." }
+ns.ACH_REVIEWED[61642] = true
+
+-- instances
+ns.ACH_STEPS[61644] = {
+    { t = "Track the achievement: the arrow leads to the entrance of Maisara Caverns." },
+    { t = "Queue for it on Heroic in the Group Finder." },
+    { t = "Defeat Rak'tul, Vessel of Souls on Heroic or higher." },
+}
+ns.ACH_NOTES[61644] = { "A Mythic or keystone kill counts too." }
+ns.ACH_REVIEWED[61644] = true
+
+-- instances
+ns.ACH_STEPS[61646] = {
+    { t = "Track the achievement: the arrow leads to the entrance of Nexus-Point Xenas." },
+    { t = "Queue for it on Heroic in the Group Finder." },
+    { t = "Defeat Lothraxion on Heroic or higher." },
+}
+ns.ACH_NOTES[61646] = { "A Mythic or keystone kill counts too." }
+ns.ACH_REVIEWED[61646] = true
+
+-- instances
+ns.ACH_STEPS[61648] = {
+    { t = "Track the achievement: the arrow leads to the entrance of The Blinding Vale." },
+    { t = "Queue for it on Heroic in the Group Finder." },
+    { t = "Defeat Ziekket on Heroic or higher." },
+}
+ns.ACH_NOTES[61648] = { "A Mythic or keystone kill counts too." }
+ns.ACH_REVIEWED[61648] = true
+
+-- instances
+ns.ACH_STEPS[62283] = {
+    { t = "Track the achievement: the arrow leads to the entrance of Altar of Fangs." },
+    { t = "Queue for it on Heroic in the Group Finder." },
+    { t = "Defeat Zul'jan on Heroic or higher." },
+}
+ns.ACH_NOTES[62283] = { "A Mythic or keystone kill counts too." }
+ns.ACH_REVIEWED[62283] = true
+
 -- prey
 ns.ACH_STEPS[42701] = {
     { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
