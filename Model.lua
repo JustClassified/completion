@@ -112,6 +112,14 @@ local function BuildPoint(p, fallbackZone)
     if p.x then it.spots[1] = { map = p.m, x = p.x, y = p.y } end
     for _, a in ipairs(p.alt or {}) do it.spots[#it.spots + 1] = { map = a[1], x = a[2], y = a[3] } end
     it.steps = PointSteps(p, name)
+    -- drops the spot data was missing (Data/ExtraLoot.lua), added after its own
+    local extra = p.npc and ns.EXTRA_LOOT and ns.EXTRA_LOOT[p.npc]
+    if extra then
+        local loot, have = {}, {}
+        for _, l in ipairs(it.loot or {}) do loot[#loot + 1] = l; have[l[1]] = true end
+        for _, id in ipairs(extra) do if not have[id] then loot[#loot + 1] = { id } end end
+        it.loot = loot
+    end
     return it, zone
 end
 
