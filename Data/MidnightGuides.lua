@@ -1178,3 +1178,396 @@ ns.CRIT_NOTES[63182]["Week 4: Reinforcements and Alarm Bells"] = { t = "Taken fr
 ns.CRIT_NOTES[63182]["Week 5: Boons and Patrols"] = { t = "Taken from the Image of Lady Darkglen at this week's Ritual Site", at = { { 2395, 34.9, 65.4 }, { 2437, 29.7, 78.2 } } }
 ns.CRIT_NOTES[63182]["Week 6: Embers and Manifestations"] = { t = "Taken from the Image of Lady Darkglen at this week's Ritual Site", at = { { 2395, 34.9, 65.4 }, { 2437, 29.7, 78.2 } } }
 ns.ACH_REVIEWED[63182] = true
+
+-- void_assaults
+ns.ACH_STEPS[62498] = {
+    { t = "First time: take Void Strike from Ranger Captain Lilatha in Silvermoon.", at = { 2393, 48.1, 49.7 } },
+    { t = "Wait for a week when the Void Strikes are in Eversong Woods." },
+    { t = "Find the active Void Strike on the world map; strikes move between Eversong Woods and Zul'Aman each week, and a new one starts somewhere else as soon as one ends." },
+    { t = "Complete one Void Strike or Void Incursion there." },
+}
+ns.ACH_NOTES[62498] = {  }
+ns.ACH_REVIEWED[62498] = true
+
+-- void_assaults
+ns.ACH_STEPS[62499] = {
+    { t = "First time: take Void Strike from Ranger Captain Lilatha in Silvermoon.", at = { 2393, 48.1, 49.7 } },
+    { t = "Wait for a week when the Void Strikes are in Zul'Aman." },
+    { t = "Find the active Void Strike on the world map; strikes move between Eversong Woods and Zul'Aman each week, and a new one starts somewhere else as soon as one ends." },
+    { t = "Complete one Void Strike or Void Incursion there." },
+}
+ns.ACH_NOTES[62499] = {  }
+ns.ACH_REVIEWED[62499] = true
+
+-- void_assaults
+ns.ACH_STEPS[62507] = {
+    { t = "First time: take Void Strike from Ranger Captain Lilatha in Silvermoon.", at = { 2393, 48.1, 49.7 } },
+    { t = "Wait for a week when the Void Strikes are in Eversong Woods." },
+    { t = "Find the active Void Strike on the world map; strikes move between Eversong Woods and Zul'Aman each week, and a new one starts somewhere else as soon as one ends." },
+    { t = "Complete 5 Void Strikes there; Incursions don't count." },
+}
+ns.ACH_NOTES[62507] = { "Strike progress is shared: everyone in the zone fills it together." }
+ns.ACH_REVIEWED[62507] = true
+
+-- void_assaults
+ns.ACH_STEPS[62508] = {
+    { t = "First time: take Void Strike from Ranger Captain Lilatha in Silvermoon.", at = { 2393, 48.1, 49.7 } },
+    { t = "Wait for a week when the Void Strikes are in Eversong Woods." },
+    { t = "Find the active Void Strike on the world map; strikes move between Eversong Woods and Zul'Aman each week, and a new one starts somewhere else as soon as one ends." },
+    { t = "Complete 25 Void Strikes there; Incursions don't count." },
+}
+ns.ACH_NOTES[62508] = { "Strike progress is shared: everyone in the zone fills it together." }
+ns.ACH_REVIEWED[62508] = true
+
+-- void_assaults
+ns.ACH_STEPS[62509] = {
+    { t = "First time: take Void Strike from Ranger Captain Lilatha in Silvermoon.", at = { 2393, 48.1, 49.7 } },
+    { t = "Wait for a week when the Void Strikes are in Eversong Woods." },
+    { t = "Find the active Void Strike on the world map; strikes move between Eversong Woods and Zul'Aman each week, and a new one starts somewhere else as soon as one ends." },
+    { t = "Complete 50 Void Strikes there; Incursions don't count." },
+}
+ns.ACH_NOTES[62509] = { "Strike progress is shared: everyone in the zone fills it together." }
+ns.ACH_REVIEWED[62509] = true
+
+-- void_assaults
+ns.ACH_STEPS[62510] = {
+    { t = "First time: take Void Strike from Ranger Captain Lilatha in Silvermoon.", at = { 2393, 48.1, 49.7 } },
+    { t = "Wait for a week when the Void Strikes are in Zul'Aman." },
+    { t = "Find the active Void Strike on the world map; strikes move between Eversong Woods and Zul'Aman each week, and a new one starts somewhere else as soon as one ends." },
+    { t = "Complete 5 Void Strikes there; Incursions don't count." },
+}
+ns.ACH_NOTES[62510] = { "Strike progress is shared: everyone in the zone fills it together." }
+ns.ACH_REVIEWED[62510] = true
+
+-- void_assaults
+ns.ACH_STEPS[62511] = {
+    { t = "First time: take Void Strike from Ranger Captain Lilatha in Silvermoon.", at = { 2393, 48.1, 49.7 } },
+    { t = "Wait for a week when the Void Strikes are in Zul'Aman." },
+    { t = "Find the active Void Strike on the world map; strikes move between Eversong Woods and Zul'Aman each week, and a new one starts somewhere else as soon as one ends." },
+    { t = "Complete 25 Void Strikes there; Incursions don't count." },
+}
+ns.ACH_NOTES[62511] = { "Strike progress is shared: everyone in the zone fills it together." }
+ns.ACH_REVIEWED[62511] = true
+
+-- void_assaults
+ns.ACH_STEPS[62512] = {
+    { t = "First time: take Void Strike from Ranger Captain Lilatha in Silvermoon.", at = { 2393, 48.1, 49.7 } },
+    { t = "Wait for a week when the Void Strikes are in Zul'Aman." },
+    { t = "Find the active Void Strike on the world map; strikes move between Eversong Woods and Zul'Aman each week, and a new one starts somewhere else as soon as one ends." },
+    { t = "Complete 50 Void Strikes there; Incursions don't count." },
+}
+ns.ACH_NOTES[62512] = { "Strike progress is shared: everyone in the zone fills it together." }
+ns.ACH_REVIEWED[62512] = true
+
+-- void_assaults
+ns.ACH_STEPS[62513] = {
+    { t = "First time: take Void Strike from Ranger Captain Lilatha in Silvermoon.", at = { 2393, 48.1, 49.7 } },
+    { t = "Find the active Void Strike on the world map; strikes move between Eversong Woods and Zul'Aman each week, and a new one starts somewhere else as soon as one ends." },
+    { t = "Earn 100 Field Accolades from Void Strikes, Incursions or Ritual Sites." },
+}
+ns.ACH_NOTES[62513] = { "Dark Particles from strike enemies can be traded to Maren Silverwing in Silvermoon for more Field Accolades (100 particles for 10)." }
+ns.ACH_REVIEWED[62513] = true
+
+-- void_assaults
+ns.ACH_STEPS[62518] = {
+    { t = "Find the active Void Strike on the world map; strikes move between Eversong Woods and Zul'Aman each week, and a new one starts somewhere else as soon as one ends." },
+    { t = "Join the Void Cleansing rifts (Tranquil Repose, Sunstrider Isle and South Eversong in Eversong, Bitter Bark in Zul'Aman) and kill the creatures with Apex Corruption." },
+    { t = "Kill 100 of them." },
+}
+ns.ACH_NOTES[62518] = {  }
+ns.ACH_REVIEWED[62518] = true
+
+-- void_assaults
+ns.ACH_STEPS[62563] = {
+    { t = "Void Assault: Eversong and Void Assault: Zul'Aman." },
+    { t = "Void Eradicator: Eversong and Void Eradicator: Zul'Aman (25 strikes in each)." },
+    { t = "Outstanding in the Field (100 Field Accolades)." },
+    { t = "Cosmic Exterminator." },
+}
+ns.ACH_NOTES[62563] = { "Each part has its own guide in this list.", "It unlocks the Unbound Manawyrm mount at Sergeant Vornin in Silvermoon." }
+ns.ACH_REVIEWED[62563] = true
+
+-- void_assaults
+ns.ACH_STEPS[62568] = {
+    { t = "First time: take Void Strike from Ranger Captain Lilatha in Silvermoon.", at = { 2393, 48.1, 49.7 } },
+    { t = "Find the active Void Strike on the world map; strikes move between Eversong Woods and Zul'Aman each week, and a new one starts somewhere else as soon as one ends." },
+    { t = "Defeat 250 enemies in Void Strikes or Incursions." },
+}
+ns.ACH_NOTES[62568] = {  }
+ns.ACH_REVIEWED[62568] = true
+
+-- void_assaults
+ns.ACH_STEPS[62569] = {
+    { t = "During Void Strikes and Incursions, loot the odd items some enemies drop; each one is a part of this achievement." },
+    { t = "Known so far: enemies in the first stage of While We're Down in Amani'Zar Village, Hal'hadar enemies in Battery Rush at the Broken Throne, one near the Temple of Jan'alai, and one at the Daggerspine Point strike." },
+    { t = "Use each item or take it to whoever it names; the strikes swap zones weekly, so the rest come in their week." },
+}
+ns.ACH_NOTES[62569] = { "One part is trading Dark Particles to Maren Silverwing in Silvermoon for a Field Accolade pouch." }
+ns.ACH_REVIEWED[62569] = true
+
+-- void_assaults
+ns.ACH_STEPS[62570] = {
+    { t = "Only the giant bosses of three strikes count: Springclaw and Croaker in Eversong, and Grizzly! in Zul'Aman." },
+    { t = "Kill them in the weeks their strikes come up, 15 in all." },
+}
+ns.ACH_NOTES[62570] = {  }
+ns.ACH_REVIEWED[62570] = true
+
+-- void_assaults
+ns.ACH_STEPS[62571] = {
+    { t = "Find the active Void Strike on the world map; strikes move between Eversong Woods and Zul'Aman each week, and a new one starts somewhere else as soon as one ends." },
+    { t = "Rescue 50 Forces of Azeroth. Quickest: the Stillwhisper Pond stage of the Eversong incursion (toads and hawkstriders each count), or the Spiritpaw prisons in Zul'Aman." },
+}
+ns.ACH_NOTES[62571] = {  }
+ns.ACH_REVIEWED[62571] = true
+
+-- void_assaults
+ns.ACH_STEPS[62572] = {
+    { t = "Join a Battery Rush strike in Zul'Aman." },
+    { t = "Pick up Ethereal Batteries (you can't mount while carrying one) and right-click a Siphoning Pylon to throw them. 50 in all." },
+}
+ns.ACH_NOTES[62572] = {  }
+ns.ACH_REVIEWED[62572] = true
+
+-- void_assaults
+ns.ACH_STEPS[62573] = {
+    { t = "Join a Hive Extermination strike (one in Eversong, two in Zul'Aman)." },
+    { t = "Fly through 100 swarming enemies; the falling jellies can be hit more than once." },
+}
+ns.ACH_NOTES[62573] = {  }
+ns.ACH_REVIEWED[62573] = true
+
+-- void_assaults
+ns.ACH_STEPS[62574] = {
+    { t = "First time: take Void Strike from Ranger Captain Lilatha in Silvermoon.", at = { 2393, 48.1, 49.7 } },
+    { t = "Find the active Void Strike on the world map; strikes move between Eversong Woods and Zul'Aman each week, and a new one starts somewhere else as soon as one ends." },
+    { t = "Earn 500 Field Accolades from Void Strikes, Incursions or Ritual Sites." },
+}
+ns.ACH_NOTES[62574] = { "Dark Particles from strike enemies can be traded to Maren Silverwing in Silvermoon for more Field Accolades (100 particles for 10)." }
+ns.ACH_REVIEWED[62574] = true
+
+-- void_assaults
+ns.ACH_STEPS[62606] = {
+    { t = "Pick up The Magisters' Call from the floating Magister's Missive by the Ritual Site vendors in Silvermoon.", at = { 2393, 47.9, 51.6 } },
+    { t = "Follow the chain with Magister Umbric and Grand Magister Rommath at the Sunstrider Omnium in the Magisters' Terrace on Quel'Danas (the building, not the dungeon).", at = { 2424, 63.7, 18.6 } },
+    { t = "Finish The Omnium Reawakens." },
+}
+ns.ACH_NOTES[62606] = { "Portals to the Omnium open in Silvermoon once you have it." }
+ns.ACH_SPOTS[62606] = { t = "Sunstrider Omnium", at = { { 2424, 63.7, 18.6 } } }
+ns.ACH_REVIEWED[62606] = true
+
+-- void_assaults
+ns.ACH_STEPS[62873] = {
+    { t = "Into the Stars." },
+    { t = "Frosty Domanaar Politics." },
+    { t = "Prepared for a Showdown." },
+    { t = "Showdown Success: Val." },
+    { t = "Showdown Slugger: Val." },
+    { t = "Climate Strange: Val." },
+}
+ns.ACH_NOTES[62873] = { "Each part has its own guide in this list.", "The questlines are time-gated, so it takes several Val weeks.", "Unlocks the Voidmancer's Starcarver mount at Kifaan in the base camps." }
+ns.ACH_SPOTS[62873] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[62873] = true
+
+-- void_assaults
+ns.ACH_STEPS[62874] = {
+    { t = "Into the Stars." },
+    { t = "A Hal'hadar Walks into a Swamp." },
+    { t = "Prepared for a Showdown." },
+    { t = "Showdown Success: Naigtal." },
+    { t = "Showdown Slugger: Naigtal." },
+    { t = "Climate Strange: Naigtal." },
+}
+ns.ACH_NOTES[62874] = { "Each part has its own guide in this list.", "The questlines are time-gated, so it takes several Naigtal weeks.", "Unlocks the Netherforged Nullframe mount at Kifaan in the base camps." }
+ns.ACH_SPOTS[62874] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[62874] = true
+
+-- void_assaults
+ns.ACH_STEPS[62880] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "In a Val week, do eight different world quests there." },
+}
+ns.ACH_NOTES[62880] = { "World quests in Val and Naigtal don't count while you are in a raid group.", "Choose Heroic World Tier at the Greater Void Portal; Heroic kills and quests also count for Normal." }
+ns.ACH_SPOTS[62880] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[62880] = true
+
+-- void_assaults
+ns.ACH_STEPS[62881] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "In a Val week, kill six of its rares: they come about every 20 minutes in three fixed groups of three, always in the same order." },
+}
+ns.ACH_NOTES[62881] = { "The Rares page of Voidstorm lists them with their spots.", "Choose Heroic World Tier at the Greater Void Portal; Heroic kills and quests also count for Normal." }
+ns.ACH_SPOTS[62881] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[62881] = true
+
+-- void_assaults
+ns.ACH_STEPS[62882] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "In a Naigtal week, do eight different world quests there." },
+}
+ns.ACH_NOTES[62882] = { "World quests in Val and Naigtal don't count while you are in a raid group.", "Choose Heroic World Tier at the Greater Void Portal; Heroic kills and quests also count for Normal." }
+ns.ACH_SPOTS[62882] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[62882] = true
+
+-- void_assaults
+ns.ACH_STEPS[62883] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "In a Naigtal week, kill six of its rares: they come about every 20 minutes in three fixed groups of three, always in the same order." },
+}
+ns.ACH_NOTES[62883] = { "The Rares page of Voidstorm lists them with their spots.", "Choose Heroic World Tier at the Greater Void Portal; Heroic kills and quests also count for Normal." }
+ns.ACH_SPOTS[62883] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[62883] = true
+
+-- void_assaults
+ns.ACH_STEPS[62887] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "On Heroic World Tier, do 15 world quests in Val or Naigtal." },
+}
+ns.ACH_NOTES[62887] = { "World quests in Val and Naigtal don't count while you are in a raid group." }
+ns.ACH_SPOTS[62887] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[62887] = true
+
+-- void_assaults
+ns.ACH_STEPS[62901] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "On Heroic World Tier, kill 10 creatures with the listed affixes; rares and their followers carry them, so it usually finishes while you hunt rares." },
+}
+ns.ACH_NOTES[62901] = {  }
+ns.ACH_SPOTS[62901] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[62901] = true
+
+-- void_assaults
+ns.ACH_STEPS[62903] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "In a Val week, do the Storm Mitigation bonus objective (kill the storm creatures) five times." },
+}
+ns.ACH_NOTES[62903] = { "Choose Heroic World Tier at the Greater Void Portal; Heroic kills and quests also count for Normal." }
+ns.ACH_SPOTS[62903] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[62903] = true
+
+-- void_assaults
+ns.ACH_STEPS[62904] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "In a Naigtal week, do the storm bonus objective five times." },
+}
+ns.ACH_NOTES[62904] = { "Choose Heroic World Tier at the Greater Void Portal; Heroic kills and quests also count for Normal." }
+ns.ACH_SPOTS[62904] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[62904] = true
+
+-- void_assaults
+ns.ACH_STEPS[62905] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "In a Val week, follow the quest through the portal in the middle of the map and defeat Imperator Pertinax." },
+    { t = "In a Naigtal week, defeat Nexus-Captain Leth'ir (with Adjutant Mertei), the weekly world boss north-east of Command Point Primos.", at = { 2600, 77.0, 70.0 } },
+}
+ns.ACH_NOTES[62905] = { "Afterwards Zuronar at the base camps sells three rewards for Voidlight Marl." }
+ns.ACH_SPOTS[62905] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[62905] = true
+
+-- void_assaults
+ns.ACH_STEPS[62909] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "On Heroic World Tier, defeat Imperator Pertinax in a Val week." },
+    { t = "On Heroic World Tier, defeat Nexus-Captain Leth'ir in a Naigtal week.", at = { 2600, 77.0, 70.0 } },
+}
+ns.ACH_NOTES[62909] = { "Choose Heroic World Tier at the Greater Void Portal; Heroic kills and quests also count for Normal." }
+ns.ACH_SPOTS[62909] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[62909] = true
+
+-- void_assaults
+ns.ACH_STEPS[62917] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "In a Val week on Heroic World Tier, do the Storm Mitigation bonus objective five times." },
+}
+ns.ACH_NOTES[62917] = { "Players report you can kill the first seven storm creatures on Normal and switch to Heroic for the last one; it counts for both." }
+ns.ACH_SPOTS[62917] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[62917] = true
+
+-- void_assaults
+ns.ACH_STEPS[62919] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "In a Naigtal week on Heroic World Tier, complete Subdue the Spore Storm (kill ten spore-spewing mushrooms) five times; it appears in several places." },
+}
+ns.ACH_NOTES[62919] = { "Alts can help." }
+ns.ACH_SPOTS[62919] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[62919] = true
+
+-- void_assaults
+ns.ACH_STEPS[63264] = {
+    { t = "Finish the Heroic showdown achievements listed; all need Heroic World Tier." },
+}
+ns.ACH_NOTES[63264] = { "Each part has its own guide in this list.", "Unlocks the Tortured Gorger mount at Kifaan." }
+ns.ACH_SPOTS[63264] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[63264] = true
+
+-- void_assaults
+ns.ACH_STEPS[63325] = {
+    { t = "Unlock the Omnium Folio first (The Sunstrider Omnium).", at = { 2393, 47.9, 51.6 } },
+    { t = "Each week, take Seeking Knowledge from Magister Umbric at the Sunstrider Omnium; each one gives a Mote of Omnial Inquiry.", at = { 2424, 63.7, 18.6 } },
+    { t = "Week 2: collect 8 Ritualized Arcana from elites in Ritual Sites (about two runs)." },
+    { t = "Week 3: collect 5 Dark-Ley Coalescence, one per Void Strike or Incursion." },
+    { t = "Week 4: loot a Primessence of Magic from any final boss of a dungeon or delve, or a Raid Finder wing boss." },
+    { t = "Week 5: defeat Imperator Pertinax on Val or Nexus-Captain Leth'ir on Naigtal, and do 3 world quests there." },
+}
+ns.ACH_NOTES[63325] = { "Week 1 is simply collecting the Folio from Grand Magister Rommath.", "The quests come one per week, so this takes five weeks." }
+ns.ACH_SPOTS[63325] = { t = "Sunstrider Omnium", at = { { 2424, 63.7, 18.6 } } }
+ns.ACH_REVIEWED[63325] = true
+
+-- void_assaults
+ns.ACH_STEPS[63348] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "On Heroic World Tier, kill 15 rares in Val or Naigtal." },
+}
+ns.ACH_NOTES[63348] = { "Heroic kills count for the Normal Slugger achievements too." }
+ns.ACH_SPOTS[63348] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[63348] = true
+
+-- void_assaults
+ns.ACH_STEPS[63349] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "In a Val week, wait for the world quest Until It Is Done in the west of Val." },
+    { t = "Be in a raid group: the quest then doesn't end, so you can keep going. Kill 100 enemies while driving the Ultradon Slayer." },
+}
+ns.ACH_NOTES[63349] = {  }
+ns.ACH_SPOTS[63349] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[63349] = true
+
+-- void_assaults
+ns.ACH_STEPS[63383] = {
+    { t = "Take The Time to Strike from Riftblade Maella in Silvermoon.", at = { 2393, 47.6, 51.0 } },
+    { t = "Finish the introduction for the active zone, then the other one the next week." },
+    { t = "Both have to be done on the same character." },
+}
+ns.ACH_NOTES[63383] = {  }
+ns.ACH_SPOTS[63383] = { t = "Riftblade Maella", at = { { 2393, 47.6, 51.0 } } }
+ns.ACH_REVIEWED[63383] = true
+
+-- void_assaults
+ns.ACH_STEPS[63384] = {
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "Do the listed preparation quests in Val and Naigtal; the teleporter unlocks need a week of each zone." },
+    { t = "Check back next rotation for any not offered yet." },
+}
+ns.ACH_NOTES[63384] = { "Naigtal and Val open with The Time to Strike from Riftblade Maella in Silvermoon." }
+ns.ACH_SPOTS[63384] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[63384] = true
+
+-- void_assaults
+ns.ACH_STEPS[63385] = {
+    { t = "Finish the Naigtal introduction first.", at = { 2393, 47.6, 51.0 } },
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "Do the listed Naigtal questlines; a new part opens each Naigtal week." },
+}
+ns.ACH_NOTES[63385] = {  }
+ns.ACH_SPOTS[63385] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[63385] = true
+
+-- void_assaults
+ns.ACH_STEPS[63386] = {
+    { t = "Finish the Val introduction first.", at = { 2393, 47.6, 51.0 } },
+    { t = "Enter this week's zone through the Greater Void Portal in Voidstorm (Naigtal and Val swap each week).", at = { 2405, 51.4, 71.3 } },
+    { t = "Do the listed Val questlines; a new part opens each Val week (Victory Within Hindsight first, then A Shot at the Dark)." },
+}
+ns.ACH_NOTES[63386] = {  }
+ns.ACH_SPOTS[63386] = { t = "Greater Void Portal", at = { { 2405, 51.4, 71.3 } } }
+ns.ACH_REVIEWED[63386] = true
