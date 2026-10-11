@@ -155,6 +155,10 @@ function ns.BuildAbout(R, Header, Text, titleFont, pageW)
               function(v) s().minimap.hide = not v; if CompletionMinimapButton then CompletionMinimapButton:SetShown(v) end end },
             { "Hover hints", "Tooltips of rares, NPCs, objects and items say what they still count toward.",
               function() return s().tooltips end, function(v) s().tooltips = v end },
+            { "Show finished, faded", "Treasures and rares you've finished stay on the maps as faint grey pins, "
+                .. "instead of disappearing. Needed ones keep their full pin.",
+              function() return s().fadedDone == true end,
+              function(v) s().fadedDone = v; if ns.RefreshWorldPins then ns.RefreshWorldPins() end; if ns.RefreshMinimapPins then ns.RefreshMinimapPins() end end },
         } },
         { "Rares and farming", {
             { "Rare alerts", "During a rare patrol, a raid-warning style message and sound when a rare you still need comes up.",
@@ -176,7 +180,7 @@ function ns.BuildAbout(R, Header, Text, titleFont, pageW)
               function() return s().announce end, function(v) s().announce = v end },
             { "Every item of a look", "For completionists: an appearance counts only when you have it from that exact item, "
                 .. "not from another item with the same look. Rares then stay on the map until every look they drop is yours.",
-              function() return s().transmogSources end,
+              function() return s().transmogSources == true end,
               function(v) s().transmogSources = v; ns.ResetCollectMemory(); ns.Build(); if ns.Evaluate then ns.Evaluate() end end },
             ns.DIFFICULTY_ENABLED and { "Difficulty tags", "Show Easy, Medium, Hard or Very hard on each row, and in tooltips why and roughly how long it takes. "
                 .. "These are estimates.",

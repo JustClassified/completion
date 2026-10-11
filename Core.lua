@@ -116,11 +116,13 @@ function ns.QuestTitle(id, fallback)
     return fallback or ("Quest " .. tostring(id))
 end
 
--- A quest flag that has ever been seen stays done for this character (rare kills reset daily).
+-- A rare's kill flag that has ever been seen stays done (the flag itself resets daily). Kept for the
+-- character and for the whole account, so a kill on any of your characters counts.
 function ns.SeenQuest(id)
     if not id then return false end
-    if ns.cdb.seen[id] then return true end
-    if ns.QuestDone(id) then ns.cdb.seen[id] = true; return true end
+    ns.db.seenAccount = ns.db.seenAccount or {}
+    if ns.cdb.seen[id] or ns.db.seenAccount[id] then return true end
+    if ns.QuestDone(id) then ns.cdb.seen[id] = true; ns.db.seenAccount[id] = true; return true end
     return false
 end
 

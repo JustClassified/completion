@@ -89,7 +89,8 @@ local function Update()
                 local a = bearing - facing
                 p:ClearAllPoints()
                 p:SetPoint("CENTER", Minimap, "CENTER", -math.sin(a) * r, math.cos(a) * r)
-                p:SetAlpha(inRange and 1 or 0.7)
+                p.tex:SetDesaturated(e.faded and true or false)
+                p:SetAlpha((inRange and 1 or 0.7) * (e.faded and 0.45 or 1))
                 p.ring:SetShown(tracked or ns.upNow[e.it.key] ~= nil)
                 p:Show()
             end

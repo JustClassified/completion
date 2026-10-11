@@ -75,6 +75,9 @@ function ns.ShowPinMenu(owner)
                 function() ns.SetPin(k[1], not ns.PinOn(k[1])) end)
         end
         root:CreateDivider()
+        root:CreateCheckbox("Show finished, faded", function() return ns.db.settings.fadedDone == true end,
+            function() ns.db.settings.fadedDone = not ns.db.settings.fadedDone; PinsChanged() end)
+        root:CreateDivider()
         local only = root:CreateButton("Show only...")
         for _, k in ipairs(ns.PIN_KINDS) do
             only:CreateButton(k[2], function() ns.SetPinsOnly(k[1]) end)
@@ -158,6 +161,7 @@ local function Tooltip(pin)
     local note = (row and row.note) or it.note
     if note then GameTooltip:AddLine(note, 0.9, 0.85, 0.7, true) end
     if ns.upNow[it.key] then GameTooltip:AddLine("Up now", 0.4, 1, 0.4) end
+    if not row and it.done then GameTooltip:AddLine("Done: nothing left to get here", 0.5, 0.8, 0.5) end
     if not row and not it.done then ns.AddDifficulty(GameTooltip, it) end
     GameTooltip:AddLine("Completion: click to track with the arrow.", 0.5, 0.5, 0.5)
     GameTooltip:Show()
@@ -203,12 +207,12 @@ end
 -- unopened Sturdy Chests. The tracked target is always included.
 function ns.PinEntries(mapID)
     local out, seen = {}, {}
-    local function add(it, row, spot, kind)
+    local function add(it, row, spot, kind, faded)
         if not spot or not spot.x or #out >= 400 then return end
         local key = string.format("%d:%.1f:%.1f", spot.map, spot.x, spot.y)
         if seen[key] then return end
         seen[key] = true
-        out[#out + 1] = { it = it, row = row, spot = spot, kind = kind }
+        out[#out + 1] = { it = it, row = row, spot = spot, kind = kind, faded = faded }
     end
     local delve = ns.DelveForMap(mapID)
     if delve then
@@ -252,6 +256,17 @@ function ns.PinEntries(mapID)
                     end
                 end
             end
+            -- "Show finished, faded": finished treasures and rares stay as faint pins (after the needed ones,
+            -- so a spot that still has something to get keeps its full pin)
+            if ns.db.settings.fadedDone then
+                for _, secKey in ipairs({ "treasure", "rare" }) do
+                    for _, it in ipairs(ns.PinOn(secKey) and zone.sections[secKey].items or {}) do
+                        if it.kind == "point" and it.done and not it.hidden and not ns.FarmWanted(it) then
+                            for _, sp in ipairs(it.spots) do add(it, nil, sp, it.pkind, true) end
+                        end
+                    end
+                end
+            end
         end
     end
     -- holidays that are on: their open guide steps and achievement criteria here (Seasonal.lua)
@@ -288,6 +303,9 @@ function ns.RefreshWorldPins()
             p.it, p.row = e.it, e.row
             local ok = pcall(p.tex.SetAtlas, p.tex, ATLAS[e.kind] or "VignetteLoot")
             if not ok or not p.tex:GetAtlas() then p.tex:SetTexture("Interface\\COMMON\\Indicator-Yellow") end
+            -- a finished spot: grey and faint
+            p.tex:SetDesaturated(e.faded and true or false)
+            p:SetAlpha(e.faded and 0.45 or 1)
             Place(p, x, y, (target and target.key == e.it.key) or (ns.upNow[e.it.key] ~= nil))
         end
     end
