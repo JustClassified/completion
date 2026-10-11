@@ -8,6 +8,223 @@ ns.ACH_STEPS, ns.ACH_NOTES, ns.CRIT_NOTES = ns.ACH_STEPS or {}, ns.ACH_NOTES or 
 ns.ACH_SPOTS = ns.ACH_SPOTS or {}
 ns.ACH_REVIEWED = {}
 
+-- delves
+ns.ACH_STEPS[61707] = {
+    { t = "Finish each listed delve once, on any tier." },
+    { t = "Expand the achievement to see which delves are left; each delve is on its zone page with its entrance." },
+}
+ns.ACH_NOTES[61707] = {  }
+ns.ACH_REVIEWED[61707] = true
+
+-- delves
+ns.ACH_STEPS[61708] = {
+    { t = "Finish every listed delve on Tier 4 or higher with lives left." },
+    { t = "Expand the achievement to see which delves are left; each delve is on its zone page with its entrance." },
+}
+ns.ACH_NOTES[61708] = { "The tier menu shows each delve's story this week; pick the easier ones for higher tiers." }
+ns.ACH_REVIEWED[61708] = true
+
+-- delves
+ns.ACH_STEPS[61709] = {
+    { t = "Finish every listed delve on Tier 8 or higher with lives left." },
+    { t = "Expand the achievement to see which delves are left; each delve is on its zone page with its entrance." },
+}
+ns.ACH_NOTES[61709] = { "The tier menu shows each delve's story this week; pick the easier ones for higher tiers." }
+ns.ACH_REVIEWED[61709] = true
+
+-- delves
+ns.ACH_STEPS[61710] = {
+    { t = "Finish every listed delve on Tier 11 with lives left." },
+    { t = "Expand the achievement to see which delves are left; each delve is on its zone page with its entrance." },
+}
+ns.ACH_NOTES[61710] = { "The tier menu shows each delve's story this week; pick the easier ones for higher tiers." }
+ns.ACH_REVIEWED[61710] = true
+
+-- delves
+ns.ACH_STEPS[61711] = {
+    { t = "Finish every listed delve on Tier 4 or higher with lives left as a damage dealer." },
+    { t = "Expand the achievement to see which delves are left; each delve is on its zone page with its entrance." },
+}
+ns.ACH_NOTES[61711] = { "The tier menu shows each delve's story this week; pick the easier ones for higher tiers.", "Only your role on the final boss counts: a hybrid can run the delve in any spec and switch before the last boss." }
+ns.ACH_REVIEWED[61711] = true
+
+-- delves
+ns.ACH_STEPS[61712] = {
+    { t = "Finish every listed delve on Tier 8 or higher with lives left as a damage dealer." },
+    { t = "Expand the achievement to see which delves are left; each delve is on its zone page with its entrance." },
+}
+ns.ACH_NOTES[61712] = { "The tier menu shows each delve's story this week; pick the easier ones for higher tiers.", "Only your role on the final boss counts: a hybrid can run the delve in any spec and switch before the last boss." }
+ns.ACH_REVIEWED[61712] = true
+
+-- delves
+ns.ACH_STEPS[61713] = {
+    { t = "Finish every listed delve on Tier 11 with lives left as a damage dealer." },
+    { t = "Expand the achievement to see which delves are left; each delve is on its zone page with its entrance." },
+}
+ns.ACH_NOTES[61713] = { "The tier menu shows each delve's story this week; pick the easier ones for higher tiers.", "Only your role on the final boss counts: a hybrid can run the delve in any spec and switch before the last boss.", "The Tier 11 versions only appear in the tracker once the lower ones are done, but progress counts already." }
+ns.ACH_REVIEWED[61713] = true
+
+-- delves
+ns.ACH_STEPS[61714] = {
+    { t = "Finish every listed delve on Tier 4 or higher with lives left as a healer." },
+    { t = "Expand the achievement to see which delves are left; each delve is on its zone page with its entrance." },
+}
+ns.ACH_NOTES[61714] = { "The tier menu shows each delve's story this week; pick the easier ones for higher tiers.", "Only your role on the final boss counts: a hybrid can run the delve in any spec and switch before the last boss." }
+ns.ACH_REVIEWED[61714] = true
+
+-- delves
+ns.ACH_STEPS[61715] = {
+    { t = "Finish every listed delve on Tier 8 or higher with lives left as a healer." },
+    { t = "Expand the achievement to see which delves are left; each delve is on its zone page with its entrance." },
+}
+ns.ACH_NOTES[61715] = { "The tier menu shows each delve's story this week; pick the easier ones for higher tiers.", "Only your role on the final boss counts: a hybrid can run the delve in any spec and switch before the last boss." }
+ns.ACH_REVIEWED[61715] = true
+
+-- delves
+ns.ACH_STEPS[61716] = {
+    { t = "Finish every listed delve on Tier 11 with lives left as a healer." },
+    { t = "Expand the achievement to see which delves are left; each delve is on its zone page with its entrance." },
+}
+ns.ACH_NOTES[61716] = { "The tier menu shows each delve's story this week; pick the easier ones for higher tiers.", "Only your role on the final boss counts: a hybrid can run the delve in any spec and switch before the last boss.", "The Tier 11 versions only appear in the tracker once the lower ones are done, but progress counts already." }
+ns.ACH_REVIEWED[61716] = true
+
+-- delves
+ns.ACH_STEPS[61717] = {
+    { t = "Finish every listed delve on Tier 4 or higher with lives left as a tank." },
+    { t = "Expand the achievement to see which delves are left; each delve is on its zone page with its entrance." },
+}
+ns.ACH_NOTES[61717] = { "The tier menu shows each delve's story this week; pick the easier ones for higher tiers.", "Only your role on the final boss counts: a hybrid can run the delve in any spec and switch before the last boss." }
+ns.ACH_REVIEWED[61717] = true
+
+-- delves
+ns.ACH_STEPS[61718] = {
+    { t = "Finish every listed delve on Tier 8 or higher with lives left as a tank." },
+    { t = "Expand the achievement to see which delves are left; each delve is on its zone page with its entrance." },
+}
+ns.ACH_NOTES[61718] = { "The tier menu shows each delve's story this week; pick the easier ones for higher tiers.", "Only your role on the final boss counts: a hybrid can run the delve in any spec and switch before the last boss." }
+ns.ACH_REVIEWED[61718] = true
+
+-- delves
+ns.ACH_STEPS[61719] = {
+    { t = "Finish every listed delve on Tier 11 with lives left as a tank." },
+    { t = "Expand the achievement to see which delves are left; each delve is on its zone page with its entrance." },
+}
+ns.ACH_NOTES[61719] = { "The tier menu shows each delve's story this week; pick the easier ones for higher tiers.", "Only your role on the final boss counts: a hybrid can run the delve in any spec and switch before the last boss.", "The Tier 11 versions only appear in the tracker once the lower ones are done, but progress counts already." }
+ns.ACH_REVIEWED[61719] = true
+
+-- delves
+ns.ACH_STEPS[61720] = {
+    { t = "Midnight Delver Damage Dealer." },
+    { t = "Midnight Delver Healer." },
+    { t = "Midnight Delver Tank." },
+}
+ns.ACH_NOTES[61720] = { "Each part has its own guide in this list.", "Only your role on the final boss counts: a hybrid can run the delve in any spec and switch before the last boss." }
+ns.ACH_REVIEWED[61720] = true
+
+-- delves
+ns.ACH_STEPS[61721] = {
+    { t = "Midnight Delver Damage Dealer II." },
+    { t = "Midnight Delver Healer II." },
+    { t = "Midnight Delver Tank II." },
+}
+ns.ACH_NOTES[61721] = { "Each part has its own guide in this list.", "Only your role on the final boss counts: a hybrid can run the delve in any spec and switch before the last boss." }
+ns.ACH_REVIEWED[61721] = true
+
+-- delves
+ns.ACH_STEPS[61722] = {
+    { t = "Collect every curio Valeera can use; they come from delve rewards." },
+}
+ns.ACH_NOTES[61722] = { "If every curio shows as owned but nothing happens, relog; players report a delay." }
+ns.ACH_REVIEWED[61722] = true
+
+-- delves
+ns.ACH_STEPS[61723] = {
+    { t = "Run Bountiful delves on Tier 7 or higher: only they give rank 4 curios." },
+    { t = "Get every curio to rank 4." },
+}
+ns.ACH_NOTES[61723] = {  }
+ns.ACH_REVIEWED[61723] = true
+
+-- delves
+ns.ACH_STEPS[61734] = {
+    { t = "Reach level 90." },
+    { t = "Finish the Midnight main story campaign; on any character of your warband counts." },
+}
+ns.ACH_NOTES[61734] = { "The campaign chapters are on each zone's Storyline page." }
+ns.ACH_REVIEWED[61734] = true
+
+-- delves
+ns.ACH_STEPS[61741] = {
+    { t = "Finish the Stories achievement of every Midnight delve: run each delve until you have seen all of its story variants." },
+}
+ns.ACH_NOTES[61741] = { "Each delve on its zone page lists its stories; the tier menu shows this week's story.", "Stories rotate, so some take a few weeks." }
+ns.ACH_REVIEWED[61741] = true
+
+-- delves
+ns.ACH_STEPS[61832] = {
+    { t = "Enter any delve on Tier 1 and finish it." },
+}
+ns.ACH_NOTES[61832] = {  }
+ns.ACH_REVIEWED[61832] = true
+
+-- delves
+ns.ACH_STEPS[61835] = {
+    { t = "Enter any delve on Tier 2 and finish it." },
+}
+ns.ACH_NOTES[61835] = {  }
+ns.ACH_REVIEWED[61835] = true
+
+-- delves
+ns.ACH_STEPS[61836] = {
+    { t = "Enter any delve on Tier 3 and finish it." },
+}
+ns.ACH_NOTES[61836] = {  }
+ns.ACH_REVIEWED[61836] = true
+
+-- delves
+ns.ACH_STEPS[61901] = {
+    { t = "Open every Sturdy Chest: each delve's Discoveries achievement, inside the delve on its zone page, has the chest spots." },
+    { t = "Some chests only exist in certain stories, so run each delve with its other stories too." },
+}
+ns.ACH_NOTES[61901] = {  }
+ns.ACH_REVIEWED[61901] = true
+
+-- delves
+ns.ACH_STEPS[61906] = {
+    { t = "Delve Loremaster: Midnight." },
+    { t = "Curio Fanatic: Midnight." },
+    { t = "Midnight: Leave No Treasure Unfound." },
+    { t = "Defeat the season's Nemesis boss: in Season 2 that's Azta'rec in Venomfall Deeps, in the north of the Coiled Isle.", at = { 2512, 51.2, 31.0 } },
+}
+ns.ACH_NOTES[61906] = { "Each achievement part has its own guide in this list." }
+ns.ACH_SPOTS[61906] = { t = "Venomfall Deeps", at = { { 2512, 51.2, 31.0 } } }
+ns.ACH_REVIEWED[61906] = true
+
+-- delves
+ns.ACH_STEPS[62206] = {
+    { t = "Midnight Delver Damage Dealer III." },
+    { t = "Midnight Delver Healer III." },
+    { t = "Midnight Delver Tank III." },
+}
+ns.ACH_NOTES[62206] = { "Each part has its own guide in this list.", "Only your role on the final boss counts: a hybrid can run the delve in any spec and switch before the last boss." }
+ns.ACH_REVIEWED[62206] = true
+
+-- delves
+ns.ACH_STEPS[63434] = {
+    { t = "Run delves with Valeera; every finished delve gives her experience. Get her to level 70." },
+    { t = "Fast way: equip the Dundun's Favor curio on her, run the Ring of Glory's Open Night story and ride around the arena picking up Mislaid Curiosities (avoid the floor traps)." },
+}
+ns.ACH_NOTES[63434] = { "Turning on the game's outline option for objects makes the curiosities easy to see." }
+ns.ACH_REVIEWED[63434] = true
+
+-- delves
+ns.ACH_STEPS[63435] = {
+    { t = "Run delves with Valeera; every finished delve gives her experience. Get her to level 80." },
+    { t = "Fast way: equip the Dundun's Favor curio on her, run the Ring of Glory's Open Night story and ride around the arena picking up Mislaid Curiosities (avoid the floor traps)." },
+}
+ns.ACH_NOTES[63435] = { "Turning on the game's outline option for objects makes the curiosities easy to see." }
+ns.ACH_REVIEWED[63435] = true
+
 -- prey
 ns.ACH_STEPS[42701] = {
     { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
