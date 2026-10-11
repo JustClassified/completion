@@ -588,6 +588,20 @@ function ns.ResolveAchParts(it, t)
                 return t
             end
         end
+        -- the game spells a few Glyph Hunter criteria differently from the glyph's own achievement: the criterion
+        -- that links to this achievement finds it in any spelling or language
+        for _, p in ipairs(ns.POINTS) do
+            if p.k == "achv" and p.x and p.n then
+                local c = ns.Crits(p.a)
+                for _, e in ipairs(c and c.list or {}) do
+                    -- the criterion that links to this achievement, matched to the spot by ID or by its own name
+                    if e.t == 8 and e.asset == it.id and (e.id == p.c or (e.name and ns.norm(e.name):find(ns.norm(p.n), 1, true) == 1)) then
+                        t.spot, t.text = { map = p.m, x = p.x, y = p.y }, "Fly through the skyriding glyph" .. (p.note and (" - " .. p.note) or "")
+                        return t
+                    end
+                end
+            end
+        end
     end
     -- the whole achievement happens in one place (ns.ACH_SPOTS in Data/Notes.lua)
     local where = ns.ACH_SPOTS and ns.ACH_SPOTS[it.id]
