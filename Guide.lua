@@ -76,6 +76,10 @@ function ns.QuestPos(questID, mapHint)
         local q = qlQuests[m] and qlQuests[m][questID]
         if q then return q, "pickup" end
     end
+    -- the game doesn't show it yet (an earlier quest is still open, or it's in another zone): where it's
+    -- picked up, from the research data (Data/QuestStarts.lua)
+    local st = ns.QUEST_START and ns.QUEST_START[questID]
+    if st then return { map = st[1], x = st[2], y = st[3] }, "pickup" end
 end
 
 ------------------------------------------------------------------------
@@ -347,6 +351,14 @@ end
 
 -- The rows an item expands into in the book: a container's items, a treasure's steps, a storyline's quests,
 -- or an achievement's steps and criteria.
+-- False for a quest only the other faction can do (Data/QuestStarts.lua), so chains skip it.
+function ns.QuestForMe(questID)
+    local s = ns.QUEST_SIDE and ns.QUEST_SIDE[questID]
+    if not s then return true end
+    local f = UnitFactionGroup and UnitFactionGroup("player")
+    return not f or (s == 1) == (f == "Alliance")
+end
+
 -- Row: { key, name, done, spot, quest, sub, note, item (a real item, for containers) }
 function ns.Children(it)
     local rows = {}
@@ -365,14 +377,20 @@ function ns.Children(it)
         local c = it.crit
         local limit = (c.pos and c.pos > 0) and math.min(c.pos, #c.chain) or #c.chain
         local nextFound = false
+        local n = 0
         for i = 1, limit do
             local qid, qname = c.chain[i][1], c.chain[i][2]
-            local done, acct = ns.QuestDone(qid)
-            local active = not done and ns.QuestActive(qid)
-            local row = { key = "q" .. qid, quest = qid, name = i .. ". " .. ns.QuestTitle(qid, qname), done = done or it.done,
-                          sub = acct and "warband" or (active and "in log" or nil) }
-            if not row.done and not nextFound then row.current = true; nextFound = true end
-            rows[#rows + 1] = row
+            -- the other faction's version of a quest is left out of the list and the numbering
+            if ns.QuestForMe(qid) then
+                n = n + 1
+                local done, acct = ns.QuestDone(qid)
+                local active = not done and ns.QuestActive(qid)
+                local row = { key = "q" .. qid, quest = qid, name = n .. ". " .. ns.QuestTitle(qid, qname), done = done or it.done,
+                              sub = acct and "warband" or (active and "in log" or nil),
+                              note = ns.QUEST_NOTES and ns.QUEST_NOTES[qid] }
+                if not row.done and not nextFound then row.current = true; nextFound = true end
+                rows[#rows + 1] = row
+            end
         end
         return rows
     end
@@ -669,7 +687,8 @@ function ns.Resolve(it, childKey)
         local nextQ, nextName
         local limit = (c.pos and c.pos > 0) and math.min(c.pos, #(c.chain or {})) or #(c.chain or {})
         for i = 1, limit do
-            if not ns.QuestDone(c.chain[i][1]) then nextQ, nextName = c.chain[i][1], c.chain[i][2]; break end
+            local qid = c.chain[i][1]
+            if ns.QuestForMe(qid) and not ns.QuestDone(qid) then nextQ, nextName = qid, c.chain[i][2]; break end
         end
         nextQ = nextQ or c.q
         if nextQ then

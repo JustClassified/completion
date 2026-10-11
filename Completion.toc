@@ -20,6 +20,8 @@ Data\TWW\Points.lua
 Data\Overrides.lua
 Data\ExtraLoot.lua
 Data\Lore.lua
+Data\QuestStarts.lua
+Data\QuestNotes.lua
 Data\Achievements.lua
 Data\TWW\Achievements.lua
 Data\ExtraAchievements.lua

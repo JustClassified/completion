@@ -1092,10 +1092,16 @@ local function EvalLore(it)
     if not done and c.t == 8 and c.q and ns.AchDone(c.q) then done = true end
     it.done, it.max, it.cur = done, 1, done and 1 or 0
     if c.chain then
-        local n = 0
+        local n, total = 0, 0
         local limit = (c.pos and c.pos > 0) and math.min(c.pos, #c.chain) or #c.chain
-        for i = 1, limit do if ns.QuestDone(c.chain[i][1]) then n = n + 1 end end
-        it.sub = done and "" or string.format("%d/%d", n, limit)
+        for i = 1, limit do
+            local qid = c.chain[i][1]
+            if ns.QuestForMe(qid) then
+                total = total + 1
+                if ns.QuestDone(qid) then n = n + 1 end
+            end
+        end
+        it.sub = done and "" or string.format("%d/%d", n, total)
     end
 end
 

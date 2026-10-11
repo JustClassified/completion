@@ -1078,14 +1078,15 @@ G[63457] = {
 }
 G[61916] = {
     steps = {
-        { t = "On a level 80 Void Elf, fly to Magister Umbric at the Shan'dorah flight point in K'aresh (south-east corner of the large northern isle).", at = { 2371, 60.91, 27.71 } },
-        { t = "Take his quest and follow the Rage of the Ren'dorei storyline to its end." },
+        { t = "At level 80, pick up The Pursuit Continues from Magister Umbric. It's offered through Messenger Aelor near the Dornogal flight path; if it doesn't appear, take it from Suggested Content in the Adventure Guide.", quest = 92630 },
+        { t = "In K'aresh, take Abhorrent Gauntlet from Allari the Souleater. If she vanishes when you accept it, leave the phase, drop the quest and take it again.", at = { 2371, 65.0, 40.6 }, quest = 92631 },
+        { t = "Finish Trial of Wrath with Allari; she ends it at the Shan'dorah flight point.", at = { 2371, 60.8, 27.8 }, quest = 92632 },
     },
 }
 G[61942] = {
     steps = {
         { t = "Create a haranir character and level it to 50 (a level boost works)." },
-        { t = "Pick up the Heritage of the Haranir quest and hand it in at the Den in Harandar for the heritage armor and the achievement." },
+        { t = "On that character, go to Harandar and hand Heritage of the Haranir in to Orweyna on the ledge above the Den (Rootwalking in your General spells takes you up).", at = { 2413, 50.9, 53.1 }, quest = 94464 },
     },
 }
 G[61881] = {
