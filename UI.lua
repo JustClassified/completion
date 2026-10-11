@@ -202,7 +202,11 @@ local function ItemTooltip(owner, it, row)
         GameTooltip:AddLine(row.name or "?", 1, 1, 1, true)
         GameTooltip:AddLine(row.done and "Done" or (row.current and "Next up" or "Not done"),
             row.done and 0.4 or 1, row.done and 0.9 or 0.8, row.done and 0.4 or 0.3)
-        AddWrapped(row.note)
+        if row.soon and not row.done then
+            GameTooltip:AddLine("Coming soon: " .. row.soon, 0.62, 0.60, 0.56, true)
+        else
+            AddWrapped(row.note)
+        end
         if row.spot then
             local ok, info = pcall(C_Map.GetMapInfo, row.spot.map)
             GameTooltip:AddLine(string.format("%s  %.1f, %.1f", ok and info and info.name or "", row.spot.x, row.spot.y), 0.6, 0.6, 0.6)
@@ -261,6 +265,15 @@ local function ItemTooltip(owner, it, row)
     else GameTooltip:AddLine("Missing", 1, 0.5, 0.3) end
     if it.sub and it.sub ~= "" then GameTooltip:AddLine(it.sub, 0.8, 0.8, 0.8) end
     if it.uncounted then GameTooltip:AddLine("Not part of 100%: it isn't tied to the expansion's content.", 0.7, 0.7, 0.7, true) end
+    -- coming soon: say what's missing and show nothing unsure (no guide, notes or places)
+    local soon = ns.SoonReason(it)
+    if soon then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine("Coming soon", 0.85, 0.82, 0.75)
+        GameTooltip:AddLine(soon, 0.62, 0.60, 0.56, true)
+        GameTooltip:Show()
+        return
+    end
     if not it.done then ns.AddDifficulty(GameTooltip, it) end
     if it.kind == "lore" then
         local a = ns.LORE_ACH[it.ach]
@@ -1395,6 +1408,11 @@ local function GetRow(i)
     r.plus:SetWidth(10)
     r.text = Text(r, "GameFontHighlight")
     r.text:SetWordWrap(false)
+    -- a line through the name for "coming soon" rows (Research.lua)
+    r.strike = r:CreateTexture(nil, "OVERLAY")
+    r.strike:SetHeight(1)
+    r.strike:SetColorTexture(0.62, 0.60, 0.56, 0.9)
+    r.strike:Hide()
     r.right = Text(r, "GameFontHighlightSmall")
     r.right:SetPoint("RIGHT", -2, 0)
     r.right:SetJustifyH("RIGHT")
@@ -1417,7 +1435,7 @@ end
 -- The right column shows the item's note, "up now", a distance in yards, or the section of a search hit.
 local function FillRow(r, ln)
     r.line = ln
-    r.icon:Hide(); r.plus:SetText(""); r.bar:Hide(); r.track:Hide()
+    r.icon:Hide(); r.plus:SetText(""); r.bar:Hide(); r.track:Hide(); r.strike:Hide()
     r.status:ClearAllPoints(); r.text:ClearAllPoints(); r.plus:ClearAllPoints()
     if ln.header then
         r.status:Hide()
@@ -1505,6 +1523,16 @@ local function FillRow(r, ln)
     r.text:SetText(name)
     local c = done and DONE_C or (current and GOLD or CREAM)
     r.text:SetTextColor(c[1], c[2], c[3])
+    -- coming soon: greyed, struck through, and said so on the right
+    local soon = not done and ((row and row.soon) or (not row and ns.SoonReason(it)))
+    if soon then
+        r.text:SetTextColor(GREY[1], GREY[2], GREY[3])
+        r.strike:ClearAllPoints()
+        r.strike:SetPoint("LEFT", r.text, "LEFT", 0, 0)
+        r.strike:SetWidth(math.max(1, math.min(r.text:GetStringWidth() or 0, r.text:GetWidth() or 0)))
+        r.strike:Show()
+        sub = "coming soon"
+    end
     if ln.secName then sub = ln.secName end
     -- how hard it is, before the count or distance (finished rows don't need it)
     local tag = not row and not done and ns.DiffTag(it)

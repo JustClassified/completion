@@ -22,6 +22,7 @@ Data\ExtraLoot.lua
 Data\Lore.lua
 Data\QuestStarts.lua
 Data\QuestNotes.lua
+Data\Research.lua
 Data\Achievements.lua
 Data\TWW\Achievements.lua
 Data\ExtraAchievements.lua
@@ -48,6 +49,7 @@ Core.lua
 Model.lua
 Guide.lua
 Difficulty.lua
+Research.lua
 Seasonal.lua
 Farm.lua
 WorldPins.lua

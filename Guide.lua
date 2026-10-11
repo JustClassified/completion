@@ -387,7 +387,8 @@ function ns.Children(it)
                 local active = not done and ns.QuestActive(qid)
                 local row = { key = "q" .. qid, quest = qid, name = n .. ". " .. ns.QuestTitle(qid, qname), done = done or it.done,
                               sub = acct and "warband" or (active and "in log" or nil),
-                              note = ns.QUEST_NOTES and ns.QUEST_NOTES[qid] }
+                              note = ns.QuestNote and ns.QuestNote(qid),
+                              soon = ns.RESEARCH and ns.RESEARCH["q:" .. qid] }
                 if not row.done and not nextFound then row.current = true; nextFound = true end
                 rows[#rows + 1] = row
             end

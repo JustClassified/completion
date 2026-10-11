@@ -644,7 +644,7 @@ local TWW = {
     {k="rare", m=2371, x=51.91, y=57.67, a=42761, c=106347, n="The Nightreaver", q=90589, npc=232111, loot={{239454}, {239467}, {239479}, {245254, "p"}}},
     {k="rare", m=2371, x=65.14, y=49.98, a=42761, c=106349, n="Xarran the Binder", q=90584, npc=232199, loot={{239451}, {239463}, {239468}}},
     {k="rare", m=2472, x=34.7, y=36.1, a=42761, c=106332, n="Arcana-Monger So'zer", q=90696, npc=241956, note="Complete Warrant Arcana-Monger So'zer to summon"},
-    {k="rare", m=2371, x=75.23, y=30.98, a=42761, c=106334, n="Heka'tamos", q=91276, npc=245998, note="Gather The Callous Gale, The Ephemeral Flame, The Fractured Earth and The Bracing Spray nearby to summon it", loot={{245272, "p"}, {246064}, {246065}}},
+    {k="rare", m=2371, x=75.23, y=30.98, a=42761, c=106334, n="Heka'tamos", q=91276, npc=245998, note="Gather The Callous Gale, The Ephemeral Flame, The Fractured Earth and The Bracing Spray nearby", loot={{245272, "p"}, {246064}, {246065}}},
     {k="rare", m=2371, x=65.62, y=44.23, a=42761, c=106335, n="Korgorath the Ravager", q=90586, npc=232077, loot={{239448}, {239462}, {239475}}},
     {k="rare", m=2371, x=54.45, y=54.45, a=42761, c=106337, n="Maw of the Sands", q=90594, npc=231981, loot={{240172}, {240213}, {240214}}},
     {k="rare", m=2371, x=52.78, y=20.81, a=42761, c=106339, n="Orith the Dreadful", q=90595, npc=232127, loot={{240172}, {240213}, {240214}}},

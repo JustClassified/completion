@@ -8,3 +8,5 @@ CHANGELOG.md
 .DS_Store
 *.heic
 media/converted/
+CLAUDE.md
+.idea/

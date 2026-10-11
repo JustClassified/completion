@@ -1059,14 +1059,12 @@ local UNLOCK = {
     ["Patrols!"] = "Unlock it first through the quest Misappropriated Treasures, started by picking up one of its four items at the sites.",
 }
 local challenge = function(name, expert)
-    return {
-        steps = {
-            { t = "Go to the Ritual Site that's active (Broken Throne in south Zul'Aman or Daggerspine Point in Eversong; one at a time)." },
-            { t = UNLOCK[name] or ("If the " .. name .. " challenge isn't offered yet, it's unlocked by an item or quest found inside the sites.") },
-            { t = "At the start, add the " .. name .. " challenge" .. (expert and " and choose Tier 5." or ".") },
-            { t = "Finish the site by defeating its final boss; the achievement only pops then." },
-        },
-    }
+    local steps = { { t = "Go to the Ritual Site that's active (Broken Throne in south Zul'Aman or Daggerspine Point in Eversong; one at a time)." } }
+    -- only the two challenges whose unlock is known get an unlock step
+    if UNLOCK[name] then steps[#steps + 1] = { t = UNLOCK[name] } end
+    steps[#steps + 1] = { t = "At the start, add the " .. name .. " challenge" .. (expert and " and choose Tier 5." or ".") }
+    steps[#steps + 1] = { t = "Finish the site by defeating its final boss; the achievement only pops then." }
+    return { steps = steps }
 end
 local names = { "Tendrils", "Tainted Corpses", "Manifestations", "Patrols!", "Magical Alarm Bells", "Malevolent Boons", "Reinforced", "Embers" }
 for i, n in ipairs(names) do
