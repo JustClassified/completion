@@ -8,6 +8,632 @@ ns.ACH_STEPS, ns.ACH_NOTES, ns.CRIT_NOTES = ns.ACH_STEPS or {}, ns.ACH_NOTES or 
 ns.ACH_SPOTS = ns.ACH_SPOTS or {}
 ns.ACH_REVIEWED = {}
 
+-- prey
+ns.ACH_STEPS[42701] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Choose Normal hunts and defeat every listed target." },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[42701] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2)." }
+ns.ACH_SPOTS[42701] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[42701] = true
+
+-- prey
+ns.ACH_STEPS[42702] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Choose Hard hunts and defeat every listed target." },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[42702] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2)." }
+ns.ACH_SPOTS[42702] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[42702] = true
+
+-- prey
+ns.ACH_STEPS[42703] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Choose Nightmare hunts and defeat every listed target." },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[42703] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2)." }
+ns.ACH_SPOTS[42703] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[42703] = true
+
+-- prey
+ns.ACH_STEPS[61386] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Choose Normal hunts and defeat 15 different listed targets." },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[61386] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2)." }
+ns.ACH_SPOTS[61386] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[61386] = true
+
+-- prey
+ns.ACH_STEPS[61387] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Choose Normal hunts and defeat any one listed target." },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[61387] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2)." }
+ns.ACH_SPOTS[61387] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[61387] = true
+
+-- prey
+ns.ACH_STEPS[61388] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Choose Hard hunts and defeat 15 different listed targets." },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[61388] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2)." }
+ns.ACH_SPOTS[61388] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[61388] = true
+
+-- prey
+ns.ACH_STEPS[61389] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Choose Hard hunts and defeat any one listed target." },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[61389] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2)." }
+ns.ACH_SPOTS[61389] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[61389] = true
+
+-- prey
+ns.ACH_STEPS[61391] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Choose Nightmare hunts and defeat 15 different listed targets." },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[61391] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2)." }
+ns.ACH_SPOTS[61391] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[61391] = true
+
+-- prey
+ns.ACH_STEPS[61392] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Choose Nightmare hunts and defeat any one listed target." },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[61392] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2)." }
+ns.ACH_SPOTS[61392] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[61392] = true
+
+-- prey
+ns.ACH_STEPS[62134] = {
+    { t = "Turn on War Mode (in a city) before you start." },
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+    { t = "Finish five hunts with War Mode on." },
+}
+ns.ACH_NOTES[62134] = {  }
+ns.ACH_SPOTS[62134] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62134] = true
+
+-- prey
+ns.ACH_STEPS[62135] = {
+    { t = "Turn on War Mode and keep it on the whole time." },
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Choose a Nightmare hunt." },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62135] = { "Hard and Nightmare are open to everyone once Prey is unlocked." }
+ns.ACH_SPOTS[62135] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62135] = true
+
+-- prey
+ns.ACH_STEPS[62136] = {
+    { t = "Turn on War Mode and start a Nightmare hunt.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fight other players; Slayer's Rise in Voidstorm is the busiest place.", at = { 2405, 58.8, 60.0 } },
+    { t = "Keep going until 50 kills." },
+}
+ns.ACH_NOTES[62136] = { "A player you damaged who dies counts." }
+ns.ACH_SPOTS[62136] = { t = "Slayer's Rise", at = { { 2405, 58.8, 60.0 } } }
+ns.ACH_REVIEWED[62136] = true
+
+-- prey
+ns.ACH_STEPS[62137] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fight enemies in the hunt's zone until your target ambushes you, then beat the ambush. Repeat for 10 ambushes." },
+}
+ns.ACH_NOTES[62137] = { "An ambush comes about every 3 minutes while you fight in the hunt's zone. Bring the target to half health, or use a Disarmed Trap on it, and it flees.", "Disarming a trap can also start an ambush." }
+ns.ACH_SPOTS[62137] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62137] = true
+
+-- prey
+ns.ACH_STEPS[62138] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Stay in combat in the hunt's zone and beat every ambush until 100." },
+}
+ns.ACH_NOTES[62138] = { "An ambush comes about every 3 minutes while you fight in the hunt's zone. Bring the target to half health, or use a Disarmed Trap on it, and it flees.", "Going in and out of combat often brings more ambushes than waiting at traps.", "The training dummies in Voidstorm are a quiet place to wait for them." }
+ns.ACH_SPOTS[62138] = { t = "Quiet training dummies", at = { { 2405, 40.0, 81.5 } } }
+ns.ACH_REVIEWED[62138] = true
+
+-- prey
+ns.ACH_STEPS[62139] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Finish one hunt in each of Eversong Woods, Zul'Aman, Harandar and Voidstorm." },
+}
+ns.ACH_NOTES[62139] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Expand the achievement to see which zones are left." }
+ns.ACH_SPOTS[62139] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62139] = true
+
+-- prey
+ns.ACH_STEPS[62140] = {
+    { t = "Start a Nightmare hunt and wait until your target is revealed (fewer interruptions).", at = { 2393, 55.8, 66.0 } },
+    { t = "Cook 100 things while the hunt is active; any recipe counts, even the cheapest." },
+}
+ns.ACH_NOTES[62140] = {  }
+ns.ACH_SPOTS[62140] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62140] = true
+
+-- prey
+ns.ACH_STEPS[62141] = {
+    { t = "Start a Nightmare hunt and wait until your target is revealed.", at = { 2393, 55.8, 66.0 } },
+    { t = "Catch 100 fish while the hunt is active. Fishing at the edge of a sanctuary lets you step in to clear the hunt's debuff." },
+}
+ns.ACH_NOTES[62141] = {  }
+ns.ACH_SPOTS[62141] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62141] = true
+
+-- prey
+ns.ACH_STEPS[62142] = {
+    { t = "Start a Normal or Hard hunt in Voidstorm and fight the training dummies.", at = { 2405, 40.0, 81.5 } },
+    { t = "When an ambush ends, a bolt flies from you and leaves red smoke on the ground. Walk into the smoke to reveal the target and riposte. Repeat until 50." },
+}
+ns.ACH_NOTES[62142] = { "An ambush comes about every 3 minutes while you fight in the hunt's zone. Bring the target to half health, or use a Disarmed Trap on it, and it flees.", "If you click fast you can sometimes riposte twice, and both count." }
+ns.ACH_SPOTS[62142] = { t = "Quiet training dummies", at = { { 2405, 40.0, 81.5 } } }
+ns.ACH_REVIEWED[62142] = true
+
+-- prey
+ns.ACH_STEPS[62143] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Click the traps shown on your minimap in the hunt's zone until 100." },
+}
+ns.ACH_NOTES[62143] = { "Traps can start an ambush; be ready to fight." }
+ns.ACH_SPOTS[62143] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62143] = true
+
+-- prey
+ns.ACH_STEPS[62144] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Magister Sunbreaker or Magistrix Emberlash on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62144] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62144] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62144] = true
+
+-- prey
+ns.ACH_STEPS[62153] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Senior Tinker Ozwold or L-N-0R the Recycler on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62153] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62153] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62153] = true
+
+-- prey
+ns.ACH_STEPS[62154] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Mordril Shadowfell or Deliah Gloomsong on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62154] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62154] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62154] = true
+
+-- prey
+ns.ACH_STEPS[62155] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Phaseblade Talasha or Nexus-Edge Hadim on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62155] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62155] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62155] = true
+
+-- prey
+ns.ACH_STEPS[62156] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Jo'zolo the Breaker or Zadu, Fist of Nalorakk on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62156] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62156] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62156] = true
+
+-- prey
+ns.ACH_STEPS[62157] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for The Talon of Jan'alai or The Wing of Akil'zon on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62157] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62157] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62157] = true
+
+-- prey
+ns.ACH_STEPS[62158] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Ranger Swiftglade or Lieutenant Blazewing on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62158] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62158] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62158] = true
+
+-- prey
+ns.ACH_STEPS[62159] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Petyoll the Razorleaf or Lamyne of the Undercroft on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62159] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62159] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62159] = true
+
+-- prey
+ns.ACH_STEPS[62160] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for High Vindicator Vureem or Crusader Luxia Maxwell on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62160] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62160] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62160] = true
+
+-- prey
+ns.ACH_STEPS[62161] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Praetor Singularis or Consul Nebulor on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62161] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62161] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62161] = true
+
+-- prey
+ns.ACH_STEPS[62162] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Executor Kaenius or Imperator Enigmalia on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62162] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62162] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62162] = true
+
+-- prey
+ns.ACH_STEPS[62163] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Knight-Errant Bloodshatter or Vylenna the Defector on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62163] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62163] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62163] = true
+
+-- prey
+ns.ACH_STEPS[62164] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Lost Theldrin or Neydra the Starving on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62164] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62164] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62164] = true
+
+-- prey
+ns.ACH_STEPS[62165] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Thornspeaker Edgath or Thorn-Witch Liset on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62165] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62165] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62165] = true
+
+-- prey
+ns.ACH_STEPS[62166] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Grothoz, the Burning Shadow or Dengzag, the Darkened Blaze on Hard; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62166] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Hard counts here." }
+ns.ACH_SPOTS[62166] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62166] = true
+
+-- prey
+ns.ACH_STEPS[62167] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Magister Sunbreaker or Magistrix Emberlash on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62167] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62167] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62167] = true
+
+-- prey
+ns.ACH_STEPS[62168] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Senior Tinker Ozwold or L-N-0R the Recycler on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62168] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62168] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62168] = true
+
+-- prey
+ns.ACH_STEPS[62169] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Mordril Shadowfell or Deliah Gloomsong on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62169] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62169] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62169] = true
+
+-- prey
+ns.ACH_STEPS[62173] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Phaseblade Talasha or Nexus-Edge Hadim on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62173] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62173] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62173] = true
+
+-- prey
+ns.ACH_STEPS[62174] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Jo'zolo the Breaker or Zadu, Fist of Nalorakk on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62174] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62174] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62174] = true
+
+-- prey
+ns.ACH_STEPS[62175] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for The Talon of Jan'alai or The Wing of Akil'zon on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62175] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62175] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62175] = true
+
+-- prey
+ns.ACH_STEPS[62176] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Ranger Swiftglade or Lieutenant Blazewing on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62176] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62176] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62176] = true
+
+-- prey
+ns.ACH_STEPS[62177] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Petyoll the Razorleaf or Lamyne of the Undercroft on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62177] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62177] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62177] = true
+
+-- prey
+ns.ACH_STEPS[62178] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for High Vindicator Vureem or Crusader Luxia Maxwell on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62178] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62178] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62178] = true
+
+-- prey
+ns.ACH_STEPS[62179] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Praetor Singularis or Consul Nebulor on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62179] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62179] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62179] = true
+
+-- prey
+ns.ACH_STEPS[62180] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Executor Kaenius or Imperator Enigmalia on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62180] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62180] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62180] = true
+
+-- prey
+ns.ACH_STEPS[62181] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Knight-Errant Bloodshatter or Vylenna the Defector on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62181] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62181] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62181] = true
+
+-- prey
+ns.ACH_STEPS[62182] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Lost Theldrin or Neydra the Starving on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62182] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62182] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62182] = true
+
+-- prey
+ns.ACH_STEPS[62183] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Thornspeaker Edgath or Thorn-Witch Liset on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62183] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62183] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62183] = true
+
+-- prey
+ns.ACH_STEPS[62184] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Check the hunt table for Grothoz, the Burning Shadow or Dengzag, the Darkened Blaze on Nightmare; either one counts.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62184] = { "Hard and Nightmare are open to everyone once Prey is unlocked.", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Only a kill on Nightmare counts here." }
+ns.ACH_SPOTS[62184] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62184] = true
+
+-- prey
+ns.ACH_STEPS[62351] = {
+    { t = "Gotta Hunt Them All." },
+    { t = "Trapped In The Middle With You." },
+    { t = "Kitchen Nightmare." },
+    { t = "You're Trapped In Here With Me." },
+    { t = "Look, I'm Just Trying To Fish Here." },
+    { t = "I Didn't Hear No Bell." },
+    { t = "Midnight Hunter." },
+}
+ns.ACH_NOTES[62351] = { "Each part has its own guide in this list; several can be done in the same hunts." }
+ns.ACH_SPOTS[62351] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62351] = true
+
+-- prey
+ns.ACH_STEPS[62383] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt at the hunt table in Astalor's Sanctum, Silvermoon. Each zone offers one target per difficulty.", at = { 2393, 55.8, 66.0 } },
+    { t = "Defeat every listed target on any difficulty; expand the achievement to see who is left." },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[62383] = { "Some targets show up more often in random hunts (from Astalor once you reach Journey rank 2).", "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty." }
+ns.ACH_SPOTS[62383] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[62383] = true
+
+-- prey
+ns.ACH_STEPS[62403] = {
+    { t = "In Astalor's Sanctum, pet Lord Viscera's cat on the table left of the main entrance until you get Cat Scratch.", at = { 2393, 56.0, 64.5 } },
+    { t = "Within 30 minutes, run a Nightmare hunt and defeat your target (if you die, pet the cat again)." },
+    { t = "Take the portal back first, then hand in the hunt." },
+}
+ns.ACH_NOTES[62403] = { "Hard and Nightmare are open to everyone once Prey is unlocked." }
+ns.ACH_SPOTS[62403] = { t = "Lord Viscera's cat", at = { { 2393, 56.0, 64.5 } } }
+ns.ACH_REVIEWED[62403] = true
+
+-- prey
+ns.ACH_STEPS[63415] = {
+    { t = "Hunt the four Coiled Isle targets: Janoa the Fang, Kursak the Coiled, Kadani the Claw and Batani the Scaled.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[63415] = { "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "Expand the achievement to see who is left." }
+ns.ACH_SPOTS[63415] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[63415] = true
+
+-- prey
+ns.ACH_STEPS[63416] = {
+    { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
+    { t = "Pick a hunt on the Coiled Isle at the hunt table.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[63416] = {  }
+ns.ACH_SPOTS[63416] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[63416] = true
+
+-- prey
+ns.ACH_STEPS[63451] = {
+    { t = "Take a Nightmare hunt for Batani the Scaled or Kadani the Claw.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[63451] = { "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "If it doesn't complete on the kill, it does when you hand in the hunt." }
+ns.ACH_SPOTS[63451] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[63451] = true
+
+-- prey
+ns.ACH_STEPS[63452] = {
+    { t = "Take a Nightmare hunt for Janoa the Fang or Kursak the Coiled.", at = { 2393, 55.8, 66.0 } },
+    { t = "Fill the hunt's crystal (world quests, treasures, rares, traps, ambushes), click the red crystal where your target appears, defeat it and hand in the hunt." },
+}
+ns.ACH_NOTES[63452] = { "Journey rank 10 gives the quest Prey: Preferential Killing, which lets you choose the target, zone and difficulty.", "If it doesn't complete on the kill, it does when you hand in the hunt." }
+ns.ACH_SPOTS[63452] = { t = "Hunt table", at = { { 2393, 55.8, 66.0 } } }
+ns.ACH_REVIEWED[63452] = true
+
+-- prey
+ns.ACH_STEPS[63453] = {
+    { t = "Start a Nightmare hunt on the Coiled Isle, or turn on the Curse of the Isle at the Image of Astalor Bloodsworn in Tokka's Landing.", at = { 2512, 58.2, 48.7 } },
+    { t = "Summon Ral'kala, Terror of the Isle by burning Ossified Relics at a Haunted Brazier, and defeat it." },
+}
+ns.ACH_NOTES[63453] = { "The Curse of the Isle is unlocked by Prey: A Slithering Threat from Astalor (after the first chapter of The Curse of Ula'tek); after that you can switch it on and off.", "Groups farming Ral'kala are common; joining one is quickest." }
+ns.ACH_SPOTS[63453] = { t = "Tokka's Landing", at = { { 2512, 58.2, 48.7 } } }
+ns.ACH_REVIEWED[63453] = true
+
+-- prey
+ns.ACH_STEPS[63454] = {
+    { t = "Start a Nightmare hunt on the Coiled Isle, or turn on the Curse of the Isle at the Image of Astalor Bloodsworn in Tokka's Landing.", at = { 2512, 58.2, 48.7 } },
+    { t = "Defeat Ral'kala, Terror of the Isle fifty times in all." },
+}
+ns.ACH_NOTES[63454] = { "The Curse of the Isle is unlocked by Prey: A Slithering Threat from Astalor (after the first chapter of The Curse of Ula'tek); after that you can switch it on and off.", "Joining other players' summons counts and saves your own relics." }
+ns.ACH_SPOTS[63454] = { t = "Tokka's Landing", at = { { 2512, 58.2, 48.7 } } }
+ns.ACH_REVIEWED[63454] = true
+
+-- prey
+ns.ACH_STEPS[63457] = {
+    { t = "Take Prey: A Slithering Threat from Astalor Bloodsworn in Silvermoon and follow it; it leads to a daily quest that rewards Ossified Relics.", at = { 2393, 55.0, 63.4 } },
+    { t = "Loot 100 Ossified Relics in all." },
+}
+ns.ACH_NOTES[63457] = { "Relics also come from Coiled Isle world quests and from enemies while a Nightmare hunt or the Curse of the Isle is active (from Journey rank 3)." }
+ns.ACH_SPOTS[63457] = { t = "Astalor Bloodsworn", at = { { 2393, 55.0, 63.4 } } }
+ns.ACH_REVIEWED[63457] = true
+
+-- prey
+ns.ACH_STEPS[63642] = {
+    { t = "Start a Nightmare hunt on the Coiled Isle, or turn on the Curse of the Isle at the Image of Astalor Bloodsworn in Tokka's Landing.", at = { 2512, 58.2, 48.7 } },
+    { t = "Stay in combat: Toxic Snare nets are thrown at you about once a minute. Survive 100 of them." },
+}
+ns.ACH_NOTES[63642] = { "The Curse of the Isle is unlocked by Prey: A Slithering Threat from Astalor (after the first chapter of The Curse of Ula'tek); after that you can switch it on and off." }
+ns.ACH_SPOTS[63642] = { t = "Tokka's Landing", at = { { 2512, 58.2, 48.7 } } }
+ns.ACH_REVIEWED[63642] = true
+
+-- prey
+ns.ACH_STEPS[63643] = {
+    { t = "Start a Nightmare hunt on the Coiled Isle, or turn on the Curse of the Isle at the Image of Astalor Bloodsworn in Tokka's Landing.", at = { 2512, 58.2, 48.7 } },
+    { t = "Kill 150 Pack Scouts; scouts that come for other players count too." },
+}
+ns.ACH_NOTES[63643] = { "The Curse of the Isle is unlocked by Prey: A Slithering Threat from Astalor (after the first chapter of The Curse of Ula'tek); after that you can switch it on and off.", "The groups farming Ral'kala are the quickest place for scouts." }
+ns.ACH_SPOTS[63643] = { t = "Tokka's Landing", at = { { 2512, 58.2, 48.7 } } }
+ns.ACH_REVIEWED[63643] = true
+
+-- prey
+ns.ACH_STEPS[63644] = {
+    { t = "Start a Nightmare hunt on the Coiled Isle, or turn on the Curse of the Isle at the Image of Astalor Bloodsworn in Tokka's Landing.", at = { 2512, 58.2, 48.7 } },
+    { t = "Kill enemies in the Coiled Isle's world quest areas: Venom-Bloated Pythons burst from the corpses. Kill 200 of them." },
+}
+ns.ACH_NOTES[63644] = { "The Curse of the Isle is unlocked by Prey: A Slithering Threat from Astalor (after the first chapter of The Curse of Ula'tek); after that you can switch it on and off.", "Pythons from other players' kills count too." }
+ns.ACH_SPOTS[63644] = { t = "Tokka's Landing", at = { { 2512, 58.2, 48.7 } } }
+ns.ACH_REVIEWED[63644] = true
+
 -- ritual_sites
 ns.ACH_STEPS[62450] = {
     { t = "Go to this week's Ritual Site: Daggerspine Point in Eversong Woods or the Broken Throne in Zul'Aman (the map marks the active one). The Curious Obelisk there sets the tier and the challenges." },
