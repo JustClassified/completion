@@ -1602,6 +1602,140 @@ ns.ACH_NOTES[63644] = { "The Curse of the Isle is unlocked by Prey: A Slithering
 ns.ACH_SPOTS[63644] = { t = "Tokka's Landing", at = { { 2512, 58.2, 48.7 } } }
 ns.ACH_REVIEWED[63644] = true
 
+-- professions
+ns.ACH_STEPS[42786] = {
+    { t = "Learn Midnight Leatherworking from a trainer (a city guard can point the way)." },
+    { t = "Craft Midnight recipes until the ones you know turn grey, then learn new ones; reach 100 Midnight Leatherworking skill." },
+}
+ns.ACH_NOTES[42786] = { "Knowledge points (weekly quests, treasures on the Professions page) unlock specialisations; skill comes from crafting and gathering." }
+ns.ACH_REVIEWED[42786] = true
+
+-- professions
+ns.ACH_STEPS[42787] = {
+    { t = "Learn Midnight Enchanting from a trainer (a city guard can point the way)." },
+    { t = "Craft Midnight recipes until the ones you know turn grey, then learn new ones; reach 100 Midnight Enchanting skill." },
+}
+ns.ACH_NOTES[42787] = { "Knowledge points (weekly quests, treasures on the Professions page) unlock specialisations; skill comes from crafting and gathering." }
+ns.ACH_REVIEWED[42787] = true
+
+-- professions
+ns.ACH_STEPS[42788] = {
+    { t = "Learn Midnight Alchemy from a trainer (a city guard can point the way)." },
+    { t = "Craft Midnight recipes until the ones you know turn grey, then learn new ones; reach 100 Midnight Alchemy skill." },
+}
+ns.ACH_NOTES[42788] = { "Knowledge points (weekly quests, treasures on the Professions page) unlock specialisations; skill comes from crafting and gathering." }
+ns.ACH_REVIEWED[42788] = true
+
+-- professions
+ns.ACH_STEPS[42789] = {
+    { t = "Learn Midnight Jewelcrafting from a trainer (a city guard can point the way)." },
+    { t = "Craft Midnight recipes until the ones you know turn grey, then learn new ones; reach 100 Midnight Jewelcrafting skill." },
+}
+ns.ACH_NOTES[42789] = { "Knowledge points (weekly quests, treasures on the Professions page) unlock specialisations; skill comes from crafting and gathering." }
+ns.ACH_REVIEWED[42789] = true
+
+-- professions
+ns.ACH_STEPS[42790] = {
+    { t = "Learn Midnight Skinning from a trainer (a city guard can point the way)." },
+    { t = "Gather in the Midnight zones until you reach 100 Midnight Skinning skill." },
+}
+ns.ACH_NOTES[42790] = { "Knowledge points (weekly quests, treasures on the Professions page) unlock specialisations; skill comes from crafting and gathering." }
+ns.ACH_REVIEWED[42790] = true
+
+-- professions
+ns.ACH_STEPS[42791] = {
+    { t = "Learn Midnight Mining from a trainer (a city guard can point the way)." },
+    { t = "Gather in the Midnight zones until you reach 100 Midnight Mining skill." },
+}
+ns.ACH_NOTES[42791] = { "Knowledge points (weekly quests, treasures on the Professions page) unlock specialisations; skill comes from crafting and gathering." }
+ns.ACH_REVIEWED[42791] = true
+
+-- professions
+ns.ACH_STEPS[42792] = {
+    { t = "Learn Midnight Blacksmithing from a trainer (a city guard can point the way)." },
+    { t = "Craft Midnight recipes until the ones you know turn grey, then learn new ones; reach 100 Midnight Blacksmithing skill." },
+}
+ns.ACH_NOTES[42792] = { "Knowledge points (weekly quests, treasures on the Professions page) unlock specialisations; skill comes from crafting and gathering." }
+ns.ACH_REVIEWED[42792] = true
+
+-- professions
+ns.ACH_STEPS[42793] = {
+    { t = "Learn Midnight Herbalism from a trainer (a city guard can point the way)." },
+    { t = "Gather in the Midnight zones until you reach 100 Midnight Herbalism skill." },
+}
+ns.ACH_NOTES[42793] = { "Knowledge points (weekly quests, treasures on the Professions page) unlock specialisations; skill comes from crafting and gathering." }
+ns.ACH_REVIEWED[42793] = true
+
+-- professions
+ns.ACH_STEPS[42794] = {
+    { t = "Learn Midnight Tailoring from a trainer (a city guard can point the way)." },
+    { t = "Craft Midnight recipes until the ones you know turn grey, then learn new ones; reach 100 Midnight Tailoring skill." },
+}
+ns.ACH_NOTES[42794] = { "Knowledge points (weekly quests, treasures on the Professions page) unlock specialisations; skill comes from crafting and gathering." }
+ns.ACH_REVIEWED[42794] = true
+
+-- professions
+ns.ACH_STEPS[42796] = {
+    { t = "Learn Midnight Inscription from a trainer (a city guard can point the way)." },
+    { t = "Craft Midnight recipes until the ones you know turn grey, then learn new ones; reach 100 Midnight Inscription skill." },
+}
+ns.ACH_NOTES[42796] = { "Knowledge points (weekly quests, treasures on the Professions page) unlock specialisations; skill comes from crafting and gathering." }
+ns.ACH_REVIEWED[42796] = true
+
+-- professions
+ns.ACH_STEPS[42797] = {
+    { t = "Learn Midnight Fishing from a fishing trainer." },
+    { t = "Fish in Midnight waters; your skill rises with catches. Reach 300." },
+}
+ns.ACH_NOTES[42797] = { "Fishing pools in the Midnight zones are good places to level." }
+ns.ACH_REVIEWED[42797] = true
+
+-- professions
+ns.ACH_STEPS[42798] = {
+    { t = "Learn Midnight Engineering from a trainer (a city guard can point the way)." },
+    { t = "Craft Midnight recipes until the ones you know turn grey, then learn new ones; reach 100 Midnight Engineering skill." },
+}
+ns.ACH_NOTES[42798] = { "Knowledge points (weekly quests, treasures on the Professions page) unlock specialisations; skill comes from crafting and gathering." }
+ns.ACH_REVIEWED[42798] = true
+
+-- professions
+ns.ACH_STEPS[61438] = {
+    { t = "Raise one Midnight primary profession to maximum skill by crafting or gathering." },
+}
+ns.ACH_NOTES[61438] = { "Knowledge points (weekly quests, treasures on the Professions page) unlock specialisations; skill comes from crafting and gathering." }
+ns.ACH_REVIEWED[61438] = true
+
+-- professions
+ns.ACH_STEPS[61439] = {
+    { t = "Raise two Midnight primary professions to maximum skill by crafting or gathering." },
+}
+ns.ACH_NOTES[61439] = { "Knowledge points (weekly quests, treasures on the Professions page) unlock specialisations; skill comes from crafting and gathering." }
+ns.ACH_REVIEWED[61439] = true
+
+-- professions
+ns.ACH_STEPS[61440] = {
+    { t = "Raise five Midnight primary professions to maximum skill by crafting or gathering." },
+}
+ns.ACH_NOTES[61440] = { "Knowledge points (weekly quests, treasures on the Professions page) unlock specialisations; skill comes from crafting and gathering." }
+ns.ACH_REVIEWED[61440] = true
+
+-- professions
+ns.ACH_STEPS[62223] = {
+    { t = "Open the crafting orders table for Alchemy and fill Midnight orders: patron, public and personal all count." },
+    { t = "Keep going until you've filled 50." },
+}
+ns.ACH_NOTES[62223] = { "Personal orders from your own alts count, so you can feed yourself cheap orders." }
+ns.ACH_REVIEWED[62223] = true
+
+-- professions
+ns.ACH_STEPS[62233] = {
+    { t = "Reach 25 Midnight Enchanting skill." },
+    { t = "From the week after you learn it, pick up an Enchanting weekly quest and finish it." },
+    { t = "Repeat for four weeks, or use alts." },
+}
+ns.ACH_NOTES[62233] = {  }
+ns.ACH_REVIEWED[62233] = true
+
 -- ritual_sites
 ns.ACH_STEPS[62450] = {
     { t = "Go to this week's Ritual Site: Daggerspine Point in Eversong Woods or the Broken Throne in Zul'Aman (the map marks the active one). The Curious Obelisk there sets the tier and the challenges." },
