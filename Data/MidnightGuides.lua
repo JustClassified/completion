@@ -821,6 +821,80 @@ ns.ACH_STEPS[63435] = {
 ns.ACH_NOTES[63435] = { "Turning on the game's outline option for objects makes the curiosities easy to see." }
 ns.ACH_REVIEWED[63435] = true
 
+-- exploration
+ns.ACH_STEPS[61082] = {
+    { t = "Each week a different pair of visitors comes to the Arcantina; look in the side rooms too, not only at the map icons." },
+    { t = "Before handing in their quest, place the pair's optional decoration (see Highly Decorated)." },
+    { t = "Hand in their quest. A missed pair has to come round again, so check in every week." },
+}
+ns.ACH_NOTES[61082] = { "The Arcantina opens after Arator's Journey; the Personal Key to the Arcantina takes you there.", "Visitors this achievement needs: Danath and Kurdran, Tehd and Marius, Thisalee Crow and Zen'tabra, Gamon and Gorgonna, Eitrigg and Darius Crowley, Gidwin and Tarenar, Lan'dalock and Timear, Taoshi and Kelsey Steelspark, Nisha and Cyrus." }
+ns.ACH_REVIEWED[61082] = true
+
+-- exploration
+ns.ACH_STEPS[62267] = {
+    { t = "Kill Kapara and Kapara Pups (the neutral capybaras) anywhere in Zul'Aman except the Shrine of Filo, where they are friendly. The pool by Feevra has many.", at = { 2437, 32.2, 22.3 } },
+    { t = "Every 25 kills you get a warning; on the 100th kill Filo, Loa of Childhood appears and the achievement completes." },
+}
+ns.ACH_NOTES[62267] = { "Filo hits very hard; expect to die right after." }
+ns.ACH_SPOTS[62267] = { t = "Kapara near Feevra", at = { { 2437, 32.2, 22.3 } } }
+ns.ACH_REVIEWED[62267] = true
+
+-- exploration
+ns.ACH_STEPS[62288] = {
+    { t = "Expand the achievement: each of Eversong Woods's five telescopes has its spot (purple telescopes on high points)." },
+    { t = "Fly to each telescope and use it." },
+}
+ns.ACH_NOTES[62288] = { "If the zone shows 5/5 without completing, go round again: one telescope may need using once more." }
+ns.ACH_REVIEWED[62288] = true
+
+-- exploration
+ns.ACH_STEPS[62289] = {
+    { t = "Expand the achievement: each of Zul'Aman's five telescopes has its spot (purple telescopes on high points)." },
+    { t = "Fly to each telescope and use it." },
+}
+ns.ACH_NOTES[62289] = { "If the zone shows 5/5 without completing, go round again: one telescope may need using once more." }
+ns.ACH_REVIEWED[62289] = true
+
+-- exploration
+ns.ACH_STEPS[62290] = {
+    { t = "Expand the achievement: each of Harandar's five telescopes has its spot (purple telescopes on high points)." },
+    { t = "Fly to each telescope and use it." },
+}
+ns.ACH_NOTES[62290] = { "If the zone shows 5/5 without completing, go round again: one telescope may need using once more." }
+ns.ACH_REVIEWED[62290] = true
+
+-- exploration
+ns.ACH_STEPS[62291] = {
+    { t = "Expand the achievement: each of Voidstorm's five telescopes has its spot (purple telescopes on high points)." },
+    { t = "Fly to each telescope and use it." },
+}
+ns.ACH_NOTES[62291] = { "If the zone shows 5/5 without completing, go round again: one telescope may need using once more." }
+ns.ACH_REVIEWED[62291] = true
+
+-- exploration
+ns.ACH_STEPS[63619] = {
+    { t = "Each week a different pair of visitors comes to the Arcantina; look in the side rooms too, not only at the map icons." },
+    { t = "Before handing in their quest, place the pair's optional decoration (see Highly Decorated)." },
+    { t = "Hand in their quest. A missed pair has to come round again, so check in every week." },
+}
+ns.ACH_NOTES[63619] = { "The Arcantina opens after Arator's Journey; the Personal Key to the Arcantina takes you there.", "Visitors this achievement needs: Chen and Flynn, Vanessa and Garona." }
+ns.ACH_REVIEWED[63619] = true
+
+-- exploration
+ns.ACH_STEPS[63636] = {
+    { t = "Get the Spirit Corrosion point from Jan'sari the Watchful.", at = { 2512, 58.8, 46.0 } },
+    { t = "Get the point from Er'inye in the Vaults of Atal'Utek.", at = { 2509, 51.2, 62.8 } },
+    { t = "Loot the Venom-Worn Coffer in the Vaults.", at = { 2509, 53.9, 18.0 } },
+    { t = "Get the Eye of Szarith in the Underbelly.", at = { 2613, 68.6, 15.7 } },
+    { t = "Get the point from Jin'tal.", at = { 2636, 48.1, 72.7 } },
+    { t = "Loot the Faintly Glowing Gem in the Vaults.", at = { 2509, 48.0, 51.8 } },
+    { t = "Loot Jin'tal's Reliquary.", at = { 2638, 36.3, 23.7 } },
+    { t = "Loot the Feather of Tokjara in the Vaults.", at = { 2509, 48.5, 25.8 } },
+    { t = "Spend all the points at the Altar of Corrosion." },
+}
+ns.ACH_NOTES[63636] = { "The points are shared across your warband.", "The last point needs Renown 14 with Zul'jarra's Forces.", "These steps don't tick themselves: shift-click a step in the list once you have it." }
+ns.ACH_REVIEWED[63636] = true
+
 -- prey
 ns.ACH_STEPS[42701] = {
     { t = "If you haven't yet: at level 90 take Prey: Astalor's Initiative from Astalor Bloodsworn in Silvermoon and follow it to To the Sanctum!, which opens the hunt table.", at = { 2393, 55.0, 63.4 } },
