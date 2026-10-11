@@ -8,6 +8,602 @@ ns.ACH_STEPS, ns.ACH_NOTES, ns.CRIT_NOTES = ns.ACH_STEPS or {}, ns.ACH_NOTES or 
 ns.ACH_SPOTS = ns.ACH_SPOTS or {}
 ns.ACH_REVIEWED = {}
 
+-- abundance
+ns.ACH_STEPS[42283] = {
+    { t = "Abundance: Artisan of Mausoloa." },
+    { t = "Abundance: Artisan of Loaknit." },
+    { t = "Abundance: Artisan of Floaret." },
+    { t = "Abundance: Artisan of Loanite." },
+}
+ns.ACH_NOTES[42283] = { "Each part has its own guide in this list.", "It isn't shared across your warband: do it on one character.", "Chel the Chip sells a toy that teleports you to Abundance." }
+ns.ACH_SPOTS[42283] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[42283] = true
+
+-- abundance
+ns.ACH_STEPS[61681] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join an Abundance event: Watha'nan Crypts (Eversong), Loaknit Den (Zul'Aman), Floaret Grotto (Harandar) or the Abundant Voidburrow (Voidstorm)." },
+    { t = "Harvest 1,000,000 Abundance in total; every bit counts." },
+}
+ns.ACH_NOTES[61681] = {  }
+ns.ACH_SPOTS[61681] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[61681] = true
+
+-- abundance
+ns.ACH_STEPS[61937] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join Abundance events at the Watha'nan Crypts in Eversong Woods.", at = { 2395, 56.78, 65.79 } },
+    { t = "Earn 250,000 Abundance there in total." },
+}
+ns.ACH_NOTES[61937] = {  }
+ns.ACH_SPOTS[61937] = { t = "the Watha'nan Crypts", at = { { 2395, 56.78, 65.79 } } }
+ns.ACH_REVIEWED[61937] = true
+
+-- abundance
+ns.ACH_STEPS[61938] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join Abundance events at the Loaknit Den in Zul'Aman.", at = { 2437, 31.62, 26.14 } },
+    { t = "Earn 250,000 Abundance there in total." },
+}
+ns.ACH_NOTES[61938] = {  }
+ns.ACH_SPOTS[61938] = { t = "the Loaknit Den", at = { { 2437, 31.62, 26.14 } } }
+ns.ACH_REVIEWED[61938] = true
+
+-- abundance
+ns.ACH_STEPS[61939] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join Abundance events at the Floaret Grotto in Harandar.", at = { 2413, 66.14, 61.69 } },
+    { t = "Earn 250,000 Abundance there in total." },
+}
+ns.ACH_NOTES[61939] = {  }
+ns.ACH_SPOTS[61939] = { t = "the Floaret Grotto", at = { { 2413, 66.14, 61.69 } } }
+ns.ACH_REVIEWED[61939] = true
+
+-- abundance
+ns.ACH_STEPS[61940] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join Abundance events at the Abundant Voidburrow in Voidstorm.", at = { 2405, 38.82, 53.31 } },
+    { t = "Earn 250,000 Abundance there in total." },
+}
+ns.ACH_NOTES[61940] = {  }
+ns.ACH_SPOTS[61940] = { t = "the Abundant Voidburrow", at = { { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[61940] = true
+
+-- abundance
+ns.ACH_STEPS[61941] = {
+    { t = "Take the Abundance tutorial from Chel the Chip in Amani'Zar Village, Zul'Aman (Chel also stands elsewhere; this is the right one).", at = { 2437, 45.0, 67.6 } },
+    { t = "Finish it with Dundun." },
+}
+ns.ACH_NOTES[61941] = {  }
+ns.ACH_SPOTS[61941] = { t = "Chel the Chip", at = { { 2437, 45.0, 67.6 } } }
+ns.ACH_REVIEWED[61941] = true
+
+-- abundance
+ns.ACH_STEPS[61943] = {
+    { t = "Follow the Abundance questline in Zul'Aman to its end; the achievement completes with the quest that ends it.", at = { 2437, 45.0, 67.6 }, quest = 94361 },
+}
+ns.ACH_NOTES[61943] = {  }
+ns.ACH_SPOTS[61943] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[61943] = true
+
+-- abundance
+ns.ACH_STEPS[62266] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join an Abundance event: Watha'nan Crypts (Eversong), Loaknit Den (Zul'Aman), Floaret Grotto (Harandar) or the Abundant Voidburrow (Voidstorm)." },
+    { t = "Harvest 10,000,000 Abundance in total." },
+}
+ns.ACH_NOTES[62266] = { "Players report it sometimes stops adding progress for a while." }
+ns.ACH_SPOTS[62266] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62266] = true
+
+-- abundance
+ns.ACH_STEPS[62268] = {
+    { t = "Have a Midnight profession at skill 25 or more." },
+    { t = "Go to the location with your profession's artisan nodes: Eversong for Enchanting, Jewelcrafting or Tailoring; Zul'Aman for Cooking, Leatherworking or Skinning; Harandar for Alchemy, Herbalism or Inscription; Voidstorm for Blacksmithing, Engineering or Mining." },
+    { t = "During the event, harvest a node marked Artisan for your profession." },
+}
+ns.ACH_NOTES[62268] = {  }
+ns.ACH_SPOTS[62268] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62268] = true
+
+-- abundance
+ns.ACH_STEPS[62324] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join an Abundance event: Watha'nan Crypts (Eversong), Loaknit Den (Zul'Aman), Floaret Grotto (Harandar) or the Abundant Voidburrow (Voidstorm)." },
+    { t = "In one event, score in every category: deliver materials, gather basic nodes, gather artisan nodes (a Midnight profession at 25), catch large orbs and take part in bonus events." },
+    { t = "Stay until each category shows a score." },
+}
+ns.ACH_NOTES[62324] = {  }
+ns.ACH_SPOTS[62324] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62324] = true
+
+-- abundance
+ns.ACH_STEPS[62325] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join an Abundance event: Watha'nan Crypts (Eversong), Loaknit Den (Zul'Aman), Floaret Grotto (Harandar) or the Abundant Voidburrow (Voidstorm)." },
+    { t = "Fill the bar (kill, gather, bring orbs to the altar) until the Treasure Dundun bonus fires." },
+    { t = "Do this at all four locations." },
+}
+ns.ACH_NOTES[62325] = { "Every 10,000 progress rolls one of five bonuses: Treasure Dundun, Golden Glow, Runaways, Gigantic Harvest or Rain of Abundance.", "The enhanced Abundance location fills fastest in a raid group." }
+ns.ACH_SPOTS[62325] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62325] = true
+
+-- abundance
+ns.ACH_STEPS[62326] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join an Abundance event: Watha'nan Crypts (Eversong), Loaknit Den (Zul'Aman), Floaret Grotto (Harandar) or the Abundant Voidburrow (Voidstorm)." },
+    { t = "Fill the bar (kill, gather, bring orbs to the altar) until the Golden Glow bonus fires." },
+    { t = "Do this at all four locations." },
+}
+ns.ACH_NOTES[62326] = { "Every 10,000 progress rolls one of five bonuses: Treasure Dundun, Golden Glow, Runaways, Gigantic Harvest or Rain of Abundance.", "The enhanced Abundance location fills fastest in a raid group." }
+ns.ACH_SPOTS[62326] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62326] = true
+
+-- abundance
+ns.ACH_STEPS[62329] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join an Abundance event: Watha'nan Crypts (Eversong), Loaknit Den (Zul'Aman), Floaret Grotto (Harandar) or the Abundant Voidburrow (Voidstorm)." },
+    { t = "Fill the bar (kill, gather, bring orbs to the altar) until the Runaways bonus fires." },
+    { t = "Do this at all four locations." },
+}
+ns.ACH_NOTES[62329] = { "Every 10,000 progress rolls one of five bonuses: Treasure Dundun, Golden Glow, Runaways, Gigantic Harvest or Rain of Abundance.", "The enhanced Abundance location fills fastest in a raid group." }
+ns.ACH_SPOTS[62329] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62329] = true
+
+-- abundance
+ns.ACH_STEPS[62330] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join an Abundance event: Watha'nan Crypts (Eversong), Loaknit Den (Zul'Aman), Floaret Grotto (Harandar) or the Abundant Voidburrow (Voidstorm)." },
+    { t = "Fill the bar (kill, gather, bring orbs to the altar) until the Gigantic Harvest bonus fires." },
+    { t = "Do this at all four locations." },
+}
+ns.ACH_NOTES[62330] = { "Every 10,000 progress rolls one of five bonuses: Treasure Dundun, Golden Glow, Runaways, Gigantic Harvest or Rain of Abundance.", "The enhanced Abundance location fills fastest in a raid group." }
+ns.ACH_SPOTS[62330] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62330] = true
+
+-- abundance
+ns.ACH_STEPS[62331] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join an Abundance event: Watha'nan Crypts (Eversong), Loaknit Den (Zul'Aman), Floaret Grotto (Harandar) or the Abundant Voidburrow (Voidstorm)." },
+    { t = "Fill the bar (kill, gather, bring orbs to the altar) until the Rain of Abundance bonus fires." },
+    { t = "Do this at all four locations." },
+}
+ns.ACH_NOTES[62331] = { "Every 10,000 progress rolls one of five bonuses: Treasure Dundun, Golden Glow, Runaways, Gigantic Harvest or Rain of Abundance.", "The enhanced Abundance location fills fastest in a raid group.", "The Voidburrow one has been reported as not counting at times." }
+ns.ACH_SPOTS[62331] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62331] = true
+
+-- abundance
+ns.ACH_STEPS[62332] = {
+    { t = "Get all five bonus achievements: Treasures Aplenty, Golden Opportunities, Squash the Competition, One Bite at a Time and Drops of Prosperity." },
+}
+ns.ACH_NOTES[62332] = { "Every 10,000 progress rolls one of five bonuses: Treasure Dundun, Golden Glow, Runaways, Gigantic Harvest or Rain of Abundance.", "The enhanced Abundance location fills fastest in a raid group.", "Each part has its own guide in this list." }
+ns.ACH_SPOTS[62332] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62332] = true
+
+-- abundance
+ns.ACH_STEPS[62333] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join an Abundance event: Watha'nan Crypts (Eversong), Loaknit Den (Zul'Aman), Floaret Grotto (Harandar) or the Abundant Voidburrow (Voidstorm)." },
+    { t = "Pick up the orbs that enemies and gathering drop." },
+    { t = "Finish the event with at least 10,000 in Materials Harvested." },
+}
+ns.ACH_NOTES[62333] = { "In Zul'Aman it's quickest when the big corpse spawns and everyone skins it." }
+ns.ACH_SPOTS[62333] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62333] = true
+
+-- abundance
+ns.ACH_STEPS[62336] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join an Abundance event: Watha'nan Crypts (Eversong), Loaknit Den (Zul'Aman), Floaret Grotto (Harandar) or the Abundant Voidburrow (Voidstorm)." },
+    { t = "Pick up orbs and deliver them to the altar yourself." },
+    { t = "Finish the event with at least 10,000 in Materials Contributed." },
+}
+ns.ACH_NOTES[62336] = {  }
+ns.ACH_SPOTS[62336] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62336] = true
+
+-- abundance
+ns.ACH_STEPS[62337] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join an Abundance event: Watha'nan Crypts (Eversong), Loaknit Den (Zul'Aman), Floaret Grotto (Harandar) or the Abundant Voidburrow (Voidstorm)." },
+    { t = "Gather basic nodes all event long: skin the beasts (no Skinning needed), or click the Floaret buds in the Harandar grotto's deep pool, which come back fast." },
+    { t = "Finish the event with at least 10,000 in Basic Nodes." },
+}
+ns.ACH_NOTES[62337] = { "A quiet location is easier than the busy enhanced one." }
+ns.ACH_SPOTS[62337] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62337] = true
+
+-- abundance
+ns.ACH_STEPS[62338] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join an Abundance event: Watha'nan Crypts (Eversong), Loaknit Den (Zul'Aman), Floaret Grotto (Harandar) or the Abundant Voidburrow (Voidstorm)." },
+    { t = "Harvest your profession's artisan nodes all event long (see Professionals Only)." },
+    { t = "Finish the event with at least 10,000 in Artisan Nodes." },
+}
+ns.ACH_NOTES[62338] = { "Players report this is very hard in one event (about 50 points per node); a double-harvest buff helps." }
+ns.ACH_SPOTS[62338] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62338] = true
+
+-- abundance
+ns.ACH_STEPS[62339] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join an Abundance event: Watha'nan Crypts (Eversong), Loaknit Den (Zul'Aman), Floaret Grotto (Harandar) or the Abundant Voidburrow (Voidstorm)." },
+    { t = "Stay for as many bonus triggers as you can; a busy group helps." },
+    { t = "Finish the event with at least 10,000 in Bonus Events." },
+}
+ns.ACH_NOTES[62339] = { "The enhanced Abundance location fills fastest in a raid group." }
+ns.ACH_SPOTS[62339] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62339] = true
+
+-- abundance
+ns.ACH_STEPS[62340] = {
+    { t = "First: unlock Abundance with Chel the Chip in Amani'Zar Village, Zul'Aman.", at = { 2437, 45.0, 67.6 } },
+    { t = "Join an Abundance event: Watha'nan Crypts (Eversong), Loaknit Den (Zul'Aman), Floaret Grotto (Harandar) or the Abundant Voidburrow (Voidstorm)." },
+    { t = "Stand under the falling orbs (green circles)." },
+    { t = "Finish the event with at least 10,000 in Large Orbs." },
+}
+ns.ACH_NOTES[62340] = { "The enhanced Abundance location fills fastest in a raid group." }
+ns.ACH_SPOTS[62340] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62340] = true
+
+-- abundance
+ns.ACH_STEPS[62341] = {
+    { t = "Finish every Abundance achievement listed; expand it to see which are left." },
+}
+ns.ACH_NOTES[62341] = { "Each part has its own guide in this list.", "Players have reported parts of it not completing at times; check again after patches." }
+ns.ACH_SPOTS[62341] = { t = "Abundance locations", at = { { 2395, 56.78, 65.79 }, { 2437, 31.62, 26.14 }, { 2413, 66.14, 61.69 }, { 2405, 38.82, 53.31 } } }
+ns.ACH_REVIEWED[62341] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62117] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Fish the Abyss Bubbles (swirling bubbles on the sea floor); click the bobber, not the bubble. The bubble near the start and the one beside the big air vents on the right never run out." },
+    { t = "Collect 10 fish from bubbles." },
+}
+ns.ACH_NOTES[62117] = { "Tracking the biggest count finishes the smaller ones along the way." }
+ns.ACH_SPOTS[62117] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62117] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62118] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Fish the Abyss Bubbles (swirling bubbles on the sea floor); click the bobber, not the bubble. The bubble near the start and the one beside the big air vents on the right never run out." },
+    { t = "Collect 25 fish from bubbles in total." },
+    { t = "Buy the Finnow Chum upgrade from Depthdiver Jeju.", at = { 2437, 68.0, 19.4 } },
+}
+ns.ACH_NOTES[62118] = { "Tracking the biggest count finishes the smaller ones along the way." }
+ns.ACH_SPOTS[62118] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62118] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62119] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Fish the Abyss Bubbles (swirling bubbles on the sea floor); click the bobber, not the bubble. The bubble near the start and the one beside the big air vents on the right never run out." },
+    { t = "Collect 50 fish from bubbles in total." },
+    { t = "Buy the Murkskimmer Meat upgrade from Depthdiver Jeju.", at = { 2437, 68.0, 19.4 } },
+}
+ns.ACH_NOTES[62119] = { "Tracking the biggest count finishes the smaller ones along the way." }
+ns.ACH_SPOTS[62119] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62119] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62207] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Catch 3 fish during dives." },
+    { t = "Buy the Reinforced Joints upgrade from Depthdiver Jeju.", at = { 2437, 68.0, 19.4 } },
+}
+ns.ACH_NOTES[62207] = { "The upgrade may only appear after the next weekly reset." }
+ns.ACH_SPOTS[62207] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62207] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62208] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Catch at least 25 fish in one dive." },
+    { t = "Buy the Reinforced Joints upgrade from Depthdiver Jeju.", at = { 2437, 68.0, 19.4 } },
+}
+ns.ACH_NOTES[62208] = { "Relog if the upgrade's part stays grey after buying it." }
+ns.ACH_SPOTS[62208] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62208] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62209] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Stay near the start, turn around and spear anything that glows; about 100 fish per dive is possible. Reach 500 in total." },
+    { t = "Buy the Depth Grease upgrade from Depthdiver Jeju.", at = { 2437, 68.0, 19.4 } },
+}
+ns.ACH_NOTES[62209] = { "Only your best character's count counts; it isn't added up across characters." }
+ns.ACH_SPOTS[62209] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62209] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62210] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Near the start, collect each listed creature: Finnows (almost anywhere), Shallows Scamps (large fish), Brakpuffers (near the floor), Zipperfish (small sharks), Porcofrills (spined fish) and an Axetooth Thresher (larger shark)." },
+}
+ns.ACH_NOTES[62210] = {  }
+ns.ACH_SPOTS[62210] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62210] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62211] = {
+    { t = "Have the Depthdiver's Used Tank first; this one unlocks after it." },
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Swim to the ravines and the Champion of Pahk's area and collect: Plecofin and Kobiamora (small sharks), Crustleech (in and near the ravines), Flitray (small manta), Cragback Sea Turtle (circles near the Champion), Dolphion (in packs), Abyss Fangray and Seamare." },
+}
+ns.ACH_NOTES[62211] = {  }
+ns.ACH_SPOTS[62211] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62211] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62212] = {
+    { t = "Have the Fathom-Tested Tank first." },
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "On the sea floor: Trench Crawlers (crabs) and Murkskimmers. Above and in the ravines: Sightless Skippers (fast, above the ravine), Umbramot Eels (far right ravine) and Gemscale Nymphs (above the far right ravine)." },
+    { t = "Last, the Depthbash Thresher: the shark guarding the Champion of Pahk." },
+}
+ns.ACH_NOTES[62212] = {  }
+ns.ACH_SPOTS[62212] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62212] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62213] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Loot 50 Sunken Relics from the sea floor over your dives; the giant skeleton area has many." },
+}
+ns.ACH_NOTES[62213] = { "Relics move around and come back after a few minutes.", "Relog if it doesn't complete at the count." }
+ns.ACH_SPOTS[62213] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62213] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62214] = {
+    { t = "Catch the Champion of Pahk and buy the Pressurized Eyeglass first." },
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Loot 10 Ancient Relics over your dives; the giant skeleton area has many." },
+}
+ns.ACH_NOTES[62214] = { "Ancient Relics can only be seen and looted after you buy the Pressurized Eyeglass.", "Relog if it doesn't complete at the count." }
+ns.ACH_SPOTS[62214] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62214] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62217] = {
+    { t = "Finish every Abyss Anglers achievement listed; expand it to see which are left." },
+}
+ns.ACH_NOTES[62217] = { "Each part has its own guide in this list.", "The reward adds the Depths blessings to the Altar of Blessings." }
+ns.ACH_SPOTS[62217] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62217] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62218] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Don't use Surface!: let your breath run out." },
+}
+ns.ACH_NOTES[62218] = {  }
+ns.ACH_SPOTS[62218] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62218] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62219] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Turn around and swim out past the trench edge until the warning appears; stay there." },
+}
+ns.ACH_NOTES[62219] = {  }
+ns.ACH_SPOTS[62219] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62219] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62220] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Wait until your breath is below 10 seconds, then use Surface!." },
+}
+ns.ACH_NOTES[62220] = {  }
+ns.ACH_SPOTS[62220] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62220] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62221] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Swim through 25 schools of fish (small clouds of tiny fish) in one dive: one floats above the rocks near the start, many sit in and around the right-hand ravine." },
+    { t = "Buy the Fresh Depth Nets upgrade from Depthdiver Jeju.", at = { 2437, 68.0, 19.4 } },
+}
+ns.ACH_NOTES[62221] = {  }
+ns.ACH_SPOTS[62221] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62221] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62222] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Find a Brakpuffer (small puffer fish, mid-depth) and stay next to it until the bomb over its head goes off." },
+}
+ns.ACH_NOTES[62222] = {  }
+ns.ACH_SPOTS[62222] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62222] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62271] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Catch 100 fish during dives in total." },
+}
+ns.ACH_NOTES[62271] = { "If the count sticks just short, players report finishing it on another character." }
+ns.ACH_SPOTS[62271] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62271] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62272] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Loot Sunken and Ancient Relics around the giant skeleton (Ancient ones are worth far more); refill air at the vents when your breath runs low." },
+    { t = "Reach 250,000 points over all your dives; a good dive gives about 50,000." },
+}
+ns.ACH_NOTES[62272] = { "Ancient Relics can only be seen and looted after you buy the Pressurized Eyeglass." }
+ns.ACH_SPOTS[62272] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62272] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62342] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Catch the Champion of Pahk three times; one kill can count several times." },
+}
+ns.ACH_NOTES[62342] = { "The Champion of Pahk is the Mythic creature: it starts with 99 scales and comes back 5 to 10 minutes after it's caught." }
+ns.ACH_SPOTS[62342] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62342] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62343] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Catch the Champion of Pahk six times; one kill can count several times." },
+    { t = "Use both air vents to last long enough alone." },
+}
+ns.ACH_NOTES[62343] = { "The Champion of Pahk is the Mythic creature: it starts with 99 scales and comes back 5 to 10 minutes after it's caught." }
+ns.ACH_SPOTS[62343] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62343] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62506] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Find the Champion of Pahk and spear it from straight above, far enough away that you can't see its counter; that keeps it from charging." },
+    { t = "If it charges, rise with it and keep shooting. Land the last catch yourself." },
+    { t = "Buy the Pressurized Eyeglass upgrade from Depthdiver Jeju.", at = { 2437, 68.0, 19.4 } },
+}
+ns.ACH_NOTES[62506] = { "The Champion of Pahk is the Mythic creature: it starts with 99 scales and comes back 5 to 10 minutes after it's caught.", "Someone else landing the final catch doesn't count for you." }
+ns.ACH_SPOTS[62506] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62506] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62759] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "In one dive, loot 3 relics from the sea floor." },
+}
+ns.ACH_NOTES[62759] = { "The achievement names Sunken Relics; a player report says Ancient Relics, which need the Pressurized Eyeglass. Loot both kinds to be safe." }
+ns.ACH_SPOTS[62759] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62759] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62760] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Fish the Abyss Bubbles (swirling bubbles on the sea floor); click the bobber, not the bubble. The bubble near the start and the one beside the big air vents on the right never run out." },
+    { t = "In one dive, catch fish from three different bubbles." },
+}
+ns.ACH_NOTES[62760] = {  }
+ns.ACH_SPOTS[62760] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62760] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62761] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Loot Sunken and Ancient Relics around the giant skeleton (Ancient ones are worth far more); refill air at the vents when your breath runs low." },
+    { t = "Reach 1,000,000 points over all your dives." },
+}
+ns.ACH_NOTES[62761] = { "Ancient Relics can only be seen and looted after you buy the Pressurized Eyeglass." }
+ns.ACH_SPOTS[62761] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62761] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62762] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Swim through 250 schools of fish in total." },
+}
+ns.ACH_NOTES[62762] = { "An Inky Black Potion makes the schools stand out." }
+ns.ACH_SPOTS[62762] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62762] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62763] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Loot 250 Sunken or Ancient treasures over many dives; the cluster in the ravine comes back fast and has an air vent close by." },
+}
+ns.ACH_NOTES[62763] = { "Ancient Relics can only be seen and looted after you buy the Pressurized Eyeglass." }
+ns.ACH_SPOTS[62763] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62763] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62772] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Fish the Abyss Bubbles (swirling bubbles on the sea floor); click the bobber, not the bubble. The bubble near the start and the one beside the big air vents on the right never run out." },
+    { t = "Collect 100 fish from bubbles in total." },
+}
+ns.ACH_NOTES[62772] = { "Tracking the biggest count finishes the smaller ones along the way." }
+ns.ACH_SPOTS[62772] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62772] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62773] = {
+    { t = "Abyss Anglers: Trench Berserker." },
+    { t = "Abyss Anglers: Vintage Collector." },
+    { t = "Abyss Anglers: Top of the Class." },
+    { t = "Abyss Anglers: Now That's Anglin'." },
+}
+ns.ACH_NOTES[62773] = { "Each part has its own guide in this list." }
+ns.ACH_SPOTS[62773] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62773] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62774] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Swim through one of the two air vents." },
+}
+ns.ACH_NOTES[62774] = {  }
+ns.ACH_SPOTS[62774] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62774] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62775] = {
+    { t = "Collect Sunken Relics and buy the first net upgrade (it catches Barbed Crawlers and Thorny Seahorses).", at = { 2437, 68.0, 19.4 } },
+    { t = "Catch the Champion of Pahk once, then buy the Triple-Thread Net.", at = { 2437, 68.0, 19.4 } },
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Right-click each listed small creature to net it (the net isn't an action button)." },
+}
+ns.ACH_NOTES[62775] = {  }
+ns.ACH_SPOTS[62775] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62775] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62776] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Catch one fish of each rarity: Mythic (the Champion of Pahk), Legendary (small seahorses or the Gemscale Nymph), Epic (the Sightless Skipper) and the common ones on the way." },
+}
+ns.ACH_NOTES[62776] = { "The Champion of Pahk is the Mythic creature: it starts with 99 scales and comes back 5 to 10 minutes after it's caught." }
+ns.ACH_SPOTS[62776] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62776] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62777] = {
+    { t = "Earn the dive achievements as you go; some upgrades only appear after their achievement and a weekly reset." },
+    { t = "Buy every upgrade from Depthdiver Jeju.", at = { 2437, 68.0, 19.4 } },
+}
+ns.ACH_NOTES[62777] = { "One upgrade has limited stock; check back if it's gone." }
+ns.ACH_SPOTS[62777] = { t = "Depthdiver Jeju", at = { { 2437, 68.0, 19.4 } } }
+ns.ACH_REVIEWED[62777] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62778] = {
+    { t = "Get the Murkskimmer Meat upgrade first (Abyss Anglers: Murkskimmer Meat)." },
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Fish the Abyss Bubbles (swirling bubbles on the sea floor); click the bobber, not the bubble. The bubble near the start and the one beside the big air vents on the right never run out." },
+    { t = "Keep fishing bubbles until an Epic fish comes up." },
+}
+ns.ACH_NOTES[62778] = {  }
+ns.ACH_SPOTS[62778] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62778] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62829] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Swim to the aggressive fish near 65, 25 on the dive map (Axetooth Thresher, Abyss Fangray or Depthbash Thresher) and let one grab you." },
+}
+ns.ACH_NOTES[62829] = {  }
+ns.ACH_SPOTS[62829] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62829] = true
+
+-- abyss_anglers
+ns.ACH_STEPS[62832] = {
+    { t = "Start a dive with Depthdiver Tu'nakit on the Zul'Aman coast.", at = { 2437, 68.2, 20.2 } },
+    { t = "Find the Champion of Pahk and catch it exactly once, when its armor is gone; catch nothing else." },
+    { t = "Use Surface! straight away." },
+}
+ns.ACH_NOTES[62832] = { "More than one Mythic catch, or any other fish, breaks it.", "Easier with a friend." }
+ns.ACH_SPOTS[62832] = { t = "Depthdiver Tu'nakit", at = { { 2437, 68.2, 20.2 } } }
+ns.ACH_REVIEWED[62832] = true
+
 -- delves
 ns.ACH_STEPS[61707] = {
     { t = "Finish each listed delve once, on any tier." },
