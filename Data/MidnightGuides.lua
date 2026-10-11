@@ -1736,6 +1736,37 @@ ns.ACH_STEPS[62233] = {
 ns.ACH_NOTES[62233] = {  }
 ns.ACH_REVIEWED[62233] = true
 
+-- pvp_events
+ns.ACH_STEPS[61225] = {
+    { t = "At level 90, do each listed PvP world quest at Slayer's Rise in Voidstorm once; expand the achievement to see which are left." },
+}
+ns.ACH_NOTES[61225] = { "They show on the Voidstorm map when they are up; some come up less often than others." }
+ns.ACH_REVIEWED[61225] = true
+
+-- pvp_events
+ns.ACH_STEPS[61234] = {
+    { t = "Turn on War Mode." },
+    { t = "In each Midnight zone, kill a player who carries a bounty (shown on the map) and loot it." },
+}
+ns.ACH_NOTES[61234] = { "Bounty holders often vanish quickly; busy world PvP spots are the best place to wait." }
+ns.ACH_REVIEWED[61234] = true
+
+-- pvp_events
+ns.ACH_STEPS[61464] = {
+    { t = "Turn on War Mode." },
+    { t = "Each week, pick up a Midnight Sparks of War quest, do the PvP world quests and kills it asks for, and hand it in. Five times in all." },
+}
+ns.ACH_NOTES[61464] = { "The Naigtal and Coiled Isle versions of the quest have been reported as not counting." }
+ns.ACH_REVIEWED[61464] = true
+
+-- pvp_events
+ns.ACH_STEPS[61465] = {
+    { t = "Turn on War Mode." },
+    { t = "Each week, pick up a Midnight Sparks of War quest, do the PvP world quests and kills it asks for, and hand it in. Twenty times in all." },
+}
+ns.ACH_NOTES[61465] = { "The Naigtal and Coiled Isle versions of the quest have been reported as not counting." }
+ns.ACH_REVIEWED[61465] = true
+
 -- ritual_sites
 ns.ACH_STEPS[62450] = {
     { t = "Go to this week's Ritual Site: Daggerspine Point in Eversong Woods or the Broken Throne in Zul'Aman (the map marks the active one). The Curious Obelisk there sets the tier and the challenges." },
