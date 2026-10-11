@@ -19,7 +19,7 @@ local DEFAULTS = {
     settings = {
         arrow = true, pin = false, sound = true, announce = true, follow = true,
         hidedone = false, transmog = true, scale = 1, arrowScale = 1,
-        scope = {}, hardmodes = false, worldPins = "missing", tooltips = true,
+        scope = {}, hardmodes = true, worldPins = "missing", tooltips = true,
         minimapPins = true, rareAlerts = true, farm = true, waypointAddon = true, followTracked = true, tracker = true,
         pins = {},        -- map pin filter: section key -> false to hide (see ns.PIN_KINDS)
         minimap = { angle = 215, hide = false },
@@ -53,6 +53,12 @@ function ns.InitDB()
     copyDefaults(CompletionDB, DEFAULTS)
     copyDefaults(CompletionCharDB, CHAR_DEFAULTS)
     ns.db, ns.cdb = CompletionDB, CompletionCharDB
+    -- 1.5.3: the default became "everything the achievement window lists", hard modes included. Saved
+    -- settings still hold the old default (off), so switch it on once; What Counts can turn it off again.
+    if not ns.db.settings.listDefaults then
+        ns.db.settings.hardmodes = true
+        ns.db.settings.listDefaults = true
+    end
 end
 
 -- Adds an entry to the top of the character's adventure log; older entries past the cap are dropped.

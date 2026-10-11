@@ -355,7 +355,7 @@ function ns.BuildScope(R, Header, Text, pageW)
     reset:SetText("Back to defaults")
     reset:SetScript("OnClick", function()
         s.scope = {}
-        s.hardmodes = false
+        s.hardmodes = true
         ApplyScope()
     end)
 end
