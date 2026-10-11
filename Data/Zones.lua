@@ -26,7 +26,7 @@ ns.ZONES = {
         key = "queldanas", name = "Isle of Quel'Danas", short = "Quel'Danas", map = 2424, maps = { 2424, 2432 },
         iconAch = 42045,
         desc = "The Sunwell's island, home of Magisters' Terrace and the March on Quel'Danas.",
-        story = {}, side = {},
+        story = { 62191 }, side = {},
         factions = {},
         keywords = { "Quel'Danas", "Sunwell" },
         instances = { "Magisters' Terrace", "March on Quel'Danas" },

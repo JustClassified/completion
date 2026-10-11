@@ -1121,6 +1121,23 @@ ns.LORE_ACH = {
             },
         },
     },
+    [62191] = {
+        name = "Call of the Light", pts = 10,
+        desc = "Complete \"The Light's Summons\" questline.",
+        note = "The expansion's opening questline on the Isle of Quel'Danas.",
+        crits = {
+            { t = 27, q = 86852, n = "The Light's Summons", map = 2432, pos = 17,
+              first = "Midnight", start = "an Image of Lady Liadrin (the quest is offered automatically at level 80)",
+              hand = "Lady Liadrin",
+              note = "The first quest is handed in to an Image of Lady Liadrin in Stormwind, Orgrimmar, Dornogal or Silvermoon; the rest happens on the Isle of Quel'Danas.",
+              chain = { {91281,"Midnight"},{88719,"A Voice from the Light"},{86769,"Last Bastion of the Light"},
+                        {86770,"Champions of Quel'Danas"},{89271,"My Son"},{86780,"Where Heroes Hold"},
+                        {86805,"The Hour of Need"},{89012,"A Safe Path"},{86806,"Luminous Wings"},{86807,"The Gate"},
+                        {91274,"Severing the Void"},{86834,"Voidborn Banishing"},{86811,"Ethereal Eradication"},
+                        {86848,"Light's Arsenal"},{86849,"Wrath Unleashed"},{86850,"Broken Sun"},{86852,"Light's Last Stand"} },
+            },
+        },
+    },
     [61916] = {
         name = "Rage of the Ren'dorei", pts = 10,
         desc = "Complete the Rage of the Ren'dorei storyline.",
