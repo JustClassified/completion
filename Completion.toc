@@ -26,6 +26,7 @@ Data\Research.lua
 Data\Achievements.lua
 Data\TWW\Achievements.lua
 Data\ExtraAchievements.lua
+Data\AchPlacement.lua
 Data\Difficulty.lua
 Data\Collections.lua
 Data\TWW\Collections.lua

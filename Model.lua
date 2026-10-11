@@ -595,6 +595,13 @@ local function BuildAchievements(midnight)
     for id in pairs(loreIDs) do placed[id] = true; zoneOfAch[id] = loreZone[id] end
     for id in pairs(groupAchs) do placed[id] = true end
     for id in pairs(ns.IGNORE_ACH) do placed[id] = true end
+    for id in pairs(ns.ACH_EXCLUDE or {}) do placed[id] = true end
+    local PLACE = ns.ACH_PLACE or {}
+    -- the page an achievement belongs on by Data/AchPlacement.lua, or nil when the table doesn't name it
+    local function placePage(aid)
+        local pl = PLACE[aid]
+        return pl and ns.zoneByKey[pl[1]]
+    end
 
     -- achievements with spots: they live where their spots are
     for aid, pts in pairs(achvPoints) do
@@ -606,7 +613,7 @@ local function BuildAchievements(midnight)
             placed[aid] = true
             local byZone, order = {}, {}
             for _, p in ipairs(pts) do
-                local z = ZoneForMap(p.m) or home(aid)
+                local z = ZoneForMap(p.m) or placePage(aid) or home(aid)
                 if not byZone[z] then byZone[z] = {}; order[#order + 1] = z end
                 table.insert(byZone[z], p)
             end
@@ -614,7 +621,7 @@ local function BuildAchievements(midnight)
             if not split then zoneOfAch[aid] = order[1] end
             for _, z in ipairs(order) do
                 local it = { key = "a:" .. z.key .. ":" .. aid, kind = "ach", id = aid, points = byZone[z], spots = {},
-                             group = groupOf[aid] }
+                             group = groupOf[aid], heading = PLACE[aid] and PLACE[aid][2], order = PLACE[aid] and PLACE[aid].o }
                 if split then
                     -- this zone's criteria: by criterion ID, and by name in case the game's IDs differ from the data
                     it.filter, it.filterNames = {}, {}
@@ -648,7 +655,9 @@ local function BuildAchievements(midnight)
     for _, g in ipairs(ns.ACH_GROUPS or {}) do
         for _, aid in ipairs(g[2]) do queue(aid, g[1]) end
     end
-    for _, cat in ipairs(MidnightCategories()) do
+    local cats = MidnightCategories()
+    for id, label in pairs(ns.FEATURE_CATEGORIES or {}) do cats[#cats + 1] = { id = id, label = label } end
+    for _, cat in ipairs(cats) do
         local ok, n = pcall(GetCategoryNumAchievements, cat.id, true)
         if ok and type(n) == "number" then
             for i = 1, n do
@@ -660,12 +669,33 @@ local function BuildAchievements(midnight)
 
     -- first pass: what the text says
     for _, t in ipairs(todo) do
-        t.zone, t.container = MatchAch(t.id, t.sub)
-        -- a zone hint from the data (Data/TWW/Points.lua) wins over a guess from the text, never over an instance
-        local hint = ns.ACH_ZONE and ns.ACH_ZONE[t.id]
-        if hint and not t.container and ns.zoneByKey[hint] then t.zone = ns.zoneByKey[hint] end
+        local pl = PLACE[t.id]
+        if pl and ns.zoneByKey[pl[1]] then
+            -- Data/AchPlacement.lua: the page, the heading, and the dungeon or raid it is done in
+            t.zone, t.heading, t.order, t.fixed = ns.zoneByKey[pl[1]], pl[2], pl.o, true
+            if pl[3] then
+                local c = instanceItem[norm(pl[3])]
+                -- in another language the instance has another name: its name in the achievement's text finds it
+                if not c then
+                    local mz, mc = MatchAch(t.id, nil)
+                    if mc and mz == t.zone then c = mc end
+                end
+                if c and c.zone == t.zone then t.container = c end
+            end
+        else
+            t.zone, t.container = MatchAch(t.id, t.sub)
+            -- a zone hint from the data (Data/TWW/Points.lua) wins over a guess from the text, never over an instance
+            local hint = ns.ACH_ZONE and ns.ACH_ZONE[t.id]
+            if hint and not t.container and ns.zoneByKey[hint] then t.zone = ns.zoneByKey[hint] end
+        end
         if t.zone and not t.container then zoneOfAch[t.id] = t.zone end
     end
+    -- the table's order: headings and their achievements come out in the order it lists them
+    for i, t in ipairs(todo) do t.idx = i end
+    table.sort(todo, function(a, b)
+        if (a.order or 1e9) ~= (b.order or 1e9) then return (a.order or 1e9) < (b.order or 1e9) end
+        return a.idx < b.idx
+    end)
     -- parts of a zone meta follow the meta
     local meta = MetaZones(zoneOfAch)
     for _, t in ipairs(todo) do
@@ -675,12 +705,23 @@ local function BuildAchievements(midnight)
             AddItem(z, "other", { key = "a:" .. z.key .. ":" .. t.id, kind = "ach", id = t.id, group = t.group, spots = {} })
         elseif t.container then
             local child = Register({ key = "a:" .. t.container.key .. ":" .. t.id, kind = "ach", id = t.id,
-                                     spots = {}, parent = t.container, group = t.group })
+                                     spots = {}, parent = t.container, group = t.group, heading = t.heading })
             table.insert(t.container.children, child)
         else
-            local z = meta[t.id] or t.zone or SpotZone(t.id) or home(t.id)
-            AddItem(z, "achv", { key = "a:" .. z.key .. ":" .. t.id, kind = "ach", id = t.id, group = t.group, spots = {} })
+            local z = t.fixed and t.zone or (meta[t.id] or t.zone or SpotZone(t.id) or home(t.id))
+            AddItem(z, "achv", { key = "a:" .. z.key .. ":" .. t.id, kind = "ach", id = t.id, group = t.group, spots = {},
+                                 heading = t.heading, order = t.order })
         end
+    end
+    -- each page's achievements in the table's order (spot achievements were filed first); unknown ones keep
+    -- their place after them
+    for _, z in ipairs(ns.ZONES) do
+        local list = z.sections.achv.items
+        for i, it in ipairs(list) do it.listIdx = i end
+        table.sort(list, function(a, b)
+            if (a.order or 1e9) ~= (b.order or 1e9) then return (a.order or 1e9) < (b.order or 1e9) end
+            return a.listIdx < b.listIdx
+        end)
     end
 end
 

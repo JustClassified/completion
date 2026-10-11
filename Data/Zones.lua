@@ -14,9 +14,9 @@ local _, ns = ...
 
 ns.ZONES = {
     {
-        key = "eversong", name = "Eversong Woods", short = "Eversong", map = 2395, maps = { 2395, 2393 },
+        key = "eversong", name = "Eversong Woods", short = "Eversong", map = 2395, maps = { 2395, 2393, 2541 },
         iconAch = 61960,
-        desc = "The sin'dorei homeland under a new sun. Silvermoon City counts as part of this page.",
+        desc = "The sin'dorei homeland under a new sun. Silvermoon City and the Arcantina (through its inn) count as part of this page.",
         story = { 41802 }, side = { 61957, 60891 },
         factions = { 2710, 2712, 2713, 2711, 2714 },   -- Silvermoon Court and its Blood Knights, Farstriders, Magisters, Shades of the Row
         keywords = { "Eversong", "Silvermoon" },
@@ -47,7 +47,7 @@ ns.ZONES = {
         story = { 41804 }, side = { 61739, 61574, 42278, 61506 },
         factions = { 2704 },
         keywords = { "Harandar", "Haranir" },
-        instances = { "The Blinding Vale", "The Dreamrift", "Chimaerus" },
+        instances = { "The Blinding Vale", "The Dreamrift", "Sporefall" },
     },
     {
         key = "voidstorm", name = "Voidstorm", short = "Voidstorm", map = 2405, maps = { 2405, 2444, 2527, 2599, 2600, 2646 },
@@ -65,7 +65,7 @@ ns.ZONES = {
         story = { 62297 }, side = { 63641, 63633 },
         factions = { 2772, 2773 },
         keywords = { "Coiled Isle", "Atal'Utek", "Ula'tek" },
-        instances = { "Altar of Fangs", "The Venomous Abyss" },
+        instances = { "Altar of Fangs", "The Venomous Abyss", "The Tidebound Grotto" },
     },
     {
         key = "midnight", name = "Midnight", short = "Midnight", overview = true,

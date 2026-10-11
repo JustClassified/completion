@@ -104,3 +104,7 @@ ns.SCOPE_DEFAULTS = {
 ns.HARD_PATTERNS = { "^Mythic:", "^Glory of", "Nightmare", "Hall of Fame",
     -- Revisited Horrific Visions with several masks on
     "^Masked ", "of Masks$", "^Horrific Masquerade", "Most Horrific Vision", "^Mastering the Visions", "Through the Depths of Visions" }
+
+-- The game's feature categories that sit outside its "Midnight" categories (Expansion Features > ...). The book
+-- reads them live too, so an achievement Blizzard adds there later is listed without an update.
+ns.FEATURE_CATEGORIES = { [15605] = "Prey", [15608] = "Ritual Sites", [15610] = "Void Assaults" }

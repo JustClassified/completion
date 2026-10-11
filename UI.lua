@@ -1253,7 +1253,8 @@ local function GroupOf(it)
         local a = ns.Ach(it.groupAch)
         return "a" .. it.groupAch, a and a.name or ("Achievement " .. it.groupAch)
     end
-    if it.group then return "g" .. it.group, it.group end
+    local label = it.heading or it.group
+    if label then return "g" .. label, label end
     return "zz", nil
 end
 

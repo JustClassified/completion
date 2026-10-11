@@ -13,7 +13,4 @@ ns.RESEARCH = {
     ["a:40927"] = "The start of Scrapshop Shot isn't confirmed yet.",
     ["a:40928"] = "The start of Scrapshop Shot isn't confirmed yet.",
     ["a:40929"] = "The start of Scrapshop Shot isn't confirmed yet.",
-    -- Midnight: Abyss Anglers creature collections players report as not completable
-    ["a:62215"] = "Players report this may not be completable right now; being checked.",
-    ["a:62216"] = "Players report this may not be completable right now; being checked.",
 }
