@@ -1101,6 +1101,7 @@ local function EvalLore(it)
                 if ns.QuestDone(qid) then n = n + 1 end
             end
         end
+        it.qDone, it.qTotal = n, total
         it.sub = done and "" or string.format("%d/%d", n, total)
     end
 end

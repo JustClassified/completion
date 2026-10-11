@@ -301,9 +301,9 @@ function ns.NotePoints(note)
 end
 
 -- Adds an achievement's guide to a tooltip: the numbered steps (done ones greyed when `it` is given),
--- then the notes and the group's note as bullet points.
-function ns.AddGuide(tooltip, id, it, groupNote)
-    local steps = (ns.ACH_STEPS and ns.ACH_STEPS[id]) or (ns.ACH_READ and ns.ACH_READ[id])
+-- then the notes and the group's note as bullet points. noRead leaves out the read-only "do each part" steps.
+function ns.AddGuide(tooltip, id, it, groupNote, noRead)
+    local steps = (ns.ACH_STEPS and ns.ACH_STEPS[id]) or (not noRead and ns.ACH_READ and ns.ACH_READ[id]) or nil
     local note = ns.ACH_NOTES and ns.ACH_NOTES[id]
     if not (steps or note or groupNote) then return end
     tooltip:AddLine(" ")
@@ -386,7 +386,7 @@ function ns.Children(it)
                 local done, acct = ns.QuestDone(qid)
                 local active = not done and ns.QuestActive(qid)
                 local row = { key = "q" .. qid, quest = qid, name = n .. ". " .. ns.QuestTitle(qid, qname), done = done or it.done,
-                              sub = acct and "warband" or (active and "in log" or nil),
+                              sub = acct and "warband" or (active and "in log" or nil), active = active, acct = acct,
                               note = ns.QuestNote and ns.QuestNote(qid),
                               soon = ns.RESEARCH and ns.RESEARCH["q:" .. qid] }
                 if not row.done and not nextFound then row.current = true; nextFound = true end
@@ -607,6 +607,24 @@ end
 
 -- Returns { spot, title, text, step, stepCount } for an item, or for one of its child rows. spot is nil when
 -- there is nowhere to point; an unknown childKey falls back to the whole item.
+-- The next quest of a storyline for this character: its ID, its fallback name, and true when it is the
+-- chain's first quest (so the storyline's own "starts with" text applies). Nil when the chain is done.
+function ns.LoreNext(it)
+    local c = it.crit
+    local chain = c.chain or {}
+    local limit = (c.pos and c.pos > 0) and math.min(c.pos, #chain) or #chain
+    local first = true
+    for i = 1, limit do
+        local qid = chain[i][1]
+        if ns.QuestForMe(qid) then
+            if not ns.QuestDone(qid) then return qid, chain[i][2], first end
+            first = false
+        end
+    end
+    -- no chain, or the chain's known quests are done: the quest behind the criterion itself
+    if c.q and c.t ~= 8 and not ns.QuestDone(c.q) then return c.q, first and c.first or nil, first end
+end
+
 function ns.Resolve(it, childKey)
     local t = { title = it.name or "?" }
     if childKey then
@@ -685,13 +703,7 @@ function ns.Resolve(it, childKey)
     end
     if it.kind == "lore" then
         local c = it.crit
-        local nextQ, nextName
-        local limit = (c.pos and c.pos > 0) and math.min(c.pos, #(c.chain or {})) or #(c.chain or {})
-        for i = 1, limit do
-            local qid = c.chain[i][1]
-            if ns.QuestForMe(qid) and not ns.QuestDone(qid) then nextQ, nextName = qid, c.chain[i][2]; break end
-        end
-        nextQ = nextQ or c.q
+        local nextQ, nextName, isFirst = ns.LoreNext(it)
         if nextQ then
             local pos, how = ns.QuestPos(nextQ, c.map)
             t.spot = pos
@@ -699,7 +711,7 @@ function ns.Resolve(it, childKey)
             if pos then
                 t.text = (how == "objective" and "On: " or "Pick up: ") .. title
             else
-                t.text = "Next: " .. title .. (c.start and ("  (from " .. c.start .. ")") or "")
+                t.text = "Next: " .. title .. ((isFirst and c.start) and ("  (from " .. c.start .. ")") or "")
             end
         end
         return t

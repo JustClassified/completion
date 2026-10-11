@@ -193,10 +193,119 @@ local function AddWrapped(text, r, g, b)
     if text and text ~= "" then GameTooltip:AddLine(text, r or 0.9, g or 0.85, b or 0.7, true) end
 end
 
+-- A map name and coordinates as one grey line ("Eversong Woods  45.4, 70.4"), with a label in front.
+local function AddPlace(label, spot)
+    if not spot then return end
+    local ok, info = pcall(C_Map.GetMapInfo, spot.map)
+    GameTooltip:AddLine(string.format("%s%s  %.1f, %.1f", label or "", ok and info and info.name or "", spot.x, spot.y), 0.6, 0.6, 0.6, true)
+end
+
+-- Where a quest is picked up, from the research data, or nil when that isn't known.
+local function QuestStart(questID)
+    local st = ns.QUEST_START and ns.QUEST_START[questID]
+    return st and { map = st[1], x = st[2], y = st[3] }
+end
+
+-- One quest inside a storyline: name, state, where it starts, its note. Same order as the storyline tooltip.
+local function QuestRowTooltip(row)
+    GameTooltip:AddLine(row.name or "?", 1, 1, 1, true)
+    if row.done then
+        GameTooltip:AddLine(row.acct and "Done by your warband" or "Done", 0.4, 0.9, 0.4)
+    elseif row.active then
+        GameTooltip:AddLine("In your quest log", 1, 0.82, 0.3)
+    elseif row.current then
+        GameTooltip:AddLine("Next up", 1, 0.82, 0.3)
+    else
+        GameTooltip:AddLine("Later in the storyline", 0.7, 0.7, 0.7)
+    end
+    if row.soon and not row.done then
+        GameTooltip:AddLine("Coming soon: " .. row.soon, 0.62, 0.60, 0.56, true)
+    elseif not row.done then
+        if not row.active then AddPlace("Starts in ", QuestStart(row.quest)) end
+        AddWrapped(row.note)
+    end
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine("Click: point the arrow here.", 0.5, 0.5, 0.5)
+    GameTooltip:Show()
+end
+
+-- A storyline: progress, the next quest and where it starts, the notes, then which achievement it is part of.
+-- The achievement's own guide is on the group heading, so it isn't repeated on every storyline.
+local function LoreTooltip(it)
+    local c = it.crit
+    local total = it.qTotal or 0
+    if it.done then
+        GameTooltip:AddLine("Done", 0.4, 0.9, 0.4)
+    elseif total > 0 and (it.qDone or 0) > 0 then
+        GameTooltip:AddLine(string.format("In progress: %d of %d quests done", it.qDone, total), 1, 0.82, 0.3)
+    else
+        GameTooltip:AddLine(total > 0 and string.format("Not started (%d quests)", total) or "Not started", 1, 0.5, 0.3)
+    end
+    local soon = ns.SoonReason(it)
+    if soon then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine("Coming soon", 0.85, 0.82, 0.75)
+        GameTooltip:AddLine(soon, 0.62, 0.60, 0.56, true)
+        GameTooltip:Show()
+        return
+    end
+    if not it.done then
+        local q, qname, isFirst = ns.LoreNext(it)
+        if q then
+            GameTooltip:AddLine(" ")
+            local active = ns.QuestActive(q)
+            GameTooltip:AddLine("Next: " .. ns.QuestTitle(q, qname) .. (active and "  |cffaaaaaa(in your quest log)|r" or ""), 1, 0.82, 0.3, true)
+            if not active then
+                if isFirst and c.start then GameTooltip:AddLine("From " .. c.start, 0.8, 0.8, 0.8, true) end
+                AddPlace("Starts in ", QuestStart(q))
+            end
+            local research = ns.RESEARCH and ns.RESEARCH["q:" .. q]
+            if research then GameTooltip:AddLine("Coming soon: " .. research, 0.62, 0.60, 0.56, true)
+            else AddWrapped(ns.QuestNote(q)) end
+        end
+    end
+    if it.note and it.note ~= "" then
+        GameTooltip:AddLine(" ")
+        AddWrapped(it.note, 0.75, 0.75, 0.75)
+    end
+    local a = ns.LORE_ACH[it.ach]
+    if a then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine("Part of " .. a.name, 0.8, 0.7, 0.5, true)
+    end
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine(c.chain and "Click: show its quests and point the arrow at the next one." or "Click: point the arrow at it.", 0.5, 0.5, 0.5, true)
+    GameTooltip:AddLine("Right-click: stop tracking.", 0.5, 0.5, 0.5)
+    GameTooltip:AddLine("Alt-click: add to (or take off) the watch list.", 0.5, 0.5, 0.5)
+    GameTooltip:Show()
+end
+
+-- A group heading that is an achievement (storylines, treasures, rares): its name, count and guide.
+local function HeaderTooltip(owner, ln)
+    GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
+    GameTooltip:AddLine(ln.text or "?", 1, 1, 1, true)
+    if ln.max > 0 then
+        local full = ln.cur >= ln.max
+        GameTooltip:AddLine(string.format("%d of %d done", ln.cur, ln.max), full and 0.4 or 1, full and 0.9 or 0.82, full and 0.4 or 0.3)
+    end
+    local soon = ns.RESEARCH and ns.RESEARCH["a:" .. ln.ach]
+    if soon then
+        GameTooltip:AddLine("Coming soon: " .. soon, 0.62, 0.60, 0.56, true)
+    else
+        -- the general "expand it, do each part" text only repeats the list under the heading, so it is left out
+        ns.AddGuide(GameTooltip, ln.ach, nil, nil, true)
+    end
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine("Shift-click: link the achievement in chat.", 0.5, 0.5, 0.5)
+    GameTooltip:Show()
+end
+
 -- Fills GameTooltip for a list item, or for one of its child rows (criterion, step, quest) when row is
 -- given. A row that carries an item of its own falls through to the full item tooltip.
 local function ItemTooltip(owner, it, row)
     GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
+    -- a quest inside a storyline
+    if row and row.quest and it.kind == "lore" then QuestRowTooltip(row); return end
     -- a child row: name, state, note and where it is
     if row and not row.item then
         GameTooltip:AddLine(row.name or "?", 1, 1, 1, true)
@@ -257,6 +366,7 @@ local function ItemTooltip(owner, it, row)
     else
         GameTooltip:AddLine(it.liveName or it.name or "?", 1, 1, 1, true)
     end
+    if it.kind == "lore" then LoreTooltip(it); return end
     GameTooltip:AddLine(" ")
     -- state, then details by kind
     if ns.upNow[it.key] then GameTooltip:AddLine("Up now: it is on your minimap", 0.4, 1, 0.4) end
@@ -275,11 +385,6 @@ local function ItemTooltip(owner, it, row)
         return
     end
     if not it.done then ns.AddDifficulty(GameTooltip, it) end
-    if it.kind == "lore" then
-        local a = ns.LORE_ACH[it.ach]
-        if a then GameTooltip:AddLine("Part of: " .. a.name, 0.8, 0.7, 0.5) end
-        if it.crit.start then GameTooltip:AddLine("Starts with " .. (it.crit.first or "?") .. " from " .. it.crit.start, 0.8, 0.8, 0.8, true) end
-    end
     if it.kind == "container" then
         AddWrapped(it.desc, 0.75, 0.75, 0.75)
         if it.bosses and #it.bosses > 0 then GameTooltip:AddLine("Bosses: " .. table.concat(it.bosses, ", "), 0.8, 0.8, 0.8, true) end
@@ -320,11 +425,8 @@ local function ItemTooltip(owner, it, row)
         end
     end
     if it.kind == "rep" and it.rep then GameTooltip:AddLine(it.rep.text, 1, 1, 1) end
-    -- walkthrough notes, for achievements and lore only
-    if it.kind == "ach" or it.kind == "lore" then
-        local groupNote = it.kind == "ach" and ns.GroupNote(it)
-        ns.AddGuide(GameTooltip, it.id or it.ach or 0, it.kind == "ach" and it or nil, groupNote)
-    end
+    -- walkthrough notes, for achievements
+    if it.kind == "ach" then ns.AddGuide(GameTooltip, it.id or 0, it, ns.GroupNote(it)) end
     if it.kind == "ach" and ns.ACH_STEPS and ns.ACH_STEPS[it.id] then
         GameTooltip:AddLine("Click to follow the steps with the arrow.", 0.6, 0.8, 1)
     end
@@ -1230,7 +1332,7 @@ local function BuildLines()
             local gk, glabel = GroupOf(it)
             local g = groups[gk]
             if not g then
-                g = { key = gk, label = glabel, items = {}, first = idx, cur = 0, max = 0 }
+                g = { key = gk, label = glabel, items = {}, first = idx, cur = 0, max = 0, ach = it.groupAch }
                 groups[gk] = g
                 order[#order + 1] = g
             end
@@ -1273,7 +1375,7 @@ local function BuildLines()
     local multi = #order > 1 or (order[1] and order[1].label)
     for _, g in ipairs(order) do
         if multi and g.label then
-            lines[#lines + 1] = { header = true, text = g.label, cur = g.cur, max = g.max }
+            lines[#lines + 1] = { header = true, text = g.label, cur = g.cur, max = g.max, ach = g.ach }
         end
         for _, it in ipairs(g.items) do
             lines[#lines + 1] = { it = it, depth = 0 }
@@ -1325,6 +1427,11 @@ end
 -- has one, and is tracked unless it is done or a reputation.
 local function OnRowClick(r, button)
     local ln = r.line
+    if ln and ln.header and ln.ach and IsModifiedClick and IsModifiedClick("CHATLINK") and GetAchievementLink and ChatEdit_InsertLink then
+        local ok, link = pcall(GetAchievementLink, ln.ach)
+        if ok and link then ChatEdit_InsertLink(link) end
+        return
+    end
     if not ln or ln.header then return end
     local it, row = ln.it, ln.row
     if button == "RightButton" then
@@ -1424,7 +1531,11 @@ local function GetRow(i)
     r:SetScript("OnClick", OnRowClick)
     r:SetScript("OnEnter", function(self)
         local ln = self.line
-        if ln and not ln.header then ItemTooltip(self, ln.it, ln.row) end
+        if ln and ln.header then
+            if ln.ach then HeaderTooltip(self, ln) end
+        elseif ln then
+            ItemTooltip(self, ln.it, ln.row)
+        end
     end)
     r:SetScript("OnLeave", function() GameTooltip:Hide() end)
     R.rows[i] = r
@@ -1569,8 +1680,8 @@ end
 
 -- A hint under each section's list, shown only while nothing is being tracked.
 local FOOTERS = {
-    story = "Click a questline to follow its chain; the arrow shows your next quest.",
-    side = "Click a questline to follow its chain; the arrow shows your next quest.",
+    story = "Hover a storyline for your next quest and where it starts. Click to open it and follow the arrow.",
+    side = "Hover a storyline for your next quest and where it starts. Click to open it and follow the arrow.",
     achv = "Click to expand criteria and track the nearest one. Shift-click links it.",
     treasure = "Click to track. Multi-step treasures guide you step by step.",
     rare = "Track any rare to start a patrol: the arrow moves on when one isn't up and alerts you when one is.",
