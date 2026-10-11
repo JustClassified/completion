@@ -155,10 +155,7 @@ function ns.BuildAbout(R, Header, Text, titleFont, pageW)
               function(v) s().minimap.hide = not v; if CompletionMinimapButton then CompletionMinimapButton:SetShown(v) end end },
             { "Hover hints", "Tooltips of rares, NPCs, objects and items say what they still count toward.",
               function() return s().tooltips end, function(v) s().tooltips = v end },
-            { "Show finished, faded", "Treasures and rares you've finished stay on the maps as faint grey pins, "
-                .. "instead of disappearing. Needed ones keep their full pin.",
-              function() return s().fadedDone == true end,
-              function(v) s().fadedDone = v; if ns.RefreshWorldPins then ns.RefreshWorldPins() end; if ns.RefreshMinimapPins then ns.RefreshMinimapPins() end end },
+
         } },
         { "Rares and farming", {
             { "Rare alerts", "During a rare patrol, a raid-warning style message and sound when a rare you still need comes up.",
@@ -178,10 +175,6 @@ function ns.BuildAbout(R, Header, Text, titleFont, pageW)
               function() return s().sound end, function(v) s().sound = v end },
             { "Chat messages", "Print a line in chat when something is finished.",
               function() return s().announce end, function(v) s().announce = v end },
-            { "Every item of a look", "For completionists: an appearance counts only when you have it from that exact item, "
-                .. "not from another item with the same look. Rares then stay on the map until every look they drop is yours.",
-              function() return s().transmogSources == true end,
-              function(v) s().transmogSources = v; ns.ResetCollectMemory(); ns.Build(); if ns.Evaluate then ns.Evaluate() end end },
             ns.DIFFICULTY_ENABLED and { "Difficulty tags", "Show Easy, Medium, Hard or Very hard on each row, and in tooltips why and roughly how long it takes. "
                 .. "These are estimates.",
               function() return s().difficulty ~= false end, function(v) s().difficulty = v; ns.RefreshUI() end } or nil,
@@ -222,6 +215,12 @@ function ns.BuildAbout(R, Header, Text, titleFont, pageW)
     scopeBtn:SetPoint("TOPRIGHT", -34, y - 26)
     scopeBtn:SetText("What counts...")
     scopeBtn:SetScript("OnClick", function() ns.aboutPage = "scope"; ns.RefreshAbout() end)
+
+    local advBtn = CreateFrame("Button", nil, opts, "UIPanelButtonTemplate")
+    advBtn:SetSize(130, 22)
+    advBtn:SetPoint("TOPRIGHT", -34, y - 52)
+    advBtn:SetText("Advanced...")
+    advBtn:SetScript("OnClick", function() ns.aboutPage = "advanced"; ns.RefreshAbout() end)
 
     local toAbout = Link(opts, Text, "About and credits >", function() ns.aboutPage = "about"; ns.RefreshAbout() end)
     toAbout:SetPoint("BOTTOMLEFT", 30, 12)
@@ -273,6 +272,7 @@ function ns.BuildAbout(R, Header, Text, titleFont, pageW)
         .. "Found something missing or wrong? Use Report a gap at the top of any list and paste it on the Discord.")
 
     ns.BuildScope(R, Header, Text, pageW)
+    ns.BuildAdvanced(R, Header, Text, pageW)
 end
 
 ------------------------------------------------------------------------
@@ -366,7 +366,103 @@ local function RefreshScope()
     scope.hard:SetChecked(ns.db.settings.hardmodes and true or false)
 end
 
--- Shows whichever view ns.aboutPage asks for (nil = Options, "about", "scope") and fills it from the TOC
+------------------------------------------------------------------------
+-- Advanced: completionist settings, all off by default
+------------------------------------------------------------------------
+
+local advanced
+local advChecks = {}
+local RefreshAdvanced
+
+-- Re-reads everything after a setting that changes what counts as done.
+local function Recount()
+    ns.ResetCollectMemory()
+    ns.Build()
+    if ns.Evaluate then ns.Evaluate() end
+end
+
+-- Redraws the map pins after a pin setting.
+local function Repin()
+    if ns.RefreshWorldPins then ns.RefreshWorldPins() end
+    if ns.RefreshMinimapPins then ns.RefreshMinimapPins() end
+end
+
+-- { setting key, name, one-line explanation, what to redo after a change }
+local ADVANCED = {
+    { "transmogSources", "Every item of a look",
+      "Count each item's appearance on its own. By default a look counts as soon as any item with it is yours. "
+        .. "Killed rares also stay on the map while a look they drop is missing.", Recount },
+    { "rareByLoot", "Rares are done when you own their drops",
+      "For rares that no achievement asks for: done once you own everything they drop, even if you killed them "
+        .. "before installing the addon. By default a rare counts when you kill it.", Recount },
+    { "fadedDone", "Show finished, faded",
+      "Finished treasures and rares stay on the maps as faint grey pins instead of disappearing.", Repin },
+}
+
+-- Builds the Advanced view: one switch per row with its explanation underneath, and Back to defaults.
+function ns.BuildAdvanced(R, Header, Text, pageW)
+    advanced = CreateFrame("Frame", nil, R)
+    advanced:SetAllPoints()
+    advanced:Hide()
+    local s = ns.db.settings
+
+    local head = Header(advanced, pageW)
+    head:SetPoint("TOP", 0, -14)
+    head:Set("Advanced")
+
+    local back = CreateFrame("Button", nil, advanced)
+    back:SetSize(90, 18)
+    back:SetPoint("TOPLEFT", 12, -46)
+    back.text = Text(back, "GameFontNormalSmall")
+    back.text:SetPoint("LEFT")
+    back.text:SetText("< Options")
+    back:SetScript("OnClick", function() ns.aboutPage = nil; ns.RefreshAbout() end)
+
+    local intro = Text(advanced, "GameFontHighlightSmall")
+    intro:SetPoint("TOPLEFT", 34, -72)
+    intro:SetWidth(pageW - 68)
+    intro:SetSpacing(2)
+    intro:SetText("For completionists. Everything here is off by default, and the book works the same without it.")
+
+    local y = -108
+    for _, a in ipairs(ADVANCED) do
+        local c = CreateFrame("CheckButton", nil, advanced, "UICheckButtonTemplate")
+        c:SetSize(24, 24)
+        c:SetPoint("TOPLEFT", 30, y)
+        c.label = c:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+        c.label:SetPoint("LEFT", c, "RIGHT", 2, 0)
+        c.label:SetText(a[2])
+        local desc = Text(advanced, "GameFontHighlightSmall")
+        desc:SetPoint("TOPLEFT", 58, y - 24)
+        desc:SetWidth(pageW - 100)
+        desc:SetSpacing(2)
+        desc:SetText(a[3])
+        c.key, c.after = a[1], a[4]
+        c:SetScript("OnClick", function(self)
+            s[self.key] = self:GetChecked() and true or false
+            self.after()
+        end)
+        advChecks[#advChecks + 1] = c
+        y = y - 24 - math.max(28, (desc:GetStringHeight() or 28)) - 14
+    end
+
+    local reset = CreateFrame("Button", nil, advanced, "UIPanelButtonTemplate")
+    reset:SetSize(130, 22)
+    reset:SetPoint("BOTTOMRIGHT", -34, 30)
+    reset:SetText("Back to defaults")
+    reset:SetScript("OnClick", function()
+        for _, a in ipairs(ADVANCED) do s[a[1]] = false end
+        Recount(); Repin()
+        RefreshAdvanced()
+    end)
+end
+
+-- Syncs the Advanced switches with the saved settings.
+RefreshAdvanced = function()
+    for _, c in ipairs(advChecks) do c:SetChecked(ns.db.settings[c.key] == true) end
+end
+
+-- Shows whichever view ns.aboutPage asks for (nil = Options, "about", "scope", "advanced") and fills it from the TOC
 -- and settings. Website, Contact and Discord rows hide when the TOC has no value.
 function ns.RefreshAbout()
     if not about then return end
@@ -374,7 +470,9 @@ function ns.RefreshAbout()
     options:SetShown(page == nil)
     about:SetShown(page == "about")
     scope:SetShown(page == "scope")
+    advanced:SetShown(page == "advanced")
     if page == "scope" then RefreshScope(); return end
+    if page == "advanced" then RefreshAdvanced(); return end
     if page == "about" then
         local info = about.info
         info.Version.value:SetText(Meta("Version") or "?")

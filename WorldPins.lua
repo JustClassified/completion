@@ -75,9 +75,6 @@ function ns.ShowPinMenu(owner)
                 function() ns.SetPin(k[1], not ns.PinOn(k[1])) end)
         end
         root:CreateDivider()
-        root:CreateCheckbox("Show finished, faded", function() return ns.db.settings.fadedDone == true end,
-            function() ns.db.settings.fadedDone = not ns.db.settings.fadedDone; PinsChanged() end)
-        root:CreateDivider()
         local only = root:CreateButton("Show only...")
         for _, k in ipairs(ns.PIN_KINDS) do
             only:CreateButton(k[2], function() ns.SetPinsOnly(k[1]) end)

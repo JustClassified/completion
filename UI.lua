@@ -322,7 +322,8 @@ local function ItemTooltip(owner, it, row)
     for _, tip in ipairs(it.tips or {}) do AddWrapped("- " .. tip, 0.75, 0.75, 0.75) end
     -- a rare no achievement asks for: say plainly what ticks it off
     if it.kind == "point" and it.pkind == "rare" and not it.a and not it.done then
-        GameTooltip:AddLine("Counts once you kill it on any character, or own everything it drops.", 0.7, 0.7, 0.7, true)
+        GameTooltip:AddLine(ns.db.settings.rareByLoot and "Counts once you kill it on any character, or own everything it drops."
+            or "Counts once you kill it on any character.", 0.7, 0.7, 0.7, true)
     end
     -- treasures and other map points: collectible rewards and coordinates
     if it.kind == "point" and it.pkind ~= "rare" and it.pkind ~= "boss" then

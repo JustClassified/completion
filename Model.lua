@@ -1066,7 +1066,7 @@ local function EvalPoint(it)
     end
     -- a rare no achievement asks for: done once you own everything it drops. Its kill flag resets daily,
     -- so kills from before the addon was installed (or on another day) can't be seen any other way.
-    if not done and it.pkind == "rare" and not it.a and ns.AllLootCollected and ns.AllLootCollected(it) then done = true end
+    if not done and it.pkind == "rare" and not it.a and ns.db.settings.rareByLoot and ns.AllLootCollected(it) then done = true end
     if not done and it.a and it.c and ns.AchDone(it.a) then done = true end
     it.done, it.max, it.cur = done, 1, done and 1 or 0
 end
