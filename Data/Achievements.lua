@@ -108,3 +108,18 @@ ns.HARD_PATTERNS = { "^Mythic:", "^Glory of", "Nightmare", "Hall of Fame",
 -- The game's feature categories that sit outside its "Midnight" categories (Expansion Features > ...). The book
 -- reads them live too, so an achievement Blizzard adds there later is listed without an update.
 ns.FEATURE_CATEGORIES = { [15605] = "Prey", [15608] = "Ritual Sites", [15610] = "Void Assaults" }
+
+-- The game's own Midnight achievement categories, shown at the top of the Midnight page's Achievements with the
+-- game's counts (read live), so players can compare the book with their achievement window. where = where the book
+-- lists them.
+ns.GAME_CATEGORIES = {
+    { 15547, "Quests", "Storyline and Side Quests on each zone page and the Midnight page." },
+    { 15553, "Exploration", "Zone pages for anything done in one zone; Abundance, Abyss Anglers and the expansion-wide ones on this page." },
+    { 15541, "Midnight Dungeon", "Inside each dungeon, under Dungeons & Raids on its zone page; the metas on this page." },
+    { 15566, "Midnight Raid", "Inside each raid, under Dungeons & Raids on its zone page; the metas on this page." },
+    { 15571, "Delves", "Stories and Discoveries inside each delve on its zone page; everything else on this page." },
+    { 15600, "Reputation", "On this page, under Reputation." },
+    { 15605, "Prey", "On this page, under Prey." },
+    { 15608, "Ritual Sites", "On this page, under Ritual Sites." },
+    { 15610, "Void Assaults", "On this page, under Void Assaults (two Void Invasion rare achievements head Voidstorm's Rares)." },
+}

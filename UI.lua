@@ -1372,6 +1372,29 @@ local function BuildLines()
             table.sort(g.items, function(a, b) return d[a] < d[b] end)
         end
     end
+    -- the Midnight page's Achievements open with the game's own categories and counts, to compare with the
+    -- achievement window
+    if z.overview and z.exp == "midnight" and secKey == "achv" and searchText == "" and ns.GAME_CATEGORIES
+        and GetCategoryNumAchievements then
+        local rows, cur, max = {}, 0, 0
+        for _, c in ipairs(ns.GAME_CATEGORIES) do
+            local ok, total, done = pcall(GetCategoryNumAchievements, c[1], true)
+            if ok and type(total) == "number" and total > 0 then
+                -- the game calls several of them just "Midnight" (Quests > Midnight): the parent's name says more
+                local okT, title, parent = pcall(GetCategoryInfo, c[1])
+                if okT and parent and parent > 0 and (title == "Midnight" or title == _G.EXPANSION_NAME11) then
+                    local okP, ptitle = pcall(GetCategoryInfo, parent)
+                    if okP and ptitle then title = ptitle end
+                end
+                rows[#rows + 1] = { info = true, text = (okT and title) or c[2], cur = done or 0, max = total, tip = c[3] }
+                cur, max = cur + (done or 0), max + total
+            end
+        end
+        if #rows > 0 then
+            lines[#lines + 1] = { header = true, text = "Your achievement window", cur = cur, max = max, window = true }
+            for _, row in ipairs(rows) do lines[#lines + 1] = row end
+        end
+    end
     -- headings only when there is more than one group, or the only group has a name
     local multi = #order > 1 or (order[1] and order[1].label)
     for _, g in ipairs(order) do
@@ -1433,7 +1456,7 @@ local function OnRowClick(r, button)
         if ok and link then ChatEdit_InsertLink(link) end
         return
     end
-    if not ln or ln.header then return end
+    if not ln or ln.header or ln.info then return end
     local it, row = ln.it, ln.row
     if button == "RightButton" then
         local t = ns.cdb.target
@@ -1532,7 +1555,21 @@ local function GetRow(i)
     r:SetScript("OnClick", OnRowClick)
     r:SetScript("OnEnter", function(self)
         local ln = self.line
-        if ln and ln.header then
+        if ln and ln.info then
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            GameTooltip:AddLine(ln.text, 1, 1, 1)
+            GameTooltip:AddLine(string.format("%d of %d done, the same count as your achievement window.", ln.cur, ln.max),
+                0.8, 0.8, 0.8, true)
+            GameTooltip:AddLine(" ")
+            GameTooltip:AddLine("In this book: " .. ln.tip, 0.9, 0.85, 0.7, true)
+            GameTooltip:Show()
+        elseif ln and ln.window then
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            GameTooltip:AddLine("Your achievement window", 1, 1, 1)
+            GameTooltip:AddLine("The game's Midnight categories with their own counts, read live. Hover one to see where "
+                .. "this book lists it.", 0.8, 0.8, 0.8, true)
+            GameTooltip:Show()
+        elseif ln and ln.header then
             if ln.ach then HeaderTooltip(self, ln) end
         elseif ln then
             ItemTooltip(self, ln.it, ln.row)
@@ -1559,6 +1596,22 @@ local function FillRow(r, ln)
         local c = (ln.max > 0 and ln.cur >= ln.max) and DONE_C or GOLD
         r.right:SetTextColor(c[1], c[2], c[3])
         r.bar:Show()
+        return
+    end
+    -- one of the game's categories: its name and the game's own count
+    if ln.info then
+        local full = ln.max > 0 and ln.cur >= ln.max
+        r.status:Show()
+        r.status:SetPoint("LEFT", 4, 0)
+        r.status:SetTexture(full and ICON_DONE or ICON_OPEN)
+        r.status:SetAlpha(1)
+        r.text:SetPoint("LEFT", 21, 0)
+        r.text:SetPoint("RIGHT", r.right, "LEFT", -6, 0)
+        r.text:SetText(ln.text)
+        local c = full and DONE_C or CREAM
+        r.text:SetTextColor(c[1], c[2], c[3])
+        r.right:SetText(string.format("%d/%d", ln.cur, ln.max))
+        r.right:SetTextColor(GREY[1], GREY[2], GREY[3])
         return
     end
     local it, row = ln.it, ln.row
