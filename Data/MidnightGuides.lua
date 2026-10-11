@@ -2066,6 +2066,477 @@ ns.CRIT_NOTES[63182]["Week 5: Boons and Patrols"] = { t = "Taken from the Image 
 ns.CRIT_NOTES[63182]["Week 6: Embers and Manifestations"] = { t = "Taken from the Image of Lady Darkglen at this week's Ritual Site", at = { { 2395, 34.9, 65.4 }, { 2437, 29.7, 78.2 } } }
 ns.ACH_REVIEWED[63182] = true
 
+-- skyriding
+ns.ACH_STEPS[61521] = {
+    { t = "Fly to the glyph at The Shining Span; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61521] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61521] = true
+
+-- skyriding
+ns.ACH_STEPS[61522] = {
+    { t = "Fly to the glyph at Brightwing Estate; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61522] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61522] = true
+
+-- skyriding
+ns.ACH_STEPS[61523] = {
+    { t = "Fly to the glyph at Silvermoon City; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61523] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61523] = true
+
+-- skyriding
+ns.ACH_STEPS[61524] = {
+    { t = "Fly to the glyph at Goldenmist Village; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61524] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61524] = true
+
+-- skyriding
+ns.ACH_STEPS[61525] = {
+    { t = "Fly to the glyph at Daggerspine Point; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61525] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61525] = true
+
+-- skyriding
+ns.ACH_STEPS[61526] = {
+    { t = "Fly to the glyph at Suncrown Tree; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61526] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61526] = true
+
+-- skyriding
+ns.ACH_STEPS[61527] = {
+    { t = "Fly to the glyph at Fairbreeze Village; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61527] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61527] = true
+
+-- skyriding
+ns.ACH_STEPS[61528] = {
+    { t = "Fly to the glyph at Tranquillien; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61528] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61528] = true
+
+-- skyriding
+ns.ACH_STEPS[61529] = {
+    { t = "Fly to the glyph at Dawnstar Spire; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61529] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61529] = true
+
+-- skyriding
+ns.ACH_STEPS[61530] = {
+    { t = "Fly to the glyph at Sunsail Anchorage; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61530] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61530] = true
+
+-- skyriding
+ns.ACH_STEPS[61531] = {
+    { t = "Fly to the glyph at Path of Dawn; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61531] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61531] = true
+
+-- skyriding
+ns.ACH_STEPS[61532] = {
+    { t = "Fly to the glyph at Shadebasin Watch; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61532] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61532] = true
+
+-- skyriding
+ns.ACH_STEPS[61533] = {
+    { t = "Fly to the glyph at Temple of Akil'zon; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61533] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61533] = true
+
+-- skyriding
+ns.ACH_STEPS[61534] = {
+    { t = "Fly to the glyph at Temple of Jan'alai; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61534] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61534] = true
+
+-- skyriding
+ns.ACH_STEPS[61535] = {
+    { t = "Fly to the glyph at Strait of Hexx'alor; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61535] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61535] = true
+
+-- skyriding
+ns.ACH_STEPS[61536] = {
+    { t = "Fly to the glyph at Witherbark Bluffs; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61536] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61536] = true
+
+-- skyriding
+ns.ACH_STEPS[61537] = {
+    { t = "Fly to the glyph at Nalorakk's Prowl; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61537] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61537] = true
+
+-- skyriding
+ns.ACH_STEPS[61538] = {
+    { t = "Fly to the glyph at Zeb'Alar Lumberyard; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61538] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61538] = true
+
+-- skyriding
+ns.ACH_STEPS[61539] = {
+    { t = "Fly to the glyph at Solemn Valley; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61539] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61539] = true
+
+-- skyriding
+ns.ACH_STEPS[61540] = {
+    { t = "Fly to the glyph at Amani Pass; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61540] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61540] = true
+
+-- skyriding
+ns.ACH_STEPS[61541] = {
+    { t = "Fly to the glyph at Spiritpaw Burrow; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61541] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61541] = true
+
+-- skyriding
+ns.ACH_STEPS[61542] = {
+    { t = "Fly to the glyph at Revantusk Sedge; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61542] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61542] = true
+
+-- skyriding
+ns.ACH_STEPS[61543] = {
+    { t = "Fly to the glyph at Blossoming Terrace; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61543] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61543] = true
+
+-- skyriding
+ns.ACH_STEPS[61544] = {
+    { t = "Fly to the glyph at The Cradle; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61544] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61544] = true
+
+-- skyriding
+ns.ACH_STEPS[61545] = {
+    { t = "Fly to the glyph at Roots of Teldrassil; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61545] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61545] = true
+
+-- skyriding
+ns.ACH_STEPS[61546] = {
+    { t = "Fly to the glyph at Roots of Amirdrassil; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61546] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61546] = true
+
+-- skyriding
+ns.ACH_STEPS[61547] = {
+    { t = "Fly to the glyph at Blooming Lattice; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61547] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61547] = true
+
+-- skyriding
+ns.ACH_STEPS[61548] = {
+    { t = "Fly to the glyph at Roots of Nordrassil; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61548] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61548] = true
+
+-- skyriding
+ns.ACH_STEPS[61549] = {
+    { t = "Fly to the glyph at Fungara Village; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61549] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61549] = true
+
+-- skyriding
+ns.ACH_STEPS[61550] = {
+    { t = "Fly to the glyph at Rift of Aln; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61550] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61550] = true
+
+-- skyriding
+ns.ACH_STEPS[61551] = {
+    { t = "Fly to the glyph at Roots of Shaladrassil; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61551] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61551] = true
+
+-- skyriding
+ns.ACH_STEPS[61552] = {
+    { t = "Fly to the glyph at The Voidspire; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61552] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61552] = true
+
+-- skyriding
+ns.ACH_STEPS[61555] = {
+    { t = "Fly to the glyph at The Molt; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61555] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61555] = true
+
+-- skyriding
+ns.ACH_STEPS[61556] = {
+    { t = "Fly to the glyph at The Ingress; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61556] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61556] = true
+
+-- skyriding
+ns.ACH_STEPS[61557] = {
+    { t = "Fly to the glyph at The Bladeburrows; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61557] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61557] = true
+
+-- skyriding
+ns.ACH_STEPS[61558] = {
+    { t = "Fly to the glyph at Gnawing Reach; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61558] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61558] = true
+
+-- skyriding
+ns.ACH_STEPS[61559] = {
+    { t = "Fly to the glyph at The Gorging Pit; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61559] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61559] = true
+
+-- skyriding
+ns.ACH_STEPS[61560] = {
+    { t = "Fly to the glyph at Shadowguard Point; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61560] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61560] = true
+
+-- skyriding
+ns.ACH_STEPS[61561] = {
+    { t = "Fly to the glyph at Obscurion Citadel; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61561] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61561] = true
+
+-- skyriding
+ns.ACH_STEPS[61562] = {
+    { t = "Fly to the glyph at Masters' Perch; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61562] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61562] = true
+
+-- skyriding
+ns.ACH_STEPS[61563] = {
+    { t = "Fly to the glyph at Ethereum Refinery; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61563] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61563] = true
+
+-- skyriding
+ns.ACH_STEPS[61564] = {
+    { t = "Fly to the glyph at Hanaar Outpost; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[61564] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[61564] = true
+
+-- skyriding
+ns.ACH_STEPS[61576] = {
+    { t = "Track this achievement: the arrow goes to the nearest glyph in Eversong Woods you still need." },
+    { t = "Fly through each glyph on a skyriding mount; expand the achievement to see which are left." },
+}
+ns.ACH_NOTES[61576] = { "Glyphs only count on a skyriding mount.", "You can fly through a glyph's spot even when the glyph itself isn't showing yet." }
+ns.ACH_REVIEWED[61576] = true
+
+-- skyriding
+ns.ACH_STEPS[61581] = {
+    { t = "Track this achievement: the arrow goes to the nearest glyph in Zul'Aman you still need." },
+    { t = "Fly through each glyph on a skyriding mount; expand the achievement to see which are left." },
+}
+ns.ACH_NOTES[61581] = { "Glyphs only count on a skyriding mount.", "You can fly through a glyph's spot even when the glyph itself isn't showing yet." }
+ns.ACH_REVIEWED[61581] = true
+
+-- skyriding
+ns.ACH_STEPS[61582] = {
+    { t = "Track this achievement: the arrow goes to the nearest glyph in Harandar you still need." },
+    { t = "Fly through each glyph on a skyriding mount; expand the achievement to see which are left." },
+}
+ns.ACH_NOTES[61582] = { "Glyphs only count on a skyriding mount.", "You can fly through a glyph's spot even when the glyph itself isn't showing yet." }
+ns.ACH_REVIEWED[61582] = true
+
+-- skyriding
+ns.ACH_STEPS[61583] = {
+    { t = "Track this achievement: the arrow goes to the nearest glyph in Voidstorm you still need." },
+    { t = "Fly through each glyph on a skyriding mount; expand the achievement to see which are left." },
+}
+ns.ACH_NOTES[61583] = { "Glyphs only count on a skyriding mount.", "You can fly through a glyph's spot even when the glyph itself isn't showing yet." }
+ns.ACH_REVIEWED[61583] = true
+
+-- skyriding
+ns.ACH_STEPS[61584] = {
+    { t = "Finish the Glyph Hunter achievements of Eversong Woods, Zul'Aman, Harandar and Voidstorm." },
+}
+ns.ACH_NOTES[61584] = { "Each part has its own guide on its zone page.", "Glyphs only count on a skyriding mount.", "You can fly through a glyph's spot even when the glyph itself isn't showing yet." }
+ns.ACH_REVIEWED[61584] = true
+
+-- skyriding
+ns.ACH_STEPS[63394] = {
+    { t = "Fly to the glyph at The Fangs; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[63394] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[63394] = true
+
+-- skyriding
+ns.ACH_STEPS[63395] = {
+    { t = "Track this achievement: the arrow goes to the nearest glyph in the Coiled Isle you still need." },
+    { t = "Fly through each glyph on a skyriding mount; expand the achievement to see which are left." },
+}
+ns.ACH_NOTES[63395] = { "Glyphs only count on a skyriding mount.", "You can fly through a glyph's spot even when the glyph itself isn't showing yet." }
+ns.ACH_REVIEWED[63395] = true
+
+-- skyriding
+ns.ACH_STEPS[63420] = {
+    { t = "Fly to the glyph at The Forum; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[63420] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[63420] = true
+
+-- skyriding
+ns.ACH_STEPS[63421] = {
+    { t = "Fly to the glyph at The Wreck of Sethraliss's Scales; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[63421] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[63421] = true
+
+-- skyriding
+ns.ACH_STEPS[63422] = {
+    { t = "Fly to the glyph at Southern Island; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[63422] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[63422] = true
+
+-- skyriding
+ns.ACH_STEPS[63423] = {
+    { t = "Fly to the glyph at Gate of the Eastern Fang; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[63423] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[63423] = true
+
+-- skyriding
+ns.ACH_STEPS[63424] = {
+    { t = "Fly to the glyph at Tokka's Landing; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[63424] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[63424] = true
+
+-- skyriding
+ns.ACH_STEPS[63425] = {
+    { t = "Fly to the glyph at The Whispering Marsh; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[63425] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[63425] = true
+
+-- skyriding
+ns.ACH_STEPS[63426] = {
+    { t = "Fly to the glyph at The Wreck of Paku's Talon; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[63426] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[63426] = true
+
+-- skyriding
+ns.ACH_STEPS[63427] = {
+    { t = "Fly to the glyph at The Serpent's Tail; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[63427] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[63427] = true
+
+-- skyriding
+ns.ACH_STEPS[63428] = {
+    { t = "Fly to the glyph at Blistering Terrace; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[63428] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[63428] = true
+
+-- skyriding
+ns.ACH_STEPS[63430] = {
+    { t = "Fly to the glyph at Gate of the Serpent's Eye; the arrow points at it." },
+    { t = "Fly through it on a skyriding mount." },
+}
+ns.ACH_NOTES[63430] = { "If the glyph isn't there, it may appear only after the zone's intro quests." }
+ns.ACH_REVIEWED[63430] = true
+
 -- void_assaults
 ns.ACH_STEPS[62498] = {
     { t = "First time: take Void Strike from Ranger Captain Lilatha in Silvermoon.", at = { 2393, 48.1, 49.7 } },
