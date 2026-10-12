@@ -280,6 +280,77 @@ local function LoreTooltip(it)
     GameTooltip:Show()
 end
 
+-- A treasure: whether it's looted, where it is (map, coordinates and a plain hint), how to open it (its steps,
+-- ticked off as you go), each reward with whether you have it, and the achievement it belongs to.
+local function TreasureTooltip(it)
+    local text = ns.TREASURE_TEXT and it.q and ns.TREASURE_TEXT[it.q]
+    if it.done then GameTooltip:AddLine("Looted", 0.4, 0.9, 0.4)
+    else GameTooltip:AddLine("Not looted yet", 1, 0.5, 0.3) end
+    local soon = ns.SoonReason(it)
+    if soon then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine("Coming soon", 0.85, 0.82, 0.75)
+        GameTooltip:AddLine(soon, 0.62, 0.60, 0.56, true)
+        GameTooltip:Show()
+        return
+    end
+    -- where
+    local sp = it.spots and it.spots[1]
+    if sp then
+        GameTooltip:AddLine(" ")
+        AddPlace("", sp)
+        if #it.spots > 1 then GameTooltip:AddLine(string.format("(%d places; the arrow picks the nearest)", #it.spots), 0.6, 0.6, 0.6) end
+    end
+    if text and text.where then AddWrapped(text.where, 0.9, 0.85, 0.7) end
+    -- how to open it
+    if it.steps and #it.steps > 0 then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine("How to open it", 1, 0.82, 0.3)
+        local cur = not it.done and ns.CurrentStep(it)
+        for i, st in ipairs(it.steps) do
+            local d = it.done or ns.StepDone(it, i)
+            local line = i .. ". " .. (st.text or "")
+            if d then GameTooltip:AddLine(line, 0.5, 0.5, 0.5, true)
+            elseif i == cur then GameTooltip:AddLine(line, 1, 1, 1, true)
+            else GameTooltip:AddLine(line, 0.9, 0.85, 0.7, true) end
+        end
+    end
+    -- a reviewed hint replaces the older spot note; the older note only shows for treasures not reviewed yet
+    local how = (text and text.how) or (not text and not (it.steps and #it.steps > 0) and it.note) or nil
+    if how and how ~= "" then
+        GameTooltip:AddLine(" ")
+        AddWrapped(how, 0.9, 0.85, 0.7)
+    end
+    for _, tip in ipairs(text and text.tips or {}) do AddWrapped("- " .. tip, 0.75, 0.75, 0.75) end
+    -- rewards, each with whether you have it
+    local rewards = {}
+    for _, l in ipairs(it.loot or {}) do
+        local t, owned = ns.ItemCollect(l[1], l[2])
+        local name = ns.ItemName(l[1])
+        if name and t then
+            local label = ns.TYPE_LABEL[t] and (" (" .. ns.TYPE_LABEL[t]:lower() .. ")") or ""
+            local state = owned == true and "  |cff55ff55collected|r" or (owned == false and "  |cffff8040not yet|r" or "")
+            rewards[#rewards + 1] = name .. label .. state
+        end
+    end
+    if #rewards > 0 then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine("Rewards", 1, 0.82, 0.3)
+        for _, r in ipairs(rewards) do GameTooltip:AddLine(r, 0.9, 0.9, 0.9, true) end
+    end
+    -- the achievement it counts for
+    GameTooltip:AddLine(" ")
+    local a = it.groupAch and ns.Ach(it.groupAch)
+    if a then GameTooltip:AddLine("Part of " .. a.name, 0.8, 0.7, 0.5, true)
+    else GameTooltip:AddLine("Not needed for an achievement.", 0.7, 0.7, 0.7, true) end
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine(it.steps and #it.steps > 0 and "Click: track it; the arrow follows the steps." or "Click: track it with the arrow.",
+        0.5, 0.5, 0.5, true)
+    GameTooltip:AddLine("Right-click: stop tracking.", 0.5, 0.5, 0.5)
+    GameTooltip:AddLine("Alt-click: add to (or take off) the watch list.", 0.5, 0.5, 0.5)
+    GameTooltip:Show()
+end
+
 -- A group heading that is an achievement (storylines, treasures, rares): its name, count and guide.
 local function HeaderTooltip(owner, ln)
     GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
@@ -367,6 +438,7 @@ local function ItemTooltip(owner, it, row)
         GameTooltip:AddLine(it.liveName or it.name or "?", 1, 1, 1, true)
     end
     if it.kind == "lore" then LoreTooltip(it); return end
+    if it.kind == "point" and it.pkind == "treasure" then TreasureTooltip(it); return end
     GameTooltip:AddLine(" ")
     -- state, then details by kind
     if ns.upNow[it.key] then GameTooltip:AddLine("Up now: it is on your minimap", 0.4, 1, 0.4) end

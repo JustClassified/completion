@@ -18,6 +18,7 @@ Data\TWW\Zones.lua
 Data\Points.lua
 Data\TWW\Points.lua
 Data\Overrides.lua
+Data\TreasureText.lua
 Data\ExtraLoot.lua
 Data\Lore.lua
 Data\QuestStarts.lua

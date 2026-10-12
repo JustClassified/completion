@@ -90,13 +90,17 @@ end
 local function stepKey(it, i) return it.key .. "#" .. i end
 
 -- True when step i is done: the item is done, the step was ticked by hand, its quest is done or the bags hold
--- enough of its item. False for a step that doesn't exist.
+-- enough of its item. An item step stays done once reached, so using the item up later (grapes into a vat, a key
+-- into a lock) doesn't send the arrow back. False for a step that doesn't exist.
 function ns.StepDone(it, i)
     local s = it.steps and it.steps[i]
     if not s then return false end
     if it.done or ns.cdb.steps[stepKey(it, i)] then return true end
     if s.quest and ns.QuestDone(s.quest) then return true end
-    if s.item and type(s.item) == "number" and (ns.bag[s.item] or 0) >= (s.count or 1) then return true end
+    if s.item and type(s.item) == "number" and (ns.bag[s.item] or 0) >= (s.count or 1) then
+        ns.cdb.steps[stepKey(it, i)] = true
+        return true
+    end
     return false
 end
 

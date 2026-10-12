@@ -51,9 +51,10 @@ ns.OVERRIDES = {
     },
     [111478] = { n = "Stone Vat",
         steps = {
-            { x=40.44, y=60.90, text="On the floating platform: pick 10 Bunches of Ripe Grapes nearby", item=256232 },
-            { x=40.44, y=60.90, text="Get a Packet of Instant Yeast from Sheri nearby", item=256397 },
-            { x=40.44, y=60.90, text="Use the Stone Vat of Wine" },
+            { x=40.44, y=60.90, text="On the floating platforms: pick 10 Bunches of Ripe Grapes (hanging on the arbors and on the ground)", item=256232, count=10 },
+            { x=40.44, y=60.90, text="Put the grapes in the Stone Vat, then jump into the vat and stomp a few times" },
+            { x=40.83, y=60.48, text="Buy a Packet of Instant Yeast from Sheri", item=256397 },
+            { x=40.44, y=60.90, text="Add the yeast to the vat and loot it" },
         },
     },
     [111477] = { n = "Farstrider's Lost Quiver",
@@ -293,7 +294,7 @@ ns.OVERRIDES = {
     },
     [115291] = { n = "Grave of Someone Forgotten",
         steps = {
-            { x=67.30, y=48.50, text="Read the Nameless Grave" },
+            { x=67.30, y=48.50, text="Read the Nameless Grave, then talk to the ghost of the forgotten soldier beside it" },
             { x=66.40, y=57.20, text="Speak with the spirit of Ru'ko" },
             { x=70.40, y=58.40, text="Speak with the spirit of Zan'ja" },
             { x=69.00, y=52.70, text="Speak with the spirit of Zuzan" },
@@ -328,6 +329,8 @@ ns.PEAKS_HOWTO = "Telescopes show up as small grey flag markers on the minimap. 
 -- No criterion IDs in the data, so the addon matches these to the live criteria by name.
 ns.DAMNED_NOTE = "Fishing on the Coiled Isle. The ten artifacts are random catches, gated by Captain Tokka reputation (the Venom Fishing quests). The arrow only points at a spot people report catches from."
 ns.EXTRA_POINTS = {
+    -- a Pepe costume hidden in the Arcantina (patch 10.2.5 item, tracked by its own quest flag)
+    {k="treasure", m=2541, x=54.53, y=42.41, n="A Tiny Explorer's Hat (Pepe)", q=79550, note="A costume for Pepe: when summoned, he sometimes wears an explorer's hat."},
     {k="treasure", m=2512, x=50.60, y=51.80, n="Bonemail Gauntlet", a=63512, q=97457, fish=true, note="Open water (no pool) around the isle, e.g. next to Tokka's crew on the small island. Rank 2 (Doomed Sailor) or higher."},
     {k="treasure", m=2512, x=65.70, y=74.60, n="Ritual Dagger", a=63512, q=97463, fish=true, note="Open water around the isle; reported at 65.7, 74.6 and next to Tokka's crew. Very rare."},
     {k="treasure", m=2512, x=31.60, y=56.80, n="Spiritsurge Incense", a=63512, q=97459, fish=true, note="Venom or cursed open water after rank 3 (Cursed Angler). Often caught in the small pool in Lockjaw's cave."},
