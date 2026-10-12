@@ -1652,6 +1652,22 @@ local function GetRow(i)
     return r
 end
 
+-- A treasure row's right column: the kinds of reward you don't have yet (mount, pet, toy, decor, appearance) and how
+-- many steps opening it takes, e.g. "pet  3 steps". nil when there is nothing to say.
+local TAG_ORDER = { "mount", "pet", "toy", "decor", "appearance" }
+local function TreasureTag(it)
+    local want = {}
+    for _, l in ipairs(it.loot or {}) do
+        local t, owned = ns.ItemCollect(l[1], l[2])
+        if t and owned == false then want[t] = true end
+    end
+    local parts = {}
+    for _, t in ipairs(TAG_ORDER) do if want[t] then parts[#parts + 1] = (ns.TYPE_LABEL[t] or t):lower() end end
+    if it.steps and #it.steps > 1 then parts[#parts + 1] = #it.steps .. " steps" end
+    if #parts == 0 then return end
+    return table.concat(parts, "  ")
+end
+
 -- Draws one line into a row: a group heading with its count, an item, or a child row indented by depth.
 -- The right column shows the item's note, "up now", a distance in yards, or the section of a search hit.
 local function FillRow(r, ln)
@@ -1724,6 +1740,7 @@ local function FillRow(r, ln)
                 if atotal > 0 then sub = string.format("%s here, %d/%d", it.sub or "", adone, atotal) end
             end
         end
+        if it.kind == "point" and it.pkind == "treasure" and not done and (not sub or sub == "") then sub = TreasureTag(it) end
         if ns.Watched(it) then name = name .. " |cffffd100(watching)|r" end
         local farm = ns.FarmTag(it)
         if farm then sub = "|cffff9040" .. farm .. "|r" end
@@ -1809,7 +1826,7 @@ local FOOTERS = {
     story = "Hover a storyline for your next quest and where it starts. Click to open it and follow the arrow.",
     side = "Hover a storyline for your next quest and where it starts. Click to open it and follow the arrow.",
     achv = "Click to expand criteria and track the nearest one. Shift-click links it.",
-    treasure = "Click to track. Multi-step treasures guide you step by step.",
+    treasure = "Hover a treasure for where exactly it is and how to open it; the right side shows rewards you still need.",
     rare = "Track any rare to start a patrol: the arrow moves on when one isn't up and alerts you when one is.",
     collect = "Click one to see it in 3D; hover for Blizzard's tooltip and how to get it.",
     instance = "Achievements found for each dungeon and raid.",

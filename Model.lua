@@ -158,6 +158,7 @@ local function BuildPoints(midnight)
                 it.groupAch = p.a
                 if p.a then groupAchs[p.a] = true end
                 if p.k == "boss" then it.group = "World bosses" end
+                if p.k == "treasure" and not p.a then it.heading = "More treasures (no achievement)" end
                 if p.k == "prof" then it.group = p.prof end
                 AddItem(zone, sec, it)
             end

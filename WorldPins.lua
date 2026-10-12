@@ -155,8 +155,18 @@ local function Tooltip(pin)
     local it, row = pin.it, pin.row
     GameTooltip:AddLine(row and row.name or it.liveName or it.name or "?", 1, 1, 1, true)
     if row then GameTooltip:AddLine(it.name or "", 0.9, 0.8, 0.5, true) end
-    local note = (row and row.note) or it.note
-    if note then GameTooltip:AddLine(note, 0.9, 0.85, 0.7, true) end
+    -- a treasure with a reviewed hint (Data/TreasureText.lua) says where exactly and how to open it
+    local text = not row and it.pkind == "treasure" and it.q and ns.TREASURE_TEXT and ns.TREASURE_TEXT[it.q]
+    if text then
+        if text.where then GameTooltip:AddLine(text.where, 0.9, 0.85, 0.7, true) end
+        if text.how then GameTooltip:AddLine(text.how, 0.9, 0.85, 0.7, true) end
+        if it.steps and #it.steps > 1 then
+            GameTooltip:AddLine(#it.steps .. " steps: track it and the arrow walks you through them.", 0.6, 0.8, 1, true)
+        end
+    else
+        local note = (row and row.note) or it.note
+        if note then GameTooltip:AddLine(note, 0.9, 0.85, 0.7, true) end
+    end
     if ns.upNow[it.key] then GameTooltip:AddLine("Up now", 0.4, 1, 0.4) end
     if not row and it.done then GameTooltip:AddLine("Done: nothing left to get here", 0.5, 0.8, 0.5) end
     if not row and not it.done then ns.AddDifficulty(GameTooltip, it) end
