@@ -107,6 +107,7 @@ local function BuildPoint(p, fallbackZone)
         key = string.format("p:%d:%s:%s:%s", p.m, tostring(p.q or p.c or ""), tostring(p.x or ""), tostring(p.y or "")),
         kind = "point", pkind = p.k, name = name, a = p.a, c = p.c, q = p.q, npc = p.npc, prof = p.prof,
         fish = p.fish, wq = p.wq, note = ov.note or p.note, tips = ov.tips, loot = ov.loot or p.loot, sl = p.sl,
+        side = ov.side,
         spots = {},
     }
     if p.x then it.spots[1] = { map = p.m, x = p.x, y = p.y } end
@@ -1099,6 +1100,11 @@ local Eval                  -- defined below; containers call it for their child
 -- tracks the kill. Knowledge spots for a profession the character lacks are hidden.
 local function EvalPoint(it)
     if it.prof and not ns.HasProf(it.prof) then it.max, it.cur, it.done, it.hidden = 0, 0, false, true; return end
+    -- a rare only the other faction can fight (Data/Overrides.lua side)
+    if it.side and UnitFactionGroup and UnitFactionGroup("player") and UnitFactionGroup("player") ~= it.side then
+        it.max, it.cur, it.done, it.hidden = 0, 0, false, true
+        return
+    end
     it.hidden = nil
     local done = false
     if it.a and it.c then

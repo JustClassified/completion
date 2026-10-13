@@ -8,6 +8,20 @@
 local _, ns = ...
 
 ns.OVERRIDES = {
+    -- rares whose spot data has no name (the live criterion name wins once the game has it)
+    [110169] = { n = "Bloated Snapdragon" },
+    [115282] = { n = "Szarith the Fanged" },
+    [115283] = { n = "Nar'zira" },
+    -- the Voidstorm faction rares: each can only be fought by one faction (they share one tracking quest)
+    ["n:Hardin Steellock"] = { side = "Horde" },
+    ["n:Gar'chak Skullcleave"] = { side = "Alliance" },
+    -- Blackcore (Voidstorm): summoned with three Unstable Focusing Crystals at the consoles
+    ["q94463"] = {
+        steps = {
+            { map = 2405, x = 28.82, y = 70.24, text = "Get 3 Unstable Focusing Crystals: attack a Crystal Fragment here to make The Many-Broken appear and loot its crystal (they also come from the Victorious Stormarion Cache and the crystal enemies in Sunkiller Sanctum)", item = 248680, count = 3 },
+            { map = 2405, x = 24.73, y = 67.93, text = "Put the crystals into the consoles here to summon Blackcore; others may have put some in already" },
+        },
+    },
     -- Sleepy Mandrake pet: five Redcaps from around Naigtal fed to the mandrake in the Sleeper's Grotto
     ["n:Sleepy Mandrake"] = { n = "Sleepy Mandrake",
         note = "Collect five different Redcaps in Naigtal, then feed them to the Sleepy Mandrake. Normal world tier is fine.",

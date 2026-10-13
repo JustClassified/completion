@@ -156,7 +156,8 @@ local function Tooltip(pin)
     GameTooltip:AddLine(row and row.name or it.liveName or it.name or "?", 1, 1, 1, true)
     if row then GameTooltip:AddLine(it.name or "", 0.9, 0.8, 0.5, true) end
     -- a treasure with a reviewed hint (Data/TreasureText.lua) says where exactly and how to open it
-    local text = not row and it.pkind == "treasure" and it.q and ns.TREASURE_TEXT and ns.TREASURE_TEXT[it.q]
+    local text = not row and ((it.pkind == "treasure" and it.q and ns.TREASURE_TEXT and ns.TREASURE_TEXT[it.q])
+        or ((it.pkind == "rare" or it.pkind == "boss") and it.npc and ns.RARE_TEXT and ns.RARE_TEXT[it.npc]))
     if text then
         if text.where then GameTooltip:AddLine(text.where, 0.9, 0.85, 0.7, true) end
         if text.how then GameTooltip:AddLine(text.how, 0.9, 0.85, 0.7, true) end

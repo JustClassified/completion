@@ -351,6 +351,108 @@ local function TreasureTooltip(it)
     GameTooltip:Show()
 end
 
+-- A rare or world boss: killed or not (and looted today), up now, where it is and how it moves, what makes it appear,
+-- fight tips, its drops with whether you have them (appearances summed up), and the achievement it counts for.
+local function RareTooltip(it)
+    local text = it.npc and ns.RARE_TEXT and ns.RARE_TEXT[it.npc]
+    if it.done then GameTooltip:AddLine(it.pkind == "boss" and "Defeated" or "Killed", 0.4, 0.9, 0.4)
+    else GameTooltip:AddLine("Not killed yet", 1, 0.5, 0.3) end
+    if ns.upNow[it.key] then GameTooltip:AddLine("Up now: it's on your minimap", 0.4, 1, 0.4) end
+    if it.done and ns.LootedToday and ns.LootedToday(it) then
+        GameTooltip:AddLine("Looted today: its loot comes back after the daily reset", 0.7, 0.7, 0.7, true)
+    elseif ns.FarmWanted and ns.FarmWanted(it) then
+        GameTooltip:AddLine("Killed already, but it still drops something you need", 1, 0.56, 0.25, true)
+    end
+    local soon = ns.SoonReason(it)
+    if soon then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine("Coming soon", 0.85, 0.82, 0.75)
+        GameTooltip:AddLine(soon, 0.62, 0.60, 0.56, true)
+        GameTooltip:Show()
+        return
+    end
+    -- where
+    local sp = it.spots and it.spots[1]
+    if sp then
+        GameTooltip:AddLine(" ")
+        AddPlace("", sp)
+        if #it.spots > 1 then GameTooltip:AddLine(string.format("(%d spawn points; the arrow picks the nearest)", #it.spots), 0.6, 0.6, 0.6) end
+    end
+    if text and text.where then AddWrapped(text.where, 0.9, 0.85, 0.7) end
+    -- what makes it appear
+    if it.steps and #it.steps > 0 then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine("How to make it appear", 1, 0.82, 0.3)
+        local cur = not it.done and ns.CurrentStep(it)
+        for i, st in ipairs(it.steps) do
+            local d = it.done or ns.StepDone(it, i)
+            local line = i .. ". " .. (st.text or "")
+            if d then GameTooltip:AddLine(line, 0.5, 0.5, 0.5, true)
+            elseif i == cur then GameTooltip:AddLine(line, 1, 1, 1, true)
+            else GameTooltip:AddLine(line, 0.9, 0.85, 0.7, true) end
+        end
+    end
+    -- a reviewed hint replaces the older spot note; steps replace it too
+    local how = (text and text.how) or (not text and not (it.steps and #it.steps > 0) and it.note) or nil
+    if how and how ~= "" then
+        GameTooltip:AddLine(" ")
+        AddWrapped(how, 0.9, 0.85, 0.7)
+    end
+    for _, tip in ipairs(text and text.tips or {}) do AddWrapped("- " .. tip, 0.75, 0.75, 0.75) end
+    for _, tip in ipairs(it.tips or {}) do AddWrapped("- " .. tip, 0.75, 0.75, 0.75) end
+    -- drops: collectibles one by one, appearances summed up
+    local list, seen = {}, {}
+    for _, l in ipairs(it.loot or {}) do list[#list + 1] = l end
+    if it.sl and ns.SHARED_LOOT and ns.SHARED_LOOT[it.sl] then
+        for _, l in ipairs(ns.SHARED_LOOT[it.sl]) do list[#list + 1] = l end
+    end
+    local drops, looks, looksHave = {}, 0, 0
+    for _, l in ipairs(list) do
+        if not seen[l[1]] then
+            seen[l[1]] = true
+            local t, owned = ns.ItemCollect(l[1], l[2])
+            if t == "appearance" then
+                looks = looks + 1
+                if owned then looksHave = looksHave + 1 end
+            elseif t then
+                local name = ns.ItemName(l[1])
+                if name then
+                    local tries = ns.Attempts and ns.Attempts(l[1]) or 0
+                    local state = owned == true and "  |cff55ff55collected|r"
+                        or (tries > 0 and string.format("  |cffaaaaaa%d %s|r", tries, tries == 1 and "try" or "tries") or "  |cffff8040not yet|r")
+                    drops[#drops + 1] = name .. " (" .. (ns.TYPE_LABEL[t] or t):lower() .. ")" .. state
+                end
+            end
+        end
+    end
+    if #drops > 0 or looks > 0 then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine("Drops", 1, 0.82, 0.3)
+        for _, d in ipairs(drops) do GameTooltip:AddLine(d, 0.9, 0.9, 0.9, true) end
+        if looks > 0 then
+            GameTooltip:AddLine(string.format("Appearances: %d of %d collected", looksHave, looks),
+                looksHave >= looks and 0.4 or 0.9, looksHave >= looks and 0.9 or 0.9, looksHave >= looks and 0.4 or 0.9)
+        end
+        if it.sl then GameTooltip:AddLine("Some drops are shared by every rare of the zone.", 0.6, 0.6, 0.6, true) end
+    end
+    -- what it counts for
+    GameTooltip:AddLine(" ")
+    local a = it.groupAch and ns.Ach(it.groupAch)
+    if a then GameTooltip:AddLine("Part of " .. a.name, 0.8, 0.7, 0.5, true)
+    elseif it.pkind == "boss" then GameTooltip:AddLine("World boss: counts once you defeat it.", 0.7, 0.7, 0.7, true)
+    else
+        GameTooltip:AddLine(ns.db.settings.rareByLoot and "Not needed for an achievement: counts once you kill it on any "
+            .. "character, or own everything it drops." or "Not needed for an achievement: counts once you kill it on any character.",
+            0.7, 0.7, 0.7, true)
+    end
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine(it.pkind == "boss" and "Click: see it in 3D and track it." or
+        "Click: see it in 3D and track it; tracking a rare starts a patrol of the zone's rares.", 0.5, 0.5, 0.5, true)
+    GameTooltip:AddLine("Right-click: stop tracking.", 0.5, 0.5, 0.5)
+    GameTooltip:AddLine("Alt-click: add to (or take off) the watch list.", 0.5, 0.5, 0.5)
+    GameTooltip:Show()
+end
+
 -- A delve: stories and chests done, the entrance (and how to find it), the current story from the map and whether
 -- you still need it, bountiful, every story ticked off, and the delve's tips.
 local function DelveTooltip(it)
@@ -518,6 +620,7 @@ local function ItemTooltip(owner, it, row)
     end
     if it.kind == "lore" then LoreTooltip(it); return end
     if (it.kind == "point" and (it.pkind == "treasure" or it.pkind == "delve")) then TreasureTooltip(it); return end
+    if it.kind == "point" and (it.pkind == "rare" or it.pkind == "boss") then RareTooltip(it); return end
     if it.kind == "container" and it.ctype == "delve" then
         GameTooltip:AddLine(" ")
         DelveTooltip(it)
@@ -1741,7 +1844,13 @@ end
 local TAG_ORDER = { "mount", "pet", "toy", "decor", "appearance" }
 local function TreasureTag(it)
     local want = {}
-    for _, l in ipairs(it.loot or {}) do
+    local list = {}
+    for _, l in ipairs(it.loot or {}) do list[#list + 1] = l end
+    -- a rare's drops shared by every rare of the zone (mounts mostly)
+    if it.sl and ns.SHARED_LOOT and ns.SHARED_LOOT[it.sl] then
+        for _, l in ipairs(ns.SHARED_LOOT[it.sl]) do if l[2] then list[#list + 1] = l end end
+    end
+    for _, l in ipairs(list) do
         local t, owned = ns.ItemCollect(l[1], l[2])
         if t and owned == false then want[t] = true end
     end
@@ -1824,7 +1933,8 @@ local function FillRow(r, ln)
                 if atotal > 0 then sub = string.format("%s here, %d/%d", it.sub or "", adone, atotal) end
             end
         end
-        if it.kind == "point" and it.pkind == "treasure" and not done and (not sub or sub == "") then sub = TreasureTag(it) end
+        if it.kind == "point" and (it.pkind == "treasure" or it.pkind == "rare" or it.pkind == "boss") and not done
+            and (not sub or sub == "") then sub = TreasureTag(it) end
         if ns.Watched(it) then name = name .. " |cffffd100(watching)|r" end
         local farm = ns.FarmTag(it)
         if farm then sub = "|cffff9040" .. farm .. "|r" end
@@ -1916,7 +2026,7 @@ local FOOTERS = {
     side = "Hover a storyline for your next quest and where it starts. Click to open it and follow the arrow.",
     achv = "Click to expand criteria and track the nearest one. Shift-click links it.",
     treasure = "Hover a treasure for where exactly it is and how to open it; the right side shows rewards you still need.",
-    rare = "Track any rare to start a patrol: the arrow moves on when one isn't up and alerts you when one is.",
+    rare = "Hover a rare for where it is and what it drops; the right side shows drops you still need. Tracking one starts a patrol.",
     collect = "Click one to see it in 3D; hover for Blizzard's tooltip and how to get it.",
     instance = "Achievements found for each dungeon and raid.",
     delve = "Hover a delve for its current story and what's left. \"Story you need\" means today's story counts for you.",
