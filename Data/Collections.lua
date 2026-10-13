@@ -1,10 +1,11 @@
 -- Completion: every mount, pet and toy item added in Midnight (checked 2026-09-29, 12.1),
 -- placeholder "[PH]" entries removed.
 --
--- The game decides the rest in Model.lua: the Mount and Pet Journals give each one's source, anything
--- sold in the shop, from promotions, trading cards or the Trading Post is left out, and the rest is filed
--- under the zone named in its source ("Zone: Voidstorm") or on the Midnight page. Items already found in
--- a zone's treasures, rares, vendors or renown tracks keep that more precise source.
+-- Data/CollectText.lua (from Tools/db/collect.py) says how to get each one and which ones playing can't earn
+-- (shop, promotions, China only, not in the game...); those are left out. The rest is filed under the page the
+-- reviewed data names, else the zone in its journal source ("Zone: Voidstorm"), else the Midnight page. Items
+-- already found in a zone's treasures, rares, vendors or renown tracks keep that more precise source.
+-- Patch 12.1.5 items (still on the test server) are not listed yet: see Tools/RESEARCH.md.
 
 local _, ns = ...
 

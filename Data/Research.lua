@@ -13,4 +13,8 @@ ns.RESEARCH = {
     ["a:40927"] = "The start of Scrapshop Shot isn't confirmed yet.",
     ["a:40928"] = "The start of Scrapshop Shot isn't confirmed yet.",
     ["a:40929"] = "The start of Scrapshop Shot isn't confirmed yet.",
+    -- Midnight collectibles still being checked (Tools/db/collect.py SOON)
+    ["i:264413"] = "Its Season 1 source (Nulling Nullaeus) has ended; whether it still drops is being checked.",
+    ["i:263871"] = "Where this toy comes from is being researched.",
+    ["i:270061"] = "Only one player report explains this pet so far; it's being checked.",
 }

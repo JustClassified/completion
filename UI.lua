@@ -453,6 +453,99 @@ local function RareTooltip(it)
     GameTooltip:Show()
 end
 
+-- A mount, pet or toy: collected or not, how to get it (the reviewed instruction, or the treasure, rare or renown it
+-- comes from), its steps ticked off as you go, what it still needs with live progress (renown, achievement, quest,
+-- the price against what you have), where to go, tips and your attempts.
+local function CollectTooltip(it)
+    local info = ns.CollectInfo(it)
+    if it.done then GameTooltip:AddLine("Collected", 0.4, 0.9, 0.4)
+    elseif (it.max or 0) == 0 then GameTooltip:AddLine("Not counted: the game can't tell yet", 0.7, 0.7, 0.7)
+    else GameTooltip:AddLine("Not collected yet", 1, 0.5, 0.3) end
+    local soon = ns.SoonReason(it)
+    if soon then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine("Coming soon", 0.85, 0.82, 0.75)
+        GameTooltip:AddLine(soon, 0.62, 0.60, 0.56, true)
+        GameTooltip:Show()
+        return
+    end
+    -- how to get it
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine("How to get it", 1, 0.82, 0.3)
+    local how = ns.CollectHow(it)
+    if how then
+        AddWrapped(how, 0.95, 0.92, 0.85)
+        AddWrapped(info.note, 0.8, 0.8, 0.8)
+        local src = it.source
+        if src then AddPlace("", src.spots and src.spots[1]) end
+    else
+        -- no reviewed sentence: the treasure, rare, renown track or vendor it comes from
+        for _, l in ipairs(ns.HowToGet(it)) do GameTooltip:AddLine(l[1], l[2], l[3], l[4], true) end
+        local src = it.source
+        local hint = src and ((src.q and ns.TREASURE_TEXT and ns.TREASURE_TEXT[src.q]) or (src.npc and ns.RARE_TEXT and ns.RARE_TEXT[src.npc]))
+        if hint and hint.where then AddWrapped(hint.where, 0.8, 0.8, 0.8) end
+    end
+    -- steps, ticked off as you go
+    if it.steps and #it.steps > 0 and not it.done then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine("Steps", 1, 0.82, 0.3)
+        local cur = ns.CurrentStep(it)
+        for i, st in ipairs(it.steps) do
+            local line = i .. ". " .. (st.text or "")
+            if st.count and st.item then line = line .. string.format("  (%d/%d)", math.min(ns.bag[st.item] or 0, st.count), st.count) end
+            if ns.StepDone(it, i) then GameTooltip:AddLine(line, 0.5, 0.5, 0.5, true)
+            elseif i == cur then GameTooltip:AddLine(line, 1, 1, 1, true)
+            else GameTooltip:AddLine(line, 0.9, 0.85, 0.7, true) end
+        end
+    end
+    -- what it still needs, live (only from reviewed data; the older lines above already cover the rest)
+    if how and not it.done then
+        local needs = ns.CollectNeeds(it)
+        if #needs > 0 then
+            GameTooltip:AddLine(" ")
+            for _, n in ipairs(needs) do
+                if n.met == true then GameTooltip:AddLine(n.text, 0.4, 0.9, 0.4, true)
+                elseif n.met == false then GameTooltip:AddLine(n.text, 1, 0.6, 0.3, true)
+                else GameTooltip:AddLine(n.text, 0.8, 0.8, 0.8, true) end
+            end
+            if ns.CollectReady(it) then GameTooltip:AddLine("You can buy it now.", 0.4, 1, 0.4) end
+        end
+    end
+    -- where: the vendor, or its own places
+    if how and not it.done then
+        local v = ns.CollectVendor(it)
+        if v then
+            GameTooltip:AddLine(" ")
+            GameTooltip:AddLine("Sold by " .. (v.name or "?") .. (v.tag and ("  <" .. v.tag .. ">") or ""), 0.9, 0.85, 0.7, true)
+            AddPlace("", v.spots[1])
+            if #it.vendors > 1 then GameTooltip:AddLine(string.format("(%d places; the arrow picks the nearest)", #it.vendors), 0.6, 0.6, 0.6) end
+        elseif not it.source and it.spots and it.spots[1] then
+            GameTooltip:AddLine(" ")
+            AddPlace("", it.spots[1])
+            if #it.spots > 1 then GameTooltip:AddLine(string.format("(%d places; the arrow picks the nearest)", #it.spots), 0.6, 0.6, 0.6) end
+        end
+        if it.instance then
+            GameTooltip:AddLine("Inside " .. (it.instance.name or "the instance") .. ": the arrow points at the entrance.", 0.6, 0.8, 1, true)
+        end
+    end
+    -- tips
+    local tips = info and info.tips
+    if tips and #tips > 0 and not it.done then
+        GameTooltip:AddLine(" ")
+        for _, tip in ipairs(tips) do AddWrapped("- " .. tip, 0.75, 0.75, 0.75) end
+    end
+    if it.itemID and not it.done and ns.Attempts and ns.Attempts(it.itemID) > 0 then
+        GameTooltip:AddLine(string.format("Attempts so far: %d", ns.Attempts(it.itemID)), 0.8, 0.8, 0.8)
+    end
+    if it.uncounted then GameTooltip:AddLine("Not part of 100%: it isn't tied to the expansion's content.", 0.7, 0.7, 0.7, true) end
+    GameTooltip:AddLine(" ")
+    GameTooltip:AddLine((it.steps and #it.steps > 0) and "Click: see it in 3D and track it; the arrow follows the steps."
+        or "Click: see it in 3D and track where it comes from.", 0.5, 0.5, 0.5, true)
+    GameTooltip:AddLine("Right-click: stop tracking.", 0.5, 0.5, 0.5)
+    GameTooltip:AddLine("Alt-click: add to (or take off) the watch list.", 0.5, 0.5, 0.5)
+    GameTooltip:Show()
+end
+
 -- A delve: stories and chests done, the entrance (and how to find it), the current story from the map and whether
 -- you still need it, bountiful, every story ticked off, and the delve's tips.
 local function DelveTooltip(it)
@@ -621,6 +714,7 @@ local function ItemTooltip(owner, it, row)
     if it.kind == "lore" then LoreTooltip(it); return end
     if (it.kind == "point" and (it.pkind == "treasure" or it.pkind == "delve")) then TreasureTooltip(it); return end
     if it.kind == "point" and (it.pkind == "rare" or it.pkind == "boss") then RareTooltip(it); return end
+    if it.kind == "collect" then GameTooltip:AddLine(" "); CollectTooltip(it); return end
     if it.kind == "container" and it.ctype == "delve" then
         GameTooltip:AddLine(" ")
         DelveTooltip(it)
@@ -1698,6 +1792,16 @@ local function BuildLines()
             end
         end
     end
+    -- the Midnight page's Collectibles end with what is left out of 100% and why (Data/CollectText.lua)
+    if z.overview and z.exp == "midnight" and secKey == "collect" and searchText == "" and ns.CollectLeftOutSummary then
+        local groups = ns.CollectLeftOutSummary()
+        if #groups > 0 then
+            local n = 0
+            for _, g in ipairs(groups) do n = n + #g.ids end
+            lines[#lines + 1] = { header = true, text = "Not counted", cur = 0, max = 0, leftOut = n }
+            for _, g in ipairs(groups) do lines[#lines + 1] = { outInfo = g, text = g.label } end
+        end
+    end
 end
 
 -- Whether an item can expand: dungeons and delves, achievements, lore with a quest chain, multi-step treasures.
@@ -1715,7 +1819,7 @@ local function OnRowClick(r, button)
         if ok and link then ChatEdit_InsertLink(link) end
         return
     end
-    if not ln or ln.header or ln.info then return end
+    if not ln or ln.header or ln.info or ln.outInfo then return end
     local it, row = ln.it, ln.row
     if button == "RightButton" then
         local t = ns.cdb.target
@@ -1814,7 +1918,27 @@ local function GetRow(i)
     r:SetScript("OnClick", OnRowClick)
     r:SetScript("OnEnter", function(self)
         local ln = self.line
-        if ln and ln.info then
+        if ln and ln.outInfo then
+            -- a reason items are left out: what it means, then the items
+            local g = ln.outInfo
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            GameTooltip:AddLine(g.label, 1, 1, 1)
+            GameTooltip:AddLine(g.why, 0.8, 0.8, 0.8, true)
+            GameTooltip:AddLine(" ")
+            local shown = 0
+            for _, id in ipairs(g.ids) do
+                local name = ns.ItemName(id)
+                if name and shown < 15 then GameTooltip:AddLine(name, 0.9, 0.85, 0.7); shown = shown + 1 end
+            end
+            if #g.ids > shown then GameTooltip:AddLine(string.format("(+%d more)", #g.ids - shown), 0.6, 0.6, 0.6) end
+            GameTooltip:Show()
+        elseif ln and ln.header and ln.leftOut then
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            GameTooltip:AddLine("Not counted", 1, 1, 1)
+            GameTooltip:AddLine(string.format("%d Midnight mounts, pets and toys can't be earned by playing, so they aren't "
+                .. "part of 100%%. Hover a line to see which ones and why.", ln.leftOut), 0.8, 0.8, 0.8, true)
+            GameTooltip:Show()
+        elseif ln and ln.info then
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
             GameTooltip:AddLine(ln.text, 1, 1, 1)
             GameTooltip:AddLine(string.format("%d of %d done, the same count as your achievement window.", ln.cur, ln.max),
@@ -1879,6 +2003,20 @@ local function FillRow(r, ln)
         r.bar:Show()
         return
     end
+    -- a reason items are left out of 100%: its name and how many, greyed
+    if ln.outInfo then
+        r.status:Show()
+        r.status:SetPoint("LEFT", 4, 0)
+        r.status:SetTexture(ICON_OPEN)
+        r.status:SetAlpha(0.35)
+        r.text:SetPoint("LEFT", 21, 0)
+        r.text:SetPoint("RIGHT", r.right, "LEFT", -6, 0)
+        r.text:SetText(ln.text)
+        r.text:SetTextColor(GREY[1], GREY[2], GREY[3])
+        r.right:SetText(tostring(#ln.outInfo.ids))
+        r.right:SetTextColor(GREY[1], GREY[2], GREY[3])
+        return
+    end
     -- one of the game's categories: its name and the game's own count
     if ln.info then
         local full = ln.max > 0 and ln.cur >= ln.max
@@ -1935,6 +2073,8 @@ local function FillRow(r, ln)
         end
         if it.kind == "point" and (it.pkind == "treasure" or it.pkind == "rare" or it.pkind == "boss") and not done
             and (not sub or sub == "") then sub = TreasureTag(it) end
+        -- a collectible: what's in the way (renown, achievement, price) or where it comes from
+        if it.kind == "collect" and not done and ns.CollectTag then sub = ns.CollectTag(it) or sub end
         if ns.Watched(it) then name = name .. " |cffffd100(watching)|r" end
         local farm = ns.FarmTag(it)
         if farm then sub = "|cffff9040" .. farm .. "|r" end

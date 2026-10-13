@@ -101,6 +101,15 @@ function ns.StepDone(it, i)
         ns.cdb.steps[stepKey(it, i)] = true
         return true
     end
+    -- a renown level reached, or a toy or mount you need first already collected
+    if s.renown then
+        local r = ns.Rep(s.renown[1])
+        if r and (r.cur or 0) >= s.renown[2] then return true end
+    end
+    if s.own and ns.ItemCollect then
+        local _, owned = ns.ItemCollect(s.own)
+        if owned == true then return true end
+    end
     return false
 end
 
@@ -690,6 +699,7 @@ function ns.Resolve(it, childKey)
         local i = ns.CurrentStep(it)
         local s = it.steps[i]
         t.step, t.text, t.stepCount = i, s.text, #it.steps
+        if s.count then t.text = string.format("%s  |cffffffff%d/%d|r", s.text or "", ns.bag[s.item] or 0, s.count) end
         t.spot = s.x and { map = s.map, x = s.x, y = s.y }
         return t
     end

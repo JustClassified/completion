@@ -778,8 +778,20 @@ end
 
 local mountItem   -- mountID -> item that teaches it (renown rewards only know the mount)
 
--- Adds a collectible once per key and fills in what it can: the item behind a renown mount, the
--- vendors, and spots to point at (the vendor first, then where it drops).
+-- The steps of a collectible from Data/CollectText.lua, copied so ticking them never touches the data.
+local function InfoSteps(info)
+    if not (info and info.steps) then return end
+    local steps = {}
+    for i, s in ipairs(info.steps) do
+        steps[i] = { map = s.map, x = s.x, y = s.y, text = s.text, item = s.item, count = s.count, quest = s.quest,
+                     renown = s.renown, own = s.own }
+    end
+    return steps
+end
+
+-- Adds a collectible once per key and fills in what it can: the item behind a renown mount, its how-to data
+-- (Data/CollectText.lua), the vendors, and spots to point at (its own places, the vendor, then where it drops).
+-- Items playing can't earn (shop, promotions, not in the game...) are left out here, whoever found them.
 local function AddCollect(zone, key, it)
     if collectSeen[key] then return end
     collectSeen[key] = true
@@ -796,6 +808,14 @@ local function AddCollect(zone, key, it)
         it.itemID = mountItem[it.mountID]
         if it.itemID then collectSeen["i" .. it.itemID] = true end
     end
+    if it.itemID and ns.CollectLeftOut(it.itemID) then return end
+    local info = it.itemID and ns.COLLECT_INFO and ns.COLLECT_INFO[it.itemID]
+    if info and ns.CollectWrongRace(info) then return end
+    it.info = info
+    if info and not (it.steps and it.steps[1]) then it.steps = InfoSteps(info) end
+    if info and #it.spots == 0 then
+        for _, at in ipairs(info.at or {}) do it.spots[#it.spots + 1] = { map = at[1], x = at[2], y = at[3] } end
+    end
     it.vendors = VendorsFor(it.itemID)
     -- nothing to point at yet: point at the vendor
     if #it.spots == 0 and it.vendors then
@@ -803,15 +823,31 @@ local function AddCollect(zone, key, it)
             for _, sp in ipairs(v.spots) do it.spots[#it.spots + 1] = sp end
         end
     end
-    -- still nothing: where it drops or starts (Data/Sources.lua)
+    -- still nothing: where it drops or starts (Data/Sources.lua); reviewed data replaces the old line
     local ds = it.itemID and ns.ITEM_SOURCES and ns.ITEM_SOURCES[it.itemID]
-    if ds and not it.source and not it.vendors then
+    if ds and not it.source and not it.vendors and not (info and (info.how or info.k ~= "rare" and info.k ~= "treasure")) then
         it.dropSource = ds
         if #it.spots == 0 then
             for _, at in ipairs(ds.at or {}) do it.spots[#it.spots + 1] = { map = at[1], x = at[2], y = at[3] } end
         end
     end
+    -- a step with a place: the first one is where it starts
+    if #it.spots == 0 and it.steps then
+        for _, st in ipairs(it.steps) do
+            if st.x then it.spots[1] = { map = st.map, x = st.x, y = st.y }; break end
+        end
+    end
     AddItem(zone, "collect", it)
+end
+
+-- The page a collectible's how-to data names: its own zone, else the page its achievement is on. nil without one.
+local function InfoZone(itemID)
+    local info = itemID and ns.COLLECT_INFO and ns.COLLECT_INFO[itemID]
+    if not info then return end
+    local key = info.zone
+    local a = not key and info.a and ns.ACH_PLACE and ns.ACH_PLACE[info.a]
+    if a then key = a[1] end
+    return key and ns.zoneByKey[key] or nil
 end
 
 -- Own loot first, then the drop table the point shares with its group (marked shared = true).
@@ -943,19 +979,26 @@ end
 
 -- A reward from an achievement that does not count (M+, rated PvP, hard modes, the ones left out of
 -- Data/Achievements.lua) does not count either.
+-- A Mythic-only drop follows the hard-modes switch too.
 local achGroup              -- achievementID -> group name, built on first use
 local function RewardOutOfScope(itemID)
+    local info = itemID and ns.COLLECT_INFO and ns.COLLECT_INFO[itemID]
+    if info and info.mythic and not ns.db.settings.hardmodes then return true end
     local ds = itemID and ns.ITEM_SOURCES and ns.ITEM_SOURCES[itemID]
-    if not (ds and ds.a) then return false end
+    -- reviewed data decides: only its own reward achievement counts against it; else the older source line
+    local aid
+    if info then aid = info.k == "ach" and ns.CollectAch(info) or nil else aid = ds and ds.a end
+    if not aid then return false end
     if not achGroup then
         achGroup = {}
         for _, g in ipairs(ns.ACH_GROUPS or {}) do
             for _, id in ipairs(g[2]) do achGroup[id] = g[1] end
         end
     end
-    local group = achGroup[ds.a]
+    local group = achGroup[aid]
     if not group or not ns.Counts(group) then return true end
-    return ns.IsHard(ds.t and ds.t:match("achievement (.+)$"))
+    local a = ns.Ach(aid)
+    return ns.IsHard((a and a.name) or (ds and ds.t and ds.t:match("achievement (.+)$")))
 end
 
 -- Each expansion's mounts, pets and toys (Data/Collections.lua, Data/TWW/Collections.lua) that no zone source
@@ -975,6 +1018,9 @@ local function BuildJournalCollect(midnight)
             if extraKey then collectSeen[extraKey] = true end
             -- a zone of another expansion named in the source text doesn't count: stay in this expansion
             if zone and zone.exp ~= set.exp then zone = nil end
+            -- the reviewed page (Data/CollectText.lua) wins over a guess from the source text
+            local iz = InfoZone(it.itemID)
+            if iz and iz.exp == set.exp then zone = iz end
             AddCollect(zone or VendorZone(VendorsFor(it.itemID)) or SourceZone(it.itemID) or home, key, it)
         end
         if C_MountJournal and C_MountJournal.GetMountFromItem then
@@ -1079,6 +1125,11 @@ function ns.Build()
             local an = it.sourceText and it.sourceText:match("Achievement:%s*([^;]+)")
             if an then it.viaAch = achByName[norm(an)] end
             if not it.viaAch and it.dropSource and it.dropSource.a then it.viaAch = achById[it.dropSource.a] end
+            -- reviewed data: an achievement reward, or a purchase an achievement unlocks
+            if not it.viaAch and it.info then
+                local aid = (it.info.k == "ach" and ns.CollectAch(it.info)) or it.info.needA
+                if aid then it.viaAch = achById[aid] end
+            end
         end
     end
     -- the Seasonal book's holiday pages (Seasonal.lua)

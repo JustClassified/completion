@@ -128,6 +128,28 @@ function ns.HowToGet(it)
         if it.note then add(it.note, 0.85, 0.8, 0.65) end
         return out
     end
+    -- reviewed data (Data/CollectText.lua): the instruction, its note and what it still needs, live
+    local how = it.kind == "collect" and ns.CollectHow and ns.CollectHow(it)
+    if how then
+        add(how, 0.9, 0.85, 0.7)
+        local info = ns.CollectInfo(it)
+        if info and info.note then add(info.note, 0.8, 0.8, 0.8) end
+        if not it.done then
+            for _, n in ipairs(ns.CollectNeeds(it)) do
+                if n.met == true then add(n.text, 0.4, 0.9, 0.4)
+                elseif n.met == false then add(n.text, 1, 0.6, 0.3)
+                else add(n.text, 0.8, 0.8, 0.8) end
+            end
+            if ns.CollectReady(it) then add("You can buy it now.", 0.4, 1, 0.4) end
+        end
+        if it.steps and #it.steps > 0 then
+            add(string.format("%d steps: track it and the arrow guides you through each one", #it.steps), 0.6, 0.8, 1)
+        end
+        if it.itemID and not it.done and ns.Attempts(it.itemID) > 0 then
+            add(string.format("Attempts so far: %d", ns.Attempts(it.itemID)), 0.8, 0.8, 0.8)
+        end
+        return out
+    end
     if it.vendors and not it.source then
         for i, v in ipairs(it.vendors) do
             if i > 2 then add(string.format("(+%d more vendors)", #it.vendors - 2), 0.6, 0.6, 0.6); break end
