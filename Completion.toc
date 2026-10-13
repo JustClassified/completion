@@ -44,6 +44,7 @@ Data\TWW\Guides.lua
 Data\TWW\Guides2.lua
 Data\TWW\AutoGuides.lua
 Data\Delves.lua
+Data\DelveText.lua
 Data\TWW\Delves.lua
 Data\Expansions.lua
 Data\Events.lua

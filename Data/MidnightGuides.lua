@@ -751,9 +751,9 @@ ns.ACH_REVIEWED[61734] = true
 
 -- delves
 ns.ACH_STEPS[61741] = {
-    { t = "Finish the Stories achievement of every Midnight delve: run each delve until you have seen all of its story variants." },
+    { t = "Finish the Stories achievement of every Midnight delve: run each delve in each of its stories." },
 }
-ns.ACH_NOTES[61741] = { "Each delve on its zone page lists its stories; the tier menu shows this week's story.", "Stories rotate, so some take a few weeks." }
+ns.ACH_NOTES[61741] = { "A delve's row says \"story you need\" when its current story still counts for you; This Week lists them.", "The current story shows when you hover the delve on the world map and changes from time to time; some stories come up rarely, so check back.", "Shadow Enclave's Infiltrate and Ameliorate counts as Basilisk Blitz, and Collegiate Calamity's An Elementary Antidote is Academic Antitoxin." }
 ns.ACH_REVIEWED[61741] = true
 
 -- delves
@@ -779,10 +779,9 @@ ns.ACH_REVIEWED[61836] = true
 
 -- delves
 ns.ACH_STEPS[61901] = {
-    { t = "Open every Sturdy Chest: each delve's Discoveries achievement, inside the delve on its zone page, has the chest spots." },
-    { t = "Some chests only exist in certain stories, so run each delve with its other stories too." },
+    { t = "Open every Sturdy Chest: each delve's Discoveries achievement, inside the delve on its zone page, has the chest spots, and the arrow goes chest to chest once you are inside." },
 }
-ns.ACH_NOTES[61901] = {  }
+ns.ACH_NOTES[61901] = { "Every chest can be found in any story of its delve.", "Hover a chest for where exactly it is; a few sit on ledges or branches." }
 ns.ACH_REVIEWED[61901] = true
 
 -- delves

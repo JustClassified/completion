@@ -340,7 +340,7 @@ local function TreasureTooltip(it)
     end
     -- the achievement it counts for
     GameTooltip:AddLine(" ")
-    local a = it.groupAch and ns.Ach(it.groupAch)
+    local a = (it.groupAch or it.a) and ns.Ach(it.groupAch or it.a)
     if a then GameTooltip:AddLine("Part of " .. a.name, 0.8, 0.7, 0.5, true)
     else GameTooltip:AddLine("Not needed for an achievement.", 0.7, 0.7, 0.7, true) end
     GameTooltip:AddLine(" ")
@@ -348,6 +348,85 @@ local function TreasureTooltip(it)
         0.5, 0.5, 0.5, true)
     GameTooltip:AddLine("Right-click: stop tracking.", 0.5, 0.5, 0.5)
     GameTooltip:AddLine("Alt-click: add to (or take off) the watch list.", 0.5, 0.5, 0.5)
+    GameTooltip:Show()
+end
+
+-- A delve: stories and chests done, the entrance (and how to find it), the current story from the map and whether
+-- you still need it, bountiful, every story ticked off, and the delve's tips.
+local function DelveTooltip(it)
+    local info, key = ns.DelveInfo(it.name)
+    local text = key and ns.DELVE_TEXT and ns.DELVE_TEXT[key]
+    -- progress: stories and Sturdy Chests
+    local sDone, sTotal = 0, 0
+    local c = info and info.stories and ns.Crits(info.stories)
+    for _, e in ipairs(c and c.list or {}) do sTotal = sTotal + 1; if e.done then sDone = sDone + 1 end end
+    local open, total = 0, 0
+    for _, ch in ipairs(it.children or {}) do
+        if ch.kind == "point" and not ch.hidden then total = total + 1; if ch.done then open = open + 1 end end
+    end
+    local function line(label, a, b)
+        local full = b > 0 and a >= b
+        GameTooltip:AddLine(string.format("%s: %d / %d", label, a, b), full and 0.4 or 1, full and 0.9 or 0.82, full and 0.4 or 0.3)
+    end
+    if sTotal > 0 then line("Stories done", sDone, sTotal) end
+    if total > 0 then line("Sturdy Chests opened", open, total) end
+    -- the way in
+    local sp = it.spots and it.spots[1]
+    if sp then
+        GameTooltip:AddLine(" ")
+        AddPlace("Entrance: ", sp)
+    end
+    if text and text.entrance then AddWrapped(text.entrance, 0.9, 0.85, 0.7) end
+    -- the current story and bountiful
+    local story = ns.DelveStory and ns.DelveStory(it.name)
+    GameTooltip:AddLine(" ")
+    if story then
+        local need = ns.DelveStoryNeeded(it.name, story)
+        local state = need == true and "  |cffffd100you still need it|r" or (need == false and "  |cff55ff55done|r"
+            or "  |cffaaaaaa(not needed for the achievement)|r")
+        GameTooltip:AddLine("Story now: " .. story .. state, 1, 1, 1, true)
+        local tip = text and text.stories and text.stories[story]
+        if tip then AddWrapped(tip, 0.9, 0.85, 0.7) end
+    else
+        GameTooltip:AddLine("Story now: hover the delve on the world map to see it.", 0.7, 0.7, 0.7, true)
+    end
+    if ns.IsBountiful(it.name) then
+        GameTooltip:AddLine("Bountiful now: use a Coffer Key at the end for the better chest.", 1, 0.82, 0.3, true)
+    end
+    -- every story, ticked off
+    if c and #c.list > 0 then
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine("Stories", 1, 0.82, 0.3)
+        for _, e in ipairs(c.list) do
+            local now = story and ns.norm(story) == ns.norm(e.name or "") and "  |cffffd100(now)|r" or ""
+            if e.done then GameTooltip:AddLine("|TInterface\\RaidFrame\\ReadyCheck-Ready:12|t " .. (e.name or "?") .. now, 0.5, 0.5, 0.5)
+            else GameTooltip:AddLine("|TInterface\\COMMON\\Indicator-Gray:12|t " .. (e.name or "?") .. now, 0.95, 0.9, 0.8) end
+        end
+        for _, x in ipairs(info.extra or {}) do
+            GameTooltip:AddLine("   " .. x.n .. "  |cffaaaaaa(not needed for the achievement)|r", 0.7, 0.7, 0.7, true)
+        end
+        -- how to tell which story you are in, when the map can't say
+        if not story and text and text.spot then
+            GameTooltip:AddLine("Which story is it? On entry:", 0.8, 0.7, 0.5)
+            for name, how in pairs(text.spot) do GameTooltip:AddLine("- " .. name .. ": " .. how, 0.75, 0.75, 0.75, true) end
+        end
+    end
+    -- tips
+    local tips = {}
+    for _, t in ipairs(text and text.tips or {}) do tips[#tips + 1] = t end
+    for _, t in ipairs(ns.DELVE_ALL_TIPS or {}) do tips[#tips + 1] = t end
+    if #tips > 0 then
+        GameTooltip:AddLine(" ")
+        for _, t in ipairs(tips) do AddWrapped("- " .. t, 0.75, 0.75, 0.75) end
+    end
+    GameTooltip:AddLine(" ")
+    if total > open then
+        GameTooltip:AddLine("Click: track it. The arrow leads to the entrance, then from chest to chest inside; inside, "
+            .. "Route plans a loop through the chests.", 0.5, 0.5, 0.5, true)
+    else
+        GameTooltip:AddLine("Click: track it; the arrow leads to the entrance.", 0.5, 0.5, 0.5, true)
+    end
+    GameTooltip:AddLine("Right-click: stop tracking.", 0.5, 0.5, 0.5)
     GameTooltip:Show()
 end
 
@@ -438,7 +517,12 @@ local function ItemTooltip(owner, it, row)
         GameTooltip:AddLine(it.liveName or it.name or "?", 1, 1, 1, true)
     end
     if it.kind == "lore" then LoreTooltip(it); return end
-    if it.kind == "point" and it.pkind == "treasure" then TreasureTooltip(it); return end
+    if (it.kind == "point" and (it.pkind == "treasure" or it.pkind == "delve")) then TreasureTooltip(it); return end
+    if it.kind == "container" and it.ctype == "delve" then
+        GameTooltip:AddLine(" ")
+        DelveTooltip(it)
+        return
+    end
     GameTooltip:AddLine(" ")
     -- state, then details by kind
     if ns.upNow[it.key] then GameTooltip:AddLine("Up now: it is on your minimap", 0.4, 1, 0.4) end
@@ -1745,8 +1829,13 @@ local function FillRow(r, ln)
         local farm = ns.FarmTag(it)
         if farm then sub = "|cffff9040" .. farm .. "|r" end
         if ns.upNow[it.key] then sub = "|cff55ff55up now|r" end
-        if it.kind == "container" and it.ctype == "delve" and ns.IsBountiful(it.name) then
-            sub = "|cffffd100bountiful|r" .. (sub and sub ~= "" and ("  " .. sub) or "")
+        if it.kind == "container" and it.ctype == "delve" then
+            if ns.IsBountiful(it.name) then sub = "|cffffd100bountiful|r" .. (sub and sub ~= "" and ("  " .. sub) or "") end
+            -- the current story is one the Stories achievement still needs
+            local story = ns.DelveStory and ns.DelveStory(it.name)
+            if story and ns.DelveStoryNeeded(it.name, story) then
+                sub = "|cffffd100story you need|r" .. (sub and sub ~= "" and ("  " .. sub) or "")
+            end
         end
         -- a small book marks achievements that have a walkthrough or notes
         local aid = it.id or it.ach
@@ -1830,7 +1919,7 @@ local FOOTERS = {
     rare = "Track any rare to start a patrol: the arrow moves on when one isn't up and alerts you when one is.",
     collect = "Click one to see it in 3D; hover for Blizzard's tooltip and how to get it.",
     instance = "Achievements found for each dungeon and raid.",
-    delve = "Track a delve: entrance first, then chest to chest inside. Inside, Route loops through its chests.",
+    delve = "Hover a delve for its current story and what's left. \"Story you need\" means today's story counts for you.",
     rep = "Maxed renown or rank counts as done.",
     prof = "Knowledge treasures for your professions (once per character).",
     guide = "Follow the steps in order; the arrow moves on as each is done. Shift-click ticks one by hand.",

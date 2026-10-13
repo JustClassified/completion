@@ -128,17 +128,142 @@ local function BountifulDelves(out)
     end
 end
 
--- True when the delve of this name is bountiful right now (read from the map, cached for 30 seconds).
-local bountiful, bountifulAt = {}, -100
-function ns.IsBountiful(name)
-    local now = GetTime and GetTime() or 0
-    if now - bountifulAt > 30 then
-        bountifulAt, bountiful = now, {}
-        local list = {}
-        BountifulDelves(list)
-        for _, ln in ipairs(list) do bountiful[ns.norm((ln.text:gsub("^Bountiful: ", "")))] = true end
+-- Reverse lookup of widget type numbers to their names, for the matching visualization getter.
+local widgetTypeName
+local function TypeName(t)
+    if not widgetTypeName then
+        widgetTypeName = {}
+        for k, v in pairs(Enum and Enum.UIWidgetVisualizationType or {}) do widgetTypeName[v] = k end
     end
-    return bountiful[ns.norm(name or "")] or false
+    return widgetTypeName[t]
+end
+
+-- Collects every string inside a widget info table (two levels deep).
+local function Strings(t, out, depth)
+    for _, v in pairs(t) do
+        if type(v) == "string" and v ~= "" then out[#out + 1] = v
+        elseif type(v) == "table" and depth < 2 then Strings(v, out, depth + 1) end
+    end
+end
+
+-- All texts shown in a widget set: a delve's map tooltip shows its current story there.
+local function WidgetTexts(setID, out)
+    if not (setID and C_UIWidgetManager and C_UIWidgetManager.GetAllWidgetsBySetID) then return end
+    local ok, widgets = pcall(C_UIWidgetManager.GetAllWidgetsBySetID, setID)
+    if not ok or type(widgets) ~= "table" then return end
+    for _, w in ipairs(widgets) do
+        local name = TypeName(w.widgetType)
+        if name then
+            for _, get in ipairs({ C_UIWidgetManager["Get" .. name .. "WidgetVisualizationInfo"],
+                                   C_UIWidgetManager["Get" .. name .. "VisualizationInfo"] }) do
+                local okI, info = pcall(get, w.widgetID)
+                if okI and type(info) == "table" then Strings(info, out, 0) end
+            end
+        end
+    end
+end
+
+-- The story names a delve can have (Data/Delves.lua) and the other names the map uses for them
+-- (Data/DelveText.lua aliases), as { shown name = story }.
+local function StoryNames(dname)
+    local info, key = ns.DelveInfo and ns.DelveInfo(dname)
+    if not info then return {} end
+    local names = {}
+    for story in pairs(info.notes or {}) do names[story] = story end
+    for _, e in ipairs(info.extra or {}) do names[e.n] = e.n end
+    local text = ns.DELVE_TEXT and ns.DELVE_TEXT[key]
+    for alias, story in pairs(text and text.aliases or {}) do names[alias] = story end
+    -- the live criterion names, in the player's language
+    local c = info.stories and ns.Crits(info.stories)
+    for _, e in ipairs(c and c.list or {}) do if e.name and e.name ~= "" then names[e.name] = names[e.name] or e.name end end
+    return names
+end
+
+-- Reads every delve marker on the Midnight maps once per 30 seconds: bountiful or not, and the current story
+-- (the longest story name found in the marker's texts). nil story when it can't be read.
+local delveState, delveStateAt = {}, -100
+local function DelveState(name)
+    local now = GetTime and GetTime() or 0
+    if now - delveStateAt > 30 then
+        delveStateAt, delveState = now, {}
+        if C_AreaPoiInfo and C_AreaPoiInfo.GetDelvesForMap then
+            for _, mz in ipairs(AllMaps()) do
+                local ok, ids = pcall(C_AreaPoiInfo.GetDelvesForMap, mz.m)
+                for _, id in ipairs(ok and type(ids) == "table" and ids or {}) do
+                    local ok2, info = pcall(C_AreaPoiInfo.GetAreaPOIInfo, mz.m, id)
+                    local key = ok2 and info and info.name and ns.norm(info.name)
+                    if key and not delveState[key] then
+                        local st = { bountiful = (info.atlasName or ""):lower():find("bountiful") and true or false }
+                        local texts = {}
+                        if info.description then texts[#texts + 1] = info.description end
+                        WidgetTexts(info.tooltipWidgetSet, texts)
+                        WidgetTexts(info.iconWidgetSet, texts)
+                        local bestLen
+                        for shown, story in pairs(StoryNames(info.name)) do
+                            local n = ns.norm(shown)
+                            for _, t in ipairs(texts) do
+                                if n ~= "" and ns.norm(t):find(n, 1, true) and (not bestLen or #n > bestLen) then
+                                    st.story, bestLen = story, #n
+                                end
+                            end
+                        end
+                        delveState[key] = st
+                    end
+                end
+            end
+        end
+    end
+    return delveState[ns.norm(name or "")]
+end
+
+-- True when the delve of this name is bountiful right now (read from the map, cached for 30 seconds).
+function ns.IsBountiful(name)
+    local st = DelveState(name)
+    return st and st.bountiful or false
+end
+
+-- The delve's current story as the map shows it (its name in Data/Delves.lua), or nil when it can't be read.
+function ns.DelveStory(name)
+    local st = DelveState(name)
+    return st and st.story
+end
+
+-- Whether this story of the delve still counts for its Stories achievement: true needed, false done, nil when the
+-- story isn't part of the achievement (an extra one) or can't be matched.
+function ns.DelveStoryNeeded(dname, story)
+    local info = ns.DelveInfo and ns.DelveInfo(dname)
+    if not (info and info.stories and story) then return nil end
+    if ns.AchDone(info.stories) then return false end
+    local c = ns.Crits(info.stories)
+    local e = c and c.byName[ns.norm(story)]
+    if not e then
+        -- a story the achievement lists under another name (Data/DelveText.lua aliases)
+        local _, key = ns.DelveInfo(dname)
+        local text = ns.DELVE_TEXT and ns.DELVE_TEXT[key]
+        for alias, s2 in pairs(text and text.aliases or {}) do
+            if s2 == story then e = c and c.byName[ns.norm(alias)] end
+            if alias == story then e = c and c.byName[ns.norm(s2)] end
+            if e then break end
+        end
+    end
+    if not e then return nil end
+    return not e.done
+end
+
+-- Appends a line for each delve whose current story (read from the map) the Stories achievement still needs.
+local function NeededDelveStories(out)
+    for _, z in ipairs(ns.ZONES) do
+        if z.exp == "midnight" then
+            for _, it in ipairs(z.sections.delve.items) do
+                local story = it.ctype == "delve" and ns.DelveStory(it.name)
+                if story and ns.DelveStoryNeeded(it.name, story) then
+                    out[#out + 1] = { text = "Story you need: " .. it.name, right = z.short or "",
+                                      tip = it.name .. " has " .. story .. " right now, a story you still need.",
+                                      hint = "Click: track the delve.", click = function() ns.Track(it) end }
+                end
+            end
+        end
+    end
 end
 
 -- Quest ID -> { it, what, crit } for achievement criteria that are "complete this quest" (criteria type 27)
@@ -266,7 +391,7 @@ local function WeekLines()
         fill(out)
         if #out == n then out[#out + 1] = { text = empty, color = GREY } end
     end
-    section("Happening Now", function(o) Events(o); BountifulDelves(o) end, "No timed events on the Midnight maps right now.")
+    section("Happening Now", function(o) Events(o); BountifulDelves(o); NeededDelveStories(o) end, "No timed events on the Midnight maps right now.")
     section("World Quests That Count", WorldQuests, "None of today's world quests count for anything still open.")
     section("Renown To Earn", Renown, "Every Midnight renown is maxed.")
     section("Repeatables With Achievements Left", Repeatables, "Nothing left in the repeatable features you count.")
