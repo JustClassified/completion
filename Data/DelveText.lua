@@ -16,6 +16,10 @@ ns.DELVE_TEXT = {
     ["Gnarldor Isle"] = {
         spot = { ["Minchi's Osseous Adventure"] = "Minchi stands right in front of the entrance.", ["Olds and Ends"] = "Tormunda stands at the entrance by a bowl with a potion and a scroll." },
     },
+    ["Labyrinth of Kindo'jan"] = {
+        entrance = "North of the Amani Pass in Eversong Woods. The first time, take The Labyrinth from Kul'amara the Fierce (the Amani Tablet at the entrance points you to her) and do the short introduction with Valeera; after that it is open to your whole warband.",
+        tips = { "It has no story variants and is always bountiful: one run has nine chambers, you choose the route, and every chamber you clear adds to the reward chests at the end.", "Leaving the delve ends the run and loses its progress; logging out inside is safe.", "Kindo'jan can only be fought on Tier 8 or higher. The first time, clear all nine chambers in one run; after that you only need a way to Akil'zon's Roost, where his door is.", "Sturdy Chests: 20 are open from the start, 5 are behind an ice wall past the waterfalls in the Central Chamber (melt it with fire damage), and 19 are in loa-sealed rooms that open at Labyrinth Journey ranks 3, 5, 7 and 9.", "From Journey rank 2 each run has one Locked Room and three Elemental Hexmasks among five fixed spots; the key drops from the Keeper of the Key, who can turn up anywhere in the delve." },
+    },
     ["Parhelion Plaza"] = {
         entrance = "Take the stairs down at the plaza (about 48, 42); the door just west of it is not the way in.",
     },

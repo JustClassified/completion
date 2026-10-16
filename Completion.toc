@@ -33,6 +33,7 @@ Data\Difficulty.lua
 Data\Collections.lua
 Data\TWW\Collections.lua
 Data\Vendors.lua
+Data\VendorsExtra.lua
 Data\Sources.lua
 Data\CollectText.lua
 Data\Walkthroughs.lua
@@ -46,6 +47,7 @@ Data\TWW\Guides.lua
 Data\TWW\Guides2.lua
 Data\TWW\AutoGuides.lua
 Data\Delves.lua
+Data\DelvesExtra.lua
 Data\DelveText.lua
 Data\TWW\Delves.lua
 Data\Expansions.lua

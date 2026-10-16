@@ -18,7 +18,8 @@ ns.ZONES = {
         iconAch = 61960,
         desc = "The sin'dorei homeland under a new sun. Silvermoon City and the Arcantina (through its inn) count as part of this page.",
         story = { 41802 }, side = { 61957, 60891 },
-        factions = { 2710, 2712, 2713, 2711, 2714 },   -- Silvermoon Court and its Blood Knights, Farstriders, Magisters, Shades of the Row
+        -- Silvermoon Court and its Blood Knights, Farstriders, Magisters, Shades of the Row; Aqir Research Enclave (12.1.5)
+        factions = { 2710, 2712, 2713, 2711, 2714, 2838 },
         keywords = { "Eversong", "Silvermoon" },
         instances = { "Windrunner Spire", "Murder Row" },
     },
@@ -65,15 +66,16 @@ ns.ZONES = {
         story = { 62297 }, side = { 63641, 63633 },
         factions = { 2772, 2773 },
         keywords = { "Coiled Isle", "Atal'Utek", "Ula'tek" },
-        instances = { "Altar of Fangs", "The Venomous Abyss", "The Tidebound Grotto" },
+        instances = { "Altar of Fangs", "The Venomous Abyss", "The Tidebound Grotto", "The Unbinding of Kith'ix" },
     },
     {
         key = "midnight", name = "Midnight", short = "Midnight", overview = true,
         iconAch = 62110,
         desc = "Everything not tied to one zone: the campaign, Loremaster, delves and dungeons found nowhere else, and every other Midnight achievement. The total here is the whole expansion.",
-        story = { 62110, 42045, 41805, 42117, 61916 }, side = { 61910, 61219, 62105, 61942 },
-        -- Delves (current season), Ritual Sites, Preyhunter's Journey, Prey: Season 1, Valeera Sanguinar
-        factions = { 2796, 2792, 2808, 2764, 2744 },
+        story = { 62110, 42045, 41805, 42117, 61916, 63519 }, side = { 61910, 61219, 62105, 61942 },
+        -- Delves (current season), Ritual Sites, Preyhunter's Journey, Prey: Season 1, Valeera Sanguinar,
+        -- Kindo'jan's Labyrinth journey (12.1.5)
+        factions = { 2796, 2792, 2808, 2764, 2744, 2836 },
         keywords = {},
         instances = {},
     },
@@ -104,6 +106,7 @@ ns.DELVE_MAPS = {
     [2506] = "Shadowguard Point", [2510] = "The Grudge Pit", [2525] = "The Darkway",
     [2528] = "Sunkiller Sanctum", [2571] = "Sunkiller Sanctum", [2535] = "Atal'aman",
     [2545] = "Parhelion Plaza", [2547] = "Collegiate Calamity", [2635] = "Gnarldor Isle", [2633] = "Ring of Glory",
+    [2647] = "Labyrinth of Kindo'jan", [2648] = "Labyrinth of Kindo'jan",
 }
 
 -- Achievements that must never be counted: unused copies in the game files.

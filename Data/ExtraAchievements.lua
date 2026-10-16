@@ -1,8 +1,7 @@
 -- Completion: achievements the generated lists missed, added by hand so a regeneration keeps them,
 -- and the groups shown as Other (not counted).
 -- Found by comparing the lists with the game's own achievement table (2026-10-10). Patch 12.1.5 content
--- (Kindo'jan's Labyrinth, Kith'ix, The Promise of Tomorrow) is left out until it's live; the two in
--- Midnight categories are picked up by the in-game category scan anyway.
+-- (Kindo'jan's Labyrinth, Kith'ix, The Promise of Tomorrow) is in Data/Achievements.lua since 2026-10-16.
 
 local _, ns = ...
 

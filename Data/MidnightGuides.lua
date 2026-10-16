@@ -820,6 +820,77 @@ ns.ACH_STEPS[63435] = {
 ns.ACH_NOTES[63435] = { "Turning on the game's outline option for objects makes the curiosities easy to see." }
 ns.ACH_REVIEWED[63435] = true
 
+-- delves
+ns.ACH_STEPS[63718] = {
+    { t = "Reach Labyrinth Journey rank 2: the Locked Room appears from then on." },
+    { t = "In a run, find and defeat the Keeper of the Key and take the Archaic Amani Key. He can turn up anywhere in the delve." },
+    { t = "Open the Locked Room: it is at one of the five marked spots." },
+}
+ns.ACH_NOTES[63718] = { "Each run picks five fixed spots: three hold the Hexmasks, one the Locked Room, one nothing (Chamber of Rites, Cave Towers, Akil'zon's Roost, Jan'alai's Refuge, Nalorakk's Rest)." }
+ns.ACH_SPOTS[63718] = { t = "Possible Locked Room spots", at = { { 2647, 50.3, 82.6 }, { 2647, 88.5, 51.5 }, { 2647, 56.8, 17.8 }, { 2647, 18.8, 18.2 }, { 2647, 58.5, 21.7 } } }
+ns.ACH_REVIEWED[63718] = true
+
+-- delves
+ns.ACH_STEPS[63719] = {
+    { t = "Open the Locked Room 20 times: one key and one Locked Room per run, so at least 20 runs." },
+}
+ns.ACH_NOTES[63719] = { "Each run picks five fixed spots: three hold the Hexmasks, one the Locked Room, one nothing (Chamber of Rites, Cave Towers, Akil'zon's Roost, Jan'alai's Refuge, Nalorakk's Rest)." }
+ns.ACH_SPOTS[63719] = { t = "Possible Locked Room spots", at = { { 2647, 50.3, 82.6 }, { 2647, 88.5, 51.5 }, { 2647, 56.8, 17.8 }, { 2647, 18.8, 18.2 }, { 2647, 58.5, 21.7 } } }
+ns.ACH_REVIEWED[63719] = true
+
+-- delves
+ns.ACH_STEPS[63720] = {
+    { t = "Reach Labyrinth Journey rank 2: the Elemental Hexmasks appear from then on." },
+    { t = "In one run, pick up all three: Fiery, Frozen and Thundering. They wait at three of the five marked spots and follow you once picked up." },
+}
+ns.ACH_NOTES[63720] = { "Each run picks five fixed spots: three hold the Hexmasks, one the Locked Room, one nothing (Chamber of Rites, Cave Towers, Akil'zon's Roost, Jan'alai's Refuge, Nalorakk's Rest).", "Clearing all nine chambers takes you past every spot." }
+ns.ACH_SPOTS[63720] = { t = "Possible Hexmask spots", at = { { 2647, 50.3, 82.6 }, { 2647, 88.5, 51.5 }, { 2647, 56.8, 17.8 }, { 2647, 18.8, 18.2 }, { 2647, 58.5, 21.7 } } }
+ns.ACH_REVIEWED[63720] = true
+
+-- delves
+ns.ACH_STEPS[63721] = {
+    { t = "Enter the Labyrinth on any tier.", at = { 2395, 63.0, 72.2 } },
+    { t = "Clear all nine chambers in one run: after the Chamber of Rites you choose your way, and a new chamber only opens once the one you're in is cleared." },
+}
+ns.ACH_NOTES[63721] = { "Leaving the delve ends the run; logging out inside is safe.", "Check the map to see which chambers you can open next." }
+ns.ACH_REVIEWED[63721] = true
+
+-- delves
+ns.ACH_STEPS[63722] = {
+    { t = "Enter the Labyrinth on Tier 11.", at = { 2395, 63.0, 72.2 } },
+    { t = "Clear all nine chambers in one run." },
+}
+ns.ACH_NOTES[63722] = { "Leaving the delve ends the run; logging out inside is safe.", "Loot the Mislaid Oddities and Spiritual Conduits on the way: their boons last the whole run." }
+ns.ACH_REVIEWED[63722] = true
+
+-- delves
+ns.ACH_STEPS[63723] = {
+    { t = "Clear chambers in the Labyrinth on any tier until you reach 100 in total; they add up over every run.", at = { 2395, 63.0, 72.2 } },
+}
+ns.ACH_NOTES[63723] = { "Even a short run counts the chambers you cleared before leaving." }
+ns.ACH_REVIEWED[63723] = true
+
+-- delves
+ns.ACH_STEPS[63724] = {
+    { t = "Go to the Labyrinth entrance north of the Amani Pass and step inside.", at = { 2395, 63.0, 72.2 } },
+}
+ns.ACH_NOTES[63724] = { "The first visit is part of the introduction from Kul'amara the Fierce: The Labyrinth, then Dangers Untold and Hardships Unnumbered with Valeera." }
+ns.ACH_REVIEWED[63724] = true
+
+-- delves
+ns.ACH_STEPS[63727] = {
+    { t = "Loot 10 Mislaid Oddities: small chests that turn up at random in the chambers.", at = { 2395, 63.0, 72.2 } },
+}
+ns.ACH_NOTES[63727] = { "They also hand out boons for the rest of the run." }
+ns.ACH_REVIEWED[63727] = true
+
+-- delves
+ns.ACH_STEPS[63728] = {
+    { t = "Loot 50 Mislaid Oddities over as many runs as it takes.", at = { 2395, 63.0, 72.2 } },
+}
+ns.ACH_NOTES[63728] = { "The Locked Room and the loa-sealed rooms always hold a few." }
+ns.ACH_REVIEWED[63728] = true
+
 -- exploration
 ns.ACH_STEPS[61082] = {
     { t = "Each week a different pair of visitors comes to the Arcantina; look in the side rooms too, not only at the map icons." },
@@ -974,6 +1045,33 @@ ns.ACH_STEPS[62283] = {
 }
 ns.ACH_NOTES[62283] = { "A Mythic or keystone kill counts too." }
 ns.ACH_REVIEWED[62283] = true
+
+-- instances
+ns.ACH_STEPS[63692] = {
+    { t = "Track the achievement: the arrow leads to the Underbelly, the northern tip of the Vaults of Atal'Utek.", at = { 2509, 47.4, 6.1 } },
+    { t = "Fight through the Underbelly to the raid entrance at its far north-east end.", at = { 2613, 74.0, 7.4 } },
+    { t = "Defeat Kith'ix on Raid Finder or higher." },
+}
+ns.ACH_NOTES[63692] = { "The raid is a single boss, fought alongside Lady Liadrin.", "The campaign quest The Unbinding of Kith'ix also accepts a Story Mode kill." }
+ns.ACH_REVIEWED[63692] = true
+
+-- instances
+ns.ACH_STEPS[63693] = {
+    { t = "Track the achievement: the arrow leads to the Underbelly, the northern tip of the Vaults of Atal'Utek.", at = { 2509, 47.4, 6.1 } },
+    { t = "Fight through the Underbelly to the raid entrance at its far north-east end.", at = { 2613, 74.0, 7.4 } },
+    { t = "Defeat Kith'ix on Heroic or higher." },
+}
+ns.ACH_NOTES[63693] = { "Normal and Heroic take 10 to 30 players." }
+ns.ACH_REVIEWED[63693] = true
+
+-- instances
+ns.ACH_STEPS[63694] = {
+    { t = "Track the achievement: the arrow leads to the Underbelly, the northern tip of the Vaults of Atal'Utek.", at = { 2509, 47.4, 6.1 } },
+    { t = "Fight through the Underbelly to the raid entrance at its far north-east end.", at = { 2613, 74.0, 7.4 } },
+    { t = "Defeat Kith'ix on Mythic." },
+}
+ns.ACH_NOTES[63694] = { "Mythic is flexible: 15 to 25 players." }
+ns.ACH_REVIEWED[63694] = true
 
 -- prey
 ns.ACH_STEPS[42701] = {

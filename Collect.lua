@@ -52,6 +52,8 @@ local KIND_LABEL = {
 }
 ns.COLLECT_KIND_LABEL = KIND_LABEL
 
+local STANDING   -- filled below, before it is used
+
 local WILD = "Catch it in the wild: Midnight's wild pets don't battle, so find one at a marked spot and click it."
 
 -- A vendor's name from Data/Vendors.lua, or nil.
@@ -138,6 +140,10 @@ function ns.CollectVendor(it)
     return it.vendors and it.vendors[1]
 end
 
+-- Neutral-to-Exalted standings by level (1 Neutral ... 5 Exalted), in the player's language where the game has them.
+STANDING = {}
+for i = 1, 5 do STANDING[i] = _G["FACTION_STANDING_LABEL" .. (i + 3)] or ({ "Neutral", "Friendly", "Honored", "Revered", "Exalted" })[i] end
+
 -- What the item still needs, with live progress: a list of { text = ..., met = true / false / nil }.
 -- Renown or rank, the achievement or quest behind it, and the vendor price against what you have.
 function ns.CollectNeeds(it)
@@ -146,7 +152,15 @@ function ns.CollectNeeds(it)
     if info then
         local fac, lvl = info.needFac, info.needLvl
         if info.k == "renown" then fac, lvl = info.fac, info.lvl end
-        if fac and lvl then
+        if fac and lvl and info.needStanding then
+            -- a Neutral-to-Exalted reputation: level 1 Neutral ... 5 Exalted, whichever way the game reports it
+            local r = ns.Rep(fac)
+            local cur = 0
+            if r then cur = r.renown and (r.cur or 0) or math.max(0, (r.cur or 0) - 3) end
+            out[#out + 1] = { text = string.format("%s with %s  (you: %s)", STANDING[lvl] or "?", r and r.name or "the faction",
+                                  STANDING[cur] or "not yet"),
+                              met = cur >= lvl, rep = true, cur = cur, need = lvl, label = "standing", standing = true }
+        elseif fac and lvl then
             local r = ns.Rep(fac)
             local cur = r and r.cur or 0
             local label = (r and r.renown) and "Renown" or "Rank"
@@ -215,7 +229,10 @@ function ns.CollectTag(it)
     if it.done or (it.max or 0) == 0 then return end
     local needs = ns.CollectNeeds(it)
     for _, n in ipairs(needs) do
-        if n.rep and n.met == false then return string.format("%s %d/%d", n.label, n.cur, n.need) end
+        if n.rep and n.met == false then
+            if n.standing then return (STANDING[n.need] or "?") .. " needed" end
+            return string.format("%s %d/%d", n.label, n.cur, n.need)
+        end
     end
     for _, n in ipairs(needs) do
         if n.ach and n.met == false then

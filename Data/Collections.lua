@@ -5,7 +5,7 @@
 -- (shop, promotions, China only, not in the game...); those are left out. The rest is filed under the page the
 -- reviewed data names, else the zone in its journal source ("Zone: Voidstorm"), else the Midnight page. Items
 -- already found in a zone's treasures, rares, vendors or renown tracks keep that more precise source.
--- Patch 12.1.5 items (still on the test server) are not listed yet: see Tools/RESEARCH.md.
+-- Patch 12.1.5 items are listed at the end of each list (checked 2026-10-16); 12.1.7 items are not, until it is live.
 
 local _, ns = ...
 
@@ -23,6 +23,7 @@ ns.MIDNIGHT_MOUNT_ITEMS = {
     268877, 262909, 268474, 262661, 268363, 275573, 278576, 260893, 269009, 274681, 280581, 264273, 276550,
     254736, 276552, 275571, 276245, 260896, 275551, 275574, 275572, 254735, 269012, 274037, 262708, 262707,
     269659, 262344, 268360, 275570, 268362, 269640, 260894, 272920, 260895, 262706,
+    276926, 282414, 283363,   -- 12.1.5: Corrupted Swarmer, Sporebearer Fungal Strider, Loa-Blessed Wayfarer
 }
 
 ns.MIDNIGHT_PET_ITEMS = {
@@ -39,6 +40,7 @@ ns.MIDNIGHT_PET_ITEMS = {
     274456, 271652, 277322, 274438, 274452, 274458, 277270, 251004, 264654, 275818, 258840, 274454, 274457,
     275703, 277318, 250142, 258739, 238793, 250141, 274467, 262769, 270214, 274439, 274449, 273021, 277321,
     248073,
+    274923, 274927, 276927,   -- 12.1.5: the Aqir Research Enclave's pets
 }
 
 ns.MIDNIGHT_TOY_ITEMS = {
@@ -48,6 +50,8 @@ ns.MIDNIGHT_TOY_ITEMS = {
     268504, 277954, 274921, 263244, 267323, 263975, 259240, 264666, 268695, 267139, 250974, 263871, 276371,
     264517, 268456, 276229, 267456, 267472, 268455, 272287, 243146, 258963, 280201, 264672, 250320, 249468,
     263198, 259335, 258135, 259899, 274730, 260170, 258136, 258129, 274967, 258840, 256141,
+    -- 12.1.5: Aqir vendor, the Labyrinth of Kindo'jan, the Kith'ix raid and campaign
+    275039, 280820, 280821, 280822, 280823, 280825, 281136, 281615, 284159, 286643,
 }
 
 -- Source text that means "not obtainable by playing": left out of the count.

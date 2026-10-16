@@ -111,7 +111,8 @@ local function BuildPoint(p, fallbackZone)
         spots = {},
     }
     if p.x then it.spots[1] = { map = p.m, x = p.x, y = p.y } end
-    for _, a in ipairs(p.alt or {}) do it.spots[#it.spots + 1] = { map = a[1], x = a[2], y = a[3] } end
+    -- other spawn points; an override's list replaces the spot data's (a spot that moved in a patch)
+    for _, a in ipairs(ov.alt or p.alt or {}) do it.spots[#it.spots + 1] = { map = a[1], x = a[2], y = a[3] } end
     it.steps = PointSteps(p, name)
     -- drops the spot data was missing (Data/ExtraLoot.lua), added after its own
     local extra = p.npc and ns.EXTRA_LOOT and ns.EXTRA_LOOT[p.npc]
@@ -387,13 +388,15 @@ local function AttachDelveAchievements()
             local info = DelveInfo(d.name)
             if info then
                 d.achSet = d.achSet or {}
-                for i, aid in ipairs({ info.stories, info.chests }) do
+                -- Stories first, then Discoveries; a delve without story variants (a Labyrinth) has only Discoveries
+                local pos = 1
+                for _, aid in ipairs({ info.stories or false, info.chests or false }) do
                     if aid and not d.achSet[aid] then
                         local child = Register({ key = "a:" .. d.key .. ":" .. aid, kind = "ach", id = aid, spots = {}, parent = d })
-                        table.insert(d.children, i, child)
+                        table.insert(d.children, pos, child)
                         d.achSet[aid] = true
                     end
-                    if aid then groupAchs[aid] = true end
+                    if aid then groupAchs[aid] = true; pos = pos + 1 end
                 end
                 if not notesDone and info.stories then
                     ns.CRIT_NOTES[info.stories] = ns.CRIT_NOTES[info.stories] or {}

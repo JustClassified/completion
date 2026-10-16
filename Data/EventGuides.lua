@@ -545,3 +545,15 @@ ns.CRIT_NOTES[63400] = {
     ["Voidstorm, Slayer's Rise"]         = { t = BUCKET_HUB, taxi = "Slayer's Rise" },
     ["Voidstorm, The Ingress"]           = { t = BUCKET_HUB, taxi = "The Ingress" },
 }
+
+-- Patch 12.1.5 holiday achievements the generated list (Data/Events.lua) doesn't have yet: the neighborhood candy
+-- quests of Hallow's End and the tree defense of Winter Veil. They show as coming soon (Data/Research.lua) until
+-- players have done them and their steps are known.
+for _, e in ipairs({
+    { "hallows", 62500, "Sweet Tooth (meta)" }, { "hallows", 64160, "Sweet Tooth (meta)" },
+    { "hallows", 64161, "Sweet Tooth (meta)" }, { "hallows", 64162, "Sweet Tooth (meta)" },
+    { "hallows", 62501, "More achievements" }, { "veil", 62502, "More achievements" },
+}) do
+    local list = ns.EVENT_ACHS and ns.EVENT_ACHS[e[1]]
+    if list then table.insert(list, { e[2], 0, e[3] }) end
+end
