@@ -74,7 +74,7 @@ ns.LORE_ACH = {
     [42045] = {
         name = "Midnight", pts = 10,
         desc = "Complete the Midnight storyline.",
-        note = "The five campaign chapters only, no side quests. Finishing it does not finish Loremaster - the four Sojourner achievements are the other half.",
+        note = "The five campaign achievements, plus The Darkening Sky: a campaign chapter the achievement doesn't need. No side quests. Finishing it does not finish Loremaster - the four Sojourner achievements are the other half.",
         crits = {
             { id = 209652, t = 8, q = 41802, n = "Eversong In Reprise",
             },
@@ -85,6 +85,12 @@ ns.LORE_ACH = {
             { id = 209653, t = 8, q = 41803, n = "For Zul'Aman!",
             },
             { id = 209655, t = 8, q = 41804, n = "One Does Not Simply Walk Into Harandar",
+            },
+            -- a chapter of the game's Midnight campaign (quest line 5979) that the achievement doesn't ask for
+            { t = 27, q = 91967, n = "The Darkening Sky", map = 2393, pos = 2,
+              first = "Deepening Shadows", start = "Commander Koruth Mountainfist in Silvermoon City",
+              note = "A chapter of the campaign window that the Midnight achievement doesn't need. Deepening Shadows opens once you finish one of the zone campaigns after Eversong; You Know This Evil? follows. The report-back quests Reports Returned (after Zul'Aman) and Looming Shadows (after Harandar) lead here and are optional.",
+              chain = { {91854,"Deepening Shadows"},{91967,"You Know This Evil?"} },
             },
         },
     },
@@ -1097,6 +1103,7 @@ ns.LORE_ACH = {
             },
             { id = 209729, t = 27, q = 88710, n = "The Darkwell", pos = 2,
               first = "Quel'Danas", start = "Lor'themar Theron", hand = "Arator",
+              note = "The campaign window calls this chapter March on Quel'Danas.",
               chain = {
                 {90748,"Quel'Danas"},{88710,"March on Quel'Danas"},
               },
@@ -1124,13 +1131,20 @@ ns.LORE_ACH = {
     [63519] = {
         name = "The Promise of Tomorrow", pts = 10, reward = "Title: Light's Faithful", zone = "Silvermoon City", map = 2393,
         desc = "Complete the Promise of Tomorrow storyline.",
-        note = "The patch 12.1.5 campaign: the aqir rise in Eversong and Zul'Aman, and the trail leads under the Vaults of Atal'Utek to Kith'ix. Its first chapter unlocks the Aqir Invasions.",
+        note = "The patch 12.1.5 campaign in three chapters, like the game's campaign window: What Slept Below, Sins of the Past and To the Faithful. The aqir rise in Eversong and Zul'Aman, and the trail leads under the Vaults of Atal'Utek to Kith'ix. Its first chapter unlocks the Aqir Invasions.",
         crits = {
-            { id = 116096, t = 27, q = 95211, n = "Sins of the Past", map = 2393, pos = 16,
+            -- the campaign has three chapters (Campaign 349: quest lines 6233, 6221, 6245); the achievement only asks
+            -- for the last two, but the first one is where it starts
+            { t = 27, q = 95533, n = "What Slept Below", map = 2393, pos = 1,
               first = "The Aqir Swarm", start = "Lor'themar Theron in Silvermoon City",
-              note = "Players report Lor'themar only offers it once the Coiled Isle campaign (The Curse of Ula'tek) is done. The last quest is defeating Kith'ix in his raid on any difficulty; Story Mode works.",
+              note = "Chapter 1 of the campaign. The achievement only asks for chapters 2 and 3, but they start here. Players report Lor'themar only offers The Aqir Swarm once the Coiled Isle campaign (The Curse of Ula'tek) is done.",
+              chain = { {95533,"The Aqir Swarm"} },
+            },
+            { id = 116096, t = 27, q = 95211, n = "Sins of the Past", map = 2393, pos = 15,
+              first = "All Along the Watchtowers", start = "Lor'themar Theron in Silvermoon City",
+              note = "Chapter 2. The last quest is defeating Kith'ix in his raid on any difficulty; Story Mode works. In Zul'Aman, Kul'amara the Fierce offers The Labyrinth: that side branch leads into the Labyrinth of Kindo'jan and isn't needed for the campaign or the achievement.",
               chain = {
-                {95533,"The Aqir Swarm"},{95187,"All Along the Watchtowers"},{95190,"Double-Edged Swords"},
+                {95187,"All Along the Watchtowers"},{95190,"Double-Edged Swords"},
                 {95192,"Rendering Aid"},{95191,"The Slumbering Swarm"},{95193,"The Amani Impasse"},
                 {95197,"The Long Way Around"},{95199,"Tenuous Alliances"},{95200,"An Offering for Halazzi"},
                 {95203,"The Ties That Bind"},{95208,"Back to Back"},{95206,"Breaking the Blade"},
@@ -1140,7 +1154,7 @@ ns.LORE_ACH = {
             },
             { id = 116097, t = 27, q = 95813, n = "To the Faithful", map = 2393, pos = 4,
               first = "In Victory, Grief", start = "Lor'themar Theron, right after the Kith'ix kill",
-              note = "If you missed it in the raid, Lor'themar also offers In Victory, Grief in the Underbelly. If he won't talk to you after a Story Mode run, leave the instance group first.",
+              note = "Chapter 3, the epilogue. If you missed it in the raid, Lor'themar also offers In Victory, Grief in the Underbelly. If he won't talk to you after a Story Mode run, leave the instance group first.",
               chain = {
                 {95811,"In Victory, Grief"},{95808,"To the Faithful"},{95812,"Last Wishes"},{95813,"What the World Sees"},
               },
