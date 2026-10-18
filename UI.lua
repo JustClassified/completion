@@ -720,6 +720,13 @@ local function ItemTooltip(owner, it, row)
         DelveTooltip(it)
         return
     end
+    -- a Midnight dungeon or raid with reviewed data: entrance, season, Story Mode, what's left, drops
+    if it.kind == "container" and it.ctype == "instance" and ns.InstanceInfo(it) then
+        GameTooltip:AddLine(" ")
+        ns.InstanceTooltip(it)
+        GameTooltip:Show()
+        return
+    end
     GameTooltip:AddLine(" ")
     -- state, then details by kind
     if ns.upNow[it.key] then GameTooltip:AddLine("Up now: it is on your minimap", 0.4, 1, 0.4) end
@@ -779,6 +786,14 @@ local function ItemTooltip(owner, it, row)
     end
     if it.kind == "rep" and it.rep then GameTooltip:AddLine(it.rep.text, 1, 1, 1) end
     -- walkthrough notes, for achievements
+    -- a Heroic or Mythic dungeon achievement whose dungeon is out of this season's Mythic+ rotation
+    if it.kind == "ach" and not it.done then
+        local info, tier = ns.AchClosedThisSeason(it.id)
+        if info then
+            GameTooltip:AddLine(string.format("Not this season: %s has no %s while it is out of the Mythic+ rotation. "
+                .. "It comes back when the dungeon returns.", info.name, tier), 0.85, 0.55, 0.3, true)
+        end
+    end
     if it.kind == "ach" then ns.AddGuide(GameTooltip, it.id or 0, it, ns.GroupNote(it)) end
     if it.kind == "ach" and ns.ACH_STEPS and ns.ACH_STEPS[it.id] then
         GameTooltip:AddLine("Click to follow the steps with the arrow.", 0.6, 0.8, 1)
@@ -2079,6 +2094,11 @@ local function FillRow(r, ln)
         local farm = ns.FarmTag(it)
         if farm then sub = "|cffff9040" .. farm .. "|r" end
         if ns.upNow[it.key] then sub = "|cff55ff55up now|r" end
+        if it.kind == "container" and it.ctype == "instance" and not done then
+            local t = ns.InstanceTag(it)
+            if t then sub = t .. (sub and sub ~= "" and ("  " .. sub) or "") end
+        end
+        if it.kind == "ach" and not done and ns.AchClosedThisSeason(it.id) then sub = "|cffd08a50later season|r" end
         if it.kind == "container" and it.ctype == "delve" then
             if ns.IsBountiful(it.name) then sub = "|cffffd100bountiful|r" .. (sub and sub ~= "" and ("  " .. sub) or "") end
             -- the current story is one the Stories achievement still needs

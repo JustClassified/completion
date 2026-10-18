@@ -5,7 +5,7 @@
 ## X-Website: romsics.com
 ## X-Contact: Discord: ozonysx
 ## X-Discord: https://discord.gg/V2YsKAcux5
-## Version: 1.5.5
+## Version: 1.5.6
 ## SavedVariables: CompletionDB
 ## SavedVariablesPerCharacter: CompletionCharDB
 ## IconTexture: Interface\Icons\inv_misc_book_16
@@ -49,6 +49,7 @@ Data\TWW\AutoGuides.lua
 Data\Delves.lua
 Data\DelvesExtra.lua
 Data\DelveText.lua
+Data\InstanceText.lua
 Data\TWW\Delves.lua
 Data\Expansions.lua
 Data\Events.lua
@@ -59,6 +60,7 @@ Guide.lua
 Difficulty.lua
 Research.lua
 Collect.lua
+Instances.lua
 Seasonal.lua
 Farm.lua
 WorldPins.lua

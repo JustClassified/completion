@@ -971,7 +971,7 @@ ns.ACH_STEPS[41288] = {
     { t = "Queue for it on Heroic in the Group Finder." },
     { t = "Defeat the Restless Heart on Heroic or higher." },
 }
-ns.ACH_NOTES[41288] = { "A Mythic or keystone kill counts too." }
+ns.ACH_NOTES[41288] = { "A Mythic or keystone kill counts too.", "Heroic is only open while the dungeon is in the season's Mythic+ rotation; the book says when it isn't." }
 ns.ACH_REVIEWED[41288] = true
 
 -- instances
@@ -980,7 +980,7 @@ ns.ACH_STEPS[41961] = {
     { t = "Queue for it on Heroic in the Group Finder." },
     { t = "Defeat Lithiel Cinderfury on Heroic or higher." },
 }
-ns.ACH_NOTES[41961] = { "A Mythic or keystone kill counts too." }
+ns.ACH_NOTES[41961] = { "A Mythic or keystone kill counts too.", "Heroic is only open while the dungeon is in the season's Mythic+ rotation; the book says when it isn't." }
 ns.ACH_REVIEWED[41961] = true
 
 -- instances
@@ -989,8 +989,16 @@ ns.ACH_STEPS[61213] = {
     { t = "Queue for it on Heroic in the Group Finder." },
     { t = "Defeat Degentrius on Heroic or higher." },
 }
-ns.ACH_NOTES[61213] = { "A Mythic or keystone kill counts too." }
+ns.ACH_NOTES[61213] = { "A Mythic or keystone kill counts too.", "Heroic is only open while the dungeon is in the season's Mythic+ rotation; the book says when it isn't." }
 ns.ACH_REVIEWED[61213] = true
+
+-- instances
+ns.ACH_STEPS[61368] = {
+    { t = "Join a Heroic group for The Voidspire in Premade Groups." },
+    { t = "Defeat every boss on Heroic or Mythic; kills from different weeks add up." },
+}
+ns.ACH_NOTES[61368] = { "If the Lightblinded Vanguard row doesn't tick after a Heroic kill, players report that a Normal kill of it then completes the achievement." }
+ns.ACH_REVIEWED[61368] = true
 
 -- instances
 ns.ACH_STEPS[61509] = {
@@ -998,7 +1006,7 @@ ns.ACH_STEPS[61509] = {
     { t = "Queue for it on Heroic in the Group Finder." },
     { t = "Defeat Charonus on Heroic or higher." },
 }
-ns.ACH_NOTES[61509] = { "A Mythic or keystone kill counts too." }
+ns.ACH_NOTES[61509] = { "A Mythic or keystone kill counts too.", "Heroic is only open while the dungeon is in the season's Mythic+ rotation; the book says when it isn't." }
 ns.ACH_REVIEWED[61509] = true
 
 -- instances
@@ -1007,7 +1015,7 @@ ns.ACH_STEPS[61642] = {
     { t = "Queue for it on Heroic in the Group Finder." },
     { t = "Defeat Nalorakk on Heroic or higher." },
 }
-ns.ACH_NOTES[61642] = { "A Mythic or keystone kill counts too." }
+ns.ACH_NOTES[61642] = { "A Mythic or keystone kill counts too.", "Heroic is only open while the dungeon is in the season's Mythic+ rotation; the book says when it isn't." }
 ns.ACH_REVIEWED[61642] = true
 
 -- instances
@@ -1016,7 +1024,7 @@ ns.ACH_STEPS[61644] = {
     { t = "Queue for it on Heroic in the Group Finder." },
     { t = "Defeat Rak'tul, Vessel of Souls on Heroic or higher." },
 }
-ns.ACH_NOTES[61644] = { "A Mythic or keystone kill counts too." }
+ns.ACH_NOTES[61644] = { "A Mythic or keystone kill counts too.", "Heroic is only open while the dungeon is in the season's Mythic+ rotation; the book says when it isn't." }
 ns.ACH_REVIEWED[61644] = true
 
 -- instances
@@ -1025,7 +1033,7 @@ ns.ACH_STEPS[61646] = {
     { t = "Queue for it on Heroic in the Group Finder." },
     { t = "Defeat Lothraxion on Heroic or higher." },
 }
-ns.ACH_NOTES[61646] = { "A Mythic or keystone kill counts too." }
+ns.ACH_NOTES[61646] = { "A Mythic or keystone kill counts too.", "Heroic is only open while the dungeon is in the season's Mythic+ rotation; the book says when it isn't." }
 ns.ACH_REVIEWED[61646] = true
 
 -- instances
@@ -1034,8 +1042,17 @@ ns.ACH_STEPS[61648] = {
     { t = "Queue for it on Heroic in the Group Finder." },
     { t = "Defeat Ziekket on Heroic or higher." },
 }
-ns.ACH_NOTES[61648] = { "A Mythic or keystone kill counts too." }
+ns.ACH_NOTES[61648] = { "A Mythic or keystone kill counts too.", "Heroic is only open while the dungeon is in the season's Mythic+ rotation; the book says when it isn't." }
 ns.ACH_REVIEWED[61648] = true
+
+-- instances
+ns.ACH_STEPS[62282] = {
+    { t = "Track the achievement: the arrow leads to the entrance of Altar of Fangs." },
+    { t = "Queue for it on Heroic in the Group Finder, or run it on Mythic or a keystone." },
+    { t = "Defeat Zul'jan." },
+}
+ns.ACH_NOTES[62282] = { "Any difficulty counts." }
+ns.ACH_REVIEWED[62282] = true
 
 -- instances
 ns.ACH_STEPS[62283] = {
@@ -1043,8 +1060,43 @@ ns.ACH_STEPS[62283] = {
     { t = "Queue for it on Heroic in the Group Finder." },
     { t = "Defeat Zul'jan on Heroic or higher." },
 }
-ns.ACH_NOTES[62283] = { "A Mythic or keystone kill counts too." }
+ns.ACH_NOTES[62283] = { "A Mythic or keystone kill counts too.", "Heroic is only open while the dungeon is in the season's Mythic+ rotation; the book says when it isn't." }
 ns.ACH_REVIEWED[62283] = true
+
+-- instances
+ns.ACH_STEPS[63241] = {
+    { t = "Join a Mythic raid group for Sporefall (Premade Groups or a guild)." },
+    { t = "Defeat Rotmire on Mythic." },
+}
+ns.ACH_NOTES[63241] = { "Sporefall's Mythic is flexible: 15 to 25 players." }
+ns.ACH_REVIEWED[63241] = true
+
+-- instances
+ns.ACH_STEPS[63681] = {
+    { t = "Track the achievement: the arrow leads to the underwater portal in the cove in the middle of the Coiled Isle.", at = { 2512, 59.8, 66.2 } },
+    { t = "Swim down and click the portal. Normal, Heroic and Mythic need a premade group: the leader picks the difficulty and enters first, then the rest follow." },
+    { t = "Defeat Nymrissa Wavecaller on Heroic or higher." },
+}
+ns.ACH_NOTES[63681] = { "Normal and Heroic take up to 30 players." }
+ns.ACH_REVIEWED[63681] = true
+
+-- instances
+ns.ACH_STEPS[63682] = {
+    { t = "Track the achievement: the arrow leads to the underwater portal in the cove in the middle of the Coiled Isle.", at = { 2512, 59.8, 66.2 } },
+    { t = "Swim down and click the portal. Normal, Heroic and Mythic need a premade group: the leader picks the difficulty and enters first, then the rest follow." },
+    { t = "Defeat Nymrissa Wavecaller on Mythic." },
+}
+ns.ACH_NOTES[63682] = { "Mythic is flexible: up to 25 players." }
+ns.ACH_REVIEWED[63682] = true
+
+-- instances
+ns.ACH_STEPS[63683] = {
+    { t = "Track the achievement: the arrow leads to the underwater portal in the cove in the middle of the Coiled Isle.", at = { 2512, 59.8, 66.2 } },
+    { t = "Swim down and click the portal. Normal, Heroic and Mythic need a premade group: the leader picks the difficulty and enters first, then the rest follow." },
+    { t = "Defeat Nymrissa Wavecaller on Normal or higher." },
+}
+ns.ACH_NOTES[63683] = { "Normal and Heroic take up to 30 players." }
+ns.ACH_REVIEWED[63683] = true
 
 -- instances
 ns.ACH_STEPS[63692] = {

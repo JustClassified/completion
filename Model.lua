@@ -294,6 +294,12 @@ local function BuildInstances(zone)
                             local ok2, _, desc, _, _, _, _, _, _, _, _, _, isRaid = pcall(EJ_GetInstanceInfo, instID)
                             if ok2 then it.desc = desc; it.raid = isRaid end
                         end
+                        -- the reviewed data decides dungeon or raid, and gives the entrance when the journal has none
+                        local info = ns.InstanceInfo and ns.InstanceInfo(it)
+                        if info then
+                            it.raid = info.kind ~= "dungeon"
+                            if not it.spots[1] then it.spots[1] = { map = info.at[1], x = info.at[2], y = info.at[3] } end
+                        end
                         it.group = it.raid and "Raids" or "Dungeons"
                         local owner = OwnerZone(it.spots[1]) or zone
                         AddItem(owner, "instance", it)
@@ -319,6 +325,16 @@ local function BuildInstances(zone)
             placedInstance["i:" .. norm(name)] = true
             local it = { key = "i:" .. norm(name), kind = "container", ctype = "instance", name = name,
                          children = {}, spots = {}, group = "Dungeons & raids" }
+            -- the reviewed data (Data/InstanceText.lua): its journal ID, entrance, dungeon or raid, bosses
+            local info, jid
+            if ns.InstanceInfo then info, jid = ns.InstanceInfo(it) end
+            if info then
+                it.instID, it.raid = jid, info.kind ~= "dungeon"
+                it.group = it.raid and "Raids" or "Dungeons"
+                it.spots[1] = { map = info.at[1], x = info.at[2], y = info.at[3] }
+                it.bosses = {}
+                for _, b in ipairs(info.bosses) do it.bosses[#it.bosses + 1] = b; AddKeyword(b, zone, it) end
+            end
             AddItem(zone, "instance", it)
             AddKeyword(name, zone, it)
         end
