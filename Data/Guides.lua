@@ -875,7 +875,8 @@ G[62492] = {
 }
 G[61586] = { steps = { { t = "Buy a full Midnight PvP Season 1 armor set, Honor or Conquest (the Warmonger set doesn't count)." }, { t = "Equip every piece to learn it." } } }
 G[63608] = { steps = { { t = "Buy a full Midnight PvP Season 2 armor set, Honor or Conquest." }, { t = "Equip every piece to learn it." } } }
-G[62370] = { steps = { { t = "Chop Thalassian Lumber; Harandar has by far the most." }, { t = "Keep going until 250 (warband-wide). Druids can stay in travel form while chopping." } } }
+G[62370] = { steps = { { t = "Chop Thalassian Lumber; Harandar has by far the most." }, { t = "Keep going until 250 (warband-wide). Druids can stay in travel form while chopping." } },
+             tips = { "Progress and the harvesting unlock are shared by your warband, so a druid can chop for everyone." } }
 G[61887] = {
     steps = {
         { t = "Buy kits and enhancements from Gamesmaster Fleurian in Silvermoon." },

@@ -1355,7 +1355,7 @@ local decor = function(n)
             { t = "Collect unique decor of uncommon quality or better: vendors, quests, treasures, achievements and professions all give it." },
             { t = "Keep going until you own " .. n .. " different pieces; duplicates don't count." },
         },
-        tips = { "Some players got these late or early when the feature launched; if it looks stuck, relog." },
+        tips = { "Players report the count can lag behind the decor they really own, especially near 500; relogging doesn't fix it." },
     }
 end
 for id = 61308, 61318 do G[id] = decor(id == 61308 and 1 or (id - 61308) * 50) end
