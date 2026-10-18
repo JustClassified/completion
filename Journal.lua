@@ -13,7 +13,9 @@ local W, H = 1200, 760                   -- the default size; drag the corner to
 local MIN_W, MIN_H, MAX_W, MAX_H = 960, 620, 1800, 1150
 local CARD_W, CARD_H = 374, 112          -- a Journeys renown card
 local DETAIL_W = 340                     -- the detail panel on the right: 3D model and how to get it
-local ITEM_H, CHILD_H, HEAD_H = 50, 26, 38
+local ITEM_H, CHILD_H, HEAD_H = 22, 19, 28   -- slim rows, close to the classic book's, so a page shows a lot at once
+local INST_H = 38                            -- a dungeon or raid row with its small Adventure Guide picture
+local MAP_W = DETAIL_W - 20
 
 local frame, inset, nav, search, bookDrop, filterDrop
 local views = {}          -- home, zone, page, options, empty
@@ -293,8 +295,10 @@ local function MakeCard(parent)
     c.level = Font(c, "GameFontNormalMed2")
     c.level:SetSize(260, 16)
     c.level:SetPoint("TOPLEFT", c.name, "BOTTOMLEFT", 0, -2)
-    c.sub = Font(c, "GameFontDisableSmall")
-    c.sub:SetSize(260, 14)
+    c.sub = Font(c, "GameFontHighlightSmall")
+    c.sub:SetTextColor(0.75, 0.72, 0.65)
+    c.sub:SetSize(270, 14)
+    c.sub:SetWordWrap(false)
     c.sub:SetPoint("TOPLEFT", c.level, "BOTTOMLEFT", 0, -3)
     c:SetScript("OnClick", function(self) if self.page then OpenPage(self.page) end end)
     c:SetScript("OnEnter", function(self)
@@ -337,8 +341,17 @@ local function FillCard(c, z)
         c.level:SetText("Complete")
         c.sub:SetText(string.format("%d / %d", cur, max))
     else
-        c.level:SetText(string.format("%d%% complete", pct))
-        c.sub:SetText(max > 0 and string.format("%d / %d", cur, max) or "Nothing to count yet")
+        c.level:SetText(max > 0 and string.format("%d%% complete  |cffc8c0a8%d / %d|r", pct, cur, max) or "Nothing to count yet")
+        -- what is still left, biggest first
+        local left = {}
+        for _, d in ipairs(ns.ListSectionDefs(z)) do
+            local sec = z.sections[d.key]
+            if sec and (sec.max or 0) > sec.cur then left[#left + 1] = { sec.max - sec.cur, d.name } end
+        end
+        table.sort(left, function(a, b) return a[1] > b[1] end)
+        local parts = {}
+        for i = 1, math.min(3, #left) do parts[i] = left[i][1] .. " " .. left[i][2]:lower() end
+        c.sub:SetText(#parts > 0 and ("Left: " .. table.concat(parts, ", ")) or "")
     end
     SetRing(c, max > 0 and (cur / max * 100) or 0, color)
 end
@@ -395,8 +408,16 @@ local function SectionButton(i)
     local b = sectionButtons[i]
     if b then return b end
     b = CreateFrame("Button", nil, views.zone.list)
-    b:SetSize(200, 22)
-    b:SetPoint("TOPLEFT", 10, -10 - (i - 1) * 23)
+    b:SetSize(204, 24)
+    b:SetPoint("TOPLEFT", 10, -10 - (i - 1) * 26)
+    b.barBg = b:CreateTexture(nil, "ARTWORK")
+    b.barBg:SetHeight(2)
+    b.barBg:SetPoint("BOTTOMLEFT", 8, 1)
+    b.barBg:SetPoint("BOTTOMRIGHT", -8, 1)
+    b.barBg:SetColorTexture(0, 0, 0, 0.5)
+    b.barFill = b:CreateTexture(nil, "OVERLAY")
+    b.barFill:SetHeight(2)
+    b.barFill:SetPoint("BOTTOMLEFT", b.barBg, "BOTTOMLEFT")
     b.bg = b:CreateTexture(nil, "BACKGROUND")
     b.bg:SetAllPoints()
     b.hl = b:CreateTexture(nil, "HIGHLIGHT")
@@ -427,8 +448,12 @@ local function RefreshSections(z)
                 local full = sec.cur >= sec.max
                 b.count:SetText(string.format("%d/%d", sec.cur, sec.max))
                 b.count:SetTextColor(full and 0.4 or 0.9, full and 0.9 or 0.9, full and 0.4 or 0.9)
+                b.barFill:SetWidth(math.max(0.001, 188 * sec.cur / sec.max))
+                if full then b.barFill:SetColorTexture(0.35, 0.75, 0.35, 0.9) else b.barFill:SetColorTexture(0.85, 0.62, 0.22, 0.9) end
+                b.barFill:Show(); b.barBg:Show()
             else
                 b.count:SetText("")
+                b.barFill:Hide(); b.barBg:Hide()
             end
             if s.key == cur then Atlas(b.bg, "Options_List_Active", false); b.bg:Show(); b.label:SetTextColor(1, 1, 1)
             else b.bg:Hide(); b.label:SetTextColor(1, 0.82, 0) end
@@ -452,7 +477,7 @@ end
 local function LineHeight(ln)
     if ln.header then return HEAD_H end
     if ln.depth and ln.depth > 0 or ln.row then return CHILD_H end
-    if InstanceArt(ln.it) then return 76 end
+    if InstanceArt(ln.it) then return INST_H end
     return ITEM_H
 end
 
@@ -475,17 +500,22 @@ local function BuildRow(r)
     r.divider = r:CreateTexture(nil, "ARTWORK")
     r.divider:SetPoint("BOTTOMLEFT", 6, 2)
     r.divider:SetPoint("BOTTOMRIGHT", -6, 2)
-    r.divider:SetHeight(8)
+    r.divider:SetHeight(6)
     r.expand = r:CreateTexture(nil, "OVERLAY")
     r.expand:SetSize(18, 18)
     r.status = r:CreateTexture(nil, "OVERLAY")
-    r.status:SetSize(16, 14)
+    r.status:SetSize(14, 13)
+    r.sep = r:CreateTexture(nil, "BORDER")
+    r.sep:SetHeight(1)
+    r.sep:SetPoint("BOTTOMLEFT", 4, 0)
+    r.sep:SetPoint("BOTTOMRIGHT", -4, 0)
+    r.sep:SetColorTexture(1, 0.9, 0.7, 0.07)
     r.icon = r:CreateTexture(nil, "OVERLAY")
-    r.icon:SetSize(24, 24)
+    r.icon:SetSize(18, 18)
     r.track = r:CreateTexture(nil, "OVERLAY")
-    r.track:SetSize(18, 18)
+    r.track:SetSize(14, 14)
     r.track:SetTexture("Interface\\AddOns\\" .. (ns.ADDON or "Completion") .. "\\Textures\\arrow")
-    r.text = Font(r, "GameFontHighlightMed2")
+    r.text = Font(r, "GameFontHighlight")
     r.text:SetWordWrap(false)
     r.right = Font(r, "GameFontNormalSmall")
     r.right:SetJustifyH("RIGHT")
@@ -516,19 +546,19 @@ end
 local function FillRow(r, ln)
     BuildRow(r)
     r.line = ln
-    for _, k in ipairs({ "bg", "art", "artFrame", "divider", "expand", "status", "icon", "track", "strike" }) do r[k]:Hide() end
+    for _, k in ipairs({ "bg", "art", "artFrame", "divider", "expand", "status", "icon", "track", "strike", "sep" }) do r[k]:Hide() end
     r.hl:SetTexture(nil)
     r.text:ClearAllPoints(); r.right:ClearAllPoints(); r.status:ClearAllPoints(); r.icon:ClearAllPoints()
     r.expand:ClearAllPoints(); r.track:ClearAllPoints()
-    r.text:SetFontObject("GameFontHighlightMed2")
+    r.text:SetFontObject("GameFontHighlight")
     if ln.header then
         -- a heading: like the Journeys "Renowns" heading, with the divider under it
-        r.text:SetFontObject("GameFontNormalLarge")
-        r.text:SetPoint("LEFT", 10, 4)
-        r.text:SetPoint("RIGHT", r.right, "LEFT", -8, 4)
+        r.text:SetFontObject("GameFontNormalMed2")
+        r.text:SetPoint("LEFT", 8, 3)
+        r.text:SetPoint("RIGHT", r.right, "LEFT", -8, 3)
         r.text:SetText(ln.text or "")
         r.text:SetTextColor(1, 0.82, 0)
-        r.right:SetPoint("RIGHT", -14, 4)
+        r.right:SetPoint("RIGHT", -10, 3)
         r.right:SetText((ln.max or 0) > 0 and string.format("%d/%d", ln.cur, ln.max) or (ln.leftOut and tostring(ln.leftOut) or ""))
         local full = (ln.max or 0) > 0 and ln.cur >= ln.max
         r.right:SetTextColor(full and 0.4 or 1, full and 0.9 or 0.82, full and 0.4 or 0)
@@ -551,19 +581,19 @@ local function FillRow(r, ln)
     end
     local info = ns.LineInfo(ln)
     local child = (ln.depth or 0) > 0 or ln.row ~= nil
-    local left = 12 + (ln.depth or 0) * 18
+    local left = 6 + (ln.depth or 0) * 16
     if not child then
-        -- a top-level row: the Traveler's Log row art, lit when done
-        Atlas(r.bg, info.done and "activities-complete" or "activities-incomplete", false)
-        r.bg:Show()
-        Atlas(r.hl, info.done and "activities-complete" or "activities-incomplete", false)
-        r.hl:SetAlpha(0.3)
-        -- a dungeon or raid gets its Adventure Guide picture behind the name
+        -- a top-level row: a thin line under it and the options list's hover light
+        r.sep:Show()
+        if not Atlas(r.hl, "Options_List_Hover", false) then r.hl:SetColorTexture(1, 0.82, 0.3, 0.12) end
+        r.hl:SetAlpha(1)
+        if info.done then r.bg:SetColorTexture(0.3, 0.6, 0.3, 0.06); r.bg:Show() end
+        -- a dungeon or raid gets its small Adventure Guide picture at the left
         local art = InstanceArt(ln.it)
         if art then
             r.art:ClearAllPoints()
-            r.art:SetPoint("LEFT", 8, 0)
-            r.art:SetSize(116, 64)
+            r.art:SetPoint("LEFT", 6, 0)
+            r.art:SetSize(56, 31)
             r.art:SetTexture(art)
             r.art:SetTexCoord(0, 0.68359375, 0, 0.7421875)
             r.art:Show()
@@ -575,29 +605,30 @@ local function FillRow(r, ln)
     else
         r.hl:SetColorTexture(1, 0.82, 0.3, 0.12)
         r.hl:SetAlpha(1)
-        r.text:SetFontObject("GameFontHighlight")
+        r.text:SetFontObject("GameFontHighlightSmall")
     end
-    if not child and InstanceArt(ln.it) then left = 132 end
+    if not child and InstanceArt(ln.it) then left = 70 end
     if info.canExpand then
+        r.expand:SetSize(14, 14)
         r.expand:SetPoint("LEFT", left, 0)
         Atlas(r.expand, info.expanded and "campaign_headericon_open" or "campaign_headericon_closed", false)
         r.expand:Show()
-        left = left + 20
+        left = left + 15
     end
     r.status:SetPoint("LEFT", left, 0)
-    if info.done then Atlas(r.status, "activities-icon-checkmark-small-yellow", false); r.status:SetSize(15, 13); r.status:Show()
-    elseif info.upNow then r.status:SetTexture("Interface\\COMMON\\Indicator-Green"); r.status:SetSize(14, 14); r.status:Show()
-    elseif info.current then r.status:SetTexture("Interface\\RaidFrame\\ReadyCheck-Waiting"); r.status:SetSize(14, 14); r.status:Show() end
-    left = left + 18
+    if info.done then Atlas(r.status, "activities-icon-checkmark-small-yellow", false); r.status:SetSize(13, 11); r.status:Show()
+    elseif info.upNow then r.status:SetTexture("Interface\\COMMON\\Indicator-Green"); r.status:SetSize(12, 12); r.status:Show()
+    elseif info.current then r.status:SetTexture("Interface\\RaidFrame\\ReadyCheck-Waiting"); r.status:SetSize(12, 12); r.status:Show() end
+    left = left + 15
     if info.icon then
         r.icon:SetTexture(info.icon)
-        r.icon:SetSize(child and 18 or 26, child and 18 or 26)
+        r.icon:SetSize(child and 14 or 17, child and 14 or 17)
         r.icon:SetPoint("LEFT", left, 0)
         r.icon:Show()
-        left = left + (child and 22 or 30)
+        left = left + (child and 17 or 21)
     end
-    r.right:SetPoint("RIGHT", info.tracked and -34 or -16, 0)
-    r.right:SetWidth(child and 150 or 190)
+    r.right:SetPoint("RIGHT", info.tracked and -24 or -8, 0)
+    r.right:SetWidth(child and 170 or 210)
     r.right:SetText(info.sub or "")
     r.right:SetTextColor(0.85, 0.8, 0.65)
     r.text:SetPoint("LEFT", left, 0)
@@ -613,7 +644,7 @@ local function FillRow(r, ln)
         r.strike:SetWidth(math.max(1, math.min(r.text:GetStringWidth() or 0, r.text:GetWidth() or 0)))
         r.strike:Show()
     end
-    if info.tracked then r.track:SetPoint("RIGHT", -12, 0); r.track:Show() end
+    if info.tracked then r.track:SetPoint("RIGHT", -6, 0); r.track:Show() end
 end
 
 ------------------------------------------------------------------------
@@ -660,12 +691,142 @@ local function SetProgress(cur, max, label)
 end
 
 ------------------------------------------------------------------------
--- detail panel: the 3D model of a picked mount, pet, appearance or rare, and how to get it
+-- detail panel: the zone's map with what is still missing, or the 3D model of a picked mount, pet,
+-- appearance or rare in the map's place, with how to get it underneath
 ------------------------------------------------------------------------
 
--- Redraws the detail panel: the picked item, or the open page's emblem and a hint.
+local tilePool, pinPool = {}, {}
+
+-- Lays a map's art tiles onto the panel's map canvas, MAP_W wide; returns the map's height at that width.
+local function DrawMap(mapID)
+    local canvas = detail.map.canvas
+    for _, t in ipairs(tilePool) do t:Hide() end
+    if not (mapID and C_Map and C_Map.GetMapArtLayers and C_Map.GetMapArtLayerTextures) then return MAP_W * 2 / 3 end
+    local ok, layers = pcall(C_Map.GetMapArtLayers, mapID)
+    local ok2, textures = pcall(C_Map.GetMapArtLayerTextures, mapID, 1)
+    if not ok or not ok2 or type(layers) ~= "table" or not layers[1] or type(textures) ~= "table" then return MAP_W * 2 / 3 end
+    local l = layers[1]
+    local cols = math.ceil(l.layerWidth / l.tileWidth)
+    local scale = MAP_W / l.layerWidth
+    local tw, th = l.tileWidth * scale, l.tileHeight * scale
+    for i, tex in ipairs(textures) do
+        local t = tilePool[i]
+        if not t then t = canvas:CreateTexture(nil, "ARTWORK"); tilePool[i] = t end
+        local r, c = math.floor((i - 1) / cols), (i - 1) % cols
+        t:SetTexture(tex)
+        t:SetSize(tw, th)
+        t:ClearAllPoints()
+        t:SetPoint("TOPLEFT", canvas, "TOPLEFT", c * tw, -r * th)
+        t:Show()
+    end
+    return l.layerHeight * scale
+end
+
+-- Sets a pin's icon by kind, the same icons as the classic book's map.
+local function PinAtlas(pin, kind)
+    local atlas = ({ vendor = "banker", treasure = "VignetteLoot", rare = "VignetteKill", boss = "VignetteKillElite", achv = "VignetteEvent",
+                     lore = "QuestNormal", step = "QuestNormal", container = "Dungeon", delve = "delves-regular" })[kind] or "VignetteLoot"
+    local ok = pcall(pin.tex.SetAtlas, pin.tex, atlas)
+    if not ok or not (pin.tex.GetAtlas and pin.tex:GetAtlas()) then pin.tex:SetTexture("Interface\\COMMON\\Indicator-Yellow") end
+end
+
+-- Map pin i from the pool; hover shows the item's tooltip, a click tracks it.
+local function GetPin(i)
+    local p = pinPool[i]
+    if p then return p end
+    p = CreateFrame("Button", nil, detail.map.canvas)
+    p:SetSize(13, 13)
+    p.tex = p:CreateTexture(nil, "OVERLAY")
+    p.tex:SetAllPoints()
+    p:SetScript("OnEnter", function(self) ns.ItemTooltip(self, self.it, self.row) end)
+    p:SetScript("OnLeave", function() GameTooltip:Hide() end)
+    p:SetScript("OnClick", function(self) ns.Track(self.it, self.row and self.row.key) end)
+    pinPool[i] = p
+    return p
+end
+
+-- Pins what is still missing on the map: the open section's items, else treasures, rares and knowledge
+-- treasures as the pin filter allows (250 at most), then the route.
+local function PlacePins(z)
+    for _, p in ipairs(pinPool) do p:Hide() end
+    local canvas = detail.map.canvas
+    if not z.map then return end
+    local secKey = ns.ListSection()
+    local wanted = secKey and { [secKey] = true }
+                   or (z.event and { guide = true, achv = true })
+                   or { treasure = ns.PinOn("treasure") or nil, rare = ns.PinOn("rare") or nil, prof = ns.PinOn("prof") or nil }
+    local target = ns.TargetItem and ns.TargetItem()
+    local h = canvas:GetHeight()
+    local n = 0
+    local function add(it, row, spot, kind)
+        if n >= 250 or not spot or not spot.x then return end
+        local x, y = ns.MapPosOn(spot, z.map)
+        if not x then return end
+        n = n + 1
+        local p = GetPin(n)
+        p.it, p.row = it, row
+        PinAtlas(p, kind)
+        local big = (target and target.key == it.key) or ns.upNow[it.key] ~= nil
+        p:SetSize(big and 19 or 12, big and 19 or 12)
+        p:SetFrameLevel(canvas:GetFrameLevel() + (big and 5 or 2))
+        p:ClearAllPoints()
+        p:SetPoint("CENTER", canvas, "TOPLEFT", x * MAP_W, -y * h)
+        p:Show()
+    end
+    for key in pairs(wanted) do
+        local sec = z.sections[key]
+        for _, it in ipairs(sec and sec.items or {}) do
+            if (not it.done or ns.FarmWanted(it)) and not it.hidden then
+                if it.kind == "point" then
+                    for _, sp in ipairs(it.spots) do add(it, nil, sp, it.pkind) end
+                elseif it.kind == "ach" then
+                    local any = false
+                    for _, row in ipairs(ns.Children(it)) do
+                        if not row.done and row.spot then add(it, row, row.spot, "achv"); any = true end
+                    end
+                    if not any then
+                        local res = ns.Resolve(it)
+                        if res.spot then add(it, nil, res.spot, "achv") end
+                    end
+                elseif it.kind == "container" then
+                    for _, sp in ipairs(it.spots) do add(it, nil, sp, it.ctype) end
+                elseif it.kind == "lore" and ns.ListExpanded[it.key] then
+                    local res = ns.Resolve(it)
+                    if res.spot then add(it, nil, res.spot, "lore") end
+                elseif it.kind == "collect" then
+                    local sp = it.spots and it.spots[1]
+                    if sp then add(it, nil, sp, it.source and it.source.pkind or "vendor") end
+                elseif it.kind == "step" then
+                    for _, sp in ipairs(it.spots) do add(it, nil, sp, "step") end
+                end
+            end
+        end
+    end
+    if ns.DrawRoute then ns.DrawRoute(canvas, MAP_W, h, z.map, 1) end
+    return n
+end
+
+-- Moves the player arrow on the panel's map; hidden off this page's map.
+local function UpdatePlayerDot()
+    local z = detail.zone
+    local dot = detail.map.player
+    if not (z and z.map and detail.map:IsVisible() and C_Map and C_Map.GetPlayerMapPosition) then dot:Hide(); return end
+    local ok, pos = pcall(C_Map.GetPlayerMapPosition, z.map, "player")
+    if not ok or not pos then dot:Hide(); return end
+    local x, y
+    if pos.GetXY then x, y = pos:GetXY() else x, y = pos.x, pos.y end
+    if not x or x <= 0 or y <= 0 or x >= 1 or y >= 1 then dot:Hide(); return end
+    dot:ClearAllPoints()
+    dot:SetPoint("CENTER", detail.map.canvas, "TOPLEFT", x * MAP_W, -y * detail.map.canvas:GetHeight())
+    local facing = GetPlayerFacing and GetPlayerFacing()
+    if facing then dot.tex:SetRotation(facing) end
+    dot:Show()
+end
+
+-- Redraws the detail panel: the model of the picked item and how to get it, or the page's map.
 local function RefreshDetail(z)
     if not detail then return end
+    detail.zone = z
     local sel = ns.selected
     if sel and ns.ModelInfo and ns.ModelInfo(sel) then
         if detail.presented ~= sel then
@@ -673,29 +834,42 @@ local function RefreshDetail(z)
             detail.show:Present(sel)
         end
         detail.show:Show()
-        detail.idle:Hide()
+        detail.map:Hide()
         local parts = {}
         for _, l in ipairs(ns.HowToGet and ns.HowToGet(sel) or {}) do
             parts[#parts + 1] = string.format("|cff%02x%02x%02x%s|r", math.floor(l[2] * 255), math.floor(l[3] * 255), math.floor(l[4] * 255), l[1])
         end
-        detail.how:SetText(#parts > 0 and table.concat(parts, "\n\n") or "")
         detail.howHead:SetText(sel.done and "Collected" or "How to get it")
-        detail.howHead:Show(); detail.how:Show()
+        detail.how:SetText(table.concat(parts, "\n\n"))
+        detail.howHead:ClearAllPoints()
+        detail.howHead:SetPoint("TOPLEFT", detail.show, "BOTTOMLEFT", 4, -10)
         return
     end
     detail.presented = nil
     detail.show:Hide()
-    detail.howHead:Hide(); detail.how:Hide()
-    detail.idle:Show()
-    if z then
-        SetEmblem(detail.idle.emblem, z)
-        detail.idle.name:SetText(z.name)
-        local cur, max, pct = Totals(z)
-        detail.idle.total:SetText(max > 0 and string.format("%d of %d done (%d%%)", cur, max, pct) or "")
+    detail.map:Show()
+    local h = MAP_W * 2 / 3
+    if z and z.map then
+        if detail.drawn ~= z.map then detail.drawn = z.map; detail.mapH = DrawMap(z.map) end
+        h = detail.mapH or h
     else
-        detail.idle.emblem:SetTexture("Interface\\Icons\\INV_Misc_Book_16")
-        detail.idle.name:SetText("Search")
-        detail.idle.total:SetText("")
+        detail.drawn = nil
+        for _, t in ipairs(tilePool) do t:Hide() end
+    end
+    detail.map:SetHeight(h)
+    detail.map.canvas:SetSize(MAP_W, h)
+    local n = z and PlacePins(z) or 0
+    detail.map.empty:SetShown(not (z and z.map))
+    detail.howHead:ClearAllPoints()
+    detail.howHead:SetPoint("TOPLEFT", detail.map, "BOTTOMLEFT", 4, -10)
+    if z and z.map then
+        local sec = ns.ListSection()
+        local what = sec and z.sections[sec] and z.sections[sec].name or (z.event and "Holiday spots" or "Treasures and rares")
+        detail.howHead:SetText(string.format("%s still missing: %d", what, n))
+        detail.how:SetText("|cffc8c0a8Hover a pin to see what it is; click it to track it. Click the map to open the big map. Click a mount, pet, appearance or rare in the list to see it here in 3D.|r")
+    else
+        detail.howHead:SetText(z and z.name or "Search")
+        detail.how:SetText("|cffc8c0a8Click a mount, pet, appearance or rare in the list to see it here in 3D. Drag to turn it, scroll to zoom.|r")
     end
 end
 
@@ -708,41 +882,71 @@ local function BuildDetail(parent)
     local bg = detail:CreateTexture(nil, "BACKGROUND")
     bg:SetAllPoints()
     if not Atlas(bg, "activities-container", false) then bg:SetColorTexture(0, 0, 0, 0.3) end
-    detail.show = ns.CreateShowcase(detail, DETAIL_W - 20, 300, function()
+
+    -- the map: tiles, pins, route and the player arrow live on map.canvas
+    local map = CreateFrame("Frame", nil, detail)
+    map:SetPoint("TOPLEFT", 10, -10)
+    map:SetSize(MAP_W, MAP_W * 2 / 3)
+    map:SetClipsChildren(true)
+    local mbg = map:CreateTexture(nil, "BACKGROUND")
+    mbg:SetAllPoints()
+    mbg:SetColorTexture(0, 0, 0, 0.6)
+    map.canvas = CreateFrame("Frame", nil, map)
+    map.canvas:SetPoint("TOPLEFT")
+    map.canvas:SetSize(MAP_W, MAP_W * 2 / 3)
+    map.player = CreateFrame("Frame", nil, map.canvas)
+    map.player:SetSize(18, 18)
+    map.player:SetFrameLevel(map.canvas:GetFrameLevel() + 10)
+    map.player.tex = map.player:CreateTexture(nil, "OVERLAY")
+    map.player.tex:SetAllPoints()
+    map.player.tex:SetTexture("Interface\\WorldMap\\WorldMapArrow")
+    map.player:Hide()
+    map.empty = Font(map, "GameFontDisable")
+    map.empty:SetPoint("CENTER")
+    map.empty:SetText("No map for this page")
+    map:EnableMouse(true)
+    map:SetScript("OnMouseUp", function(_, button)
+        if button == "LeftButton" and detail.zone and detail.zone.map then ns.OpenWorldMap(detail.zone.map) end
+    end)
+    map:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_TOP")
+        GameTooltip:AddLine("Click to open the big map")
+        GameTooltip:AddLine("Everything still missing is pinned there. Click a pin to track it.", 0.8, 0.8, 0.8, true)
+        GameTooltip:Show()
+    end)
+    map:SetScript("OnLeave", function() GameTooltip:Hide() end)
+    if ns.MakePinButton then
+        map.filter = ns.MakePinButton(map, 22)
+        map.filter.zoneFor = function() local z = detail.zone; return z and not z.overview and z end
+        map.filter:SetPoint("TOPRIGHT", -4, -4)
+        map.filter:SetFrameLevel(map.canvas:GetFrameLevel() + 20)
+    end
+    local tick = 0
+    map:SetScript("OnUpdate", function(_, elapsed)
+        tick = tick + elapsed
+        if tick < 0.25 then return end
+        tick = 0
+        UpdatePlayerDot()
+    end)
+    detail.map = map
+
+    -- the 3D model takes the map's place; its Close button brings the map back
+    detail.show = ns.CreateShowcase(detail, MAP_W, 300, function()
         ns.selected = nil
         Refresh()
     end, CLOSE or "Close")
     detail.show:ClearAllPoints()
     detail.show:SetPoint("TOPLEFT", 10, -10)
-    detail.show:SetPoint("TOPRIGHT", -10, -10)
-    detail.show:SetHeight(300)
+    detail.show:SetSize(MAP_W, 300)
+
     detail.howHead = Font(detail, "GameFontNormalLarge")
-    detail.howHead:SetPoint("TOPLEFT", detail.show, "BOTTOMLEFT", 6, -12)
+    detail.howHead:SetPoint("TOPLEFT", map, "BOTTOMLEFT", 4, -10)
+    detail.howHead:SetWidth(MAP_W - 8)
     detail.how = Font(detail, "GameFontHighlight")
     detail.how:SetJustifyV("TOP")
     detail.how:SetPoint("TOPLEFT", detail.howHead, "BOTTOMLEFT", 0, -8)
     detail.how:SetPoint("BOTTOMRIGHT", detail, "BOTTOMRIGHT", -16, 12)
     detail.how:SetSpacing(2)
-    -- nothing picked: the page's emblem, its total and a hint
-    local idle = CreateFrame("Frame", nil, detail)
-    idle:SetAllPoints()
-    idle.emblem = idle:CreateTexture(nil, "ARTWORK")
-    idle.emblem:SetSize(150, 150)
-    idle.emblem:SetPoint("TOP", 0, -40)
-    idle.name = Font(idle, "GameFontNormalHuge")
-    idle.name:SetJustifyH("CENTER")
-    idle.name:SetPoint("TOP", idle.emblem, "BOTTOM", 0, -14)
-    idle.name:SetWidth(DETAIL_W - 30)
-    idle.total = Font(idle, "GameFontHighlightMed2")
-    idle.total:SetJustifyH("CENTER")
-    idle.total:SetPoint("TOP", idle.name, "BOTTOM", 0, -8)
-    idle.total:SetWidth(DETAIL_W - 30)
-    idle.hint = Font(idle, "GameFontDisable")
-    idle.hint:SetJustifyH("CENTER")
-    idle.hint:SetPoint("TOP", idle.total, "BOTTOM", 0, -30)
-    idle.hint:SetWidth(DETAIL_W - 50)
-    idle.hint:SetText("Click a mount, pet, appearance or rare to see it here in 3D. Drag to turn it, scroll to zoom.")
-    detail.idle = idle
 end
 
 -- Puts the rows between the section list (when shown) and the detail panel.
