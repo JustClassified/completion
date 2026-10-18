@@ -2197,7 +2197,7 @@ local function RefreshRight()
         ns.RefreshAbout()
         return
     end
-    R.options:Hide(); R.about:Hide(); R.scope:Hide()
+    R.options:Hide(); R.about:Hide(); R.scope:Hide(); R.advanced:Hide()
     RefreshTrackLine()
     if ns.showPage then
         R.list:Hide(); R.chron:Hide()

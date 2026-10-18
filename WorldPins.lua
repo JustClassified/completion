@@ -169,7 +169,20 @@ local function Tooltip(pin)
         if note then GameTooltip:AddLine(note, 0.9, 0.85, 0.7, true) end
     end
     if ns.upNow[it.key] then GameTooltip:AddLine("Up now", 0.4, 1, 0.4) end
-    if not row and it.done then GameTooltip:AddLine("Done: nothing left to get here", 0.5, 0.8, 0.5) end
+    -- a killed rare can still drop a mount, pet, toy or decor you need: say so, and name them
+    local wants = (not row and it.done and ns.FarmWants) and ns.FarmWants(it) or {}
+    if #wants > 0 then
+        if ns.LootedToday(it) then
+            GameTooltip:AddLine("Killed and looted today. It still drops:", 0.7, 0.7, 0.7, true)
+        else
+            GameTooltip:AddLine("Killed already, but it still drops:", 1, 0.56, 0.25, true)
+        end
+        for _, w in ipairs(wants) do
+            GameTooltip:AddLine("  " .. (ns.ItemName(w[1]) or ("item " .. w[1])) .. " (" .. w[2] .. ")", 0.9, 0.9, 0.9, true)
+        end
+    elseif not row and it.done then
+        GameTooltip:AddLine("Done: nothing left to get here", 0.5, 0.8, 0.5)
+    end
     if not row and not it.done then ns.AddDifficulty(GameTooltip, it) end
     GameTooltip:AddLine("Completion: click to track with the arrow.", 0.5, 0.5, 0.5)
     GameTooltip:Show()

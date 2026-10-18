@@ -404,6 +404,7 @@ function ns.BuildAdvanced(R, Header, Text, pageW)
     advanced = CreateFrame("Frame", nil, R)
     advanced:SetAllPoints()
     advanced:Hide()
+    R.advanced = advanced
     local s = ns.db.settings
 
     local head = Header(advanced, pageW)
