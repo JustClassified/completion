@@ -554,68 +554,74 @@ ns.ACH_PLACE = {
     [63472] = { "midnight", "Collections", o = 546 },   -- Fang Fatale
     [63473] = { "midnight", "Collections", o = 547 },   -- Sssensational!
     [63608] = { "midnight", "Collections", o = 548 },   -- Venomous Vestments
-    [61221] = { "midnight", "PvP", o = 549 },   -- Tour of Duty: Eversong Woods
-    [61222] = { "midnight", "PvP", o = 550 },   -- Tour of Duty: Zul'Aman
-    [61223] = { "midnight", "PvP", o = 551 },   -- Tour of Duty: Harandar
-    [61224] = { "midnight", "PvP", o = 552 },   -- Tour of Duty: Voidstorm
-    [61225] = { "midnight", "PvP", o = 553 },   -- Investigating the Rise
-    [61226] = { "midnight", "PvP", o = 554 },   -- Uprising
-    [61227] = { "midnight", "PvP", o = 555 },   -- Entering the Void
-    [61228] = { "midnight", "PvP", o = 556 },   -- Embracing the Void
-    [61229] = { "midnight", "PvP", o = 557 },   -- Dedication in the Void
-    [61230] = { "midnight", "PvP", o = 558 },   -- Remains in the Rise
-    [61231] = { "midnight", "PvP", o = 559 },   -- Midnight Loot
-    [61232] = { "midnight", "PvP", o = 560 },   -- Midnight Treasures
-    [61234] = { "midnight", "PvP", o = 561 },   -- Hunt in the Night
-    [61238] = { "midnight", "PvP", o = 562 },   -- Midnight Bounty
-    [61265] = { "midnight", "PvP", o = 563 },   -- Spectral Capture
-    [61266] = { "midnight", "PvP", o = 564 },   -- Spectral Stocker
-    [61446] = { "midnight", "PvP", o = 565 },   -- Slayer's Mastery
-    [61447] = { "midnight", "PvP", o = 566 },   -- Partake in the Rise
-    [61448] = { "midnight", "PvP", o = 567 },   -- Frequent the Rise
-    [61449] = { "midnight", "PvP", o = 568 },   -- Customary Rise
-    [61464] = { "midnight", "PvP", o = 569 },   -- Spark in the Night
-    [61465] = { "midnight", "PvP", o = 570 },   -- Spark in the Night
-    [61953] = { "midnight", "PvP", o = 571 },   -- Putting in the Practice
-    [61954] = { "midnight", "PvP", o = 572 },   -- Putting in the Practice
-    [61955] = { "midnight", "PvP", o = 573 },   -- Putting in the Practice
-    [61956] = { "midnight", "PvP", o = 574 },   -- Putting in the Practice
-    [61958] = { "midnight", "PvP", o = 575 },   -- Focused Target
-    [61959] = { "midnight", "PvP", o = 576 },   -- Focused Target
-    [62107] = { "midnight", "PvP", o = 577 },   -- Mandatory Training
-    [62108] = { "midnight", "PvP", o = 578 },   -- Training with Patience
-    [62109] = { "midnight", "PvP", o = 579 },   -- Training with Patience
-    [62111] = { "midnight", "PvP", o = 580 },   -- Boots on the Ground: Arathi Basin
-    [62112] = { "midnight", "PvP", o = 581 },   -- Boots on the Ground: Battle for Gilneas
-    [62113] = { "midnight", "PvP", o = 582 },   -- Boots on the Ground: Silvershard Mines
-    [62114] = { "midnight", "PvP", o = 583 },   -- Learning the Landscape: Arathi Basin
-    [62115] = { "midnight", "PvP", o = 584 },   -- Learning the Landscape: Battle for Gilneas
-    [62116] = { "midnight", "PvP", o = 585 },   -- Learning the Landscape: Silvershard Mines
-    [62493] = { "midnight", "PvP", o = 586 },   -- Slayer's Rise Victory
-    [62494] = { "midnight", "PvP", o = 587 },   -- Slayer's Rise Veteran
-    [62514] = { "midnight", "PvP", o = 588 },   -- Slayer's Rise Dominance
-    [62516] = { "midnight", "PvP", o = 589 },   -- The Voided Gazelle
-    [62517] = { "midnight", "PvP", o = 590 },   -- Rise of the Ultradon Slayer
-    [63167] = { "midnight", "PvP", o = 591 },   -- Tour of Duty: The Coiled Isle
-    [63695] = { "midnight", "PvP", o = 592 },   -- Arena Exercise
-    [63696] = { "midnight", "PvP", o = 593 },   -- Arena Exercise
-    [63697] = { "midnight", "PvP", o = 594 },   -- Arena Exercise
-    [63698] = { "midnight", "PvP", o = 595 },   -- Arena Exercise
-    [63699] = { "midnight", "PvP", o = 596 },   -- World Wide Trainer
-    [61335] = { "midnight", "World Events", o = 597 },   -- Flame Keeper of Midnight
-    [61336] = { "midnight", "World Events", o = 598 },   -- Flame Warden of Midnight
-    [61792] = { "midnight", "World Events", o = 599 },   -- T-A-G that spells "Gotcha!"
-    [61793] = { "midnight", "World Events", o = 600 },   -- Deployed to the Void
-    [61878] = { "midnight", "World Events", o = 601 },   -- Tagged and Bagged
-    [61879] = { "midnight", "World Events", o = 602 },   -- You're It
-    [61880] = { "midnight", "World Events", o = 603 },   -- It's Cold Here in This Shadow
-    [61881] = { "midnight", "World Events", o = 604 },   -- Hide and Peekless
-    [61882] = { "midnight", "World Events", o = 605 },   -- Null and Avoided
-    [61883] = { "midnight", "World Events", o = 606 },   -- Now You Don't See Me...
-    [61886] = { "midnight", "World Events", o = 607 },   -- The Whole Kit and Caboodle
-    [61887] = { "midnight", "World Events", o = 608 },   -- Disguised to the Nines
-    [63253] = { "midnight", "World Events", o = 609 },   -- A Round on the House in Midnight
-    [63400] = { "midnight", "World Events", o = 610 },   -- Tricks and Treats of Midnight
+    [61335] = { "midnight", "World Events", o = 549 },   -- Flame Keeper of Midnight
+    [61336] = { "midnight", "World Events", o = 550 },   -- Flame Warden of Midnight
+    [61792] = { "midnight", "World Events", o = 551 },   -- T-A-G that spells "Gotcha!"
+    [61793] = { "midnight", "World Events", o = 552 },   -- Deployed to the Void
+    [61878] = { "midnight", "World Events", o = 553 },   -- Tagged and Bagged
+    [61879] = { "midnight", "World Events", o = 554 },   -- You're It
+    [61880] = { "midnight", "World Events", o = 555 },   -- It's Cold Here in This Shadow
+    [61881] = { "midnight", "World Events", o = 556 },   -- Hide and Peekless
+    [61882] = { "midnight", "World Events", o = 557 },   -- Null and Avoided
+    [61883] = { "midnight", "World Events", o = 558 },   -- Now You Don't See Me...
+    [61886] = { "midnight", "World Events", o = 559 },   -- The Whole Kit and Caboodle
+    [61887] = { "midnight", "World Events", o = 560 },   -- Disguised to the Nines
+    [63253] = { "midnight", "World Events", o = 561 },   -- A Round on the House in Midnight
+    [63400] = { "midnight", "World Events", o = 562 },   -- Tricks and Treats of Midnight
+    [61221] = { "pvp", "PvP", o = 563 },   -- Tour of Duty: Eversong Woods
+    [61222] = { "pvp", "PvP", o = 564 },   -- Tour of Duty: Zul'Aman
+    [61223] = { "pvp", "PvP", o = 565 },   -- Tour of Duty: Harandar
+    [61224] = { "pvp", "PvP", o = 566 },   -- Tour of Duty: Voidstorm
+    [61225] = { "pvp", "PvP", o = 567 },   -- Investigating the Rise
+    [61226] = { "pvp", "PvP", o = 568 },   -- Uprising
+    [61227] = { "pvp", "PvP", o = 569 },   -- Entering the Void
+    [61228] = { "pvp", "PvP", o = 570 },   -- Embracing the Void
+    [61229] = { "pvp", "PvP", o = 571 },   -- Dedication in the Void
+    [61230] = { "pvp", "PvP", o = 572 },   -- Remains in the Rise
+    [61231] = { "pvp", "PvP", o = 573 },   -- Midnight Loot
+    [61232] = { "pvp", "PvP", o = 574 },   -- Midnight Treasures
+    [61234] = { "pvp", "PvP", o = 575 },   -- Hunt in the Night
+    [61238] = { "pvp", "PvP", o = 576 },   -- Midnight Bounty
+    [61265] = { "pvp", "PvP", o = 577 },   -- Spectral Capture
+    [61266] = { "pvp", "PvP", o = 578 },   -- Spectral Stocker
+    [61446] = { "pvp", "PvP", o = 579 },   -- Slayer's Mastery
+    [61447] = { "pvp", "PvP", o = 580 },   -- Partake in the Rise
+    [61448] = { "pvp", "PvP", o = 581 },   -- Frequent the Rise
+    [61449] = { "pvp", "PvP", o = 582 },   -- Customary Rise
+    [61464] = { "pvp", "PvP", o = 583 },   -- Spark in the Night
+    [61465] = { "pvp", "PvP", o = 584 },   -- Spark in the Night
+    [61683] = { "pvp", "PvP", o = 585 },   -- Entering Battle
+    [61684] = { "pvp", "PvP", o = 586 },   -- Progressing in Battle
+    [61685] = { "pvp", "PvP", o = 587 },   -- Proficient in Battle
+    [61686] = { "pvp", "PvP", o = 588 },   -- Expert in Battle
+    [61687] = { "pvp", "PvP", o = 589 },   -- Champion in Battle
+    [61688] = { "pvp", "PvP", o = 590 },   -- Master in Battle
+    [61953] = { "pvp", "PvP", o = 591 },   -- Putting in the Practice
+    [61954] = { "pvp", "PvP", o = 592 },   -- Putting in the Practice
+    [61955] = { "pvp", "PvP", o = 593 },   -- Putting in the Practice
+    [61956] = { "pvp", "PvP", o = 594 },   -- Putting in the Practice
+    [61958] = { "pvp", "PvP", o = 595 },   -- Focused Target
+    [61959] = { "pvp", "PvP", o = 596 },   -- Focused Target
+    [62107] = { "pvp", "PvP", o = 597 },   -- Mandatory Training
+    [62108] = { "pvp", "PvP", o = 598 },   -- Training with Patience
+    [62109] = { "pvp", "PvP", o = 599 },   -- Training with Patience
+    [62111] = { "pvp", "PvP", o = 600 },   -- Boots on the Ground: Arathi Basin
+    [62112] = { "pvp", "PvP", o = 601 },   -- Boots on the Ground: Battle for Gilneas
+    [62113] = { "pvp", "PvP", o = 602 },   -- Boots on the Ground: Silvershard Mines
+    [62114] = { "pvp", "PvP", o = 603 },   -- Learning the Landscape: Arathi Basin
+    [62115] = { "pvp", "PvP", o = 604 },   -- Learning the Landscape: Battle for Gilneas
+    [62116] = { "pvp", "PvP", o = 605 },   -- Learning the Landscape: Silvershard Mines
+    [62493] = { "pvp", "PvP", o = 606 },   -- Slayer's Rise Victory
+    [62494] = { "pvp", "PvP", o = 607 },   -- Slayer's Rise Veteran
+    [62514] = { "pvp", "PvP", o = 608 },   -- Slayer's Rise Dominance
+    [62516] = { "pvp", "PvP", o = 609 },   -- The Voided Gazelle
+    [62517] = { "pvp", "PvP", o = 610 },   -- Rise of the Ultradon Slayer
+    [63167] = { "pvp", "PvP", o = 611 },   -- Tour of Duty: The Coiled Isle
+    [63695] = { "pvp", "PvP", o = 612 },   -- Arena Exercise
+    [63696] = { "pvp", "PvP", o = 613 },   -- Arena Exercise
+    [63697] = { "pvp", "PvP", o = 614 },   -- Arena Exercise
+    [63698] = { "pvp", "PvP", o = 615 },   -- Arena Exercise
+    [63699] = { "pvp", "PvP", o = 616 },   -- World Wide Trainer
 }
 
 -- Hidden in the game, or not live yet: never listed or counted.

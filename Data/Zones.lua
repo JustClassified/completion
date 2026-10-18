@@ -79,6 +79,15 @@ ns.ZONES = {
         keywords = {},
         instances = {},
     },
+    {
+        key = "pvp", exp = "pvp", name = "Player vs. Player", short = "PvP", overview = true, maps = {},
+        iconAch = 61446,
+        desc = "Midnight's PvP: War Mode and Slayer's Rise, Training Grounds and battlegrounds, with their mounts, pets and toys. It has its own total and never changes the PvE pages.",
+        story = {}, side = {},
+        factions = {},
+        keywords = {},
+        instances = {},
+    },
 }
 
 -- Sections, in the order the Zone Progress list shows them.

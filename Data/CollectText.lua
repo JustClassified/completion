@@ -356,7 +356,7 @@ ns.COLLECT_INFO = {
     [275683] = { k = "craft", zone = "midnight", prof = 202, how = "Made by engineers (patch 12.1); you can also buy it on the Auction House." },
     [275702] = { k = "prey", zone = "midnight", npc = 252956, note = "A Season 2 Prey reward, sold by Construct V'anore next to the hunt board in Silvermoon City." },
     [275704] = { k = "prey", zone = "midnight", npc = 252956, note = "A Season 2 Prey reward, sold by Construct V'anore next to the hunt board in Silvermoon City." },
-    [275825] = { k = "ach", zone = "midnight", a = 63167 },
+    [275825] = { k = "ach", zone = "pvp", a = 63167 },
     [275988] = { k = "quest", zone = "coiled", q = 97482, note = "It's the reward for defeating Azta'rec." },
     [276162] = { k = "delve", zone = "midnight", npc = 242399, note = "Telemancer Astrandis sells it once your Season 2 Delver's Journey reaches rank 5." },
     [276189] = { k = "delve", zone = "midnight", npc = 242399, note = "A Season 2 delve reward from Telemancer Astrandis at the delvers' headquarters." },

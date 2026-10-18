@@ -12,7 +12,7 @@ local _, ns = ...
 function ns.CollectLeftOut(itemID)
     local r = itemID and ns.COLLECT_OUT and ns.COLLECT_OUT[itemID]
     if not r then return false end
-    if r == "pvp" then return not ns.Counts("PvP") end
+    if r == "pvp" then return false end   -- on the PvP page, counted there
     if r == "event" then return not ns.Counts("World Events") end
     return true
 end
@@ -273,7 +273,6 @@ local OUT_REASONS = {
     { "mplus", "Mythic+ rating", "Rewards for Mythic+ ratings and Keystone Master or Legend." },
     { "oldpets", "Old-world pet battles", "Rewards for the old-world Family Battler achievements." },
     { "notpet", "Not a collectible", "Listed as a pet, but it's a quest item." },
-    { "pvp", "PvP", "Rated PvP rewards. Turn on PvP in Options > What counts to include them." },
     { "event", "World events", "Holiday rewards. Turn on World Events in Options > What counts to include them." },
 }
 

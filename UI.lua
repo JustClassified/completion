@@ -1211,7 +1211,9 @@ local function ChronicleText(z)
     local cur, max = ns.ZoneTotals(z)
     local pct = ns.Pct(cur, max)
     local parts = {}
-    if z.overview then
+    if z.overview and z.exp == "pvp" then
+        parts[#parts + 1] = string.format("You have finished %d of the %d PvP things this book tracks. They have their own total and never change the PvE pages.", cur, max)
+    elseif z.overview then
         local secs = 0
         for k, v in pairs(ns.cdb.chronicle) do
             local zz = ns.zoneByKey[k]

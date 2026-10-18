@@ -74,7 +74,7 @@ ns.ACH_GROUPS = {
     { "Housing", { 62370 } },
     { "PvP", Join(R(61221, 61232), 61234, 61238, 61265, 61266, R(61446, 61449), 61464, 61465,
         R(61953, 61956), 61958, 61959, 62107, 62108, 62109, R(62111, 62116), 62493, 62494, 62514, 62516,
-        62517, 63167, R(63695, 63699)) },
+        62517, 63167, R(63695, 63699), R(61683, 61688)) },
     { "World Events", Join(61335, 61336, 61792, 61793, R(61878, 61883), 61886, 61887, 63253, 63400) },
 }
 
@@ -90,7 +90,7 @@ ns.ACH_SIDE = {
 ns.SCOPE_ORDER = {
     "Quests", "Exploration", "Abundance", "Abyss Anglers", "Fishing", "Skyriding", "Reputation", "Delves",
     "Prey", "Ritual Sites", "Void Assaults", "Horrific Visions", "Lorewalking", "Dungeons", "Raids", "Professions", "Pet Battles",
-    "Collections", "Housing", "PvP", "World Events",
+    "Collections", "Housing", "World Events",
 }
 ns.SCOPE_DEFAULTS = {
     Quests = true, Exploration = true, Abundance = true, ["Abyss Anglers"] = true, Fishing = true,

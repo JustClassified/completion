@@ -756,9 +756,11 @@ end
 -- Options > Advanced can hide them. Each row's note becomes the achievement's tooltip note.
 local function BuildExtras(midnight)
     if not midnight or (ns.db and ns.db.settings and ns.db.settings.hideExtras) then return end
+    local pvp = ns.zoneByKey.pvp
     for _, g in ipairs(ns.EXTRA_GROUPS or {}) do
+        local z = (g.zone and ns.zoneByKey[g.zone]) or midnight
         for _, r in ipairs(g.rows) do
-            AddItem(midnight, "extras", { key = "x:" .. r[1], kind = "ach", id = r[1], group = g.name, extra = true, spots = {} })
+            AddItem(z, "extras", { key = "x:" .. r[1], kind = "ach", id = r[1], group = g.name, extra = true, spots = {} })
             if r[2] and ns.ACH_NOTES and not ns.ACH_NOTES[r[1]] then ns.ACH_NOTES[r[1]] = { r[2] } end
         end
     end
@@ -766,6 +768,13 @@ local function BuildExtras(midnight)
     for _, set in ipairs(ns.MidnightSets and ns.MidnightSets("pve") or {}) do
         AddItem(midnight, "extras", { key = "s:" .. set.setID, kind = "set", setID = set.setID, name = set.title,
                                       group = set.heading, extra = true, spots = {} })
+    end
+    -- the PvP sets on the PvP book
+    if pvp then
+        for _, set in ipairs(ns.MidnightSets and ns.MidnightSets("pvp") or {}) do
+            AddItem(pvp, "extras", { key = "s:" .. set.setID, kind = "set", setID = set.setID, name = set.title,
+                                     group = set.heading, extra = true, spots = {} })
+        end
     end
 end
 
@@ -849,6 +858,8 @@ local function AddCollect(zone, key, it)
         if it.itemID then collectSeen["i" .. it.itemID] = true end
     end
     if it.itemID and ns.CollectLeftOut(it.itemID) then return end
+    -- a PvP reward belongs on the PvP page
+    if it.itemID and ns.COLLECT_OUT and ns.COLLECT_OUT[it.itemID] == "pvp" and ns.zoneByKey.pvp then zone = ns.zoneByKey.pvp end
     local info = it.itemID and ns.COLLECT_INFO and ns.COLLECT_INFO[it.itemID]
     if info and ns.CollectWrongRace(info) then return end
     it.info = info
@@ -991,8 +1002,9 @@ local function SourceInfo(raw)
     for _, pat in ipairs(ns.COLLECT_EXCLUDE or {}) do
         if text:find(pat) then return text, nil, true end
     end
+    -- PvP sources: the caller decides (reviewed PvP rewards go to the PvP page, other ones stay off the PvE pages)
+    local pvp = text:find("PvP") or text:find("Gladiator") or text:find("Rated")
     -- follow Options > What counts
-    if not ns.Counts("PvP") and (text:find("PvP") or text:find("Gladiator") or text:find("Rated")) then return text, nil, true end
     if not ns.Counts("World Events") and text:find("World Event") then return text, nil, true end
     if not ns.db.settings.hardmodes and text:find("Mythic") then return text, nil, true end
     local zone
@@ -1014,7 +1026,13 @@ local function SourceInfo(raw)
             end
         end
     end
-    return text, zone, false, inst
+    return text, zone, false, inst, pvp and true or false
+end
+
+-- True when a journal item with a PvP source may be listed: a reviewed PvP reward (it goes to the PvP page) or a
+-- reviewed PvE item whose source text merely mentions PvP.
+local function PvPSourceOK(itemID)
+    return itemID and ((ns.COLLECT_OUT and ns.COLLECT_OUT[itemID] == "pvp") or (ns.COLLECT_INFO and ns.COLLECT_INFO[itemID])) and true or false
 end
 
 -- A reward from an achievement that does not count (M+, rated PvP, hard modes, the ones left out of
@@ -1060,7 +1078,8 @@ local function BuildJournalCollect(midnight)
             if zone and zone.exp ~= set.exp then zone = nil end
             -- the reviewed page (Data/CollectText.lua) wins over a guess from the source text
             local iz = InfoZone(it.itemID)
-            if iz and iz.exp == set.exp then zone = iz end
+            -- Midnight's PvP book counts as Midnight here
+            if iz and (iz.exp == set.exp or (iz.exp == "pvp" and set.exp == "midnight")) then zone = iz end
             AddCollect(zone or VendorZone(VendorsFor(it.itemID)) or SourceZone(it.itemID) or home, key, it)
         end
         if C_MountJournal and C_MountJournal.GetMountFromItem then
@@ -1072,8 +1091,8 @@ local function BuildJournalCollect(midnight)
                     local wrongSide = factionSpecific and mySide and ((faction == 0 and mySide ~= "Horde") or (faction == 1 and mySide ~= "Alliance"))
                     if r[1] and name and not hide and not wrongSide then
                         local okx, _, _, source = pcall(C_MountJournal.GetMountInfoExtraByID, mid)
-                        local text, zone, excluded, inst = SourceInfo(okx and source)
-                        if not excluded then
+                        local text, zone, excluded, inst, pvp = SourceInfo(okx and source)
+                        if not excluded and (not pvp or PvPSourceOK(itemID)) then
                             add(zone, "i" .. itemID, "m" .. mid, { itemID = itemID, flag = "m", sourceText = text,
                                                                   spots = inst and { unpack(inst.spots) }, instance = inst })
                         end
@@ -1085,8 +1104,8 @@ local function BuildJournalCollect(midnight)
             for _, itemID in ipairs(set.pets or {}) do
                 local r = { pcall(C_PetJournal.GetPetInfoByItemID, itemID) }
                 if r[1] and r[2] and r[12] ~= false then
-                    local text, zone, excluded, inst = SourceInfo(r[6])
-                    if not excluded then
+                    local text, zone, excluded, inst, pvp = SourceInfo(r[6])
+                    if not excluded and (not pvp or PvPSourceOK(itemID)) then
                         add(zone, "i" .. itemID, nil, { itemID = itemID, flag = "p", sourceText = text, spots = inst and { unpack(inst.spots) }, instance = inst })
                     end
                 end

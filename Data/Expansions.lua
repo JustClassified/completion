@@ -41,6 +41,8 @@ ns.EXPANSIONS = {
       plan = { "Khaz Algar exploration, treasures and rares", "Delves, Undermine, Siren Isle, K'aresh",
                "Worldsoul Saga storylines", "War Within dungeons, raids and collectibles" } },
     { key = "midnight", short = "Midnight", name = "Midnight", ready = true },
+    -- not an expansion: Midnight's PvP on a book of its own, so the PvE pages stay PvE
+    { key = "pvp", short = "PvP", name = "Player vs. Player", ready = true },
     -- not an expansion: the holidays and the Darkmoon Faire, one page each (Seasonal.lua)
     { key = "seasonal", short = "Seasonal", name = "Seasonal events", ready = true, seasonal = true },
 }
