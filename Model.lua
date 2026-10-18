@@ -133,7 +133,9 @@ local function BuildPoints(midnight)
     for _, p in ipairs(ns.POINTS) do all[#all + 1] = p end
     for _, p in ipairs(ns.EXTRA_POINTS or {}) do all[#all + 1] = p end
     for _, p in ipairs(all) do
-        if p.k == "vendor" then
+        if p.q and ns.SKIP_POINTS and ns.SKIP_POINTS[p.q] then
+            -- left out on purpose (Data/Overrides.lua)
+        elseif p.k == "vendor" then
             achvLoot[#achvLoot + 1] = p
         elseif p.k == "achv" then
             if p.a and not ns.IGNORE_ACH[p.a] then
@@ -753,7 +755,9 @@ end
 -- One reputation item per faction listed for the zone.
 local function BuildRep(zone)
     for _, fid in ipairs(zone.factions or {}) do
-        AddItem(zone, "rep", { key = "r:" .. fid, kind = "rep", faction = fid, spots = {} })
+        -- the quartermaster's spot (Data/RepText.lua), so the arrow can lead there
+        local spot = ns.RepSpot and ns.RepSpot(fid)
+        AddItem(zone, "rep", { key = "r:" .. fid, kind = "rep", faction = fid, spots = spot and { spot } or {} })
     end
 end
 

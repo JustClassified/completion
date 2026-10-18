@@ -73,9 +73,9 @@ ns.ZONES = {
         iconAch = 62110,
         desc = "Everything not tied to one zone: the campaign, Loremaster, delves and dungeons found nowhere else, and every other Midnight achievement. The total here is the whole expansion.",
         story = { 62110, 42045, 41805, 42117, 61916, 63519 }, side = { 61910, 61219, 62105, 61942 },
-        -- Delves (current season), Ritual Sites, Preyhunter's Journey, Prey: Season 1, Valeera Sanguinar,
-        -- Kindo'jan's Labyrinth journey (12.1.5)
-        factions = { 2796, 2792, 2808, 2764, 2744, 2836 },
+        -- Delves (current season), Ritual Sites, Preyhunter's Journey (the Prey journey since 12.1; Prey: Season 1
+        -- ended with its season, like Delves: Season 1), Valeera Sanguinar, Kindo'jan's Labyrinth journey (12.1.5)
+        factions = { 2796, 2792, 2808, 2744, 2836 },
         keywords = {},
         instances = {},
     },

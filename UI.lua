@@ -316,7 +316,8 @@ local function TreasureTooltip(it)
         end
     end
     -- a reviewed hint replaces the older spot note; the older note only shows for treasures not reviewed yet
-    local how = (text and text.how) or (not text and not (it.steps and #it.steps > 0) and it.note) or nil
+    -- (knowledge treasures never show it: their old notes were generic or out of date)
+    local how = (text and text.how) or (not text and it.pkind ~= "prof" and not (it.steps and #it.steps > 0) and it.note) or nil
     if how and how ~= "" then
         GameTooltip:AddLine(" ")
         AddWrapped(how, 0.9, 0.85, 0.7)
@@ -338,10 +339,14 @@ local function TreasureTooltip(it)
         GameTooltip:AddLine("Rewards", 1, 0.82, 0.3)
         for _, r in ipairs(rewards) do GameTooltip:AddLine(r, 0.9, 0.9, 0.9, true) end
     end
-    -- the achievement it counts for
+    -- the achievement it counts for; a knowledge treasure says what it gives instead
     GameTooltip:AddLine(" ")
     local a = (it.groupAch or it.a) and ns.Ach(it.groupAch or it.a)
-    if a then GameTooltip:AddLine("Part of " .. a.name, 0.8, 0.7, 0.5, true)
+    if it.pkind == "prof" then
+        GameTooltip:AddLine(string.format("Gives 3 %s knowledge. Each character with the profession loots it once; "
+            .. "any Midnight %s skill is enough to see it.", it.prof or "profession", it.prof or "profession"), 0.8, 0.7, 0.5, true)
+        GameTooltip:AddLine("Its map icon only shows up close, and not from another floor.", 0.7, 0.7, 0.7, true)
+    elseif a then GameTooltip:AddLine("Part of " .. a.name, 0.8, 0.7, 0.5, true)
     else GameTooltip:AddLine("Not needed for an achievement.", 0.7, 0.7, 0.7, true) end
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine(it.steps and #it.steps > 0 and "Click: track it; the arrow follows the steps." or "Click: track it with the arrow.",
@@ -712,12 +717,19 @@ local function ItemTooltip(owner, it, row)
         GameTooltip:AddLine(it.liveName or it.name or "?", 1, 1, 1, true)
     end
     if it.kind == "lore" then LoreTooltip(it); return end
-    if (it.kind == "point" and (it.pkind == "treasure" or it.pkind == "delve")) then TreasureTooltip(it); return end
+    if (it.kind == "point" and (it.pkind == "treasure" or it.pkind == "delve" or it.pkind == "prof")) then TreasureTooltip(it); return end
     if it.kind == "point" and (it.pkind == "rare" or it.pkind == "boss") then RareTooltip(it); return end
     if it.kind == "collect" then GameTooltip:AddLine(" "); CollectTooltip(it); return end
     if it.kind == "container" and it.ctype == "delve" then
         GameTooltip:AddLine(" ")
         DelveTooltip(it)
+        return
+    end
+    -- a Midnight reputation with reviewed data: standing, progress, rewards still needed, how to earn it
+    if it.kind == "rep" and ns.REP_INFO and ns.REP_INFO[it.faction] then
+        GameTooltip:AddLine(" ")
+        ns.RepTooltip(it)
+        GameTooltip:Show()
         return
     end
     -- a Midnight dungeon or raid with reviewed data: entrance, season, Story Mode, what's left, drops
@@ -2704,3 +2716,6 @@ end
 
 -- True while the book is open (nil before it is created).
 function ns.IsShown() return main and main:IsShown() end
+
+-- The list tooltip, for the test harness and other files.
+ns.ItemTooltip = ItemTooltip

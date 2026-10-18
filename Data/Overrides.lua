@@ -343,6 +343,9 @@ ns.PEAKS_HOWTO = "Telescopes show up as small grey flag markers on the minimap. 
 -- Treasures of the Damned (63512): random fishing catches on the Coiled Isle, gated by Captain Tokka rank.
 -- No criterion IDs in the data, so the addon matches these to the live criteria by name.
 ns.DAMNED_NOTE = "Fishing on the Coiled Isle. The ten artifacts are random catches, gated by Captain Tokka reputation (the Venom Fishing quests). The arrow only points at a spot people report catches from."
+-- spots the book leaves out, by tracking quest: the five Skinning lure spots (Renowned Beasts) are daily skinning
+-- targets, not one-time knowledge treasures, so they can't count toward 100%
+ns.SKIP_POINTS = { [88524] = true, [88526] = true, [88531] = true, [88532] = true, [88545] = true }
 ns.EXTRA_POINTS = {
     -- a Pepe costume hidden in the Arcantina (patch 10.2.5 item, tracked by its own quest flag)
     {k="treasure", m=2541, x=54.53, y=42.41, n="A Tiny Explorer's Hat (Pepe)", q=79550, note="A costume for Pepe: when summoned, he sometimes wears an explorer's hat."},
