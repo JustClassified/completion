@@ -1631,7 +1631,9 @@ local function GroupOf(it)
     end
     if it.groupAch then
         local a = ns.Ach(it.groupAch)
-        return "a" .. it.groupAch, a and a.name or ("Achievement " .. it.groupAch)
+        -- a storyline block without an achievement (Data/LoreExtra.lua) has its own name
+        local lore = ns.LORE_ACH and ns.LORE_ACH[it.groupAch]
+        return "a" .. it.groupAch, a and a.name or (lore and lore.name) or ("Achievement " .. it.groupAch)
     end
     local label = it.heading or it.group
     if label then return "g" .. label, label end

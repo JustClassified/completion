@@ -22,6 +22,7 @@ Data\TreasureText.lua
 Data\RareText.lua
 Data\ExtraLoot.lua
 Data\Lore.lua
+Data\LoreExtra.lua
 Data\QuestStarts.lua
 Data\QuestNotes.lua
 Data\Research.lua

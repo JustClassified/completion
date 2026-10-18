@@ -1205,7 +1205,9 @@ end
 -- sub counts quests done up to c.pos (where the criterion quest sits), or the whole chain.
 local function EvalLore(it)
     local c = it.crit
-    local done = ns.AchDone(it.ach)
+    -- a block without an achievement (Data/LoreExtra.lua) never asks the game for one
+    local pseudo = ns.LORE_ACH and ns.LORE_ACH[it.ach] and ns.LORE_ACH[it.ach].pseudo
+    local done = not pseudo and ns.AchDone(it.ach)
     if not done and c.id then
         local cr = ns.Crit(it.ach, c.id)
         if cr then done = cr.done; it.liveName = cr.name end
@@ -1224,6 +1226,12 @@ local function EvalLore(it)
             end
         end
         it.qDone, it.qTotal = n, total
+        -- a row no criterion stands behind (Data/LoreExtra.lua, or a chapter the achievement leaves out) is done
+        -- only when every quest of it is: its quests don't always follow one another
+        if not c.id and total > 0 and (pseudo or not ns.AchDone(it.ach)) then
+            done = n >= total
+            it.done, it.cur = done, done and 1 or 0
+        end
         it.sub = done and "" or string.format("%d/%d", n, total)
     end
 end
