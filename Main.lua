@@ -288,6 +288,7 @@ local function Slash(msg)
     elseif cmd == "sound" then s.sound = not s.sound; ns.Print("Sound " .. (s.sound and "on" or "off") .. ".")
     elseif cmd == "announce" then s.announce = not s.announce; ns.Print("Chat messages " .. (s.announce and "on" or "off") .. ".")
     elseif cmd == "follow" then s.follow = not s.follow; ns.Print("Open on your current zone: " .. (s.follow and "on" or "off") .. ".")
+    elseif cmd == "ui" or cmd == "look" then ns.SwitchLook()
     elseif cmd == "hidedone" then s.hidedone = not s.hidedone; ns.RefreshUI()
     elseif cmd == "transmog" then
         s.transmog = not s.transmog
@@ -353,7 +354,17 @@ f:SetScript("OnEvent", function(_, event, arg1)
     elseif event == "PLAYER_LOGIN" then
         if not ns.db then ns.InitDB() end
         ns.CreateArrow()
-        ns.CreateMain()
+        -- the Blizzard-style window (Journal.lua) unless Options > Look picked the classic book; if the new
+        -- window can't be built for any reason, the classic book takes over so the addon always has a window
+        if ns.db.settings.ui ~= "book" and ns.CreateJournal then
+            local ok, err = pcall(ns.CreateJournal)
+            if not ok then
+                ns.Print("The new window couldn't open (" .. tostring(err) .. "); using the classic book.")
+                ns.CreateMain()
+            end
+        else
+            ns.CreateMain()
+        end
         CreateMinimapButton()
         ns.HookWorldMap()
         ns.CreateMinimapPins()

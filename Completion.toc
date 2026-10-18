@@ -78,6 +78,7 @@ Tracker.lua
 UpNow.lua
 Showcase.lua
 UI.lua
+Journal.lua
 About.lua
 Pages.lua
 Report.lua

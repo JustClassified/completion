@@ -1909,7 +1909,7 @@ local function OnRowClick(r, button)
     if HasChildren(it) then expanded[it.key] = not expanded[it.key] or nil end
     local showable = it.kind == "collect" or (it.kind == "point" and (it.pkind == "rare" or it.pkind == "boss"))
     if showable and ns.ModelInfo(it) then ns.selected = it else ns.selected = nil end
-    L.presented = nil
+    if L then L.presented = nil end
     -- a finished zone part of a split achievement: track the next unfinished part instead
     if it.kind == "ach" and it.split and it.done then
         local parts = ns.SplitParts(it)
@@ -2027,6 +2027,87 @@ local function TreasureTag(it)
     return table.concat(parts, "  ")
 end
 
+-- What a list line says, for both windows: { it, row, done, current, name, sub, tracked, canExpand, expanded,
+-- upNow, faded, soon, icon }. sub already carries the tags (difficulty, farm, up now, season, coming soon).
+function ns.LineInfo(ln)
+    local it, row = ln.it, ln.row
+    local target = ns.cdb.target
+    local done, current, name, sub, tracked
+    if row then
+        done, current, name, sub = row.done, row.current, row.name, row.sub
+        tracked = target and target.key == it.key and target.child == row.key
+        if not sub and row.spot and ns.Distance then
+            local pinst, pwx, pwy = ns.PlayerWorld()
+            local d = pinst and ns.Distance(row.spot, pinst, pwx, pwy)
+            if d then sub = string.format("%d yd", math.floor(d)) end
+        end
+    else
+        done, name, sub = it.done, it.liveName or it.name or "?", it.sub
+        tracked = target and target.key == it.key and not target.child
+        -- a holiday guide: the step to do now stands out, and steps show how far away they are
+        if it.kind == "step" then
+            current = it.sec == "guide" and not done and ns.NextEventStep(it.zone) == it
+            if not sub and not done then
+                local d = ns.ItemDistance(it)
+                if d then sub = string.format("%d yd", math.floor(d)) end
+            end
+        end
+        if it.split then
+            -- this zone's part, with the whole achievement's count beside it
+            local _, _, adone, atotal = ns.SplitParts(it)
+            if ln.part then
+                name = "In " .. (it.zone and it.zone.name or "another zone")
+            else
+                name = name .. " |cff9a927f(this zone)|r"
+                if atotal > 0 then sub = string.format("%s here, %d/%d", it.sub or "", adone, atotal) end
+            end
+        end
+        if it.kind == "point" and (it.pkind == "treasure" or it.pkind == "rare" or it.pkind == "boss") and not done
+            and (not sub or sub == "") then sub = TreasureTag(it) end
+        -- a collectible: what's in the way (renown, achievement, price) or where it comes from
+        if it.kind == "collect" and not done and ns.CollectTag then sub = ns.CollectTag(it) or sub end
+        if ns.Watched(it) then name = name .. " |cffffd100(watching)|r" end
+        local farm = ns.FarmTag(it)
+        if farm then sub = "|cffff9040" .. farm .. "|r" end
+        if ns.upNow[it.key] then sub = "|cff55ff55up now|r" end
+        if it.kind == "container" and it.ctype == "instance" and not done then
+            local t = ns.InstanceTag(it)
+            if t then sub = t .. (sub and sub ~= "" and ("  " .. sub) or "") end
+        end
+        if it.kind == "ach" and not done and ns.AchClosedThisSeason(it.id) then sub = "|cffd08a50later season|r" end
+        if it.kind == "container" and it.ctype == "delve" then
+            if ns.IsBountiful(it.name) then sub = "|cffffd100bountiful|r" .. (sub and sub ~= "" and ("  " .. sub) or "") end
+            -- the current story is one the Stories achievement still needs
+            local story = ns.DelveStory and ns.DelveStory(it.name)
+            if story and ns.DelveStoryNeeded(it.name, story) then
+                sub = "|cffffd100story you need|r" .. (sub and sub ~= "" and ("  " .. sub) or "")
+            end
+        end
+        -- a small book marks achievements that have a walkthrough or notes
+        local aid = it.id or it.ach
+        if (it.kind == "ach" or it.kind == "lore") and aid and ((ns.ACH_STEPS and ns.ACH_STEPS[aid]) or (ns.ACH_READ and ns.ACH_READ[aid]) or (ns.ACH_NOTES and ns.ACH_NOTES[aid])
+            or (ns.CRIT_NOTES and ns.CRIT_NOTES[aid])) then
+            name = name .. " |TInterface\\Icons\\INV_Misc_Book_09:12:12:2:0|t"
+        end
+    end
+    local soon = not done and ((row and row.soon) or (not row and ns.SoonReason(it))) and true or false
+    if soon then sub = "coming soon" end
+    if ln.secName then sub = ln.secName end
+    -- how hard it is, before the count or distance (finished rows don't need it)
+    local tag = not row and not done and ns.DiffTag(it)
+    if tag then sub = (sub and sub ~= "") and (tag .. "  " .. sub) or tag end
+    local icon
+    if not row and it.kind == "collect" then icon = it.icon or (it.itemID and ns.ItemIcon(it.itemID)) end
+    return {
+        it = it, row = row, done = done and true or false, current = current and true or false, name = name, sub = sub,
+        tracked = tracked and true or false, canExpand = (not row and HasChildren(it)) and true or false,
+        expanded = (not row and expanded[it.key]) and true or false,
+        upNow = (not row and not done and ns.upNow[it.key]) and true or false,
+        faded = ((not done and not current and (it.max or 0) == 0 and not row) or (row and row.extra)) and true or false,
+        soon = soon, icon = icon,
+    }
+end
+
 -- Draws one line into a row: a group heading with its count, an item, or a child row indented by depth.
 -- The right column shows the item's note, "up now", a distance in yards, or the section of a search hit.
 local function FillRow(r, ln)
@@ -2075,109 +2156,43 @@ local function FillRow(r, ln)
         r.right:SetTextColor(GREY[1], GREY[2], GREY[3])
         return
     end
-    local it, row = ln.it, ln.row
+    local info = ns.LineInfo(ln)
+    local it, row = info.it, info.row
     local indent = 4 + ln.depth * 16
-    local target = ns.cdb.target
-    local done, current, name, sub
-    if row then
-        done, current, name, sub = row.done, row.current, row.name, row.sub
-        if target and target.key == it.key and target.child == row.key then r.track:Show() end
-        if not sub and row.spot and ns.Distance then
-            local pinst, pwx, pwy = ns.PlayerWorld()
-            local d = pinst and ns.Distance(row.spot, pinst, pwx, pwy)
-            if d then sub = string.format("%d yd", math.floor(d)) end
-        end
-    else
-        done, name, sub = it.done, it.liveName or it.name or "?", it.sub
-        if target and target.key == it.key and not target.child then r.track:Show() end
-        -- a holiday guide: the step to do now stands out, and steps show how far away they are
-        if it.kind == "step" then
-            current = it.sec == "guide" and not done and ns.NextEventStep(it.zone) == it
-            if not sub and not done then
-                local d = ns.ItemDistance(it)
-                if d then sub = string.format("%d yd", math.floor(d)) end
-            end
-        end
-        if HasChildren(it) then
-            r.plus:SetPoint("LEFT", indent, 0)
-            r.plus:SetText(expanded[it.key] and "-" or "+")
-            indent = indent + 10
-        end
-        if it.split then
-            -- this zone's part, with the whole achievement's count beside it
-            local _, _, adone, atotal = ns.SplitParts(it)
-            if ln.part then
-                name = "In " .. (it.zone and it.zone.name or "another zone")
-            else
-                name = name .. " |cff9a927f(this zone)|r"
-                if atotal > 0 then sub = string.format("%s here, %d/%d", it.sub or "", adone, atotal) end
-            end
-        end
-        if it.kind == "point" and (it.pkind == "treasure" or it.pkind == "rare" or it.pkind == "boss") and not done
-            and (not sub or sub == "") then sub = TreasureTag(it) end
-        -- a collectible: what's in the way (renown, achievement, price) or where it comes from
-        if it.kind == "collect" and not done and ns.CollectTag then sub = ns.CollectTag(it) or sub end
-        if ns.Watched(it) then name = name .. " |cffffd100(watching)|r" end
-        local farm = ns.FarmTag(it)
-        if farm then sub = "|cffff9040" .. farm .. "|r" end
-        if ns.upNow[it.key] then sub = "|cff55ff55up now|r" end
-        if it.kind == "container" and it.ctype == "instance" and not done then
-            local t = ns.InstanceTag(it)
-            if t then sub = t .. (sub and sub ~= "" and ("  " .. sub) or "") end
-        end
-        if it.kind == "ach" and not done and ns.AchClosedThisSeason(it.id) then sub = "|cffd08a50later season|r" end
-        if it.kind == "container" and it.ctype == "delve" then
-            if ns.IsBountiful(it.name) then sub = "|cffffd100bountiful|r" .. (sub and sub ~= "" and ("  " .. sub) or "") end
-            -- the current story is one the Stories achievement still needs
-            local story = ns.DelveStory and ns.DelveStory(it.name)
-            if story and ns.DelveStoryNeeded(it.name, story) then
-                sub = "|cffffd100story you need|r" .. (sub and sub ~= "" and ("  " .. sub) or "")
-            end
-        end
-        -- a small book marks achievements that have a walkthrough or notes
-        local aid = it.id or it.ach
-        if (it.kind == "ach" or it.kind == "lore") and aid and ((ns.ACH_STEPS and ns.ACH_STEPS[aid]) or (ns.ACH_READ and ns.ACH_READ[aid]) or (ns.ACH_NOTES and ns.ACH_NOTES[aid])
-            or (ns.CRIT_NOTES and ns.CRIT_NOTES[aid])) then
-            name = name .. " |TInterface\\Icons\\INV_Misc_Book_09:12:12:2:0|t"
-        end
+    if info.tracked then r.track:Show() end
+    if info.canExpand then
+        r.plus:SetPoint("LEFT", indent, 0)
+        r.plus:SetText(info.expanded and "-" or "+")
+        indent = indent + 10
     end
     r.status:Show()
     r.status:SetPoint("LEFT", indent, 0)
-    r.status:SetTexture(done and ICON_DONE or (current and ICON_NOW or ICON_OPEN))
+    r.status:SetTexture(info.done and ICON_DONE or (info.current and ICON_NOW or ICON_OPEN))
     -- a rare that is up right now gets a green "online" dot
-    if not row and not done and ns.upNow[it.key] then r.status:SetTexture("Interface\\COMMON\\Indicator-Green") end
+    if info.upNow then r.status:SetTexture("Interface\\COMMON\\Indicator-Green") end
     -- faded status icon for items the game can't count yet
-    if (not done and not current and (it.max or 0) == 0 and not row) or (row and row.extra) then r.status:SetAlpha(0.35) else r.status:SetAlpha(1) end
+    r.status:SetAlpha(info.faded and 0.35 or 1)
     local textLeft = indent + 17
-    if not row and it.kind == "collect" then
-        local icon = it.icon or (it.itemID and ns.ItemIcon(it.itemID))
-        if icon then
-            r.icon:SetTexture(icon)
-            r.icon:SetPoint("LEFT", indent + 16, 0)
-            r.icon:Show()
-            textLeft = textLeft + 18
-        end
+    if info.icon then
+        r.icon:SetTexture(info.icon)
+        r.icon:SetPoint("LEFT", indent + 16, 0)
+        r.icon:Show()
+        textLeft = textLeft + 18
     end
     r.text:SetPoint("LEFT", textLeft, 0)
     r.text:SetPoint("RIGHT", r.right, "LEFT", -6, 0)
-    r.text:SetText(name)
-    local c = done and DONE_C or (current and GOLD or CREAM)
+    r.text:SetText(info.name)
+    local c = info.done and DONE_C or (info.current and GOLD or CREAM)
     r.text:SetTextColor(c[1], c[2], c[3])
-    -- coming soon: greyed, struck through, and said so on the right
-    local soon = not done and ((row and row.soon) or (not row and ns.SoonReason(it)))
-    if soon then
+    -- coming soon: greyed and struck through
+    if info.soon then
         r.text:SetTextColor(GREY[1], GREY[2], GREY[3])
         r.strike:ClearAllPoints()
         r.strike:SetPoint("LEFT", r.text, "LEFT", 0, 0)
         r.strike:SetWidth(math.max(1, math.min(r.text:GetStringWidth() or 0, r.text:GetWidth() or 0)))
         r.strike:Show()
-        sub = "coming soon"
     end
-    if ln.secName then sub = ln.secName end
-    -- how hard it is, before the count or distance (finished rows don't need it)
-    local tag = not row and not done and ns.DiffTag(it)
-    if tag then sub = (sub and sub ~= "") and (tag .. "  " .. sub) or tag end
-    r.right:SetText(sub or "")
+    r.right:SetText(info.sub or "")
     r.right:SetTextColor(GREY[1], GREY[2], GREY[3])
 end
 
@@ -2734,3 +2749,15 @@ function ns.IsShown() return main and main:IsShown() end
 
 -- The list tooltip, for the test harness and other files.
 ns.ItemTooltip = ItemTooltip
+
+-- The list engine, shared with the Blizzard-style window (Journal.lua): the same lines, clicks and row text.
+ns.ListBuild = function() BuildLines(); return lines end
+ns.ListSetSearch = function(text) searchText = (text or ""):lower() end
+ns.ListSearch = function() return searchText end
+ns.ListClick = function(ln, button) OnRowClick({ line = ln }, button) end
+ns.ListExpanded = expanded
+ns.ListZone = Zone
+ns.ListSection = Section
+ns.ListSectionDefs = SectionDefs
+ns.ListHeaderTooltip = HeaderTooltip
+ns.ListSeasonal = Seasonal

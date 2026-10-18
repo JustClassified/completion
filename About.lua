@@ -206,7 +206,7 @@ function ns.BuildAbout(R, Header, Text, titleFont, pageW)
     reset:SetText("Reset positions")
     reset:SetScript("OnClick", function()
         ns.db.frames = {}
-        if ns.main then ns.RestorePos(ns.main, "main", "CENTER", -30, 20) end
+        if ns.main then ns.RestorePos(ns.main, ns.db.settings.ui == "book" and "main" or "journal", "CENTER", -30, 20) end
         if ns.arrow then ns.RestorePos(ns.arrow, "arrow", "TOP", 0, -140) end
     end)
 
@@ -221,6 +221,22 @@ function ns.BuildAbout(R, Header, Text, titleFont, pageW)
     advBtn:SetPoint("TOPRIGHT", -34, y - 52)
     advBtn:SetText("Advanced...")
     advBtn:SetScript("OnClick", function() ns.aboutPage = "advanced"; ns.RefreshAbout() end)
+
+    -- Look: the Blizzard-style window or the classic book; switching reloads the interface
+    local lookBtn = CreateFrame("Button", nil, opts, "UIPanelButtonTemplate")
+    lookBtn:SetSize(130, 22)
+    lookBtn:SetPoint("TOPRIGHT", -34, y - 78)
+    lookBtn:SetText(ns.db.settings.ui == "book" and "New window" or "Classic book")
+    lookBtn:SetScript("OnClick", function() ns.SwitchLook() end)
+    lookBtn:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+        GameTooltip:AddLine("Look", 1, 1, 1)
+        GameTooltip:AddLine(ns.db.settings.ui == "book" and "Switch to the new window, built like the game's Adventure Guide."
+            or "Switch back to the classic book.", 0.9, 0.85, 0.7, true)
+        GameTooltip:AddLine("Your progress and settings stay; the interface reloads.", 0.7, 0.7, 0.7, true)
+        GameTooltip:Show()
+    end)
+    lookBtn:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
     local toAbout = Link(opts, Text, "About and credits >", function() ns.aboutPage = "about"; ns.RefreshAbout() end)
     toAbout:SetPoint("BOTTOMLEFT", 30, 12)
@@ -494,4 +510,22 @@ function ns.RefreshAbout()
     for _, c in ipairs(checks) do c:SetChecked(c.get() and true or false) end
     options.bookSize:Update()
     options.arrowSize:Update()
+end
+
+-- Switches between the new window and the classic book: saves the choice and reloads after a confirmation.
+function ns.SwitchLook()
+    local toBook = ns.db.settings.ui ~= "book"
+    if StaticPopupDialogs then
+        StaticPopupDialogs["COMPLETION_SWITCH_LOOK"] = {
+            text = toBook and "Switch Completion to the classic book? The interface will reload."
+                or "Switch Completion to the new window? The interface will reload.",
+            button1 = ACCEPT or "Accept", button2 = CANCEL or "Cancel",
+            OnAccept = function()
+                ns.db.settings.ui = toBook and "book" or nil
+                if C_UI and C_UI.Reload then C_UI.Reload() elseif ReloadUI then ReloadUI() end
+            end,
+            timeout = 0, whileDead = true, hideOnEscape = true, preferredIndex = 3,
+        }
+        StaticPopup_Show("COMPLETION_SWITCH_LOOK")
+    end
 end
