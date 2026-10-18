@@ -330,7 +330,7 @@ ns.EVENT_DEFS = {
             { "Fire Brigade", group = "Village fires", ach = 289,
               note = "In Goldshire, Kharanos or Azure Watch (Razor Hill, Brill or Falconwing Square for the Horde): practice with a water bucket, then put out every fire when the Headless Horseman attacks on the half hour." },
             { "Headless Horseman", group = "Every day", daily = true, ach = 18959,
-              note = "Queue for the holiday dungeon in the Scarlet Monastery graveyard. The first kill each day gives the pumpkin with the best chance at the mount." },
+              note = "Queue for the holiday dungeon in the Scarlet Monastery graveyard. The first kill each day gives the pumpkin with the best chance at the Horseman's Reins, the Ghoulish Charger and Arfus, and a piece of the Ghoulish Collection you don't have yet." },
             { "Kickin' With the Wick", group = "Achievements", ach = 18960,
               note = "Inside the Horseman's dungeon, speak to the wicker men before the fight to add their curses." },
             { "Rotten Hallow", group = "Every day", daily = true, ach = { A = 1040, H = 1041 },
@@ -556,4 +556,26 @@ for _, e in ipairs({
 }) do
     local list = ns.EVENT_ACHS and ns.EVENT_ACHS[e[1]]
     if list then table.insert(list, { e[2], 0, e[3] }) end
+end
+
+-- Hallow's End drops the generated list (Data/Events.lua) is missing: the 2025 Headless Horseman rewards. All come from
+-- the Loot-Filled Pumpkin he gives in the holiday dungeon (checked 2026-10-18 against the holiday guide).
+do
+    local HORSEMAN = 207438
+    local DAILY = "Can come from the Headless Horseman's Loot-Filled Pumpkin in the holiday dungeon, only on your warband's "
+        .. "first kill of the day; the chance grows each new day you beat him."
+    local GHOULISH = "The Headless Horseman gives one piece of the Horseman's Ghoulish Collection you don't have yet each day, "
+        .. "until you have all nine."
+    local list = ns.EVENT_ITEMS and ns.EVENT_ITEMS.hallows
+    if list then
+        local have = {}
+        for _, e in ipairs(list) do have[e.i] = true end
+        local add = { { 247721, DAILY }, { 211271, DAILY } }
+        for _, id in ipairs({ 247964, 247965, 247966, 247967, 247968, 247969, 247971, 247972, 250708 }) do
+            add[#add + 1] = { id, GHOULISH }
+        end
+        for _, a in ipairs(add) do
+            if not have[a[1]] then list[#list + 1] = { i = a[1], d = { HORSEMAN }, t = a[2] } end
+        end
+    end
 end
