@@ -542,7 +542,9 @@ local function CollectTooltip(it)
     if it.itemID and not it.done and ns.Attempts and ns.Attempts(it.itemID) > 0 then
         GameTooltip:AddLine(string.format("Attempts so far: %d", ns.Attempts(it.itemID)), 0.8, 0.8, 0.8)
     end
-    if it.uncounted then GameTooltip:AddLine("Not part of 100%: it isn't tied to the expansion's content.", 0.7, 0.7, 0.7, true) end
+    if it.uncounted then
+        GameTooltip:AddLine(it.extra and "Not part of 100%: an extra for completionists." or "Not part of 100%: it isn't tied to the expansion's content.", 0.7, 0.7, 0.7, true)
+    end
     GameTooltip:AddLine(" ")
     GameTooltip:AddLine((it.steps and #it.steps > 0) and "Click: see it in 3D and track it; the arrow follows the steps."
         or "Click: see it in 3D and track where it comes from.", 0.5, 0.5, 0.5, true)
@@ -725,6 +727,13 @@ local function ItemTooltip(owner, it, row)
         DelveTooltip(it)
         return
     end
+    -- an appearance set under Extras
+    if it.kind == "set" then
+        GameTooltip:AddLine(" ")
+        ns.SetTooltip(it)
+        GameTooltip:Show()
+        return
+    end
     -- a Midnight reputation with reviewed data: standing, progress, rewards still needed, how to earn it
     if it.kind == "rep" and ns.REP_INFO and ns.REP_INFO[it.faction] then
         GameTooltip:AddLine(" ")
@@ -746,7 +755,9 @@ local function ItemTooltip(owner, it, row)
     elseif (it.max or 0) == 0 then GameTooltip:AddLine("Not counted: the game can't tell yet", 0.7, 0.7, 0.7)
     else GameTooltip:AddLine("Missing", 1, 0.5, 0.3) end
     if it.sub and it.sub ~= "" then GameTooltip:AddLine(it.sub, 0.8, 0.8, 0.8) end
-    if it.uncounted then GameTooltip:AddLine("Not part of 100%: it isn't tied to the expansion's content.", 0.7, 0.7, 0.7, true) end
+    if it.uncounted then
+        GameTooltip:AddLine(it.extra and "Not part of 100%: an extra for completionists." or "Not part of 100%: it isn't tied to the expansion's content.", 0.7, 0.7, 0.7, true)
+    end
     -- coming soon: say what's missing and show nothing unsure (no guide, notes or places)
     local soon = ns.SoonReason(it)
     if soon then

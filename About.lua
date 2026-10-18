@@ -395,6 +395,9 @@ local ADVANCED = {
     { "rareByLoot", "Rares are done when you own their drops",
       "For rares that no achievement asks for: done once you own everything they drop, even if you killed them "
         .. "before installing the addon. By default a rare counts when you kill it.", Recount },
+    { "hideExtras", "Hide the extras",
+      "The Midnight page lists feats of strength for completionists under Extras (not counted): Mythic+, delve and "
+        .. "Labyrinth feats and more. They never count toward 100%; this hides them.", Recount },
     { "fadedDone", "Show finished, faded",
       "Finished treasures and rares stay on the maps as faint grey pins instead of disappearing.", Repin },
 }

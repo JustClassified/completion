@@ -752,6 +752,23 @@ end
 -- build: reputation and collectibles
 ------------------------------------------------------------------------
 
+-- The extras on the Midnight page (Data/Extras.lua): feats of strength for completionists, by group, never counted.
+-- Options > Advanced can hide them. Each row's note becomes the achievement's tooltip note.
+local function BuildExtras(midnight)
+    if not midnight or (ns.db and ns.db.settings and ns.db.settings.hideExtras) then return end
+    for _, g in ipairs(ns.EXTRA_GROUPS or {}) do
+        for _, r in ipairs(g.rows) do
+            AddItem(midnight, "extras", { key = "x:" .. r[1], kind = "ach", id = r[1], group = g.name, extra = true, spots = {} })
+            if r[2] and ns.ACH_NOTES and not ns.ACH_NOTES[r[1]] then ns.ACH_NOTES[r[1]] = { r[2] } end
+        end
+    end
+    -- appearance sets your class can collect, from the game's own list, PvE sources only (PvP has its own book)
+    for _, set in ipairs(ns.MidnightSets and ns.MidnightSets("pve") or {}) do
+        AddItem(midnight, "extras", { key = "s:" .. set.setID, kind = "set", setID = set.setID, name = set.title,
+                                      group = set.heading, extra = true, spots = {} })
+    end
+end
+
 -- One reputation item per faction listed for the zone.
 local function BuildRep(zone)
     for _, fid in ipairs(zone.factions or {}) do
@@ -1126,6 +1143,7 @@ function ns.Build()
     BuildAchievements(midnight)
     for _, z in ipairs(ns.ZONES) do BuildRep(z); BuildCollect(z) end
     BuildJournalCollect(midnight)
+    BuildExtras(midnight)
     -- collectibles rewarded by an achievement follow that achievement's walkthrough
     local achByName, achById = {}, {}
     for _, z in ipairs(ns.ZONES) do
@@ -1334,6 +1352,16 @@ local function EvalCollect(it)
     it.sub = TYPE_LABEL[t]
 end
 
+-- An appearance set (Extras): done once the game says the set is collected; sub counts its pieces.
+local function EvalSet(it)
+    local info = ns.SetInfo(it.setID)
+    if not info then it.max, it.cur, it.done, it.hidden = 0, 0, false, true; return end
+    it.hidden = nil
+    it.done, it.max, it.cur = info.collected, 1, info.collected and 1 or 0
+    local have, total = ns.SetPieces(it.setID)
+    it.sub = (total > 0 and not info.collected) and string.format("%d/%d pieces", have, total) or nil
+end
+
 -- Sets cur, max, done and sub on one item, by kind.
 Eval = function(it)
     local k = it.kind
@@ -1342,6 +1370,7 @@ Eval = function(it)
     elseif k == "ach" then EvalAch(it)
     elseif k == "container" then EvalContainer(it)
     elseif k == "rep" then EvalRep(it)
+    elseif k == "set" then EvalSet(it)
     elseif k == "collect" then EvalCollect(it) end
 end
 ns.Eval = Eval

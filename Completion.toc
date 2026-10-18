@@ -52,6 +52,8 @@ Data\DelvesExtra.lua
 Data\DelveText.lua
 Data\InstanceText.lua
 Data\RepText.lua
+Data\Extras.lua
+Data\Sets.lua
 Data\TWW\Delves.lua
 Data\Expansions.lua
 Data\Events.lua
@@ -64,6 +66,7 @@ Research.lua
 Collect.lua
 Instances.lua
 Reputation.lua
+Sets.lua
 Seasonal.lua
 Farm.lua
 WorldPins.lua

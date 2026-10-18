@@ -95,6 +95,8 @@ ns.SECTIONS = {
     { key = "prof",     name = "Professions" },
     -- shown on an expansion's overview page, never counted toward 100% (housing, levelling, gear)
     { key = "other",    name = "Other (not counted)", uncounted = true },
+    -- feats of strength for completionists (Data/Extras.lua), on the overview page, never counted
+    { key = "extras",   name = "Extras (not counted)", uncounted = true },
 }
 -- the sections a zone page lists: everything but the overview-only Other
 ns.ZONE_SECTIONS = {}
