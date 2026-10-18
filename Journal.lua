@@ -4,15 +4,16 @@
 -- The bottom tabs are Progress, This Week, Warband and Options.
 --
 -- It shares everything but the drawing with the classic book (UI.lua): the same lines (ns.ListBuild), clicks
--- (ns.ListClick), row text (ns.LineInfo) and tooltips (ns.ItemTooltip). Options > Look switches between the two
+-- (ns.ListClick), row text (ns.LineInfo) and tooltips (ns.ItemTooltip). Options > Classic book switches between the two
 -- (settings.ui = "book" for the classic book); only one of them is built per session.
 
 local _, ns = ...
 
-local W, H = 800, 496                    -- the Adventure Guide's size; its inner art is 786 x 425
+local W, H = 1200, 760                   -- the default size; drag the corner to resize
+local MIN_W, MIN_H, MAX_W, MAX_H = 960, 620, 1800, 1150
 local CARD_W, CARD_H = 374, 112          -- a Journeys renown card
-local ROW_W = 521                        -- a Traveler's Log row
-local ITEM_H, CHILD_H, HEAD_H = 48, 24, 36
+local DETAIL_W = 340                     -- the detail panel on the right: 3D model and how to get it
+local ITEM_H, CHILD_H, HEAD_H = 50, 26, 38
 
 local frame, inset, nav, search, bookDrop, filterDrop
 local views = {}          -- home, zone, page, options, empty
@@ -21,6 +22,7 @@ local sectionButtons = {}
 local homeBox, homeBar, rowBox, rowBar
 local headerTitle, headerSub, progress
 local pageHost, optionsHost
+local detail              -- the panel with the 3D model
 
 ------------------------------------------------------------------------
 -- small helpers
@@ -349,7 +351,16 @@ local function HomeData()
     local function group(title, list)
         if #list == 0 then return end
         data[#data + 1] = { kind = "head", text = title }
-        for i = 1, #list, 2 do data[#data + 1] = { kind = "cards", a = list[i], b = list[i + 1] } end
+        local cols = 3
+        if homeBox and homeBox.GetWidth then
+            local w = homeBox:GetWidth() or 0
+            if w > 0 then cols = math.max(1, math.min(4, math.floor(w / (CARD_W + 4)))) end
+        end
+        for i = 1, #list, cols do
+            local row = { kind = "cards", list = {} }
+            for j = 0, cols - 1 do row.list[j + 1] = list[i + j] end
+            data[#data + 1] = row
+        end
     end
     if key == "seasonal" then
         local on, rest = {}, {}
@@ -441,7 +452,7 @@ end
 local function LineHeight(ln)
     if ln.header then return HEAD_H end
     if ln.depth and ln.depth > 0 or ln.row then return CHILD_H end
-    if InstanceArt(ln.it) then return 72 end
+    if InstanceArt(ln.it) then return 76 end
     return ITEM_H
 end
 
@@ -609,13 +620,14 @@ end
 -- scroll lists (the game's ScrollBox with its minimal scroll bar)
 ------------------------------------------------------------------------
 
--- A ScrollBox list with a minimal scroll bar; height(data) sizes each element, init(frame, data) fills it.
+-- A ScrollBox list with a minimal scroll bar, anchored from (x, y) to (right, bottom) of its parent;
+-- height(data) sizes each element, init(frame, data) fills it.
 -- Returns the box, or nil when the client has no ScrollBox (then nothing is drawn).
-local function MakeList(parent, w, h, x, y, height, init)
+local function MakeList(parent, x, y, right, bottom, height, init)
     if not (CreateScrollBoxListLinearView and ScrollUtil and ScrollUtil.InitScrollBoxListWithScrollBar) then return end
     local box = CreateFrame("Frame", nil, parent, "WowScrollBoxList")
-    box:SetSize(w, h)
     box:SetPoint("TOPLEFT", x, y)
+    box:SetPoint("BOTTOMRIGHT", right, bottom)
     local bar = CreateFrame("EventFrame", nil, parent, "MinimalScrollBar")
     bar:SetPoint("TOPLEFT", box, "TOPRIGHT", 8, -6)
     bar:SetPoint("BOTTOMLEFT", box, "BOTTOMRIGHT", 8, 6)
@@ -645,6 +657,100 @@ local function SetProgress(cur, max, label)
     progress.label:SetText(label or "Progress")
     progress.value:SetText(max > 0 and string.format("%d / %d  (%d%%)", cur, max, math.floor(cur / max * 100 + 0.0001)) or "")
     progress:Show()
+end
+
+------------------------------------------------------------------------
+-- detail panel: the 3D model of a picked mount, pet, appearance or rare, and how to get it
+------------------------------------------------------------------------
+
+-- Redraws the detail panel: the picked item, or the open page's emblem and a hint.
+local function RefreshDetail(z)
+    if not detail then return end
+    local sel = ns.selected
+    if sel and ns.ModelInfo and ns.ModelInfo(sel) then
+        if detail.presented ~= sel then
+            detail.presented = sel
+            detail.show:Present(sel)
+        end
+        detail.show:Show()
+        detail.idle:Hide()
+        local parts = {}
+        for _, l in ipairs(ns.HowToGet and ns.HowToGet(sel) or {}) do
+            parts[#parts + 1] = string.format("|cff%02x%02x%02x%s|r", math.floor(l[2] * 255), math.floor(l[3] * 255), math.floor(l[4] * 255), l[1])
+        end
+        detail.how:SetText(#parts > 0 and table.concat(parts, "\n\n") or "")
+        detail.howHead:SetText(sel.done and "Collected" or "How to get it")
+        detail.howHead:Show(); detail.how:Show()
+        return
+    end
+    detail.presented = nil
+    detail.show:Hide()
+    detail.howHead:Hide(); detail.how:Hide()
+    detail.idle:Show()
+    if z then
+        SetEmblem(detail.idle.emblem, z)
+        detail.idle.name:SetText(z.name)
+        local cur, max, pct = Totals(z)
+        detail.idle.total:SetText(max > 0 and string.format("%d of %d done (%d%%)", cur, max, pct) or "")
+    else
+        detail.idle.emblem:SetTexture("Interface\\Icons\\INV_Misc_Book_16")
+        detail.idle.name:SetText("Search")
+        detail.idle.total:SetText("")
+    end
+end
+
+-- Builds the detail panel on the zone view's right side.
+local function BuildDetail(parent)
+    detail = CreateFrame("Frame", nil, parent)
+    detail:SetWidth(DETAIL_W)
+    detail:SetPoint("TOPRIGHT", -10, -96)
+    detail:SetPoint("BOTTOMRIGHT", -10, 10)
+    local bg = detail:CreateTexture(nil, "BACKGROUND")
+    bg:SetAllPoints()
+    if not Atlas(bg, "activities-container", false) then bg:SetColorTexture(0, 0, 0, 0.3) end
+    detail.show = ns.CreateShowcase(detail, DETAIL_W - 20, 300, function()
+        ns.selected = nil
+        Refresh()
+    end, CLOSE or "Close")
+    detail.show:ClearAllPoints()
+    detail.show:SetPoint("TOPLEFT", 10, -10)
+    detail.show:SetPoint("TOPRIGHT", -10, -10)
+    detail.show:SetHeight(300)
+    detail.howHead = Font(detail, "GameFontNormalLarge")
+    detail.howHead:SetPoint("TOPLEFT", detail.show, "BOTTOMLEFT", 6, -12)
+    detail.how = Font(detail, "GameFontHighlight")
+    detail.how:SetJustifyV("TOP")
+    detail.how:SetPoint("TOPLEFT", detail.howHead, "BOTTOMLEFT", 0, -8)
+    detail.how:SetPoint("BOTTOMRIGHT", detail, "BOTTOMRIGHT", -16, 12)
+    detail.how:SetSpacing(2)
+    -- nothing picked: the page's emblem, its total and a hint
+    local idle = CreateFrame("Frame", nil, detail)
+    idle:SetAllPoints()
+    idle.emblem = idle:CreateTexture(nil, "ARTWORK")
+    idle.emblem:SetSize(150, 150)
+    idle.emblem:SetPoint("TOP", 0, -40)
+    idle.name = Font(idle, "GameFontNormalHuge")
+    idle.name:SetJustifyH("CENTER")
+    idle.name:SetPoint("TOP", idle.emblem, "BOTTOM", 0, -14)
+    idle.name:SetWidth(DETAIL_W - 30)
+    idle.total = Font(idle, "GameFontHighlightMed2")
+    idle.total:SetJustifyH("CENTER")
+    idle.total:SetPoint("TOP", idle.name, "BOTTOM", 0, -8)
+    idle.total:SetWidth(DETAIL_W - 30)
+    idle.hint = Font(idle, "GameFontDisable")
+    idle.hint:SetJustifyH("CENTER")
+    idle.hint:SetPoint("TOP", idle.total, "BOTTOM", 0, -30)
+    idle.hint:SetWidth(DETAIL_W - 50)
+    idle.hint:SetText("Click a mount, pet, appearance or rare to see it here in 3D. Drag to turn it, scroll to zoom.")
+    detail.idle = idle
+end
+
+-- Puts the rows between the section list (when shown) and the detail panel.
+local function PlaceRows(withList)
+    if not (rowBox and rowBox.ClearAllPoints) then return end
+    rowBox:ClearAllPoints()
+    rowBox:SetPoint("TOPLEFT", views.zone, "TOPLEFT", withList and 244 or 14, -96)
+    rowBox:SetPoint("BOTTOMRIGHT", views.zone, "BOTTOMRIGHT", -(DETAIL_W + 40), 10)
 end
 
 ------------------------------------------------------------------------
@@ -690,7 +796,8 @@ Refresh = function()
         ns.cdb.lastSection = nil
         views.zone:Show()
         views.zone.list:Hide()
-        rowBox:ClearAllPoints(); rowBox:SetPoint("TOPLEFT", views.zone, "TOPLEFT", 20, -60); rowBox:SetWidth(730)
+        PlaceRows(false)
+        RefreshDetail(nil)
         headerTitle:SetText("Search")
         headerSub:SetText(string.format("Everything in the book matching \"%s\".", ns.ListSearch()))
         local data = {}
@@ -717,7 +824,8 @@ Refresh = function()
     local z = ns.ListZone()
     views.zone:Show()
     views.zone.list:Show()
-    rowBox:ClearAllPoints(); rowBox:SetPoint("TOPRIGHT", views.zone, "TOPRIGHT", -30, -96); rowBox:SetWidth(ROW_W)
+    PlaceRows(true)
+    RefreshDetail(z)
     headerTitle:SetText(z.name)
     headerSub:SetText(z.event and (ns.EventStatusText and ns.EventStatusText(z) or "") or (z.desc or ""))
     local cur, max = Totals(z)
@@ -839,7 +947,7 @@ function ns.CreateJournal()
     -- the progress bar (the Traveler's Log threshold bar)
     progress = CreateFrame("Frame", nil, inset)
     progress:SetSize(663, 33)
-    progress:SetPoint("TOPLEFT", 46, -48)
+    progress:SetPoint("TOP", 0, -48)
     progress.back = progress:CreateTexture(nil, "BACKGROUND")
     progress.back:SetPoint("CENTER")
     Atlas(progress.back, "activities-bar-background", true)
@@ -860,11 +968,15 @@ function ns.CreateJournal()
     -- home view: the cards
     views.home = CreateFrame("Frame", nil, inset)
     views.home:SetAllPoints()
-    homeBox = MakeList(views.home, 748, 320, 14, -92, function(data) return data.kind == "head" and 40 or CARD_H + 6 end,
+    homeBox = MakeList(views.home, 20, -92, -34, 10, function(data) return data.kind == "head" and 44 or CARD_H + 8 end,
         function(row, data)
-            if not row.cardA then
-                row.cardA = MakeCard(row); row.cardA:SetPoint("LEFT", 0, 0)
-                row.cardB = MakeCard(row); row.cardB:SetPoint("LEFT", row.cardA, "RIGHT", 0, 0)
+            if not row.cards then
+                row.cards = {}
+                for i = 1, 4 do
+                    row.cards[i] = MakeCard(row)
+                    if i == 1 then row.cards[i]:SetPoint("LEFT", 0, 0)
+                    else row.cards[i]:SetPoint("LEFT", row.cards[i - 1], "RIGHT", 4, 0) end
+                end
                 row.head = Font(row, "GameFontHighlightLarge")
                 row.head:SetPoint("TOPLEFT", 10, -6)
                 row.line = row:CreateTexture(nil, "ARTWORK")
@@ -877,10 +989,9 @@ function ns.CreateJournal()
             row.head:SetShown(head); row.line:SetShown(head)
             if head then
                 row.head:SetText(data.text)
-                row.cardA:Hide(); row.cardB:Hide()
+                for _, c in ipairs(row.cards) do c:Hide() end
             else
-                FillCard(row.cardA, data.a)
-                FillCard(row.cardB, data.b)
+                for i, c in ipairs(row.cards) do FillCard(c, data.list[i]) end
             end
         end)
 
@@ -888,27 +999,30 @@ function ns.CreateJournal()
     views.zone = CreateFrame("Frame", nil, inset)
     views.zone:SetAllPoints()
     views.zone.list = CreateFrame("Frame", nil, views.zone)
-    views.zone.list:SetSize(224, 320)
-    views.zone.list:SetPoint("TOPLEFT", 5, -96)
+    views.zone.list:SetWidth(224)
+    views.zone.list:SetPoint("TOPLEFT", 8, -96)
+    views.zone.list:SetPoint("BOTTOMLEFT", 8, 10)
     local lbg = views.zone.list:CreateTexture(nil, "BACKGROUND")
     lbg:SetAllPoints()
     if not Atlas(lbg, "activities-container", false) then lbg:SetColorTexture(0, 0, 0, 0.3) end
-    rowBox, rowBar = MakeList(views.zone, ROW_W, 320, 250, -96, LineHeight, FillRow)
-    if not rowBox then rowBox = CreateFrame("Frame", nil, views.zone); rowBox:SetSize(ROW_W, 320) end
+    rowBox, rowBar = MakeList(views.zone, 244, -96, -(DETAIL_W + 40), 10, LineHeight, FillRow)
+    if not rowBox then rowBox = CreateFrame("Frame", nil, views.zone); rowBox:SetSize(560, 500) end
+    BuildDetail(views.zone)
 
     -- the hosted pages: This Week and Warband (Pages.lua), Options (About.lua)
     views.page = CreateFrame("Frame", nil, inset)
     views.page:SetAllPoints()
     pageHost = CreateFrame("Frame", nil, views.page)
-    pageHost:SetSize(560, 360)
+    pageHost:SetSize(560, H - 140)
     pageHost:SetPoint("TOP", 0, -44)
     views.options = CreateFrame("Frame", nil, inset)
     views.options:SetAllPoints()
     -- the options are taller than the window: they scroll, with the game's minimal scroll bar
     local okS, sf = pcall(CreateFrame, "ScrollFrame", nil, views.options, "ScrollFrameTemplate")
     if not okS or not sf then sf = CreateFrame("ScrollFrame", nil, views.options, "UIPanelScrollFrameTemplate") end
-    sf:SetPoint("TOPLEFT", 100, -44)
-    sf:SetPoint("BOTTOMRIGHT", -110, 8)
+    sf:SetWidth(580)
+    sf:SetPoint("TOP", 0, -44)
+    sf:SetPoint("BOTTOM", 0, 8)
     optionsHost = CreateFrame("Frame", nil, sf)
     optionsHost:SetSize(560, 620)
     sf:SetScrollChild(optionsHost)
@@ -924,6 +1038,29 @@ function ns.CreateJournal()
     frame.Tabs = tabs
     if PanelTemplates_SetNumTabs then pcall(PanelTemplates_SetNumTabs, frame, #tabs) end
 
+    -- resizing: drag the bottom-right corner; the size is kept between sessions
+    local size = ns.db.frames and ns.db.frames.journalSize
+    if size and size.w and size.h then
+        frame:SetSize(math.max(MIN_W, math.min(MAX_W, size.w)), math.max(MIN_H, math.min(MAX_H, size.h)))
+    end
+    frame:SetResizable(true)
+    if frame.SetResizeBounds then frame:SetResizeBounds(MIN_W, MIN_H, MAX_W, MAX_H)
+    elseif frame.SetMinResize then frame:SetMinResize(MIN_W, MIN_H); frame:SetMaxResize(MAX_W, MAX_H) end
+    local grip = CreateFrame("Button", nil, frame)
+    grip:SetSize(16, 16)
+    grip:SetPoint("BOTTOMRIGHT", -3, 3)
+    grip:SetFrameLevel(inset:GetFrameLevel() + 20)
+    grip:SetNormalTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Up")
+    grip:SetHighlightTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Highlight")
+    grip:SetPushedTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down")
+    grip:SetScript("OnMouseDown", function(_, button) if button == "LeftButton" then frame:StartSizing("BOTTOMRIGHT") end end)
+    grip:SetScript("OnMouseUp", function()
+        frame:StopMovingOrSizing()
+        if ns.db.frames then ns.db.frames.journalSize = { w = frame:GetWidth(), h = frame:GetHeight() } end
+        if ns.SavePos then ns.SavePos(frame, "journal") end
+        Refresh()
+    end)
+    frame.grip = grip
     if ns.RestorePos then ns.RestorePos(frame, "journal", "CENTER", 0, 20) end
     frame:SetScale(ns.db.settings.scale or 1)
     frame:SetScript("OnShow", function()
@@ -962,5 +1099,6 @@ function ns.CreateJournal()
         end
     end
     ns.Journal = { frame = frame, Refresh = Refresh, OpenPage = OpenPage, OpenBook = OpenBook, SelectTab = SelectTab,
-                   SelectSection = SelectSection, homeBox = homeBox, rowBox = rowBox, nav = nav, search = search }
+                   SelectSection = SelectSection, homeBox = homeBox, rowBox = rowBox, nav = nav, search = search,
+                   detail = detail }
 end

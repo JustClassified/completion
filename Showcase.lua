@@ -221,8 +221,8 @@ end
 -- the viewer
 ------------------------------------------------------------------------
 
--- Builds the viewer, hidden, sized w x h on parent. onBack runs from its "Show map" button.
-function ns.CreateShowcase(parent, w, h, onBack)
+-- Builds the viewer, hidden, sized w x h on parent. onBack runs from its button, labelled backText ("Show map").
+function ns.CreateShowcase(parent, w, h, onBack, backText)
     local sc = CreateFrame("Frame", nil, parent)
     sc:SetSize(w, h)
     sc:EnableMouse(true)
@@ -261,7 +261,7 @@ function ns.CreateShowcase(parent, w, h, onBack)
     local back = CreateFrame("Button", nil, sc, "UIPanelButtonTemplate")
     back:SetSize(90, 20)
     back:SetPoint("TOPRIGHT", -4, -4)
-    back:SetText("Show map")
+    back:SetText(backText or "Show map")
     back:SetScript("OnClick", onBack)
     back:SetFrameLevel(sc.model:GetFrameLevel() + 5)
 
