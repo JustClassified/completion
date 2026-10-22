@@ -719,3 +719,90 @@ do
     S[3457] = { { t = "On Pirates' Day (19 September, one day), go up to the roof of the bank in Booty Bay: take the stairs up through Baron Revilgaz's room.", at = { 210, 40.0, 72.5 } },
                 { t = "Talk to Dread Captain DeMeza and choose to drink with her: you join her crew (a pirate costume for 12 hours) and get the achievement." } }
 end
+
+------------------------------------------------------------------------
+-- Darkmoon Faire, the rest (checked 2026-10-22 against the Faire's full guide)
+------------------------------------------------------------------------
+do
+    local DMF = 407
+    local GET_THERE = { { side = "Alliance", t = "During the Faire, a Darkmoon Faire Mystic Mage in Stormwind ports you to the Faire's portal in Elwynn Forest; take the portal to Darkmoon Island.", at = { 84, 62.2, 73.0 } },
+                        { side = "Horde", t = "During the Faire, a Darkmoon Faire Mystic Mage in Orgrimmar ports you to the Faire's portal in Mulgore; take the portal to Darkmoon Island.", at = { 85, 48.2, 62.0 } } }
+    S[6019] = { GET_THERE[1], GET_THERE[2], { t = "Arriving on Darkmoon Island is enough." } }
+    S[6020] = { GET_THERE[1], GET_THERE[2], { t = "Play five different games: Whack-a-Gnoll, the cannon, the Shooting Gallery, Ring Toss and the Tonk Challenge (Firebird's Challenge doesn't count). Each game master gives a daily quest for it." } }
+    S[6025] = { { t = "Go to the petting zoo by the boardwalk, then past it, away from the road, to the pony pen in the south-east. Click a pony to ride it.", at = { DMF, 57.0, 82.0 } } }
+    S[6026] = { { t = "Buy and eat the 10 foods Stamp Thunderhorn sells at his stall.", at = { DMF, 52.6, 67.8 } },
+                { t = "Buy and drink the 8 drinks Sylannia sells next to him.", at = { DMF, 50.6, 69.6 } } }
+    N[6026] = { "Two of the drinks need level 85.", "Some also come from the Faire's fishing crates, but buying them is quicker." }
+    S[6029] = { { t = "Keep the Darkmoon Adventurer's Guide in your bags and turn in all nine Darkmoon artifacts on the island: the five from dungeons, the three from battlegrounds and the Soothsayer's Runes." } }
+    N[6029] = "All nine are sold on the auction house; players report several no longer drop for max-level characters."
+    local FIREWORK = { t = "Buy Darkmoon Fireworks from Boomie Sparks at the Faire (10 Darkmoon Prize Tickets each); you need six. They only work while the Faire is on.", at = { DMF, 48.5, 71.8 } }
+    S[6030] = { FIREWORK, { t = "Set one off in Stormwind, Ironforge, Darnassus, the Exodar, Shattrath and Dalaran (Northrend)." } }
+    S[6031] = { FIREWORK, { t = "Set one off in Orgrimmar, Thunder Bluff, Silvermoon City, the Undercity (not the Ruins of Lordaeron), Shattrath and Dalaran (Northrend)." } }
+    N[6030] = "Darnassus needs Zidormi in Darkshore (48.8, 24.5) to see the old Teldrassil."
+    N[6031] = "The Undercity needs Zidormi in Tirisfal Glades (69.4, 62.8) to see the old city."
+    S[6032] = { { t = "Do five of the Faire's profession quests (at skill 75 or higher in that profession): two for your main professions, plus the cooking, fishing and archaeology ones, which anyone can learn." } }
+    N[6032] = "They don't need to be at the same Faire."
+    S[6332] = { { t = "Wait for the Darkmoon Rabbit at the cave south-east of the Faire and kill it. It's a rare on a long timer.", at = { DMF, 77.8, 83.8 } } }
+    N[6332] = "Easy to kill at max level; the wait is the hard part."
+end
+
+------------------------------------------------------------------------
+-- Hallow's End, step by step (checked 2026-10-22)
+------------------------------------------------------------------------
+do
+    local VEND = { { side = "Alliance", t = "Dorothy, the Hallow's End vendor outside Stormwind's gate (Tricky Treats).", at = { ELWYNN, 31.8, 50.0 } },
+                   { side = "Horde", t = "Chub, the Hallow's End vendor by the Undercity entrance in Tirisfal Glades (Tricky Treats).", at = { TIRISFAL, 62.2, 66.4 } } }
+    local function vend(rest) local out = { VEND[1], VEND[2] } for _, x in ipairs(rest) do out[#out + 1] = x end return out end
+    local TREATS = "Tricky Treats come from candy buckets in inns and the holiday's quests."
+    S[972] = { { t = "Click a candy bucket in any inn (every inn has one during Hallow's End)." } }
+    S[981] = vend({ { t = "Buy a Tooth Pick there (treat bags can also have one) and use it." } })
+    S[288] = vend({ { t = "Buy Tricky Treats or use the ones from candy buckets, and eat them until you get the Upset Tummy; usually fewer than five." } })
+    S[283] = vend({ { t = "Buy Hallowed Wands there and use them on yourself or a friend, or ask other players to wand you: you need to be turned into each of the seven costumes the achievement lists (pirate, ninja, leper gnome, ghost, bat, skeleton, wisp)." } })
+    N[283] = "The Random wand doesn't count: buy the specific ones you still need."
+    S[292] = vend({ { t = "Get the Sinister Squashling pet and the Hallowed Helm: both can come from the Headless Horseman's loot, or buy each there for Tricky Treats." } })
+    N[292] = { TREATS, "If you own the helm's look but never looted it on this character, buying it still counts; you can sell it back for the treats." }
+    S[289] = {
+        { side = "Alliance", t = "Go to Goldshire (or Kharanos, or Azure Watch). Take the water-bucket practice quest there.", at = { ELWYNN, 42.5, 65.8 } },
+        { side = "Horde", t = "Go to Razor Hill (or Brill, or Falconwing Square). Take the water-bucket practice quest there.", at = { DUROTAR, 52.2, 41.5 } },
+        { t = "When the Headless Horseman attacks the village (on the half hour), throw water at the fires with the other players until every fire is out." } }
+    N[289] = "Join a group with the other players there: the fires go out faster."
+    S[291] = { { t = "Get Weighted Jack-o'-Lanterns: they come from the Horseman's loot and the village fire quest's gift." },
+               { t = "Throw one at a player of each race the achievement lists." } }
+    S[1261] = { { t = "Get G.N.E.R.D.S. candy from the candy buckets in inns and eat one for the G.N.E.R.D. buff." },
+                { t = "With the buff on, get 10 honorable kills: a battleground is the easiest place." } }
+    N[1261] = "The buff ends when you die."
+    local HORSEMAN = { t = "Queue for the Headless Horseman in the Dungeon Finder (the holiday dungeon in the Scarlet Monastery graveyard)." }
+    S[18959] = { HORSEMAN, { t = "Defeat him. Your first kill each day gives the Loot-Filled Pumpkin." } }
+    S[18962] = { HORSEMAN, { t = "Defeat him; any kill during the holiday counts." } }
+    S[18960] = { HORSEMAN, { t = "Inside, talk to the wicker men before the fight to add their curses, then defeat the Horseman." } }
+    S[10365] = { { side = "Alliance", t = "In your level 3 garrison in Shadowmoon Valley (Draenor), go to the graveyard in the south-west corner: Pepe in his scarecrow costume sits on a gravestone. Click him." },
+                 { side = "Horde", t = "In your level 3 garrison in Frostfire Ridge (Draenor), go behind it to the stone with part of the Horde emblem carved in it: Pepe sits on it in his scarecrow costume. Click him." } }
+    N[10365] = { "Only during Hallow's End, and only in a level 3 garrison. He can't be targeted: click him.", "Since 2026 it also gives Scarecrow Pepe for your house." }
+    S[971] = { { t = "Finish Tricks and Treats of Eastern Kingdoms, of Kalimdor and of Outland (expand it: each one lists its inns, and the arrow goes to the next candy bucket)." } }
+end
+
+------------------------------------------------------------------------
+-- New holiday activities the step lists didn't have yet (checked 2026-10-22)
+------------------------------------------------------------------------
+do
+    local function addSteps(key, list)
+        for _, def in ipairs(ns.EVENT_DEFS or {}) do
+            if def.key == key then
+                def.steps = def.steps or {}
+                for _, st in ipairs(list) do def.steps[#def.steps + 1] = st end
+            end
+        end
+    end
+    addSteps("midsummer", {
+        { "Ignite the Skies", group = "Skyriding (new in 2026)", q = { A = 92711, H = 92435 },
+          note = "Aedh Firebeard at the Stormwind camp (Elder Sunhorn at the Orgrimmar camp for the Horde) starts a skyriding chain: fly through Airborne Sun Blossoms (small ones 1 point, large ones 3) across the Eastern Kingdoms and Kalimdor. Air streams lead the way; steady flight works too. It pays a lot of Burning Blossoms." },
+        { "Ignite the Skies dailies", group = "Every day", daily = true, any = true, q = { 92836, 92839 },
+          note = "Unlocked once you finish the first continent's Ignite the Skies quests." },
+        { "The Frost Lord's introduction", group = "Get started", q = 92185,
+          note = "Optional: the festival storyteller at the Stormwind or Orgrimmar camp offers it before your first Ahune kill, for extra gold." },
+    })
+    addSteps("children", {
+        { "Nap Mat", group = "Rewards", npc = 264060, at = { 2393, 51.2, 76.2 },
+          note = "Jepetto Joybuzz in Silvermoon City sells the Nap Mat toy for one Well-loved Figurine (choose the figurine as an orphan's reward)." },
+    })
+end

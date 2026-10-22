@@ -763,10 +763,10 @@ do
                   { t = string.format("Finish on the %s within %d tolls.", mount, tolls) } }
         N[id] = { TOLLS, tip }
     end
-    local STRIDER = "The Racing Strider is the plain mount you get by crossing the start without picking one. Players get the fastest runs by ignoring the banners and grabbing the speed boots."
+    local STRIDER = "The Racing Strider is the plain mount you get by crossing the start without picking one. It's naturally fast and can jump to the next banner; players get the fastest runs by grabbing the speed boots."
     local ROCKET = "Rocketeer: right after the start gate, take a hard left; players say this one trick decides the Gold run."
     local POWER = "Powermonger: Battery stores the next power-up you hit; use it again to spend it when it helps most."
-    local WANDER = "Wanderluster: its glider carries you over gaps; players pick up the Darkmoon Zeppelin's speed buff first."
+    local WANDER = "Wanderluster: it can pull a distant power-up to you, and MiniZep attacks speed it up instead of stunning it."
     local BIGTIP = "On the way to the finish, don't fly over any of the Faire's game areas: you get slammed to the ground."
     race(9756, false, "Racing Strider", 25, STRIDER); race(9759, false, "Racing Strider", 20, STRIDER)
     race(9760, false, "Racing Strider", 15, STRIDER); race(9761, false, "Racing Strider", 11, STRIDER)
