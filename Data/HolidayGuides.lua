@@ -625,3 +625,53 @@ do
         { 275462, "Part of the Sun Festival's Flame Totems ensemble from the Midsummer vendors (Burning Blossoms, new in 2026; tauren only)." },
     })
 end
+
+------------------------------------------------------------------------
+-- Brewfest (checked 2026-10-22). The camps stand outside Ironforge (Dun Morogh) and Orgrimmar (Durotar).
+------------------------------------------------------------------------
+do
+    local SILVERMOON, EVERSONG, ARCANTINA, ZULAMAN, HARANDAR, THE_DEN, VOIDSTORM = 2393, 2395, 2541, 2437, 2413, 2576, 2405
+    local CAMP = { { side = "Alliance", t = "The Brewfest camp outside Ironforge.", at = { DUN_MOROGH, 55.6, 37.0 } },
+                   { side = "Horde", t = "The Brewfest camp outside Orgrimmar.", at = { DUROTAR, 41.0, 17.5 } } }
+    local function camp(rest) local out = { CAMP[1], CAMP[2] } for _, x in ipairs(rest) do out[#out + 1] = x end return out end
+    S[1185] = camp({ { t = "Buy and eat the eight foods: The Golden Link, Succulent, Pickled, Savory, Dried and Spicy Smoked Sausage from the sausage vendor (Keiran Donoghue or Bron), Spiced Onion Cheese and The Essential Brewfest Pretzel from the food vendors next to them." } })
+    N[1185] = "Coren Direbrew's loot sometimes has some of them too."
+    S[2796] = camp({ { t = "Buy the Brew of the Month Club Membership Form from Belbi Quikswitch (Alliance) or Blix Fixwidget (Horde) with Brewfest Prize Tokens and use it." } })
+    N[2796] = "From then on, a new beer arrives in the mail every month (that's what Brew of the Year counts)."
+    S[295] = { { t = "Queue for Coren Direbrew in the Dungeon Finder and defeat him in the Grim Guzzler (Blackrock Depths)." } }
+    N[295] = "Your first kill each day gives the Keg-Shaped Treasure Chest: the best chance at the Great Brewfest Kodo, the Swift Brewfest Ram and his rare cosmetics."
+    S[1936] = camp({ { t = "Do the Brewfest quest that rewards the Wolpertinger's Tankard (Catch the Wild Wolpertinger!). On realms where that quest isn't offered, buy the Tankard from the pet vendor for Brewfest Prize Tokens instead." } })
+    S[303] = camp({ { t = "Buy Fresh or Preserved Brewfest Hops from a Brewfest vendor and use them on your mount (or get the Brewfest Kodo or Ram from Coren Direbrew)." } })
+    S[1260] = camp({ { t = "Get the free Synthebrew Goggles from Goldark Snipehunter (Alliance) or Glodrak Huntsniper (Horde) and wear them (the XL version doesn't count)." },
+                    { t = "During Brewfest, fall at least 65 yards and survive: the same falls players use for the year-round Fall 65 yards achievement work." } })
+    N[1260] = "Being completely smashed from Brewfest drinks also counts instead of the goggles."
+    S[1183] = { { t = "Join the Brew of the Month club (see Brew of the Month)." },
+                { t = "Drink each month's beer when it arrives in the mail: 12 different ones in all, so it takes a year." } }
+    N[1183] = { "Each beer can only be bought during its month, so don't miss one.", "Not part of Brewmaster any more." }
+    S[1184] = camp({ { t = "Buy and keep one of each Alliance brew the achievement lists: the Thunderbrew, Barleybrew and Gordok apprentices at the camp sell them." } })
+    S[1203] = camp({ { t = "Buy and keep one of each Horde brew the achievement lists: the T'chali's Voodoo, Drohn's Distillery and Gordok apprentices at the camp sell them." } })
+    S[293] = camp({ { t = "Buy three pieces of Brewfest clothing (a Brewfest hat, chest and boots) from the vendors and wear them." },
+                   { t = "Get completely smashed on Brewfest drinks, then /dance in Dalaran (Northrend)." } })
+    S[63253] = {
+        { t = "During Brewfest, click the Bar Tab Barrel in each Midnight tavern and donate. Silvermoon City:", at = { SILVERMOON, 54.7, 69.9 } },
+        { t = "The Arcantina.", at = { ARCANTINA, 59.2, 72.5 } },
+        { t = "Tranquillien, Eversong Woods.", at = { EVERSONG, 47.8, 67.7 } },
+        { t = "Amani'Zar, Zul'Aman.", at = { ZULAMAN, 45.4, 65.1 } },
+        { t = "Witherbark Bluffs, Zul'Aman.", at = { ZULAMAN, 37.3, 22.9 } },
+        { t = "The Den, Harandar (inside).", at = { THE_DEN, 64.2, 60.7 } },
+        { t = "Har'athir, Harandar.", at = { HARANDAR, 69.1, 51.2 } },
+        { t = "Locus Point, Voidstorm.", at = { VOIDSTORM, 41.7, 74.5 } },
+    }
+    N[63253] = "Each barrel's quest is a small gold donation; only during Brewfest."
+    N[41212] = "During Brewfest, click the Bar Tab Barrel in each listed Khaz Algar tavern and donate: track it and the arrow goes to the next one."
+    N[18579] = "During Brewfest, click the Bar Tab Barrel in each listed Dragon Isles tavern and donate: track it and the arrow goes to the next one."
+    N[1683] = "Five achievements for the title Brewmaster: expand it, each one has its guide."
+
+    local KEG = "Can be in the Keg-Shaped Treasure Chest from your first Coren Direbrew kill of the day."
+    local BANQUET = "From the Bag of Brewfest Merchandise, a reward of the Brewfest Banquet event at the camps."
+    AddItems("brewfest", {
+        { 150922, KEG }, { 208742, KEG .. " Only the first kill of the day, account-wide, and the chance grows each new day." },
+        { 245950, BANQUET }, { 246801, BANQUET }, { 246784, BANQUET }, { 245955, BANQUET }, { 245959, BANQUET },
+        { 56836, "The reward of A New Supplier of Souvenirs, a Brewfest quest at the camp." },
+    })
+end
