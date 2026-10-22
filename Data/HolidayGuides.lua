@@ -525,3 +525,35 @@ do
         { 212985, "In the Loot-Filled Basket from the holiday boss's quest." }, { 212701, "In the Loot-Filled Basket from the holiday boss's quest." },
     })
 end
+
+------------------------------------------------------------------------
+-- Children's Week (checked 2026-10-22)
+------------------------------------------------------------------------
+do
+    local SHATTRATH, DORNOGAL, HOWLING_FJORD = 111, 2339, 117
+    local ORPHAN = {
+        { side = "Alliance", t = "Take an orphan from Orphan Matron Nightingale at the Stormwind orphanage (the one-day quest Children's Week).", at = { 84, 56.4, 54.2 } },
+        { side = "Horde", t = "Take an orphan from Orphan Matron Battlewail at the Orgrimmar orphanage (the one-day quest Children's Week).", at = { 85, 58.0, 57.5 } },
+        { t = "Keep the orphan out with the whistle you get; if it leaves, use the whistle again." },
+    }
+    local function orphan(extra) local out = { ORPHAN[1], ORPHAN[2], ORPHAN[3] } for _, x in ipairs(extra) do out[#out + 1] = x end return out end
+    S[1791] = orphan({ { t = "Use your Hearthstone (a hearthstone toy works too) with the orphan out." } })
+    S[1789] = orphan({ { t = "Turn in five daily quests with the orphan out. You can call the orphan just before each turn-in." } })
+    S[1790] = orphan({ { t = "Go to Utgarde Pinnacle in Howling Fjord (Normal or Heroic) and kill King Ymiron, the last boss, with the orphan out." } })
+    S[1788] = orphan({ { t = "With the orphan out, eat each sweet the achievement lists. Aimee in Dalaran (Northrend) sells the Red Velvet Cupcake, Dalaran Doughnut, Dalaran Brownie and Lovely Cake (eat a slice). Tigule's Strawberry Ice Cream is sold by food vendors; the Tasty Cupcake and Delicious Chocolate Cake are cooked (or bought on the auction house)." } })
+    N[1788] = { "Dalaran Doughnut, not Darkmoon Doughnut.", "Some of the sweets need level 28; Earthen characters can't eat them." }
+    S[1792] = orphan({ { t = "Finish any orphan's quest line and choose a pet as the reward." } })
+    N[1792] = "Any orphan works, including Shattrath's, Dalaran's, Boralus's or Dazar'alor's and the four Khaz Algar children from Ullna in Dornogal."
+    S[1786] = orphan({ { t = "With the orphan out, in the battlegrounds: capture the flag in Eye of the Storm, assault a tower in Alterac Valley, assault a flag in Arathi Basin and return a fallen flag in Warsong Gulch." } })
+    N[1786] = { "No longer needed for For the Children.", "Players do the three quick ones in one or two games each; Warsong Gulch's flag return takes patience." }
+    S[275] = { { t = "Take Salandria or Dornaa from Orphan Matron Mercy in Shattrath's Lower City and finish their quest line. Its last quest offers Egbert's Egg, Sleepy Willy and the Elekk Training Collar: pick one you don't have yet.", at = { SHATTRATH, 74.6, 47.8 } },
+               { t = "A character can do it once each Children's Week, so the three pets take three years on the same character." } }
+    N[275] = "Buying the pets, or getting them from the vendor with a Well-loved Figurine, doesn't count: they must be quest rewards on this character."
+    N[1793] = "Five achievements for the title Matron or Patron: expand it, each one has its guide."
+
+    AddItems("children", {
+        { 272287, "Sold by Jepetto Joybuzz in Silvermoon City during Children's Week for a Well-loved Figurine (choose the figurine as an orphan's reward)." },
+        { 69895, "Sold by the toy vendors in Stormwind and Orgrimmar during Children's Week, or by the Children's Week vendors for a Well-loved Figurine." },
+        { 69896, "Sold by the toy vendors in Stormwind and Orgrimmar during Children's Week, or by the Children's Week vendors for a Well-loved Figurine." },
+    })
+end
