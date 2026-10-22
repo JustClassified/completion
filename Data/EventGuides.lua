@@ -747,3 +747,168 @@ do
         end
     end
 end
+
+-- Guides for the remaining holiday achievements, checked 2026-10-22 against each achievement's data and players'
+-- reports (newest ones where the game has changed). Darkmoon Island is map 407.
+do
+    local DMF, ELWYNN, DUROTAR, SMV_DRAENOR, VALE, SURAMAR, TANAAN = 407, 37, 1, 539, 390, 680, 534
+    local S, N = ns.ACH_STEPS, ns.ACH_NOTES
+
+    ---------------- Darkmoon Faire: the races ----------------
+    local RACE = "The Real Race: Malle Earnhard at the race start, south of the Faire, gives it once a day. Stand on the mount you want at the start, then run through the start banner."
+    local BIG = "The Real Big Race: Patti Earnhard next to her sister gives it once a day; More Big Racing! from her repeats it with no reward, for practice. Stand on the mount you want at the start."
+    local TOLLS = "Tolls are the race clock: fewer is faster. Each tier of a mount is its own achievement, so a Gold run also earns Silver and Bronze if their tolls are higher."
+    local function race(id, big, mount, tolls, tip)
+        S[id] = { { t = big and BIG or RACE, at = big and { DMF, 53.2, 87.8 } or { DMF, 49.0, 88.0 } },
+                  { t = string.format("Finish on the %s within %d tolls.", mount, tolls) } }
+        N[id] = { TOLLS, tip }
+    end
+    local STRIDER = "The Racing Strider is the plain mount you get by crossing the start without picking one. Players get the fastest runs by ignoring the banners and grabbing the speed boots."
+    local ROCKET = "Rocketeer: right after the start gate, take a hard left; players say this one trick decides the Gold run."
+    local POWER = "Powermonger: Battery stores the next power-up you hit; use it again to spend it when it helps most."
+    local WANDER = "Wanderluster: its glider carries you over gaps; players pick up the Darkmoon Zeppelin's speed buff first."
+    local BIGTIP = "On the way to the finish, don't fly over any of the Faire's game areas: you get slammed to the ground."
+    race(9756, false, "Racing Strider", 25, STRIDER); race(9759, false, "Racing Strider", 20, STRIDER)
+    race(9760, false, "Racing Strider", 15, STRIDER); race(9761, false, "Racing Strider", 11, STRIDER)
+    race(9770, false, "Rocketeer", 25, ROCKET); race(9769, false, "Rocketeer", 20, ROCKET)
+    race(9766, false, "Rocketeer", 15, ROCKET); race(9764, false, "Rocketeer", 11, ROCKET)
+    race(9780, false, "Powermonger", 25, POWER); race(9781, false, "Powermonger", 20, POWER)
+    race(9783, false, "Powermonger", 15, POWER); race(9785, false, "Powermonger", 11, POWER)
+    race(9786, false, "Wanderluster", 25, WANDER); race(9787, false, "Wanderluster", 20, WANDER)
+    race(9790, false, "Wanderluster", 15, WANDER); race(9792, false, "Wanderluster", 11, WANDER)
+    race(9793, true, "Racing Strider", 40, BIGTIP); race(9794, true, "Racing Strider", 35, BIGTIP)
+    race(9795, true, "Racing Strider", 30, "A friend standing on the cliff gives your strider's third ability a target to jump to.")
+    race(9797, true, "Racing Strider", 25, BIGTIP); race(9799, true, "Racing Strider", 20, "The hardest race; players manage it solo, but expect many tries.")
+    race(9800, true, "Rocketeer", 40, BIGTIP); race(9801, true, "Rocketeer", 30, BIGTIP)
+    race(9803, true, "Rocketeer", 25, BIGTIP); race(9805, true, "Rocketeer", 20, "The springs and the rockets swap places along this track. " .. BIGTIP)
+    race(9812, true, "Powermonger", 40, BIGTIP); race(9813, true, "Powermonger", 30, BIGTIP)
+    race(9815, true, "Powermonger", 25, BIGTIP); race(9817, true, "Powermonger", 20, "Like the Rocketeer, the Powermonger can head straight for the first checkpoint. " .. BIGTIP)
+    race(9806, true, "Wanderluster", 40, BIGTIP); race(9807, true, "Wanderluster", 30, BIGTIP)
+    race(9809, true, "Wanderluster", 25, BIGTIP); race(9811, true, "Wanderluster", 20, BIGTIP)
+    S[9755] = { { t = "Take Welcome to the Darkmoon Races (or The Real Race) from Malle Earnhard and run it on the plain Racing Strider: cross the start without standing on any other mount.", at = { DMF, 49.0, 88.0 } } }
+    N[9755] = { "Players report it may not award if you finish on a different mount; do it on the plain strider." }
+    S[9819] = { { t = "Stand on the Wanderluster at the race start, then glide for more than 10 seconds. Players jump off the hill where you arrive on the island; no race needed.", at = { DMF, 49.0, 88.0 } } }
+
+    ---------------- Darkmoon Faire: games ----------------
+    S[9250] = { { t = "Talk to Ziggie Sparks on the main path, next to the fireworks vendor, for Firebird's Challenge.", at = { DMF, 48.4, 71.4 } },
+                { t = "Fly through 10 Blazing Rings in one flight." } }
+    S[9251] = { S[9250][1], { t = "Fly through 25 Blazing Rings in one flight." } }
+    S[9252] = { S[9250][1], { t = "Fly through 50 Blazing Rings in one flight. There are a few more than 50 around the island: plan a loop that takes them all." } }
+    N[9252] = { "Players share a route that circles the island from the south up the east side and back; going fast matters more than any single ring." }
+    S[9885] = { { t = "Talk to Finlay Coolshot for the Tonk Challenge and score 45 hits in one go.", at = { DMF, 50.2, 65.6 } } }
+    N[9885] = { "Use the speed boost whenever it's ready and only shoot targets.", "Recent players report it's much easier than it used to be: more targets appear." }
+    S[9983] = { { t = "Talk to Mola for Whack-a-Gnoll and score 45 points in one go.", at = { DMF, 53.0, 53.8 } } }
+    N[9983] = { "Hogger is worth the most: always hit him first.", "Don't hit the gingerbread dolls: they stun you.", "Stay on the centre barrels and turn the camera to look down on them." }
+    S[9894] = { { t = "Talk to Jessica Rogers for Ring Toss and land 10 rings on Dubenko the turtle in one go.", at = { DMF, 51.2, 77.4 } } }
+    N[9894] = { "The ring takes a moment to land: throw just as the turtle turns back toward the middle." }
+    S[6022] = { { t = "Talk to Rinling at the Shooting Gallery and hit a target the moment it lights up for a Quick Shot.", at = { DMF, 49.0, 60.0 } } }
+    N[6022] = { "Keep aiming at one target and shoot when the green arrow lights over it." }
+    S[6021] = { { t = "Talk to Maxima Blastenheimer, get shot from the cannon and land in the centre of the target in the water.", at = { DMF, 52.0, 56.4 } } }
+    N[6021] = { "You don't need the daily quest.", "Players report pressing jump repeatedly as you hit the water makes a centre hit count." }
+
+    ---------------- Darkmoon Faire: the dance game ----------------
+    local SIMON = { t = "Talk to Simon Sezdans in front of the South Pavilion for Dance Dance Darkmoon and pick a difficulty.", at = { DMF, 51.2, 74.0 } }
+    local DANCE = { "Repeat the dance your opponent shows: three moves on the easiest setting, four on medium, five on the hardest.",
+                    "Each difficulty counts on its own: perfect scores on the hardest don't count for the easier ones.",
+                    "A dance the crowd boos at the end doesn't count." }
+    local function dance(id, text) S[id] = { SIMON, { t = text } }; N[id] = DANCE end
+    dance(15212, "Finish one dance.")
+    dance(15213, "Finish 30 dances (any difficulty, without being booed).")
+    dance(15222, "Get a perfect score on the easiest difficulty.")
+    dance(15223, "Get a perfect score on the easiest difficulty 10 times.")
+    dance(15214, "Get a perfect score on medium.")
+    dance(15215, "Get a perfect score on medium 10 times.")
+    dance(15216, "Get a perfect score on the hardest difficulty.")
+    dance(15217, "Get a perfect score on the hardest difficulty 10 times.")
+    N[15221] = "Every dance achievement of the Darkmoon Faire (expand it: each one has its guide). It gives the Dance Dance Darkmoon reward."
+
+    ---------------- Darkmoon Faire: the Blight Boar concert ----------------
+    local BOAR = { t = "Go to the Cauldron of Rock, the stage north-west of the Faire. The Blight Boar concert starts every hour on the half hour.", at = { DMF, 35.2, 39.6 } }
+    local IMMUNE = "Immunities such as Divine Shield, Ice Block or Cloak of Shadows remove your fan buff and lose you the credit."
+    S[11918] = { BOAR, { t = "Stay until the very end: after the Death Metal Knight dies, keep catching the bolts of light until the band disappears." } }
+    N[11918] = { IMMUNE }
+    S[11921] = { BOAR, { t = "Kill the ghouls before any of them reaches Devlynn Styx on the stage." } }
+    N[11921] = { "Hard alone: players bring a group of about five.", IMMUNE }
+    S[11920] = { BOAR, { t = "Each of at least four players present has to earn a band role in the same concert (they don't need to be in your group)." } }
+    N[11920] = { "Roles come from how you play the concert: avoid the banshee walls and catch the bolts of light.", IMMUNE }
+    S[11919] = { BOAR, { t = "Earn each of the band's roles once; you keep one role from each concert, so it takes several." } }
+    N[11919] = { "The best player for each style gets that role: no banshee hits and every bolt of light caught is the best one.", IMMUNE }
+
+    ---------------- Darkmoon Faire: the Deathmatch and artifacts ----------------
+    local PIT = { t = "Go to the Deathmatch pit by Korgol Crushskull. Every three hours (server time) a chest appears in the pit; whoever opens it gets a Pit Fighter trinket.", at = { DMF, 47.2, 79.6 } }
+    S[6023] = { PIT, { t = "Open the chest and loot the Pit Fighter trinket." } }
+    N[6023] = { "Turn off auto loot and take only the trinket: the chest stays up and others can loot one too, so a group can share it." }
+    S[6024] = { PIT, { t = "Loot the trinket 12 times and turn them in for the Master Pit Fighter." } }
+    N[6024] = { "The trinkets don't stack: keep 12 bag slots free.", "Turn off auto loot and take only the trinket so the chest stays up for others." }
+    N[6027] = { "Keep the Darkmoon Adventurer's Guide in your bags: the five dungeon artifacts drop in old dungeons only while you carry it. Turn each one in on the island.",
+                "Players report three of them don't drop for max-level characters any more; they're sold on the auction house." }
+    N[6028] = { "The three battleground artifacts used to come from looting players in battlegrounds.",
+                "Players report they can't be looted that way since Mists of Pandaria; check the auction house." }
+
+    ---------------- Darkmoon Faire: reputation ----------------
+    N[2336] = { "Six reputations: Honored with the Bloodsail Buccaneers, Exalted with Booty Bay, Everlook, Gadgetzan, Ratchet, the Darkmoon Faire and Ravenholdt.",
+                "Gaining Bloodsail reputation lowers the four goblin towns, so players finish the goblins last, or keep going back to them.",
+                "Darkmoon Faire reputation comes from the Faire's quests every month; Ravenholdt from Syndicate kills and, for rogues, lockbox junkboxes.",
+                "One of the longest reputation grinds in the game: hours of kills for each faction." }
+
+    ---------------- Lunar Festival ----------------
+    local COINS = "Speak to Lunar Festival elders: each one gives a Coin of Ancestry once per festival. The elder achievements in this list point at every elder."
+    N[605] = COINS; N[606] = COINS; N[607] = COINS; N[608] = COINS
+    N[609] = { COINS, "There are more than 50 elders in the world, so one festival is enough if you visit them all." }
+
+    ---------------- Love is in the Air ----------------
+    N[1701] = { "Buy a Bag of Heart Candies (2 Love Tokens) from a Lovely Merchant in a capital and eat them: you need all eight messages.",
+                "The messages are random and a bag has 10, so it usually takes a few bags. Candies traded or mailed to you don't count." }
+    N[1702] = "Buy a Box of Chocolates (10 Love Tokens) from a Lovely Merchant and eat the four kinds: Buttermilk Delight, Sweet Surprise, Dark Desire and Very Berry Cream. One box usually has them all."
+    local PRISM = { "You need the Manufactured Love Prism (40 Love Tokens). Others use their prism on you; each Love Ray lasts 5 minutes and the prism has a 30 second cooldown.",
+                    "Feign Death, Ice Block and changing zones remove the rays: stay put and use no immunities." }
+    N[9392] = { "Have 10 Love Rays on you at once. Two players with prisms can manage it.", PRISM[1], PRISM[2] }
+    N[9393] = { "Have 25 Love Rays on you at once: bring a few friends with prisms.", PRISM[1], PRISM[2] }
+    N[9394] = { "Have 50 Love Rays on you at once: a group with prisms takes turns on one player.", PRISM[1], PRISM[2] }
+    N[9389] = "Queue for the Crown Chemical Co. holiday dungeon: Apothecary Hummel drops one holiday necklace for the group. Use it to earn the achievement; it can be traded to the next player in your group."
+    N[1694] = "Buy Lovely Dress Boxes from a Lovely Merchant and open them until one has the Lovely Black Dress. A dress bought from another player doesn't count. Not part of the meta."
+    N[1700] = "Buy a Truesilver Shafted Arrow (40 Love Tokens) from a Lovely Merchant: having it in your bags counts. You can sell it back to the vendor for your tokens."
+    S[19400] = {
+        { side = "Alliance", t = "Donate to Galvus Ironhammer for the Gala of Gifts, outside Stormwind's gate.", at = { ELWYNN, 32.0, 49.7 } },
+        { side = "Horde", t = "Donate to Torgando Featherhoof for the Gala of Gifts, outside Orgrimmar's gate.", at = { DUROTAR, 42.3, 18.2 } },
+        { t = "Donate 50,000 gold in total. You can donate once a day." },
+    }
+
+    ---------------- Noblegarden ----------------
+    N[2417] = "Eat 25 Noblegarden Chocolates. They come from the Brightly Colored Eggs around the starting villages."
+    N[249] = "Find the Elegant Dress in a Brightly Colored Egg. Buying it doesn't count. Players report about a 0.5% chance per egg. Not part of the meta."
+    N[248] = "Find the White Tuxedo Shirt and the Black Tuxedo Pants in Brightly Colored Eggs. Buying them doesn't count. Each is rare (players report about 0.5% per egg). Not part of the meta."
+
+    ---------------- Midsummer (Horde: put out the Alliance's bonfires) ----------------
+    S[11277] = { { t = "Desecrate the Alliance bonfire in Embaari Village, Shadowmoon Valley (Draenor).", at = { SMV_DRAENOR, 42.0, 35.0 } } }
+    S[8043] = { { t = "Desecrate the Alliance bonfire in front of Mogu'shan Palace in the Vale of Eternal Blossoms.", at = { VALE, 79.9, 37.2 } } }
+    N[8043] = { "Can't see the bonfire? Talk to Zidormi on the upper level above the dungeon (79.9, 31.4) to see the Vale before the assault.", "Desecrating a bonfire flags you for PvP." }
+    S[11279] = { { t = "Desecrate the Alliance bonfire on the western edge of Suramar, north-west of Felsoul Hold.", at = { SURAMAR, 22.85, 58.3 } } }
+
+    ---------------- Brewfest ----------------
+    N[1183] = { "Try 12 beers of the Brew of the Month club. Join with the club form (200 Brewfest Prize Tokens) and a new beer is mailed to you each month.",
+                "Players report the brew vendor in Orgrimmar or Ironforge also sells them if the mail stops." }
+
+    ---------------- Day of the Dead ----------------
+    local CONTENDER = { "Buy a contender's costume from Chapman, the Day of the Dead vendor, and use it: you get an extra action to fight other players in a costume.",
+                        "Only killing blows on other costumed players count.",
+                        "Players team up and duel each other in costume; that's the quickest way." }
+    N[9427] = { "Defeat 20 contenders.", CONTENDER[1], CONTENDER[2], CONTENDER[3] }
+    N[9428] = { "Defeat 50 contenders.", CONTENDER[1], CONTENDER[2], CONTENDER[3] }
+
+    ---------------- Feast of Winter Veil ----------------
+    N[279] = "Do the daily You're a Mean One... in Ironforge or Orgrimmar; its follow-up returns Smokywood Pastures' stolen treats and earns the achievement."
+    N[5854] = { "Open the presents under your capital's tree on 25 December for the Gaudy Winter Veil Sweater (it holds the carol book).",
+                "Use it in each enemy capital listed. You can enter most without fighting the guards." }
+    N[4437] = { "The Red Rider Air Rifle from the 25 December presents. Shoot each listed enemy faction leader with it.",
+                "It does a little damage, so the leader and the guards attack you: players strip their gear first and run." }
+    N[1295] = { "Get a Crashin' Thrashin' Racer controller: Jepetto Joybuzz, the toy vendor in Northrend's Dalaran, sells the blue one, and Stolen Presents can have it. Summon the car and ram 25 other cars.",
+                "Aim at a cluster of cars: every one you hit counts. Your car can jump to avoid being hit." }
+    N[20511] = { "The Box of Puntables, a 25 December present (2024), sets down creatures you can punt. Punt 30.",
+                 "Progress is shared by your warband: switch characters for another box while one waits on its cooldown.",
+                 "Players report the creatures stand still on water, so one box is enough there." }
+    N[10353] = { "Collect the five Iron Armada toys: two come from Winter Veil presents, three drop from rares in eastern Tanaan Jungle.",
+                 "Smashum Grabb (87.5, 56.1), Drakum (83.9, 43.2) and Gondar (80.7, 56.1) in Tanaan Jungle; each has a chance at its toy." }
+    N[15181] = "The Rockin' Rollin' Racer toy from the 25 December presents. Summon it and use Lightning Nitro while Rockin' Tunes plays (its third and fourth buttons together)."
+    N[8699] = "Needs a second player: both of you need the Crashin' Thrashin' Flyer (a past Winter Veil present). Shoot down their flyer with yours."
+end
