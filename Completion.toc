@@ -58,6 +58,7 @@ Data\TWW\Delves.lua
 Data\Expansions.lua
 Data\Events.lua
 Data\EventGuides.lua
+Data\HolidayGuides.lua
 Core.lua
 Model.lua
 Guide.lua
