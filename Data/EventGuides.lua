@@ -523,32 +523,31 @@ for id, text in pairs(NOTES) do
     if ns.ACH_NOTES[id] == nil then ns.ACH_NOTES[id] = text end
 end
 
--- Criteria the generated data can't place yet (Midnight's newest candy buckets): the inn, or the hub's flight
--- master when only the hub is known (taxi = flight path name, resolved in game).
+-- Criteria the generated data can't place (Midnight's candy buckets): the inn of each.
 ns.CRIT_NOTES = ns.CRIT_NOTES or {}
 local BUCKET = "The candy bucket is inside the inn."
-local BUCKET_HUB = "The candy bucket is inside the inn here; the arrow points at the hub's flight master."
 ns.CRIT_NOTES[63400] = {
-    ["Eversong Woods, Silvermoon"]       = { t = BUCKET, at = { { 2393, 54.8, 69.8 } } },
-    ["Eversong Woods, Arcantina"]        = { t = BUCKET, at = { { 2541, 60.9, 70.2 } } },
-    ["Eversong Woods, Tranquiillien"]    = { t = BUCKET, at = { { 2395, 47.7, 67.7 } } },
-    ["Eversong Woods, Fairbreeze Village"] = { t = BUCKET, at = { { 2395, 39.2, 61.4 } } },
-    ["Zul'Aman, Anami'Zar"]              = { t = BUCKET, at = { { 2437, 45.4, 65.1 } } },
-    ["Zul'Aman, Witherbark Bluffs"]      = { t = BUCKET, at = { { 2437, 37.4, 22.9 } } },
-    ["Zul'Aman, Camp Stonewash"]         = { t = BUCKET_HUB, taxi = "Camp Stonewash" },
-    ["Harandar, The Den"]                = { t = BUCKET, at = { { 2576, 64.2, 60.7 } } },
-    ["Harandar, Har'athir"]              = { t = BUCKET, at = { { 2413, 69.0, 51.2 } } },
-    ["Harandar, Har'alnor"]              = { t = BUCKET_HUB, taxi = "Har'alnor" },
-    ["Harandar, Har'kuai"]               = { t = BUCKET_HUB, taxi = "Har'kuai" },
-    ["Harandar, Har'mara"]               = { t = BUCKET_HUB, taxi = "Har'mara" },
-    ["Voidstorm, Locus Point"]           = { t = BUCKET, at = { { 2405, 41.6, 74.6 } } },
-    ["Voidstorm, Slayer's Rise"]         = { t = BUCKET_HUB, taxi = "Slayer's Rise" },
-    ["Voidstorm, The Ingress"]           = { t = BUCKET_HUB, taxi = "The Ingress" },
+    -- checked 2026-10-22 against an independent per-bucket position list and players' reports
+    ["Eversong Woods, Silvermoon"]       = { t = BUCKET, at = { { 2393, 55.82, 69.8 } } },
+    ["Eversong Woods, Arcantina"]        = { t = "The candy bucket is in the Arcantina; the arrow points at its door in Silvermoon City.", at = { { 2393, 56.46, 70.86 } } },
+    ["Eversong Woods, Tranquiillien"]    = { t = BUCKET, at = { { 2395, 48.98, 68.53 } } },
+    ["Eversong Woods, Fairbreeze Village"] = { t = BUCKET, at = { { 2395, 46.42, 46.06 } } },
+    ["Zul'Aman, Anami'Zar"]              = { t = BUCKET, at = { { 2437, 45.31, 65.14 } } },
+    ["Zul'Aman, Witherbark Bluffs"]      = { t = BUCKET, at = { { 2437, 36.88, 23.43 } } },
+    ["Zul'Aman, Camp Stonewash"]         = { t = BUCKET, at = { { 2437, 46.57, 25.85 } } },
+    ["Harandar, The Den"]                = { t = "The candy bucket is inside the Den.", at = { { 2413, 51.2, 53.2 }, { 2576, 24.82, 63.82 } } },
+    ["Harandar, Har'athir"]              = { t = BUCKET, at = { { 2413, 69.04, 51.7 } } },
+    ["Harandar, Har'alnor"]              = { t = BUCKET, at = { { 2413, 30.92, 65.03 } } },
+    ["Harandar, Har'kuai"]               = { t = BUCKET, at = { { 2413, 66.15, 24.5 } } },
+    ["Harandar, Har'mara"]               = { t = BUCKET, at = { { 2413, 35.07, 22.8 } } },
+    ["Voidstorm, Locus Point"]           = { t = BUCKET, at = { { 2405, 41.74, 74.62 } } },
+    ["Voidstorm, Slayer's Rise"]         = { t = "Alliance: the bucket is at Grief Spire. Horde: at Hate Spire.", at = { { 2405, 63.4, 40.2 }, { 2405, 36.8, 29.4 } } },
+    ["Voidstorm, The Ingress"]           = { t = BUCKET, at = { { 2405, 35.67, 58.6 } } },
 }
 
 -- Patch 12.1.5 holiday achievements the generated list (Data/Events.lua) doesn't have yet: the neighborhood candy
--- quests of Hallow's End and the tree defense of Winter Veil. They show as coming soon (Data/Research.lua) until
--- players have done them and their steps are known.
+-- quests and ghost hunt of Hallow's End (guides below) and the tree defense of Winter Veil (coming soon,
+-- Data/Research.lua, until players have done it).
 for _, e in ipairs({
     { "hallows", 62500, "Sweet Tooth (meta)" }, { "hallows", 64160, "Sweet Tooth (meta)" },
     { "hallows", 64161, "Sweet Tooth (meta)" }, { "hallows", 64162, "Sweet Tooth (meta)" },
@@ -576,6 +575,139 @@ do
         end
         for _, a in ipairs(add) do
             if not have[a[1]] then list[#list + 1] = { i = a[1], d = { HORSEMAN }, t = a[2] } end
+        end
+    end
+end
+
+-- Hallow's End guides, checked 2026-10-22 against the achievement and quest data and players' reports from this
+-- year's event. The neighborhood quests (patch 12.1.5) start next to each other in your faction's neighborhood:
+-- Founder's Point for the Alliance, Razorwind Shores for the Horde.
+do
+    local FOUNDERS, RAZORWIND, ELWYNN, TIRISFAL = 2352, 2351, 37, 18
+    local YIN = "the Sugar Run quest from Yin Shuilan"
+    -- the three candy quests of one neighborhood theme
+    local function candy(theme, picks, extra)
+        local steps = {
+            { side = "Alliance", t = "Take " .. YIN .. " in Founder's Point. She offers it only on days your neighborhood's candy portal goes to " .. theme .. ".", at = { FOUNDERS, 53.8, 33.8 } },
+            { side = "Horde", t = "Take " .. YIN .. " in Razorwind Shores. She offers it only on days your neighborhood's candy portal goes to " .. theme .. ".", at = { RAZORWIND, 51.8, 54.0 } },
+            { t = "Take the portal next to her to " .. theme .. " and talk to Nomi. Pick one candy (one a day per character): " .. picks },
+            { t = "Gather what the candy needs, bring it to Nomi, then take the finished candy back to the Wickerman Pinata in the neighborhood." },
+        }
+        local tips = {
+            "Each neighborhood rolls its theme (Drustvar, Duskwood or Felwood) at random each day; the same one can come up several days in a row.",
+            "Three characters can finish all three candies in one day, each picking a different one.",
+            "Any neighborhood counts: if yours has the wrong theme, open the House Finder and visit another neighborhood that has the one you need.",
+            "The portal back always takes you to your own faction's neighborhood; the candy still counts there.",
+            "If the Wickerman Pinata is missing, visit an empty plot in another neighborhood with the House Finder and hand the candy in there.",
+        }
+        for _, x in ipairs(extra or {}) do tips[#tips + 1] = x end
+        return steps, tips
+    end
+    local G = {}
+    G[64162] = { candy("Drustvar", "Bewitched Berry Bites (15 Bewitched Berries from the thorny rose bushes), Witchbane Truffles (use the whistle and Arfus sniffs out truffles) or Hexed Honeycombs (8 Honeycombs).",
+        { "Turn on object highlighting in the game's options to spot the berry bushes." }) }
+    G[64160] = { candy("Duskwood", "Blighted Core Caramels (10 Sugar Beets), Twisted Vine Licorice (8 Twisted Vines) or Howling Honey Drops (8 Honey Drops).",
+        { "Sugar Beets aren't always lit up: watch the ground for things the hand cursor shows on." }) }
+    G[64161] = { candy("Felwood", "Blighted Bloom Bites (10 Blighted Blooms), Rotleaf Wafers (5 Rotleaves: the orange leaf piles on the ground, not the bushes) or Felroot Crunch (8 Soft Roots).",
+        { "If Nomi won't take the finished quest, log out and back in." }) }
+    for id, g in pairs(G) do ns.ACH_STEPS[id] = g[1]; ns.ACH_NOTES[id] = g[2] end
+    ns.ACH_NOTES[62500] = "Finish the Drustvar, Duskwood and Felwood candy achievements (expand it: each has its own guide). "
+        .. "The neighborhood's candy theme changes at random each day, so check other neighborhoods with the House Finder."
+    ns.ACH_STEPS[62501] = {
+        { side = "Alliance", t = "Take Specter Inspector from Alaric Duskwick in Founder's Point.", at = { FOUNDERS, 54.0, 33.8 } },
+        { side = "Horde", t = "Take Specter Inspector from Nargok Ghostcleaver in Razorwind Shores.", at = { RAZORWIND, 51.6, 54.2 } },
+        { t = "Use the Ghost Gear, then find the Hallow Drifter ghosts around the neighborhood (they stand in a glowing circle). Stand in the circle, press the extra action button and chase the ghost." },
+        { t = "Catch 10 ghosts before you hand in: the quest only asks for 5, but the achievement needs 10 in one go. A buff counts them." },
+    }
+    ns.ACH_NOTES[62501] = {
+        "Already handed in at 5? Click the Ghost Gear on the ground next to the quest giver and catch the rest; you can stop and come back later.",
+        "Don't use the broom: it belongs to a different quest.",
+        "A macro with /tar Hallow Drifter and /ping [@target] helps you spot the ghosts.",
+    }
+    -- masks: 24 for the achievement, any one for The Mask Task
+    local MASKS = "Masks cost 2 Tricky Treats each from the mask vendor: Spanky outside Stormwind's gate, Farina at the Undercity entrance. They also drop from treat bags and Loot-Filled Pumpkins."
+    ns.ACH_STEPS[284] = {
+        { side = "Alliance", t = "Buy the masks you're missing from Spanky by Stormwind's gate, 2 Tricky Treats each.", at = { ELWYNN, 31.8, 50.0 } },
+        { side = "Horde", t = "Buy the masks you're missing from Farina at the Undercity entrance, 2 Tricky Treats each.", at = { TIRISFAL, 62.2, 66.4 } },
+        { t = "You need all 24: male and female masks of every race the vendor sells. Expand the achievement to see which ones you still need." },
+    }
+    ns.ACH_NOTES[284] = { "A mask counts once you've had it in your bags; you can use it or throw it away and keep the credit.", "Not part of Hallowed Be Thy Name." }
+    ns.ACH_STEPS[979] = {
+        { side = "Alliance", t = "Buy any mask from Spanky by Stormwind's gate for 2 Tricky Treats.", at = { ELWYNN, 31.8, 50.0 } },
+        { side = "Horde", t = "Buy any mask from Farina at the Undercity entrance for 2 Tricky Treats.", at = { TIRISFAL, 62.2, 66.4 } },
+    }
+    ns.ACH_NOTES[979] = { MASKS }
+    -- notes for the rest (their how-to also sits in the holiday's steps above)
+    local HAL = {
+        [10365] = "Visit your level 3 garrison in Draenor during Hallow's End: Pepe in his scarecrow costume sits on a gravestone in the garrison graveyard (Alliance, south-west corner) or by the outhouse at the back (Horde). Click him. He can't be targeted.",
+        [18962] = "Defeat the Headless Horseman: queue for the holiday dungeon in the Dungeon Finder. Any kill during the event counts.",
+        [18959] = "Defeat the Headless Horseman: queue for the holiday dungeon in the Dungeon Finder. Your first kill each day gives the Loot-Filled Pumpkin.",
+        [18960] = "In the Horseman's holiday dungeon, talk to the wicker men before the fight to add their curses, then win.",
+        [972] = "Click a candy bucket in any inn.",
+        [981] = "Use a Tooth Pick. The candy vendor sells them, and treat bags can have them.",
+        [288] = "Eat Tricky Treats until you get the Upset Tummy; it usually takes fewer than five.",
+        [289] = "In Goldshire, Kharanos or Azure Watch (Razor Hill, Brill or Falconwing Square for the Horde), do the water bucket practice quest, then help put out every fire when the Headless Horseman attacks the village (on the half hour).",
+        [292] = "Get the Sinister Squashling pet and the Hallowed Helm: from the Horseman's loot or 150 Tricky Treats each from the candy vendor. If you own the helm's look but haven't looted it on this character, buying it counts; you can sell it back for the treats.",
+        [1261] = "Get 10 honorable kills while the G.N.E.R.D. buff is on you. The G.N.E.R.D.S. candy comes from the candy buckets in inns. The buff ends when you die; a battleground is the easiest place.",
+        [971] = "Finish the candy bucket achievements of Eastern Kingdoms, Kalimdor and Outland (expand it: each one lists its inns).",
+        [2144] = "The yearly holiday meta: finish the main achievement of every holiday (Lunar Festival, Love is in the Air, Noblegarden, Children's Week, Midsummer, Brewfest, Hallow's End, Pilgrim's Bounty and Winter Veil). It gives the Violet Proto-Drake.",
+    }
+    for id, text in pairs(HAL) do ns.ACH_NOTES[id] = text end
+end
+
+-- A holiday step that names an achievement and says how to do it is that achievement's note too, unless it
+-- has its own (so the achievement rows aren't marked coming soon when the holiday guide covers them).
+for _, def in ipairs(ns.EVENT_DEFS) do
+    for _, st in ipairs(def.steps or {}) do
+        local a = st.ach
+        if a and st.note then
+            if type(a) == "table" then a = { a.A, a.H } else a = { a } end
+            for _, id in ipairs(a) do
+                if id and ns.ACH_NOTES[id] == nil and not ns.ACH_STEPS[id] then ns.ACH_NOTES[id] = st.note end
+            end
+        end
+    end
+end
+
+-- Candy bucket spots the generated data has wrong: stray spots far from the inn, which the arrow could pick as
+-- "nearest" (Grove of Aessina pointed into the middle of Mount Hyjal). Checked 2026-10-22 against an
+-- independent per-bucket position list; every bucket in the generated data was compared and these 27 replaced.
+do
+    local FIX = {
+    [12336] = { { 37, 24.89, 40.13 }, { 84, 60.51, 75.32 } },
+    [12340] = { { 52, 52.91, 53.74 } },
+    [12366] = { { 85, 53.8, 78.8 } },
+    [12376] = { { 25, 57.85, 47.27 } },
+    [12382] = { { 50, 37.38, 51.78 } },
+    [12384] = { { 51, 46.87, 56.92 } },
+    [12396] = { { 10, 67.34, 74.66 } },
+    [12397] = { { 210, 40.91, 73.72 } },
+    [12400] = { { 83, 59.83, 51.22 } },
+    [12402] = { { 23, 75.57, 52.3 } },
+    [13448] = { { 120, 28.7, 74.3 } },
+    [13472] = { { 127, 27.29, 41.36 }, { 125, 42.3, 56.8 }, { 126, 38.22, 59.59 } },
+    [28967] = { { 51, 71.65, 14.1 } },
+    [28999] = { { 198, 63.05, 24.15 } },
+    [29000] = { { 198, 18.62, 37.32 } },
+    [29016] = { { 249, 26.58, 7.24 } },
+    [29017] = { { 249, 54.68, 33.01 } },
+    [32020] = { { 418, 28.25, 50.74 } },
+    [32022] = { { 391, 60.3, 66.3 }, { 392, 58.84, 78.32 }, { 390, 61.98, 16.26 } },
+    [32034] = { { 418, 51.4, 77.29 } },
+    [32036] = { { 418, 75.9, 6.87 } },
+    [32047] = { { 418, 61.03, 25.14 } },
+    [84568] = { { 2214, 55.29, 64.09 } },
+    [84569] = { { 2214, 43.73, 32.09 } },
+    [84570] = { { 2214, 59.27, 78.97 } },
+    [84571] = { { 2214, 57.7, 46.25 } },
+    [84577] = { { 2255, 51.4, 78.4 }, { 2216, 57.45, 38.5 } },
+    }
+    for _, a in ipairs({ 963, 965, 966, 967, 968, 969, 5835, 5836, 5837, 5838, 7601, 7602, 18360, 40862 }) do
+        local g = ns.CRIT_GUIDE and ns.CRIT_GUIDE[a]
+        if g then
+            for q, spots in pairs(FIX) do
+                if g["27:" .. q] then g["27:" .. q] = { at = spots } end
+            end
         end
     end
 end

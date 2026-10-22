@@ -14,11 +14,6 @@ ns.RESEARCH = {
     ["a:40928"] = "The start of Scrapshop Shot isn't confirmed yet.",
     ["a:40929"] = "The start of Scrapshop Shot isn't confirmed yet.",
     -- Patch 12.1.5 holiday achievements: not done by anyone yet (Hallow's End starts after the patch)
-    ["a:62500"] = "New in patch 12.1.5: steps follow once players have done the neighborhood candy quests.",
-    ["a:64160"] = "New in patch 12.1.5: steps follow once players have done the Duskwood neighborhood candy quests.",
-    ["a:64161"] = "New in patch 12.1.5: steps follow once players have done the Felwood neighborhood candy quests.",
-    ["a:64162"] = "New in patch 12.1.5: steps follow once players have done the Drustvar neighborhood candy quests.",
-    ["a:62501"] = "New in patch 12.1.5: steps follow once players have hunted the neighborhood ghosts.",
     ["a:62502"] = "New in patch 12.1.5: steps follow once Winter Veil's tree defense has been played.",
     -- Midnight collectibles still being checked (Tools/db/collect.py SOON)
     ["i:264413"] = "Its Season 1 source (Nulling Nullaeus) has ended; whether it still drops is being checked.",

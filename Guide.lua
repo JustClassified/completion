@@ -260,16 +260,20 @@ function ns.SplitParts(it)
 end
 
 -- Copies an achievement's hand-written walkthrough steps (ns.ACH_STEPS) onto it as it.steps, shaped like
--- treasure steps. Checked once per item.
+-- treasure steps; steps for the other faction are left out. Checked once per item.
 local function AttachAchSteps(it)
     if it.kind ~= "ach" or it.stepsChecked then return end
     it.stepsChecked = true
     local list = ns.ACH_STEPS and ns.ACH_STEPS[it.id]
     if not list then return end
     it.steps = {}
-    for i, st in ipairs(list) do
-        local at = st.at
-        it.steps[i] = { text = st.t, map = at and at[1], x = at and at[2], y = at and at[3], quest = st.quest, item = st.item, count = st.count }
+    -- a step with side = "Alliance" or "Horde" is only for that faction
+    local f = UnitFactionGroup and UnitFactionGroup("player")
+    for _, st in ipairs(list) do
+        if not (st.side and f and st.side ~= f) then
+            local at = st.at
+            it.steps[#it.steps + 1] = { text = st.t, map = at and at[1], x = at and at[2], y = at and at[3], quest = st.quest, item = st.item, count = st.count }
+        end
     end
 end
 ns.AttachAchSteps = AttachAchSteps
