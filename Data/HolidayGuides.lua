@@ -675,3 +675,47 @@ do
         { 56836, "The reward of A New Supplier of Souvenirs, a Brewfest quest at the camp." },
     })
 end
+
+------------------------------------------------------------------------
+-- Hallow's End, the rest (checked 2026-10-22 against the holiday's full guide)
+------------------------------------------------------------------------
+do
+    -- the Den's candy bucket: the reference list's x was a typo (24.8); the bucket is by the Den's inn
+    local m = ns.CRIT_NOTES and ns.CRIT_NOTES[63400]
+    if m then
+        m["Harandar, The Den"] = { t = "The candy bucket is inside the Den, by its inn.", at = { { 2576, 64.82, 63.82 }, { 2413, 51.2, 53.2 } } }
+        m["Eversong Woods, Arcantina"] = { t = "The candy bucket is inside the Arcantina; its door is in Silvermoon City.", at = { { 2541, 62.73, 71.0 }, { 2393, 56.46, 70.86 } } }
+    end
+    AddItems("hallows", {
+        { 71076, "The reward of The Creepy Crate, the last quest of the Fenlow sisters' story (Hallow's End); also sold by some pet vendors." },
+        { 139133, "In the Hag's Belongings from the daily Under the Crooked Tree in Val'sharah (defeat Aria Sorrowheart)." },
+        { 139134, "In the Hag's Belongings from the daily Under the Crooked Tree in Val'sharah (defeat Aria Sorrowheart)." },
+        { 139135, "In the Hag's Belongings from the daily Under the Crooked Tree in Val'sharah (defeat Aria Sorrowheart)." },
+        { 139136, "In the Hag's Belongings from the daily Under the Crooked Tree in Val'sharah (defeat Aria Sorrowheart)." },
+        { 208680, "Can be in the Loot-Filled Pumpkin from your first Headless Horseman kill of the day." },
+    })
+end
+
+------------------------------------------------------------------------
+-- Day of the Dead (checked 2026-10-22): Catrina and Chapman stand by the graveyards.
+------------------------------------------------------------------------
+do
+    local GRAVE = { { side = "Alliance", t = "Catrina and Chapman by the Stormwind graveyard (also outside Ironforge, in Darnassus and on Azuremyst Isle).", at = { 84, 47.0, 26.0 } },
+                    { side = "Horde", t = "Catrina and Chapman by the graveyard outside Orgrimmar (also in Thunder Bluff, Eversong Woods and Tirisfal).", at = { DUROTAR, 47.2, 17.8 } } }
+    S[3456] = { GRAVE[1], GRAVE[2], { t = "Target Catrina and type /dance: you turn into a skeleton for twelve hours and get the achievement." } }
+    local CONTENDER = { t = "Buy a contender's costume toy from Chapman (10 gold) and use it: you get an action to fight other players in a costume." }
+    S[9426] = { GRAVE[1], GRAVE[2], CONTENDER, { t = "Defeat one other costumed player." } }
+    S[9427] = { GRAVE[1], GRAVE[2], CONTENDER, { t = "Defeat 20 other costumed players." } }
+    S[9428] = { GRAVE[1], GRAVE[2], CONTENDER, { t = "Defeat 50 other costumed players." } }
+    local DUEL = { "Only killing blows on other costumed players count.", "Players duel a friend inside an instance, both in costume: no corpse runs and no resurrection timer.", "The costumes are toys: once bought, they work all year." }
+    N[9426] = DUEL; N[9427] = DUEL; N[9428] = DUEL
+    AddItems("dead", { { 46831, "The reward of The Grateful Dead: use an Orange Marigold by your capital's graveyard and give the spirit Bread of the Dead (recipe from Chapman, cooking skill 1)." } })
+end
+
+------------------------------------------------------------------------
+-- Pirates' Day (checked 2026-10-22)
+------------------------------------------------------------------------
+do
+    S[3457] = { { t = "On Pirates' Day (19 September, one day), go up to the roof of the bank in Booty Bay: take the stairs up through Baron Revilgaz's room.", at = { 210, 40.0, 72.5 } },
+                { t = "Talk to Dread Captain DeMeza and choose to drink with her: you join her crew (a pirate costume for 12 hours) and get the achievement." } }
+end
