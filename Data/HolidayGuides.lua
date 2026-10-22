@@ -377,3 +377,81 @@ do
         { 21540, "The reward for Elune's Blessing (defeat Omen in Moonglade)." },
     })
 end
+
+------------------------------------------------------------------------
+-- Love is in the Air (checked 2026-10-22). The Gala of Gifts stands outside Stormwind (Elwynn Forest) and
+-- outside Orgrimmar (Durotar); a portal from Dornogal leads there too.
+------------------------------------------------------------------------
+do
+    local G = {
+        -- Love Tokens: candies, arrows, dress boxes, the permanent Peddlefeet
+        main = { { side = "Alliance", t = "Kiera Torres at the Gala of Gifts outside Stormwind.", at = { ELWYNN, 32.2, 50.5 } },
+                 { side = "Horde", t = "Lythianne Morningspear at the Gala of Gifts outside Orgrimmar.", at = { DUROTAR, 41.8, 17.2 } } },
+        -- fireworks, Love Fools, the love prism
+        fun = { { side = "Alliance", t = "Bang Sparknozzle at the Gala of Gifts outside Stormwind.", at = { ELWYNN, 33.5, 47.8 } },
+                { side = "Horde", t = "Zikky at the Gala of Gifts outside Orgrimmar.", at = { DUROTAR, 41.0, 17.0 } } },
+        choc = { { side = "Alliance", t = "Maurice Guichi, the chocolatier at the Gala of Gifts outside Stormwind.", at = { ELWYNN, 33.5, 50.0 } },
+                 { side = "Horde", t = "Zin'boja, the chocolatier at the Gala of Gifts outside Orgrimmar.", at = { DUROTAR, 41.2, 18.0 } } },
+        rose = { { side = "Alliance", t = "Sylandra Silverbreeze, the flower vendor at the Gala of Gifts outside Stormwind.", at = { ELWYNN, 34.2, 48.8 } },
+                 { side = "Horde", t = "Hana Breezeheart, the flower vendor at the Gala of Gifts outside Orgrimmar.", at = { DUROTAR, 41.5, 17.8 } } },
+    }
+    local function at(key, rest) local out = { G[key][1], G[key][2] } for _, x in ipairs(rest) do out[#out + 1] = x end return out end
+    local TOKENS = "Love Tokens come from the holiday's quests and dailies and vanish when it ends: spend them as you go."
+
+    S[1701] = at("main", { { t = "Buy a Bag of Heart Candies (it has 10 candies) and eat them. You need all eight messages: Be mine!, I'm all yours!, I LOVE YOU, Hot lips., You're mine!, All yours., I'll follow you all around Azeroth. and You're the best!" } })
+    N[1701] = { "The messages are random: it usually takes a few bags.", "Candies someone else gives you don't count: open the bag yourself.", TOKENS }
+    S[1702] = at("choc", { { t = "Buy a Box of Chocolates and eat the four kinds: Buttermilk Delight, Dark Desire, Sweet Surprise and Very Berry Cream." } })
+    N[1702] = "One box usually holds all four; buy another if one is missing."
+    S[1188] = at("main", { { t = "Buy Silver Shafted Arrows and shoot 10 different players with them." } })
+    N[1188] = "It fails on a player who already has a pet out: pick players without one."
+    S[1699] = at("rose", { { t = "Buy Handfuls of Rose Petals (5 a stack) and throw them at each race and class pair the achievement lists, for example a gnome warlock or a troll rogue." } })
+    N[1699] = "Capitals and battlegrounds have most of the pairs."
+    S[1696] = at("fun", { { t = "Buy 10 Lovely Fireworks, put them on an action key and launch all 10 within 20 seconds." } })
+    S[1704] = at("fun", { { t = "Buy Love Fools (or ask someone who has one). Place one and type /pity at it in each of the five places: Wintergrasp, the Arathi Basin blacksmith, Naxxramas, the ring of the Gurubashi Arena in Stranglethorn, and the Culling of Stratholme." } })
+    N[1704] = "Another player's Love Fool counts too: /pity any Love Fool standing there."
+    S[1291] = at("choc", { { t = "Buy a Box of Chocolates there (you need a Buttermilk Delight from it)." },
+                           { t = "Get a Romantic Picnic Basket (a toy from the main gala vendor), go to Dalaran in Northrend, sit at a picnic (yours or another player's) and eat the Buttermilk Delight while sitting." } })
+    S[1695] = { { side = "Alliance", t = "Take the Crushing the Crown daily from Inspector Snip Snagglebolt at the gala outside Stormwind.", at = { ELWYNN, 32.2, 50.0 } },
+                { side = "Horde", t = "Take the Crushing the Crown daily from Detective Snap Snagglebolt in Orgrimmar.", at = { 85, 50.0, 65.0 } },
+                { t = "Destroy a Crown Chemical wagon and defeat five of its workers, then hand it in." } }
+    S[1703] = { { t = "During the holiday, bosses of older dungeons can drop a Bouquet of Red or Ebon Roses. Lord Godfrey in Shadowfang Keep is the easiest; others are listed in the achievement's text." } }
+    N[1703] = "Players farm Shadowfang Keep on normal: it's quick and Godfrey is its last boss."
+    S[4624] = { { t = "Queue for the holiday dungeon in the Dungeon Finder (level 10 or higher) and defeat Apothecary Hummel and his two helpers in Shadowfang Keep." } }
+    N[4624] = "Your first kill each day gives the Heart-Shaped Box: the best chance at the X-45 Heartbreaker, the Love Witch's Sweeper and the Spring Butterfly."
+    S[9389] = { S[4624][1], { t = "Loot the holiday necklace he drops and use it: it sets off heart fireworks." } }
+    N[9389] = "One necklace drops per kill for the group; it can be traded to others in the group."
+    local PRISM = { t = "Buy the Manufactured Love Prism from the fireworks vendor. Other players channel their prism on you; each Love Ray stays on you for a while." }
+    S[9392] = at("fun", { PRISM, { t = "Have 10 Love Rays on you at once." } })
+    S[9393] = at("fun", { PRISM, { t = "Have 25 Love Rays on you at once." } })
+    S[9394] = at("fun", { PRISM, { t = "Have 50 Love Rays on you at once: form a raid, stand in a circle and all channel on the player in the middle, then switch." } })
+    local RAYS = { "The prism has a cooldown, so it takes several players.", "Feign Death, Ice Block and changing zones remove the rays: stay put." }
+    N[9392] = RAYS; N[9393] = RAYS; N[9394] = { RAYS[1], RAYS[2], "It rewards the True Love Prism toy." }
+    S[1694] = at("main", { { t = "Buy Lovely Dress Boxes and open them until one holds the Lovely Black Dress." } })
+    N[1694] = { "A dress bought from another player doesn't count.", "Not part of Fool For Love." }
+    S[1700] = at("main", { { t = "Buy the Truesilver Shafted Arrow: having it in your bags counts." } })
+    N[1700] = "You can sell it back to the vendor for your tokens once you have the achievement."
+    S[19400] = { { side = "Alliance", t = "Donate to Galvus Ironhammer at the gala outside Stormwind.", at = { ELWYNN, 32.0, 49.7 } },
+                 { side = "Horde", t = "Donate to Torgando Featherhoof at the gala outside Orgrimmar.", at = { DUROTAR, 42.3, 18.2 } },
+                 { t = "Donate 10,000 gold once a day, five times: 50,000 gold in all." } }
+    N[19400] = "Each donation sends you a small thank-you in the mail."
+    S[19508] = { { t = "Do the scenic getaway daily in Feralas when it's offered (gift matching at the Steam Pools resort)." },
+                 { t = "Give each guest their gift: Vernon Whitlock and Bront Axecrusher a sword, Angus Flagonshot the puppy, Halene Mistrunner and Bratley Graston a bouquet, Clarissa Buchannan the wine and Verilas Sunblood the scroll. Hug Theoderic Prescott, bow to Wilber Campbell and listen to Rizzi's story." } }
+    N[19508] = "Not every gift appears each time: it takes the Feralas daily on a few different days."
+    N[1693] = "The nine achievements for the title the Love Fool: expand it, each one has its guide."
+
+    local BOX = "Can be in the Heart-Shaped Box from your first Apothecary Hummel kill of the day (the holiday dungeon)."
+    AddItems("love", {
+        { 232926, BOX .. " Only the first kill of the day, account-wide, and the chance grows each new day you kill him." },
+        { 235658, BOX .. " New in 2026. Only the first kill of the day, account-wide, and the chance grows each new day you kill him." },
+        { 211812, BOX },
+        { 151767, "In a Lovely Dress Box from Kiera Torres or Lythianne Morningspear at the gala (Love Tokens)." },
+        { 151768, "In a Lovely Dress Box from Kiera Torres or Lythianne Morningspear at the gala (Love Tokens)." },
+        { 151769, "In a Lovely Dress Box from Kiera Torres or Lythianne Morningspear at the gala (Love Tokens)." },
+        { 151764, "In a Dinner Suit Box from Kiera Torres or Lythianne Morningspear at the gala (Love Tokens)." },
+        { 151765, "In a Dinner Suit Box from Kiera Torres or Lythianne Morningspear at the gala (Love Tokens)." },
+        { 151766, "In a Dinner Suit Box from Kiera Torres or Lythianne Morningspear at the gala (Love Tokens)." },
+        { 235150, "Part of the Spring Butterfly ensemble from Kiera Torres or Lythianne Morningspear (Love Tokens, new in 2026)." },
+        { 235212, "Part of the Spring Butterfly ensemble from Kiera Torres or Lythianne Morningspear (Love Tokens, new in 2026)." },
+        { 235214, "Part of the Spring Butterfly ensemble from Kiera Torres or Lythianne Morningspear (Love Tokens, new in 2026)." },
+    })
+end
