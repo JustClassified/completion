@@ -557,3 +557,71 @@ do
         { 69896, "Sold by the toy vendors in Stormwind and Orgrimmar during Children's Week, or by the Children's Week vendors for a Well-loved Figurine." },
     })
 end
+
+------------------------------------------------------------------------
+-- Midsummer bonfires (checked 2026-10-22 against an independent per-bonfire list): spots that were off replaced.
+------------------------------------------------------------------------
+do
+    local FIX = {
+        [11580] = { { 21, 49.62, 38.66 } },
+        [11581] = { { 52, 45.14, 62.44 } },
+        [11732] = { { 14, 44.59, 46.27 } },
+        [11745] = { { 37, 43.08, 62.85 } },
+        [11749] = { { 48, 32.31, 40.09 } },
+        [11755] = { { 26, 14.51, 49.87 } },
+        [11766] = { { 15, 24.11, 37.22 } },
+        [11786] = { { 18, 56.98, 51.76 } },
+        [11808] = { { 17, 55.53, 14.88 } },
+        [11816] = { { 37, 43.47, 62.63 } },
+        [11821] = { { 107, 49.61, 69.46 } },
+        [11834] = { { 83, 61.24, 47.25 } },
+        [11839] = { { 83, 58.15, 47.51 } },
+        [11842] = { { 15, 23.09, 37.45 } },
+        [11851] = { { 100, 57.1, 42.11 } },
+        [28929] = { { 51, 70.24, 15.73 } },
+    }
+    for _, a in ipairs({ 263, 271, 272, 1022, 1023, 1024, 1025, 1026, 1027, 1028, 1029, 1030, 1031, 1032, 1033, 1034, 1035, 1036, 1037, 1038, 1039, 1145, 2144, 6007, 6008, 6009, 6010, 6011, 6012, 6013, 6014, 8042, 8043, 8044, 8045, 11276, 11277, 11278, 11279, 11280, 11282, 11283, 11284, 13340, 13341, 13342, 13343, 17737, 17738, 41631, 41632, 61335, 61336 }) do
+        local g = ns.CRIT_GUIDE and ns.CRIT_GUIDE[a]
+        if g then
+            for q, spots in pairs(FIX) do
+                if g["27:" .. q] then g["27:" .. q].at = spots end
+            end
+        end
+    end
+end
+
+------------------------------------------------------------------------
+-- Midsummer Fire Festival (checked 2026-10-22)
+------------------------------------------------------------------------
+do
+    local CAMP = { { side = "Alliance", t = "The Midsummer camp in Stormwind (also Ironforge, Darnassus and the Exodar): the Festival Loremaster, the vendors and the Earthen Ring Elder." },
+                   { side = "Horde", t = "The Midsummer camp in Orgrimmar (also Thunder Bluff, Silvermoon and the Undercity): the Festival Talespinner, the vendors and the Earthen Ring Elder." } }
+    S[271] = { CAMP[1], CAMP[2], { t = "Buy the Mantle of the Fire Festival, Vestment of Summer and Sandals of Summer from a Midsummer vendor with Burning Blossoms and put all three on." },
+               { t = "Right-click a ribbon pole next to any festival bonfire and keep dancing for a full minute." } }
+    N[271] = "The Crown of the Fire Festival isn't needed."
+    S[272] = { CAMP[1], CAMP[2], { t = "Buy at least 10 Juggling Torches from a Midsummer vendor." },
+               { t = "In Dalaran (Northrend), juggle 40 torches within 15 seconds: put them on a key and keep throwing at the ground at your feet." } }
+    S[263] = { { t = "Queue for The Frost Lord Ahune in the Dungeon Finder (level 10 or higher), or ask the Earthen Ring Elder at a main camp." },
+               { t = "Defeat the naga guarding the Ice Stone, use the stone to call Ahune, kill his minions until he retreats, then destroy his Frozen Core." } }
+    N[263] = "Your first kill each day gives the Satchel of Chilled Goods, and only that first kill (account-wide) can drop the Sun Festival's Painted Roc mount and Ahune's rarest weapons."
+    S[1145] = { CAMP[1], CAMP[2], { t = "Take A Thief's Reward there, then go into each of the other faction's four capitals and click its festival flame to take a piece of it." },
+                { t = "Hand the four flames back in for the quest; the achievement and the Crown of the Fire Festival come with it." } }
+    N[1145] = { "The Exodar and Silvermoon can't be flown into: walk in.", "Taking an enemy flame flags you for PvP." }
+    local DESECRATE = "Desecrating the other faction's bonfire flags you for PvP: go at a quiet hour or with friends."
+    for _, id in ipairs({ 1028, 1029, 1030, 1031, 1032, 1033, 6007, 6010, 6013, 6014, 13342, 13343 }) do
+        N[id] = N[id] or { "Track it: the arrow goes to the nearest bonfire you still need.", DESECRATE }
+    end
+    for _, id in ipairs({ 1022, 1023, 1024, 1025, 1026, 1027, 6008, 6009, 6011, 6012, 8044, 8045, 11280, 11282, 13340, 13341, 17737, 17738, 41631, 41632, 61335, 61336 }) do
+        N[id] = N[id] or { "Track it: the arrow goes to the nearest bonfire you still need. Honoring a bonfire is a one-time quest at the fire." }
+    end
+    N[1038] = "Six achievements for the title Flame Warden: expand it, each one has its guide."
+    N[1039] = "Six achievements for the title Flame Keeper: expand it, each one has its guide."
+
+    local AHUNE = "Can drop from Ahune, the holiday boss (Dungeon Finder): only your first kill of the day, account-wide, and the chance grows each new day."
+    AddItems("midsummer", {
+        { 275464, AHUNE .. " New in 2026: the first Midsummer mount." },
+        { 224163, AHUNE }, { 246570, AHUNE }, { 244423, AHUNE }, { 246571, AHUNE }, { 244422, AHUNE }, { 244356, AHUNE },
+        { 275463, "Part of the Sun Festival's Flame Totems ensemble from the Midsummer vendors (Burning Blossoms, new in 2026)." },
+        { 275462, "Part of the Sun Festival's Flame Totems ensemble from the Midsummer vendors (Burning Blossoms, new in 2026; tauren only)." },
+    })
+end
