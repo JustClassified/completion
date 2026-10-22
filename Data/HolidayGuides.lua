@@ -285,3 +285,95 @@ do
         AddItems("veil", { { id, "Sold by the Smokywood Pastures vendors in the capitals for gold (15 to 30)." } })
     end
 end
+
+------------------------------------------------------------------------
+-- Lunar Festival elders (checked 2026-10-22 against an independent per-elder list): stray far-away spots replaced,
+-- and the elders that need Zidormi or a dungeon say so.
+------------------------------------------------------------------------
+do
+    local FIX = {
+        [8635] = { { 66, 28.86, 62.56 }, { 67, 28.05, 33.62 }, { 68, 44.23, 77.21 }, { 281, 51.47, 93.73 } },
+        [8642] = { { 48, 33.32, 46.54 } },
+        [8643] = { { 26, 50, 48.04 } },
+        [8644] = { { 33, 80.32, 40.27 }, { 252, 61.81, 40 }, { 36, 27.59, 25.44 } },
+        [8645] = { { 21, 44.98, 41.14 } },
+        [8646] = { { 37, 32.16, 52.76 } },
+        [8647] = { { 17, 54.28, 49.49 } },
+        [8649] = { { 37, 39.79, 63.67 } },
+        [8650] = { { 23, 75.73, 54.56 } },
+        [8653] = { { 27, 53.91, 49.91 } },
+        [8654] = { { 81, 30.81, 13.32 } },
+        [8671] = { { 71, 37.24, 79.06 } },
+        [8672] = { { 83, 59.96, 49.94 } },
+        [8673] = { { 7, 48.5, 53.24 } },
+        [8674] = { { 210, 39.95, 72.5 } },
+        [8678] = { { 7, 44.94, 23.23 }, { 88, 72.98, 23.38 } },
+        [8679] = { { 69, 76.71, 37.89 } },
+        [8680] = { { 10, 68.36, 69.96 } },
+        [8681] = { { 78, 50.37, 76.16 } },
+        [8682] = { { 64, 46.34, 51.01 } },
+        [8717] = { { 10, 48.52, 59.27 } },
+        [8718] = { { 89, 39.21, 31.85 }, { 57, 28.11, 43.67 } },
+        [8719] = { { 81, 53.02, 35.48 } },
+        [8720] = { { 76, 64.73, 79.34 } },
+        [8721] = { { 62, 49.54, 18.94 } },
+        [8723] = { { 77, 38.35, 52.85 } },
+        [8724] = { { 64, 77.09, 75.61 } },
+        [8725] = { { 63, 35.54, 48.91 } },
+        [8866] = { { 27, 62.96, 21.94 }, { 87, 29.33, 17.15 } },
+        [13019] = { { 115, 48.76, 78.18 } },
+        [13021] = { { 114, 27.5, 25.98 }, { 129, 55.2, 64.71 } },
+        [13032] = { { 120, 64.59, 51.34 } },
+        [85931] = { { 2214, 44.76, 67.32 } },
+        [85932] = { { 2214, 63.12, 52.97 } },
+    }
+    local ZID_TIRISFAL = "Talk to Zidormi in Tirisfal Glades (69.4, 62.8) first to see the zone before the Battle for Azeroth."
+    local ZID_DARKSHORE = "Talk to Zidormi in Darkshore (48.8, 24.5) first to see the zone before the Battle for Azeroth."
+    local NOTE = {
+        [8647] = "Talk to Zidormi at the north end of the Blasted Lands (48.2, 7.2) first to see the zone before the invasion.",
+        [8648] = "In the Undercity. " .. ZID_TIRISFAL, [8652] = "In Brill. " .. ZID_TIRISFAL,
+        [8715] = "On Teldrassil. " .. ZID_DARKSHORE, [8718] = "In Darnassus. " .. ZID_DARKSHORE, [8721] = "In Lor'danel. " .. ZID_DARKSHORE,
+        [8619] = "Inside Blackrock Depths.", [8635] = "Inside Maraudon, in Earthsong Falls.", [8644] = "Inside Lower Blackrock Spire.",
+        [8676] = "Inside Zul'Farrak.", [8713] = "Inside the Sunken Temple.", [8727] = "Inside Stratholme.",
+        [13017] = "Inside Utgarde Keep.", [13021] = "Inside the Nexus.", [13022] = "Inside Azjol-Nerub.", [13023] = "Inside Drak'Tharon Keep.",
+        [13065] = "Inside Gundrak.", [13066] = "Inside the Halls of Stone.", [13067] = "Inside Utgarde Pinnacle.",
+    }
+    for _, a in ipairs({ 910, 911, 912, 914, 915, 1396, 6006, 17321, 41130 }) do
+        local g = ns.CRIT_GUIDE and ns.CRIT_GUIDE[a]
+        if g then
+            for q, spots in pairs(FIX) do
+                if g["27:" .. q] then g["27:" .. q].at = spots end
+            end
+            for q, text in pairs(NOTE) do
+                if g["27:" .. q] then g["27:" .. q].t = "Speak to the elder. " .. text end
+            end
+        end
+    end
+end
+
+------------------------------------------------------------------------
+-- Lunar Festival (checked 2026-10-22)
+------------------------------------------------------------------------
+do
+    local MOONGLADE = 80
+    local VALADAR = { t = "Valadar Starsong on the platform over the lake in Nighthaven, Moonglade. Reach Moonglade with the Lunar Festival Invitation from your capital's festival camp (use it in the beam of moonlight).", at = { MOONGLADE, 54.0, 35.0 } }
+    S[626] = { VALADAR, { t = "Buy any festive dress or pant suit from him with Coins of Ancestry." } }
+    N[626] = "Each elder gives a Coin of Ancestry, and the coins never expire, so leftovers from earlier years work too."
+    S[937] = { VALADAR, { t = "Take Elune's Blessing from him." },
+               { t = "At the Stormrage Barrow Dens, south-east of the lake, fire rocket clusters from the launchers until the Minions of Omen and then Omen appear.", at = { MOONGLADE, 60.5, 65.5 } },
+               { t = "Stand by Omen's body after he dies to get Elune's Blessing (you don't need to have hit him), then return to Valadar." } }
+    N[937] = "Other players usually have Omen up: wait by the barrows and stay close when he falls."
+    local FIRE = { t = "Buy fireworks from a Lunar Festival Vendor at your capital's festival camp or in Nighthaven." }
+    S[1552] = { FIRE, { t = "Buy 10 Festival Firecrackers, put them on an action key and set off all 10 within 30 seconds." } }
+    S[1281] = { FIRE, { t = "Buy 10 Red Rocket Clusters and fire all 10 from a Cluster Launcher (on the ground around the camps) within 25 seconds." } }
+    N[1281] = "Put the clusters on an action key and stand right at the launcher before you start."
+    N[913] = "The twelve achievements for the title Elder: expand it, each one has its guide. Track an elder achievement and the arrow takes you to the nearest elder you still need."
+
+    AddItems("lunar", {
+        { 169208, "From the quest Lunar Preservation (Myrael Lunarbloom in Moonglade): unlike the vendor crowns, it can be worn as transmog all year." },
+        { 170205, "From the quest Lunar Preservation (Myrael Lunarbloom in Moonglade): unlike the vendor crowns, it can be worn as transmog all year." },
+        { 170206, "From the quest Lunar Preservation (Myrael Lunarbloom in Moonglade): unlike the vendor crowns, it can be worn as transmog all year." },
+        { 170207, "From the quest Lunar Preservation (Myrael Lunarbloom in Moonglade): unlike the vendor crowns, it can be worn as transmog all year." },
+        { 21540, "The reward for Elune's Blessing (defeat Omen in Moonglade)." },
+    })
+end

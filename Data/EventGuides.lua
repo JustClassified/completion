@@ -41,7 +41,7 @@ ns.EVENT_DEFS = {
               note = "Buy 10 Festival Firecrackers and set off all 10 within 30 seconds. Put them on a key and press it repeatedly." },
             { "Go to Moonglade", group = "Get started", q = 8883, npc = 15864,
               note = "Stand in the moonlight beam at the camp and use the Lunar Festival Invitation. In Nighthaven, speak to Valadar Starsong on the platform over the lake." },
-            { "Elune's Blessing", group = "Moonglade", q = 8868, ach = 937, at = { 80, 70.0, 64.0 },
+            { "Elune's Blessing", group = "Moonglade", q = 8868, ach = 937, at = { 80, 60.5, 65.5 },
               note = "Valadar sends you after Omen, south-east of Lake Elune'ara by the Stormrage Barrow Dens. Fire rocket clusters from the launchers there until Omen appears; stand near his body after the kill for Elune's Blessing. No tag needed." },
             { "Lunar Preservation", group = "Moonglade", q = 56842,
               note = "Rite of the Moon at moonwells in Ashenvale, Felwood, Feralas, Moonglade, Stonetalon, Duskwood and Mount Hyjal. Keep the Blessing of the Moon buff up or start over. Rewards crowns and coins." },
