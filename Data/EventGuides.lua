@@ -711,3 +711,39 @@ do
         end
     end
 end
+
+-- Candy buckets hidden by phasing: since later expansions changed these zones, the bucket only shows in the zone's
+-- old version (Zidormi switches it) or after a storyline. Checked 2026-10-22 against players' reports on every
+-- bucket; only consistent, well-rated reports are used.
+do
+    local function zidormi(where, x, y, ago)
+        return "Can't see the bucket? Talk to Zidormi in " .. where .. " (" .. x .. ", " .. y .. ") and ask to see the zone "
+            .. ago .. "; the bucket only shows in the old version. Talk to her again afterwards to come back."
+    end
+    local ARATHI = zidormi("the south of Arathi Highlands", "38.2", "90.0", "before the Battle for Azeroth")
+    local BLASTED = zidormi("the north of the Blasted Lands", "48.2", "7.2", "before the Iron Horde invasion")
+    local ULDUM = zidormi("Ramkahen", "56.0", "35.2", "as it was during the Cataclysm")
+    local PHASE = {
+        [12380] = ARATHI, [28954] = ARATHI,
+        [28959] = BLASTED, [28960] = BLASTED, [28961] = BLASTED,
+        [29016] = ULDUM, [29017] = ULDUM,
+        [12401] = zidormi("the north-east of Silithus", "78.8", "22.0", "before the Wound"),
+        [32052] = zidormi("the east of the Vale of Eternal Blossoms", "80.5", "32.0", "before the assault") .. " The bucket is behind the innkeeper.",
+        [32022] = "The bucket is upstairs in the inn.",
+        [12367] = "If Thunder Bluff is under attack by shadowy invaders (the Highmountain Tauren unlock), the bucket is hidden until you finish that event.",
+        [12373] = "Hidden while you are partway through the blood elf storyline in Quel'Thalas; finish it to see the bucket.",
+        [13462] = "Hidden while you are partway through the Storm Peaks storyline at Bouldercrag's Refuge; finish that chain to see it.",
+        [29019] = "Hidden until you have finished the Deepholm storyline.",
+        [28974] = "Hidden for some Horde characters until the Twilight Highlands storyline is done.",
+        [28981] = "The Deepmist Grotto inn only appears after enough of the Vashj'ir storyline.",
+    }
+    for _, a in ipairs({ 963, 965, 966, 967, 968, 969, 5835, 5836, 5837, 5838, 7601, 7602 }) do
+        local g = ns.CRIT_GUIDE and ns.CRIT_GUIDE[a]
+        if g then
+            for q, text in pairs(PHASE) do
+                local e = g["27:" .. q]
+                if e then e.t = "The candy bucket is inside the inn. " .. text end
+            end
+        end
+    end
+end
