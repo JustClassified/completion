@@ -455,3 +455,73 @@ do
         { 235214, "Part of the Spring Butterfly ensemble from Kiera Torres or Lythianne Morningspear (Love Tokens, new in 2026)." },
     })
 end
+
+------------------------------------------------------------------------
+-- Noblegarden (checked 2026-10-22). Eggs hide in the eight starting towns, and since 2026 also in Silvermoon City.
+------------------------------------------------------------------------
+do
+    local TELDRASSIL, MULGORE, UNGORO = 57, 7, 78
+    local TOWN = {
+        A = { { "Goldshire, Elwynn Forest", ELWYNN, 42.5, 65.8 }, { "Kharanos, Dun Morogh", DUN_MOROGH, 54.0, 50.8 },
+              { "Dolanaar, Teldrassil (talk to Zidormi in Darkshore first, 48.8, 24.5)", TELDRASSIL, 55.6, 51.2 }, { "Azure Watch, Azuremyst Isle", AZUREMYST, 49.0, 51.2 } },
+        H = { { "Razor Hill, Durotar", DUROTAR, 52.2, 41.5 }, { "Brill, Tirisfal Glades (talk to Zidormi in Tirisfal, 69.4, 62.8, first)", TIRISFAL, 61.4, 53.0 },
+              { "Bloodhoof Village, Mulgore", MULGORE, 47.0, 59.8 }, { "Falconwing Square, old Eversong Woods", EVERSONG_OLD, 47.5, 46.0 } },
+    }
+    local function towns(text)
+        local out = {}
+        for _, side in ipairs({ "A", "H" }) do
+            for _, w in ipairs(TOWN[side]) do
+                out[#out + 1] = { side = side == "A" and "Alliance" or "Horde", t = text .. w[1] .. ".", at = { w[2], w[3], w[4] } }
+            end
+        end
+        return out
+    end
+    local VENDOR = { { side = "Alliance", t = "The Noblegarden Vendor in Goldshire (every egg town has one).", at = { ELWYNN, 42.5, 65.8 } },
+                     { side = "Horde", t = "The Noblegarden Merchant in Razor Hill (every egg town has one).", at = { DUROTAR, 52.2, 41.5 } } }
+    local EGGS = "Brightly Colored Eggs hide on the ground around the egg towns. Each gives a Noblegarden Chocolate (the holiday's currency) and sometimes an outfit piece, the rabbit's foot or the flowers."
+    local EGG_TIP = { "Collect first, buy second, eat last: eating chocolates spends them.", "Lower ground clutter and zoom out to spot eggs before the plants hide them." }
+
+    S[2676] = { VENDOR[1], VENDOR[2], { t = EGGS .. " Loot one." } }
+    S[2417] = { { t = EGGS }, { t = "Eat 25 Noblegarden Chocolates." } }; N[2417] = EGG_TIP
+    S[2418] = { { t = EGGS }, { t = "Eat 100 Noblegarden Chocolates in total. Do it last, after buying everything you want." } }; N[2418] = EGG_TIP
+    S[249] = { { t = EGGS }, { t = "Open eggs until one holds the Elegant Dress. Only one found in an egg counts, not one bought." } }
+    S[248] = { { t = EGGS }, { t = "Open eggs until you have found both the White Tuxedo Shirt and the Black Tuxedo Pants. Only ones found in eggs count." } }
+    N[249] = "A rare find: players report about one egg in two hundred. Not part of Noble Gardener."; N[248] = N[249]
+    S[2576] = { VENDOR[1], VENDOR[2], { t = "Buy (or find in eggs) the White Tuxedo Shirt and Black Tuxedo Pants, put them on, and /kiss a player wearing the Elegant Dress." } }
+    N[2576] = { "Only the player in the tuxedo gets it: take turns with a friend.", "The tailored tuxedo doesn't count, only the holiday one." }
+    S[2422] = { VENDOR[1], VENDOR[2], { t = "Buy Spring Flowers (or find them in eggs) and use them to give bunny ears to a player of each race the achievement lists." } }
+    N[2422] = "The flowers have a cooldown: a capital with many races in it is quickest."
+    S[2436] = { VENDOR[1], VENDOR[2], { t = "Buy the Spring Florist's Pouch (a toy) and plant a flower anywhere in the Badlands, Silithus, Thousand Needles, Desolace and Tanaris." } }
+    S[2416] = { { t = "Get turned into a Noblegarden bunny: easiest, a friend uses the bunny costume item on you; eggs can also turn you into one." },
+                { t = "As a bunny, go to the Golakka Hot Springs in Un'Goro Crater and wait there until you lay an egg.", at = { UNGORO, 33.0, 49.0 } } }
+    N[2416] = { "Damage breaks the bunny form: avoid fights on the way.", "Players set their hearthstone to Marshal's Stand in Un'Goro, turn into a bunny, hearth and run west." }
+    S[2421] = { VENDOR[1], { side = "Alliance", t = "Buy a Noblegarden Egg and hide it anywhere in Stormwind." } }
+    S[2420] = { VENDOR[2], { side = "Horde", t = "Buy a Noblegarden Egg and hide it anywhere in Silvermoon City." } }
+    N[2421] = "Loot the egg you hid to get your chocolate back."; N[2420] = N[2421]
+    S[2419] = towns("Summon your Spring Rabbit next to another player's Spring Rabbit in ")
+    S[2497] = S[2419]
+    N[2419] = "Get the Spring Rabbit from a Spring Rabbit's Foot (vendor or eggs). Wait a moment by the other rabbit and it counts."; N[2497] = N[2419]
+    S[20209] = {
+        { side = "Alliance", t = "Go to the Large Duck Nest south of Goldshire, in the south of Elwynn Forest.", at = { ELWYNN, 30.6, 90.8 } },
+        { side = "Horde", t = "Go to the Large Duck Nest in Durotar.", at = { DUROTAR, 44.6, 35.6 } },
+        { t = "Find the large Golden Egg nearby (it moves between a few spots close to the nest), roll it into the nest with the extra button, and defeat Daetan Swiftplume when he appears." },
+    }
+    N[20209] = "Either nest works for both factions. He can drop the Noble Flying Carpet, the duck colors and the Spring Reveler's Cornsilk pieces."
+    N[2798] = "The eight achievements for the title the Noble: expand it, each one has its guide."
+
+    local BOSS = "Can drop from Daetan Swiftplume, the holiday duck boss at the nests in Elwynn Forest and Durotar."
+    AddItems("noble", {
+        { 212599, BOSS },
+        { 188698, "From the quest A Tisket, a Tasket, a Noblegarden Basket in your egg town." },
+        { 216881, "From the quest Just a Waddle Away, the end of the duck story in your egg town." },
+        { 216898, BOSS .. " The colors are shared by your warband (reset in 2026)." },
+        { 216901, BOSS .. " The colors are shared by your warband (reset in 2026)." },
+        { 216902, BOSS .. " The colors are shared by your warband (reset in 2026)." },
+        { 216900, BOSS .. " The colors are shared by your warband (reset in 2026)." },
+        { 212717, BOSS .. " New in 2026." }, { 212713, BOSS .. " New in 2026." }, { 212705, BOSS .. " New in 2026." },
+        { 212706, BOSS .. " New in 2026." }, { 212987, BOSS .. " New in 2026." }, { 212707, BOSS .. " New in 2026." },
+        { 212715, "In the Loot-Filled Basket from the holiday boss's quest." }, { 212711, "In the Loot-Filled Basket from the holiday boss's quest." },
+        { 212698, "In the Loot-Filled Basket from the holiday boss's quest." }, { 212699, "In the Loot-Filled Basket from the holiday boss's quest." },
+        { 212985, "In the Loot-Filled Basket from the holiday boss's quest." }, { 212701, "In the Loot-Filled Basket from the holiday boss's quest." },
+    })
+end
