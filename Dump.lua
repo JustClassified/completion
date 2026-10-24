@@ -37,6 +37,7 @@ local COLUMNS = {
     campaigns = "campaignID, name, chapters (chapterID=name, joined by |)",
     journal = "tier, journalInstanceID, name, isRaid, mapID, bosses (encounterID=name, joined by |)",
     quests = "questID, title, completed, source",
+    unmatched = "itemID, name, itemClass, itemSubClass (book items that aren't a mount, pet or toy)",
 }
 
 -- Text without the game's colour and texture codes, tabs or line breaks.
@@ -110,6 +111,11 @@ local function BookCollect(items)
     local mounts, species = {}, {}
     for id in pairs(items) do
         local m = C_MountJournal and Try(C_MountJournal.GetMountFromItem, id)
+        -- second way: the item's spell, then the mount that spell teaches
+        if not m and C_Item and C_Item.GetItemSpell and C_MountJournal.GetMountFromSpell then
+            local _, spell = Try(C_Item.GetItemSpell, id)
+            if spell then m = Try(C_MountJournal.GetMountFromSpell, spell) end
+        end
         if m then mounts[m] = id end
         if C_PetJournal and C_PetJournal.GetPetInfoByItemID then
             local r = { pcall(C_PetJournal.GetPetInfoByItemID, id) }
@@ -117,6 +123,22 @@ local function BookCollect(items)
         end
     end
     return mounts, species
+end
+
+-- The book's items that are neither a known mount, pet nor toy (for checking the matching itself).
+local function Unmatched(items, mounts, species)
+    local isMount, isPet, out = {}, {}, {}
+    for _, id in pairs(mounts) do isMount[id] = true end
+    for _, id in pairs(species) do isPet[id] = true end
+    for id in pairs(items) do
+        local toy = C_ToyBox and Try(C_ToyBox.GetToyInfo, id)
+        if not (isMount[id] or isPet[id] or toy) then
+            local name, _, _, _, _, class, sub = Try(C_Item.GetItemInfo, id)
+            out[#out + 1] = Line(id, name or "", class or "", sub or "")
+        end
+    end
+    table.sort(out)
+    return out
 end
 
 -- Every quest ID the book's data knows.
@@ -193,9 +215,10 @@ local function Start(onlyCollect)
             s.i = s.i + 1
             local id = s.list[s.i]
             if not id then
-                s.wait = s.wait or (GetTime() + 20)
+                s.wait = s.wait or (GetTime() + 30)
                 if GetTime() < s.wait then return false end
                 bookMounts, bookSpecies = BookCollect(items)
+                out.unmatched = Unmatched(items, bookMounts, bookSpecies)
                 return true
             end
             if C_Item and C_Item.RequestLoadItemDataByID then pcall(C_Item.RequestLoadItemDataByID, id) end
@@ -493,7 +516,7 @@ local function Start(onlyCollect)
     print(PREFIX .. "reading everything the game knows; this takes about half an hour. Keep playing normally (or stand still).")
     Run(steps, function(seconds)
         if onlyCollect and ns.db.dump then
-            for _, k in ipairs({ "mounts", "pets", "toys", "sets", "heirlooms", "illusions", "titles" }) do ns.db.dump[k] = out[k] end
+            for _, k in ipairs({ "mounts", "pets", "toys", "sets", "heirlooms", "illusions", "titles", "unmatched" }) do ns.db.dump[k] = out[k] end
             ns.db.dump.collectBuilt = out.built
             out = ns.db.dump
         end
