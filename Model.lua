@@ -1193,7 +1193,7 @@ local function BuildLegacyCollect()
         end
         for itemID, key in pairs(ns.LEGACY_TOYS or {}) do
             local zone = ns.zoneByKey[key]
-            if zone then AddCollect(zone, "i" .. itemID, { itemID = itemID, flag = "t", sourceText = "Toy" }) end
+            if zone then AddCollect(zone, "i" .. itemID, { itemID = itemID, flag = "t" }) end
         end
         for species, key in pairs(ns.LEGACY_WILD or {}) do
             local zone = ns.zoneByKey[key]

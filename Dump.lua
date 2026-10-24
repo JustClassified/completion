@@ -385,8 +385,14 @@ local function Start(onlyCollect, allQuests)
                 if d then fn(i, d) end
             end
         end
-        walk(function(_, d) if d.isHeader and d.isCollapsed then collapsed[d.factionID] = true end end)
-        if C_Reputation.ExpandAllFactionHeaders then C_Reputation.ExpandAllFactionHeaders() end
+        -- open every collapsed header, sub-headers too, until none is left closed (a few passes at most)
+        for _ = 1, 5 do
+            local opened = false
+            walk(function(i, d)
+                if d.isHeader and d.isCollapsed then collapsed[d.factionID] = true; Try(C_Reputation.ExpandFactionHeader, i); opened = true end
+            end)
+            if not opened then break end
+        end
         local top, sub = "", ""
         walk(function(_, d)
             if d.isHeader and not d.isChild then top, sub = d.name or "", "" elseif d.isHeader then sub = d.name or "" end
