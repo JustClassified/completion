@@ -85,4 +85,5 @@ Pages.lua
 Report.lua
 Hover.lua
 Integration.lua
+Dump.lua
 Main.lua

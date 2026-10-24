@@ -289,6 +289,7 @@ local function Slash(msg)
     elseif cmd == "announce" then s.announce = not s.announce; ns.Print("Chat messages " .. (s.announce and "on" or "off") .. ".")
     elseif cmd == "follow" then s.follow = not s.follow; ns.Print("Open on your current zone: " .. (s.follow and "on" or "off") .. ".")
     elseif cmd == "ui" or cmd == "look" then ns.SwitchLook()
+    elseif cmd == "dump" then ns.AchievementDump(rest)
     elseif cmd == "hidedone" then s.hidedone = not s.hidedone; ns.RefreshUI()
     elseif cmd == "transmog" then
         s.transmog = not s.transmog
