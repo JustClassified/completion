@@ -316,6 +316,8 @@ local function BuildInstances(zone)
                         end
                         it.group = it.raid and "Raids" or "Dungeons"
                         local owner = OwnerZone(it.spots[1]) or zone
+                        -- an older expansion lists all its dungeons and raids together on its overview
+                        if owner.legacy and not owner.overview and ns.overviews[owner.exp] then owner = ns.overviews[owner.exp] end
                         AddItem(owner, "instance", it)
                         AddKeyword(e.name, owner, it)
                         if instID and EJ_GetEncounterInfoByIndex then
