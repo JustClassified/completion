@@ -1,7 +1,9 @@
--- Completion: a temporary research tool. /comp dump reads every achievement the game knows (category, points, flags,
--- criteria with their type and asset) and whether the book shows it, and saves it all in the saved variables
--- (CompletionDB.dump) so the book's data can be checked against the game itself. It reads only; nothing is changed.
--- Spread over several frames so the game doesn't stall. /comp dump clear removes the saved copy again.
+-- Completion: a research tool for the authors. /comp dump reads everything the game knows and saves it in the saved
+-- variables (CompletionDB.dump) so the book's data can be checked against the game itself:
+--   every achievement (category, points, flags, criteria with type and asset) and where the book shows it,
+--   every mount, battle pet species, toy and appearance set, collected or not, and which ones the book lists.
+-- It reads only; no setting, filter or CVar is changed. Spread over many frames so the game doesn't stall.
+-- /comp dump clear removes the saved copy again.
 
 local _, ns = ...
 
@@ -67,9 +69,13 @@ local function Start()
             local cat = cats[i]
             if not cat then
                 self:SetScript("OnUpdate", nil)
-                ns.db.dump = out
-                running = false
-                print(string.format("|cffe6c35cCompletion|r: read %d achievements. Type /reload so the game saves them, then tell Claude.", #out.ach))
+                print(string.format("|cffe6c35cCompletion|r: read %d achievements; now the collections...", #out.ach))
+                ns.CollectionDump(out, function()
+                    ns.db.dump = out
+                    running = false
+                    print(string.format("|cffe6c35cCompletion|r: done: %d achievements, %d mounts, %d pets, %d toys, %d sets. Type /reload so the game saves them, then tell Claude.",
+                        #out.ach, #out.mounts, #out.pets, #out.toys, #out.sets))
+                end)
                 return
             end
             local okN, n = pcall(GetCategoryNumAchievements, cat, true)
@@ -82,6 +88,94 @@ local function Start()
                 end
             end
         end
+    end)
+end
+
+------------------------------------------------------------------------
+-- collections
+------------------------------------------------------------------------
+
+-- Text without the game's colour and texture codes, tabs or bars.
+local function Clean(t)
+    t = tostring(t or "")
+    t = t:gsub("|c%x%x%x%x%x%x%x%x", ""):gsub("|r", ""):gsub("|T.-|t", ""):gsub("|n", " "):gsub("[|\t\r\n]", " ")
+    return t
+end
+
+-- The mount IDs, pet species and toy items the book lists (its item lists, collectibles and holiday items).
+local function BookCollect()
+    local items = {}
+    local function add(list) for _, id in ipairs(list or {}) do items[id] = true end end
+    add(ns.MIDNIGHT_MOUNT_ITEMS); add(ns.MIDNIGHT_PET_ITEMS); add(ns.MIDNIGHT_TOY_ITEMS)
+    for id in pairs(ns.COLLECT_INFO or {}) do items[id] = true end
+    for _, list in pairs(ns.EVENT_ITEMS or {}) do for _, e in ipairs(list) do if e.i then items[e.i] = true end end end
+    for _, it in pairs(ns.items or {}) do if it.itemID then items[it.itemID] = true end end
+    local mounts, species = {}, {}
+    for id in pairs(items) do
+        if C_MountJournal and C_MountJournal.GetMountFromItem then
+            local ok, m = pcall(C_MountJournal.GetMountFromItem, id)
+            if ok and m then mounts[m] = id end
+        end
+        if C_PetJournal and C_PetJournal.GetPetInfoByItemID then
+            local r = { pcall(C_PetJournal.GetPetInfoByItemID, id) }
+            if r[1] and r[14] then species[r[14]] = id end
+        end
+    end
+    return items, mounts, species
+end
+
+-- Reads mounts and sets at once, then pet species and toy items in slices; calls done() at the end.
+function ns.CollectionDump(out, done)
+    out.mounts, out.pets, out.toys, out.sets = {}, {}, {}, {}
+    local items, bookMounts, bookSpecies = BookCollect()
+    -- mounts: the journal's full list, whatever the filters
+    if C_MountJournal and C_MountJournal.GetMountIDs then
+        for _, mid in ipairs(C_MountJournal.GetMountIDs() or {}) do
+            local ok, name, spell, _, _, _, sourceType, _, factionSpecific, faction, hide, collected = pcall(C_MountJournal.GetMountInfoByID, mid)
+            if ok and name then
+                local okX, _, _, source = pcall(C_MountJournal.GetMountInfoExtraByID, mid)
+                out.mounts[#out.mounts + 1] = table.concat({ mid, spell or 0, Clean(name), sourceType or 0, collected and 1 or 0,
+                    factionSpecific and tostring(faction) or "", hide and 1 or 0, bookMounts[mid] or "", okX and Clean(source) or "" }, "\t")
+            end
+        end
+    end
+    -- appearance sets: every set the game has, with its expansion
+    if C_TransmogSets and C_TransmogSets.GetAllSets then
+        for _, set in ipairs(C_TransmogSets.GetAllSets() or {}) do
+            out.sets[#out.sets + 1] = table.concat({ set.setID, Clean(set.name), Clean(set.label), set.expansionID or "", set.classMask or 0,
+                set.collected and 1 or 0, Clean(set.description), set.requiredFaction or "" }, "\t")
+        end
+    end
+    -- pets by species ID, toys by item ID, a slice each frame
+    local species, item = 0, 0
+    local MAX_SPECIES, MAX_ITEM = 6000, 300000
+    local f = CreateFrame("Frame")
+    f:SetScript("OnUpdate", function(self)
+        if species < MAX_SPECIES and C_PetJournal and C_PetJournal.GetPetInfoBySpeciesID then
+            for _ = 1, 200 do
+                species = species + 1
+                local r = { pcall(C_PetJournal.GetPetInfoBySpeciesID, species) }
+                if r[1] and r[2] then
+                    local okN, owned = pcall(C_PetJournal.GetNumCollectedInfo, species)
+                    out.pets[#out.pets + 1] = table.concat({ species, Clean(r[2]), r[4] or 0, r[5] or 0, r[9] and 1 or 0, r[12] and 1 or 0,
+                        okN and owned or 0, bookSpecies[species] or "", Clean(r[6]) }, "\t")
+                end
+            end
+            return
+        end
+        if item < MAX_ITEM and C_ToyBox and C_ToyBox.GetToyInfo then
+            for _ = 1, 3000 do
+                item = item + 1
+                local ok, id, name = pcall(C_ToyBox.GetToyInfo, item)
+                if ok and id then
+                    local have = PlayerHasToy and PlayerHasToy(item)
+                    out.toys[#out.toys + 1] = table.concat({ item, Clean(name), have and 1 or 0, items[item] and 1 or 0 }, "\t")
+                end
+            end
+            return
+        end
+        self:SetScript("OnUpdate", nil)
+        done()
     end)
 end
 
