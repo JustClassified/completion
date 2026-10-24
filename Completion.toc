@@ -24,6 +24,7 @@ Data\RareText.lua
 Data\ExtraLoot.lua
 Data\Lore.lua
 Data\LoreExtra.lua
+Data\Legacy\Lore.lua
 Data\QuestStarts.lua
 Data\QuestStartsExtra.lua
 Data\QuestNotes.lua

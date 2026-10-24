@@ -570,6 +570,29 @@ function ns.SpeciesCollect(speciesID, wild)
     return "pet", owned, okn and name or nil, okn and icon or nil
 end
 
+-- An heirloom by item ID.
+function ns.HeirloomCollect(itemID)
+    if not (C_Heirloom and C_Heirloom.PlayerHasHeirloom) then return "heirloom", nil end
+    local ok, has = pcall(C_Heirloom.PlayerHasHeirloom, itemID)
+    local okn, name = pcall(C_Heirloom.GetHeirloomInfo, itemID)
+    return "heirloom", ok and (has and true or false) or nil, okn and name or nil
+end
+
+-- A weapon illusion by its source ID (the game's illusion list is read once per refresh).
+local illusionStamp, illusionOwned = -1, {}
+function ns.IllusionCollect(sourceID)
+    if not (C_TransmogCollection and C_TransmogCollection.GetIllusions) then return "illusion", nil end
+    if illusionStamp ~= ns.stamp then
+        illusionStamp, illusionOwned = ns.stamp, {}
+        local ok, list = pcall(C_TransmogCollection.GetIllusions)
+        for _, il in ipairs(ok and type(list) == "table" and list or {}) do
+            if il.sourceID then illusionOwned[il.sourceID] = il.isCollected and true or false end
+        end
+    end
+    local okn, name = pcall(C_TransmogCollection.GetIllusionStrings, sourceID)
+    return "illusion", illusionOwned[sourceID], okn and name or nil
+end
+
 -- A whole transmog set by set ID.
 function ns.SetCollect(setID)
     if not (C_TransmogSets and C_TransmogSets.GetSetInfo) then return "set", nil end

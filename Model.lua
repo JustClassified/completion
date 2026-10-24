@@ -179,27 +179,33 @@ local loreIDs, loreZone = {}, {}
 -- One item per questline criterion of each Loremaster achievement, or a plain achievement item when
 -- Data/Lore.lua lists no criteria for it.
 local function BuildLore(zone, secKey, ids)
+    local f = UnitFactionGroup and UnitFactionGroup("player")
+    local mySide = f == "Alliance" and 1 or (f == "Horde" and 2 or nil)
     for _, id in ipairs(ids or {}) do
         local a = ns.LORE_ACH[id]
         loreIDs[id] = true
-        loreZone[id] = zone
-        if a then
-            if a.crits and #a.crits > 0 then
-                for i, c in ipairs(a.crits) do
-                    local it = {
-                        key = string.format("l:%d:%d", id, c.id or i), kind = "lore", ach = id, crit = c,
-                        name = c.n, groupAch = id, order = i, note = c.note,
-                        spots = {},
-                    }
-                    AddItem(zone, secKey, it)
+        -- the other faction's version of a zone's quests is left out (older zones have one per faction)
+        local side = ns.ACH_SIDE and ns.ACH_SIDE[id]
+        if not (side and mySide and side ~= mySide) then
+            loreZone[id] = zone
+            if a then
+                if a.crits and #a.crits > 0 then
+                    for i, c in ipairs(a.crits) do
+                        local it = {
+                            key = string.format("l:%d:%d", id, c.id or i), kind = "lore", ach = id, crit = c,
+                            name = c.n, groupAch = id, order = i, note = c.note,
+                            spots = {},
+                        }
+                        AddItem(zone, secKey, it)
+                    end
+                else
+                    AddItem(zone, secKey, { key = "a:lore:" .. id, kind = "ach", id = id, name = a.name, groupAch = id, spots = {} })
                 end
+                if a.note then zone.loreNotes = zone.loreNotes or {}; zone.loreNotes[id] = a.note end
             else
-                AddItem(zone, secKey, { key = "a:lore:" .. id, kind = "ach", id = id, name = a.name, groupAch = id, spots = {} })
+                -- no questline data for it (another expansion's storyline): the plain achievement with its criteria
+                AddItem(zone, secKey, { key = "a:lore:" .. id, kind = "ach", id = id, groupAch = id, spots = {} })
             end
-            if a.note then zone.loreNotes = zone.loreNotes or {}; zone.loreNotes[id] = a.note end
-        else
-            -- no questline data for it (another expansion's storyline): the plain achievement with its criteria
-            AddItem(zone, secKey, { key = "a:lore:" .. id, kind = "ach", id = id, groupAch = id, spots = {} })
         end
     end
 end
@@ -780,6 +786,19 @@ local function BuildExtras(midnight)
         AddItem(midnight, "extras", { key = "s:" .. set.setID, kind = "set", setID = set.setID, name = set.title,
                                       group = set.heading, extra = true, spots = {} })
     end
+    -- the older expansions' sets on their overview, by the expansion the game gives each set, headed by its label
+    local EXP_OF = { [0] = "classic", "tbc", "wotlk", "cata", "mop", "wod", "legion", "bfa", "sl", "df" }
+    local ok, all = pcall(C_TransmogSets and C_TransmogSets.GetAllSets)
+    for _, set in ipairs(ok and type(all) == "table" and all or {}) do
+        local ov = set.expansionID and EXP_OF[set.expansionID] and ns.overviews[EXP_OF[set.expansionID]]
+        local label = set.label or ""
+        if ov and set.validForCharacter ~= false and not label:find("Trading Post") and not (set.description or ""):find("Trading Post") then
+            local title = set.name or ("Set " .. set.setID)
+            if set.description and set.description ~= "" then title = title .. " (" .. set.description .. ")" end
+            AddItem(ov, "extras", { key = "s:" .. set.setID, kind = "set", setID = set.setID, name = title,
+                                    group = label ~= "" and label or "Appearance sets", extra = true, spots = {} })
+        end
+    end
     -- the PvP sets on the PvP book
     if pvp then
         for _, set in ipairs(ns.MidnightSets and ns.MidnightSets("pvp") or {}) do
@@ -791,10 +810,16 @@ end
 
 -- One reputation item per faction listed for the zone.
 local function BuildRep(zone)
+    local f = UnitFactionGroup and UnitFactionGroup("player")
+    local mySide = f == "Alliance" and 1 or (f == "Horde" and 2 or nil)
     for _, fid in ipairs(zone.factions or {}) do
-        -- the quartermaster's spot (Data/RepText.lua), so the arrow can lead there
-        local spot = ns.RepSpot and ns.RepSpot(fid)
-        AddItem(zone, "rep", { key = "r:" .. fid, kind = "rep", faction = fid, spots = spot and { spot } or {} })
+        -- the other faction's reputations (the older expansions have one per side) are left out
+        local side = ns.REP_SIDE and ns.REP_SIDE[fid]
+        if not (mySide and side and side ~= mySide) then
+            -- the quartermaster's spot (Data/RepText.lua), so the arrow can lead there
+            local spot = ns.RepSpot and ns.RepSpot(fid)
+            AddItem(zone, "rep", { key = "r:" .. fid, kind = "rep", faction = fid, spots = spot and { spot } or {} })
+        end
     end
 end
 
@@ -1166,6 +1191,40 @@ local function BuildLegacyCollect()
                 AddCollect(zone, "sp" .. species, { speciesID = species, sourceText = (SourceInfo(r[6])) })
             end
         end
+        for itemID, key in pairs(ns.LEGACY_TOYS or {}) do
+            local zone = ns.zoneByKey[key]
+            if zone then AddCollect(zone, "i" .. itemID, { itemID = itemID, flag = "t", sourceText = "Toy" }) end
+        end
+        for species, key in pairs(ns.LEGACY_WILD or {}) do
+            local zone = ns.zoneByKey[key]
+            local r = { pcall(C_PetJournal.GetPetInfoBySpeciesID, species) }
+            if zone and r[1] and r[2] then
+                AddCollect(zone, "sp" .. species, { speciesID = species, wild = true, sourceText = (SourceInfo(r[6])) })
+            end
+        end
+    end
+end
+
+-- The General book's collections: every heirloom and weapon illusion the game has, with the game's own source line.
+local function BuildGeneralCollect()
+    local page = ns.zoneByKey.gen_collections
+    if not page then return end
+    if C_Heirloom and C_Heirloom.GetHeirloomItemIDs then
+        local ok, ids = pcall(C_Heirloom.GetHeirloomItemIDs)
+        for _, id in ipairs(ok and type(ids) == "table" and ids or {}) do
+            local oks, src = pcall(C_Heirloom.GetHeirloomSourceText, id)
+            local okn, _, _, _, icon = pcall(C_Heirloom.GetHeirloomInfo, id)
+            AddCollect(page, "h" .. id, { heirloomID = id, icon = okn and icon or nil, sourceText = oks and (SourceInfo(src)) or nil, group = "Heirlooms" })
+        end
+    end
+    if C_TransmogCollection and C_TransmogCollection.GetIllusions then
+        local ok, list = pcall(C_TransmogCollection.GetIllusions)
+        for _, il in ipairs(ok and type(list) == "table" and list or {}) do
+            if il.sourceID and not il.isHideVisual then
+                local oks, _, _, src = pcall(C_TransmogCollection.GetIllusionStrings, il.sourceID)
+                AddCollect(page, "il" .. il.sourceID, { illusionID = il.sourceID, icon = il.icon, sourceText = oks and (SourceInfo(src)) or nil, group = "Illusions" })
+            end
+        end
     end
 end
 
@@ -1217,6 +1276,7 @@ function ns.Build()
     BuildJournalCollect(midnight)
     BuildWildPets()
     BuildLegacyCollect()
+    BuildGeneralCollect()
     BuildExtras(midnight)
     -- collectibles rewarded by an achievement follow that achievement's walkthrough
     local achByName, achById = {}, {}
@@ -1389,7 +1449,7 @@ end
 
 -- Display names for the collectible types ns.ItemCollect and friends return.
 local TYPE_LABEL = { mount = "Mount", pet = "Pet", toy = "Toy", decor = "Decor", appearance = "Appearance",
-                     title = "Title", set = "Set" }
+                     title = "Title", set = "Set", heirloom = "Heirloom", illusion = "Illusion" }
 ns.TYPE_LABEL = TYPE_LABEL
 
 -- Owned or not. A nil type means data is still loading (not counted yet), false means it is not a
@@ -1404,6 +1464,8 @@ local function EvalCollect(it)
         local icon
         t, owned, name, icon = ns.SpeciesCollect(it.speciesID, it.wild)
         it.icon = it.icon or icon
+    elseif it.heirloomID then t, owned, name = ns.HeirloomCollect(it.heirloomID)
+    elseif it.illusionID then t, owned, name = ns.IllusionCollect(it.illusionID)
     elseif it.titleID then t, owned = ns.TitleCollect(it.titleID)
     elseif it.setID then t, owned, name = ns.SetCollect(it.setID)
     elseif it.sourceID then t, owned, name = ns.SourceCollect(it.sourceID) end

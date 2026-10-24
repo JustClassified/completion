@@ -23,7 +23,9 @@ local COLUMNS = {
     ach = "achievementID, categoryID, points, flags, done, book, name, criteria (type:asset:required:criteriaID:done:name, joined by |)",
     mounts = "mountID, spellID, name, sourceType, collected, faction, hiddenForCharacter, bookItem, source",
     pets = "speciesID, name, petType, creatureID, canBattle, obtainable, owned, bookItem, source",
-    toys = "itemID, name, owned, inBook",
+    toys = "itemID, name, owned, inBook, source (the toy's tooltip lines after its name, joined by |)",
+    toyexp = "itemID, expansion (from the toy box's expansion filter)",
+    reptree = "factionID, name, isHeader, expansion header, sub-header (the reputation window's tree)",
     sets = "setID, name, label, expansionID, classMask, collected, piecesOwned, piecesTotal, description, faction",
     heirlooms = "itemID, name, owned, source",
     illusions = "visualID, sourceID, name, owned",
@@ -198,7 +200,7 @@ local function Start(onlyCollect, allQuests)
 
     local steps = {}
     local COLLECT_STEPS = { ["loading the book's items"] = true, ["mounts, sets, heirlooms, illusions, titles"] = true,
-        ["battle pet species"] = true, ["toys"] = true }
+        ["battle pet species"] = true, ["toys"] = true, ["toys by expansion"] = true, ["reputation tree"] = true }
     local function step(name, run)
         if onlyCollect and not COLLECT_STEPS[name] then return end
         steps[#steps + 1] = { name = name, run = run }
@@ -321,8 +323,80 @@ local function Start(onlyCollect, allQuests)
             s.n = s.n + 1
             if s.n > 300000 then return true end
             local id, name = Try(C_ToyBox.GetToyInfo, s.n)
-            if id then out.toys[#out.toys + 1] = Line(s.n, name, (PlayerHasToy and PlayerHasToy(s.n)) and 1 or 0, items[s.n] and 1 or 0) end
+            if id then
+                -- where it comes from: the tooltip's lines after the name (Drop:, Vendor:, Zone:, ...)
+                local src = {}
+                local tip = C_TooltipInfo and C_TooltipInfo.GetToyByItemID and Try(C_TooltipInfo.GetToyByItemID, s.n)
+                for i, l in ipairs(tip and tip.lines or {}) do
+                    if i > 1 and l.leftText and l.leftText ~= "" then src[#src + 1] = Clean(l.leftText) end
+                end
+                out.toys[#out.toys + 1] = Line(s.n, name, (PlayerHasToy and PlayerHasToy(s.n)) and 1 or 0, items[s.n] and 1 or 0, table.concat(src, "|"))
+            end
         end
+    end)
+
+    -- each toy's expansion: the toy box's own expansion filter, one expansion at a time. The filters are put
+    -- back the way they were afterwards.
+    step("toys by expansion", function(s)
+        if not (C_ToyBox and C_ToyBox.SetExpansionTypeFilter and C_ToyBox.GetNumFilteredToys) then return true end
+        if not s.saved then
+            s.saved = { collected = C_ToyBox.GetCollectedShown(), uncollected = C_ToyBox.GetUncollectedShown(),
+                        unusable = C_ToyBox.GetUnusableShown and C_ToyBox.GetUnusableShown(), src = {}, exp = {} }
+            for i = 1, 20 do s.saved.src[i] = Try(C_ToyBox.IsSourceTypeFilterChecked, i) end
+            for i = 1, 20 do s.saved.exp[i] = Try(C_ToyBox.IsExpansionTypeFilterChecked, i) end
+            C_ToyBox.SetCollectedShown(true); C_ToyBox.SetUncollectedShown(true)
+            if C_ToyBox.SetUnusableShown then C_ToyBox.SetUnusableShown(true) end
+            if C_ToyBox.SetAllSourceTypeFilters then C_ToyBox.SetAllSourceTypeFilters(true) end
+            if C_ToyBox.SetFilterString then C_ToyBox.SetFilterString("") end
+            s.e = 0
+        end
+        -- one expansion per frame, read on the frame after the filter changes
+        if s.pending then
+            local label = _G["EXPANSION_NAME" .. (s.pending - 1)] or tostring(s.pending)
+            for i = 1, (C_ToyBox.GetNumFilteredToys() or 0) do
+                local id = Try(C_ToyBox.GetToyFromIndex, i)
+                if id and id > 0 then out.toyexp[#out.toyexp + 1] = Line(id, label) end
+            end
+            s.pending = nil
+        end
+        s.e = s.e + 1
+        if s.e > 15 then
+            for i = 1, 20 do if s.saved.exp[i] ~= nil then Try(C_ToyBox.SetExpansionTypeFilter, i, s.saved.exp[i]) end end
+            for i = 1, 20 do if s.saved.src[i] ~= nil then Try(C_ToyBox.SetSourceTypeFilter, i, s.saved.src[i]) end end
+            C_ToyBox.SetCollectedShown(s.saved.collected); C_ToyBox.SetUncollectedShown(s.saved.uncollected)
+            if C_ToyBox.SetUnusableShown and s.saved.unusable ~= nil then C_ToyBox.SetUnusableShown(s.saved.unusable) end
+            if C_ToyBox.ForceToyRefilter then C_ToyBox.ForceToyRefilter() end
+            return true
+        end
+        if C_ToyBox.SetAllExpansionTypeFilters then C_ToyBox.SetAllExpansionTypeFilters(false) end
+        Try(C_ToyBox.SetExpansionTypeFilter, s.e, true)
+        if C_ToyBox.ForceToyRefilter then C_ToyBox.ForceToyRefilter() end
+        s.pending = s.e
+    end)
+
+    -- the reputation window's tree: each faction under its expansion header. Collapsed headers are opened to
+    -- read them and closed again afterwards.
+    step("reputation tree", function()
+        if not (C_Reputation and C_Reputation.GetNumFactions and C_Reputation.GetFactionDataByIndex) then return true end
+        local collapsed = {}
+        local function walk(fn)
+            for i = 1, (C_Reputation.GetNumFactions() or 0) do
+                local d = Try(C_Reputation.GetFactionDataByIndex, i)
+                if d then fn(i, d) end
+            end
+        end
+        walk(function(_, d) if d.isHeader and d.isCollapsed then collapsed[d.factionID] = true end end)
+        if C_Reputation.ExpandAllFactionHeaders then C_Reputation.ExpandAllFactionHeaders() end
+        local top, sub = "", ""
+        walk(function(_, d)
+            if d.isHeader and not d.isChild then top, sub = d.name or "", "" elseif d.isHeader then sub = d.name or "" end
+            out.reptree[#out.reptree + 1] = Line(d.factionID or 0, d.name or "", d.isHeader and 1 or 0, top, (d.isHeader and not d.isChild) and "" or sub)
+        end)
+        -- close what was closed, deepest first so the indexes stay right
+        local close = {}
+        walk(function(i, d) if d.isHeader and collapsed[d.factionID] then close[#close + 1] = i end end)
+        for k = #close, 1, -1 do Try(C_Reputation.CollapseFactionHeader, close[k]) end
+        return true
     end)
 
     -- currencies and reputations by ID
@@ -516,7 +590,7 @@ local function Start(onlyCollect, allQuests)
     print(PREFIX .. "reading everything the game knows; this takes a few minutes (half an hour with quests). Keep playing normally (or stand still).")
     Run(steps, function(seconds)
         if onlyCollect and ns.db.dump then
-            for _, k in ipairs({ "mounts", "pets", "toys", "sets", "heirlooms", "illusions", "titles", "unmatched" }) do ns.db.dump[k] = out[k] end
+            for _, k in ipairs({ "mounts", "pets", "toys", "toyexp", "reptree", "sets", "heirlooms", "illusions", "titles", "unmatched" }) do ns.db.dump[k] = out[k] end
             ns.db.dump.collectBuilt = out.built
             out = ns.db.dump
         end
