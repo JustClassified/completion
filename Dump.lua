@@ -7,10 +7,24 @@ local _, ns = ...
 
 local running = false
 
+-- Achievements the book shows another way: storylines (lore rows) and treasure or rare section headings.
+local shown
+local function Shown()
+    if shown then return shown end
+    shown = {}
+    for _, it in pairs(ns.items or {}) do
+        local key = it.zone and it.zone.key or "?"
+        if it.kind == "lore" and it.ach then shown[it.ach] = shown[it.ach] or key .. ":story" end
+        if it.groupAch then shown[it.groupAch] = shown[it.groupAch] or key .. ":heading" end
+    end
+    return shown
+end
+
 -- Where the book shows an achievement: "zone key" or "" when it isn't in the book.
 local function InBook(id)
     local it = ns.AchItem and ns.AchItem(id)
     if it then return (it.zone and it.zone.key) or "?" end
+    if Shown()[id] then return Shown()[id] end
     local p = ns.ACH_PLACE and ns.ACH_PLACE[id]
     if p then return "placed:" .. tostring(p[1]) end
     return ""
@@ -37,6 +51,7 @@ local function Start()
     if running then print("|cffe6c35cCompletion|r: the achievement read is already running."); return end
     if not (GetCategoryList and GetCategoryNumAchievements) then print("|cffe6c35cCompletion|r: this client can't list achievements."); return end
     running = true
+    shown = nil
     local cats = GetCategoryList() or {}
     local out = { built = date("%Y-%m-%d %H:%M"), version = (C_AddOns and C_AddOns.GetAddOnMetadata and C_AddOns.GetAddOnMetadata("Completion", "Version")) or "?", cats = {}, ach = {} }
     for _, cat in ipairs(cats) do
