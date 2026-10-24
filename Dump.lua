@@ -1,16 +1,72 @@
--- Completion: a research tool for the authors. /comp dump reads everything the game knows and saves it in the saved
--- variables (CompletionDB.dump) so the book's data can be checked against the game itself:
---   every achievement (category, points, flags, criteria with type and asset) and where the book shows it,
---   every mount, battle pet species, toy and appearance set, collected or not, and which ones the book lists.
--- It reads only; no setting, filter or CVar is changed. Spread over many frames so the game doesn't stall.
--- /comp dump clear removes the saved copy again.
+-- Completion: a research tool for the authors. /comp dump reads everything the game can tell us and saves it in the
+-- saved variables (CompletionDB.dump), so the book's data can be checked against the game itself:
+--   achievements (with criteria, series steps and where the book shows each), mounts, battle pet species, toys,
+--   appearance sets (with pieces collected), heirlooms, weapon illusions, titles, currencies, reputations and renown
+--   rewards, every Midnight and War Within map (child maps, dungeon entrances, flight points, map markers, quest lines),
+--   campaigns and their chapters, the Adventure Guide (every instance and boss), and quests (completed, quest lines,
+--   the book's own, and every quest title in the War Within and Midnight ID range).
+-- Each section is a list of tab-separated lines; dump.columns names the columns of each section.
+-- It reads only: no setting, filter or CVar is changed (the Adventure Guide's selected tier is put back afterwards).
+-- The work is spread over many frames and takes several minutes; chat shows each step. /comp dump clear removes it.
 
 local _, ns = ...
 
 local running = false
+local PREFIX = "|cffe6c35cCompletion|r: "
+local QUEST_RANGE = { 78000, 99999 }   -- The War Within and Midnight quest IDs
 
--- Achievements the book shows another way: storylines (lore rows) and treasure or rare section headings.
+local COLUMNS = {
+    cats = "categoryID, parentID, name",
+    ach = "achievementID, categoryID, points, flags, done, book, name, criteria (type:asset:required:criteriaID:done:name, joined by |)",
+    mounts = "mountID, spellID, name, sourceType, collected, faction, hiddenForCharacter, bookItem, source",
+    pets = "speciesID, name, petType, creatureID, canBattle, obtainable, owned, bookItem, source",
+    toys = "itemID, name, owned, inBook",
+    sets = "setID, name, label, expansionID, classMask, collected, piecesOwned, piecesTotal, description, faction",
+    heirlooms = "itemID, name, owned, source",
+    illusions = "visualID, sourceID, name, owned",
+    titles = "titleID, name, known",
+    currencies = "currencyID, name, quantity, max, discovered",
+    factions = "factionID, name, standing, current, max, isHeader, parentFactionID, isMajorFaction",
+    renown = "factionID, name, renownLevel, maxLevel, unlocked, rewards per level (level=name;name, joined by |)",
+    maps = "mapID, name, mapType, parentMapID, expansion",
+    entrances = "mapID, journalInstanceID, name, x, y",
+    taxi = "mapID, nodeID, name, x, y, state",
+    pois = "mapID, areaPoiID, name, x, y, description",
+    questlines = "mapID, questLineID, name, quests (id, joined by ,)",
+    campaigns = "campaignID, name, chapters (chapterID=name, joined by |)",
+    journal = "tier, journalInstanceID, name, isRaid, mapID, bosses (encounterID=name, joined by |)",
+    quests = "questID, title, completed, source",
+}
+
+-- Text without the game's colour and texture codes, tabs or line breaks.
+local function Clean(t)
+    t = tostring(t or "")
+    t = t:gsub("|c%x%x%x%x%x%x%x%x", ""):gsub("|r", ""):gsub("|T.-|t", ""):gsub("|A.-|a", ""):gsub("|n", " ")
+    t = t:gsub("[|\t\r\n]", " ")
+    return t
+end
+
+-- A tab-separated line from the given values.
+local function Line(...)
+    local n = select("#", ...)
+    local parts = {}
+    for i = 1, n do parts[i] = Clean((select(i, ...))) end
+    return table.concat(parts, "\t")
+end
+
+-- Calls f safely; returns its results or nothing.
+local function Try(f, ...)
+    if not f then return end
+    local r = { pcall(f, ...) }
+    if r[1] then return unpack(r, 2) end
+end
+
+------------------------------------------------------------------------
+-- what the book shows
+------------------------------------------------------------------------
+
 local shown
+-- Achievements the book shows as storylines (lore rows) or treasure and rare section headings.
 local function Shown()
     if shown then return shown end
     shown = {}
@@ -22,7 +78,7 @@ local function Shown()
     return shown
 end
 
--- Where the book shows an achievement: "zone key" or "" when it isn't in the book.
+-- Where the book shows an achievement: a zone key, or "" when it isn't in the book.
 local function InBook(id)
     local it = ns.AchItem and ns.AchItem(id)
     if it then return (it.zone and it.zone.key) or "?" end
@@ -32,87 +88,7 @@ local function InBook(id)
     return ""
 end
 
--- One achievement as a line: id, category, points, flags, done, book, name, then its criteria
--- (type:asset:required:name) separated by "|".
-local function AchLine(id, cat)
-    local ok, _, name, points, completed, _, _, _, _, flags = pcall(GetAchievementInfo, id)
-    if not ok or not name then return end
-    local crit = {}
-    local okN, n = pcall(GetAchievementNumCriteria, id)
-    for i = 1, (okN and n or 0) do
-        local okC, cname, ctype, _, _, req, _, _, asset, _, cid = pcall(GetAchievementCriteriaInfo, id, i)
-        if okC then
-            crit[#crit + 1] = string.format("%s:%s:%s:%s:%s", tostring(ctype), tostring(asset), tostring(req), tostring(cid), (cname or ""):gsub("[|\t]", " "))
-        end
-    end
-    return table.concat({ id, cat, points or 0, flags or 0, completed and 1 or 0, InBook(id), (name:gsub("[|\t]", " ")), table.concat(crit, "|") }, "\t")
-end
-
--- Starts the read: categories first, then achievements a few categories per frame.
-local function Start()
-    if running then print("|cffe6c35cCompletion|r: the achievement read is already running."); return end
-    if not (GetCategoryList and GetCategoryNumAchievements) then print("|cffe6c35cCompletion|r: this client can't list achievements."); return end
-    running = true
-    shown = nil
-    local cats = GetCategoryList() or {}
-    local out = { built = date("%Y-%m-%d %H:%M"), version = (C_AddOns and C_AddOns.GetAddOnMetadata and C_AddOns.GetAddOnMetadata("Completion", "Version")) or "?", cats = {}, ach = {} }
-    for _, cat in ipairs(cats) do
-        local ok, title, parent = pcall(GetCategoryInfo, cat)
-        out.cats[#out.cats + 1] = string.format("%d\t%s\t%s", cat, tostring(ok and parent or ""), ok and title or "?")
-    end
-    local seen, i = {}, 0
-    local f = CreateFrame("Frame")
-    print("|cffe6c35cCompletion|r: reading every achievement (" .. #cats .. " categories)...")
-    f:SetScript("OnUpdate", function(self)
-        for _ = 1, 4 do
-            i = i + 1
-            local cat = cats[i]
-            if not cat then
-                self:SetScript("OnUpdate", nil)
-                print(string.format("|cffe6c35cCompletion|r: read %d achievements; now the collections...", #out.ach))
-                ns.CollectionDump(out, function()
-                    ns.db.dump = out
-                    running = false
-                    print(string.format("|cffe6c35cCompletion|r: done: %d achievements, %d mounts, %d pets, %d toys, %d sets. Type /reload so the game saves them, then tell Claude.",
-                        #out.ach, #out.mounts, #out.pets, #out.toys, #out.sets))
-                end)
-                return
-            end
-            local okN, n = pcall(GetCategoryNumAchievements, cat, true)
-            for k = 1, (okN and n or 0) do
-                local okA, id = pcall(GetAchievementInfo, cat, k)
-                if okA and id then
-                    -- a series shows only one step: walk the chain both ways for the rest
-                    local chain = { id }
-                    local p = GetPreviousAchievement and GetPreviousAchievement(id)
-                    while p and not seen[p] and #chain < 30 do table.insert(chain, 1, p); p = GetPreviousAchievement(p) end
-                    local n2 = GetNextAchievement and GetNextAchievement(id)
-                    while n2 and not seen[n2] and #chain < 60 do chain[#chain + 1] = n2; n2 = GetNextAchievement(n2) end
-                    for _, cid in ipairs(chain) do
-                        if not seen[cid] then
-                            seen[cid] = true
-                            local line = AchLine(cid, cat)
-                            if line then out.ach[#out.ach + 1] = line end
-                        end
-                    end
-                end
-            end
-        end
-    end)
-end
-
-------------------------------------------------------------------------
--- collections
-------------------------------------------------------------------------
-
--- Text without the game's colour and texture codes, tabs or bars.
-local function Clean(t)
-    t = tostring(t or "")
-    t = t:gsub("|c%x%x%x%x%x%x%x%x", ""):gsub("|r", ""):gsub("|T.-|t", ""):gsub("|n", " "):gsub("[|\t\r\n]", " ")
-    return t
-end
-
--- The mount IDs, pet species and toy items the book lists (its item lists, collectibles and holiday items).
+-- The items, mount IDs and pet species the book lists.
 local function BookCollect()
     local items = {}
     local function add(list) for _, id in ipairs(list or {}) do items[id] = true end end
@@ -122,10 +98,8 @@ local function BookCollect()
     for _, it in pairs(ns.items or {}) do if it.itemID then items[it.itemID] = true end end
     local mounts, species = {}, {}
     for id in pairs(items) do
-        if C_MountJournal and C_MountJournal.GetMountFromItem then
-            local ok, m = pcall(C_MountJournal.GetMountFromItem, id)
-            if ok and m then mounts[m] = id end
-        end
+        local m = C_MountJournal and Try(C_MountJournal.GetMountFromItem, id)
+        if m then mounts[m] = id end
         if C_PetJournal and C_PetJournal.GetPetInfoByItemID then
             local r = { pcall(C_PetJournal.GetPetInfoByItemID, id) }
             if r[1] and r[14] then species[r[14]] = id end
@@ -134,58 +108,362 @@ local function BookCollect()
     return items, mounts, species
 end
 
--- Reads mounts and sets at once, then pet species and toy items in slices; calls done() at the end.
-function ns.CollectionDump(out, done)
-    out.mounts, out.pets, out.toys, out.sets = {}, {}, {}, {}
-    local items, bookMounts, bookSpecies = BookCollect()
-    -- mounts: the journal's full list, whatever the filters
-    if C_MountJournal and C_MountJournal.GetMountIDs then
-        for _, mid in ipairs(C_MountJournal.GetMountIDs() or {}) do
-            local ok, name, spell, _, _, _, sourceType, _, factionSpecific, faction, hide, collected = pcall(C_MountJournal.GetMountInfoByID, mid)
-            if ok and name then
-                local okX, _, _, source = pcall(C_MountJournal.GetMountInfoExtraByID, mid)
-                out.mounts[#out.mounts + 1] = table.concat({ mid, spell or 0, Clean(name), sourceType or 0, collected and 1 or 0,
-                    factionSpecific and tostring(faction) or "", hide and 1 or 0, bookMounts[mid] or "", okX and Clean(source) or "" }, "\t")
-            end
-        end
+-- Every quest ID the book's data knows.
+local function BookQuests()
+    local q = {}
+    for id in pairs(ns.QUEST_STARTS or {}) do q[id] = true end
+    for id in pairs(ns.QUEST_NOTES or {}) do q[id] = true end
+    for _, it in pairs(ns.items or {}) do
+        if type(it.q) == "number" then q[it.q] = true end
+        if type(it.quest) == "number" then q[it.quest] = true end
     end
-    -- appearance sets: every set the game has, with its expansion
-    if C_TransmogSets and C_TransmogSets.GetAllSets then
-        for _, set in ipairs(C_TransmogSets.GetAllSets() or {}) do
-            out.sets[#out.sets + 1] = table.concat({ set.setID, Clean(set.name), Clean(set.label), set.expansionID or "", set.classMask or 0,
-                set.collected and 1 or 0, Clean(set.description), set.requiredFaction or "" }, "\t")
-        end
-    end
-    -- pets by species ID, toys by item ID, a slice each frame
-    local species, item = 0, 0
-    local MAX_SPECIES, MAX_ITEM = 6000, 300000
+    return q
+end
+
+------------------------------------------------------------------------
+-- the job runner: each step is called every frame until it returns true
+------------------------------------------------------------------------
+
+local function Run(steps, done)
+    local i, t0 = 1, GetTime()
     local f = CreateFrame("Frame")
     f:SetScript("OnUpdate", function(self)
-        if species < MAX_SPECIES and C_PetJournal and C_PetJournal.GetPetInfoBySpeciesID then
-            for _ = 1, 200 do
-                species = species + 1
-                local r = { pcall(C_PetJournal.GetPetInfoBySpeciesID, species) }
-                if r[1] and r[2] then
-                    local okN, owned = pcall(C_PetJournal.GetNumCollectedInfo, species)
-                    out.pets[#out.pets + 1] = table.concat({ species, Clean(r[2]), r[4] or 0, r[5] or 0, r[9] and 1 or 0, r[12] and 1 or 0,
-                        okN and owned or 0, bookSpecies[species] or "", Clean(r[6]) }, "\t")
+        local step = steps[i]
+        if not step then self:SetScript("OnUpdate", nil); done(GetTime() - t0); return end
+        if not step.started then
+            step.started = true
+            print(PREFIX .. string.format("step %d/%d: %s...", i, #steps, step.name))
+        end
+        local ok, finished = pcall(step.run, step)
+        if not ok then print(PREFIX .. "  " .. step.name .. " stopped: " .. tostring(finished)); finished = true end
+        if finished then i = i + 1 end
+    end)
+end
+
+------------------------------------------------------------------------
+-- the steps
+------------------------------------------------------------------------
+
+local function Start()
+    if running then print(PREFIX .. "the read is already running."); return end
+    running = true
+    shown = nil
+    local out = {
+        built = date("%Y-%m-%d %H:%M"),
+        version = (C_AddOns and C_AddOns.GetAddOnMetadata and C_AddOns.GetAddOnMetadata("Completion", "Version")) or "?",
+        build = select(2, GetBuildInfo()) or "?",
+        character = string.format("%s-%s %s %s %s level %s", UnitName("player") or "?", GetRealmName() or "?",
+            select(2, UnitRace("player")) or "?", select(2, UnitClass("player")) or "?", UnitFactionGroup("player") or "?", UnitLevel("player") or "?"),
+        columns = COLUMNS,
+    }
+    for k in pairs(COLUMNS) do out[k] = {} end
+    local items, bookMounts, bookSpecies = BookCollect()
+    local mapIDs, mapSet = {}, {}
+    local questSeen = {}
+    local function addQuest(id, source) if id and not questSeen[id] then questSeen[id] = source end end
+
+    local steps = {}
+    local function step(name, run) steps[#steps + 1] = { name = name, run = run } end
+
+    -- achievements, a few categories per frame, each series walked both ways
+    step("achievements", function(s)
+        if not s.cats then
+            s.cats, s.i, s.seen = GetCategoryList() or {}, 0, {}
+            for _, cat in ipairs(s.cats) do
+                local title, parent = Try(GetCategoryInfo, cat)
+                out.cats[#out.cats + 1] = Line(cat, parent or "", title or "?")
+            end
+        end
+        for _ = 1, 3 do
+            s.i = s.i + 1
+            local cat = s.cats[s.i]
+            if not cat then return true end
+            local n = Try(GetCategoryNumAchievements, cat, true) or 0
+            for k = 1, n do
+                local id = Try(GetAchievementInfo, cat, k)
+                if id then
+                    local chain = { id }
+                    local p = GetPreviousAchievement and GetPreviousAchievement(id)
+                    while p and not s.seen[p] and #chain < 30 do table.insert(chain, 1, p); p = GetPreviousAchievement(p) end
+                    local nx = GetNextAchievement and GetNextAchievement(id)
+                    while nx and not s.seen[nx] and #chain < 60 do chain[#chain + 1] = nx; nx = GetNextAchievement(nx) end
+                    for _, cid in ipairs(chain) do
+                        if not s.seen[cid] then
+                            s.seen[cid] = true
+                            local _, name, points, completed, _, _, _, _, flags = Try(GetAchievementInfo, cid)
+                            if name then
+                                local crit = {}
+                                for c = 1, (Try(GetAchievementNumCriteria, cid) or 0) do
+                                    local cname, ctype, cdone, _, req, _, _, asset, _, critID = Try(GetAchievementCriteriaInfo, cid, c)
+                                    crit[#crit + 1] = table.concat({ tostring(ctype), tostring(asset), tostring(req), tostring(critID), cdone and "1" or "0", Clean(cname) }, ":")
+                                end
+                                out.ach[#out.ach + 1] = Line(cid, cat, points or 0, flags or 0, completed and 1 or 0, InBook(cid), name) .. "\t" .. table.concat(crit, "|")
+                            end
+                        end
+                    end
                 end
             end
-            return
         end
-        if item < MAX_ITEM and C_ToyBox and C_ToyBox.GetToyInfo then
-            for _ = 1, 3000 do
-                item = item + 1
-                local ok, id, name = pcall(C_ToyBox.GetToyInfo, item)
-                if ok and id then
-                    local have = PlayerHasToy and PlayerHasToy(item)
-                    out.toys[#out.toys + 1] = table.concat({ item, Clean(name), have and 1 or 0, items[item] and 1 or 0 }, "\t")
+    end)
+
+    -- collections that come as one list
+    step("mounts, sets, heirlooms, illusions, titles", function()
+        for _, mid in ipairs(C_MountJournal and C_MountJournal.GetMountIDs() or {}) do
+            local name, spell, _, _, _, sourceType, _, factionSpecific, faction, hide, collected = Try(C_MountJournal.GetMountInfoByID, mid)
+            if name then
+                local _, _, source = Try(C_MountJournal.GetMountInfoExtraByID, mid)
+                out.mounts[#out.mounts + 1] = Line(mid, spell or 0, name, sourceType or 0, collected and 1 or 0,
+                    factionSpecific and tostring(faction) or "", hide and 1 or 0, bookMounts[mid] or "", source)
+            end
+        end
+        for _, set in ipairs(C_TransmogSets and Try(C_TransmogSets.GetAllSets) or {}) do
+            local have, total = 0, 0
+            for _, a in ipairs(Try(C_TransmogSets.GetSetPrimaryAppearances, set.setID) or {}) do
+                total = total + 1
+                if a.collected then have = have + 1 end
+            end
+            out.sets[#out.sets + 1] = Line(set.setID, set.name, set.label, set.expansionID or "", set.classMask or 0,
+                set.collected and 1 or 0, have, total, set.description, set.requiredFaction or "")
+        end
+        for _, id in ipairs(C_Heirloom and Try(C_Heirloom.GetHeirloomItemIDs) or {}) do
+            local name, _, _, _, _, source = Try(C_Heirloom.GetHeirloomInfo, id)
+            out.heirlooms[#out.heirlooms + 1] = Line(id, name, (Try(C_Heirloom.PlayerHasHeirloom, id)) and 1 or 0, source)
+        end
+        for _, ill in ipairs(C_TransmogCollection and Try(C_TransmogCollection.GetIllusions) or {}) do
+            local name = Try(C_TransmogCollection.GetIllusionStrings, ill.sourceID)
+            out.illusions[#out.illusions + 1] = Line(ill.visualID, ill.sourceID, name or "", ill.isCollected and 1 or 0)
+        end
+        for t = 1, (GetNumTitles and GetNumTitles() or 0) do
+            local name = Try(GetTitleName, t)
+            if name then out.titles[#out.titles + 1] = Line(t, name, (Try(IsTitleKnown, t)) and 1 or 0) end
+        end
+        return true
+    end)
+
+    -- pets by species ID
+    step("battle pet species", function(s)
+        s.n = s.n or 0
+        for _ = 1, 150 do
+            s.n = s.n + 1
+            if s.n > 6000 then return true end
+            local r = { pcall(C_PetJournal.GetPetInfoBySpeciesID, s.n) }
+            if r[1] and r[2] then
+                local owned = Try(C_PetJournal.GetNumCollectedInfo, s.n) or 0
+                out.pets[#out.pets + 1] = Line(s.n, r[2], r[4] or 0, r[5] or 0, r[9] and 1 or 0, r[12] and 1 or 0, owned, bookSpecies[s.n] or "", r[6])
+            end
+        end
+    end)
+
+    -- toys by item ID
+    step("toys", function(s)
+        s.n = s.n or 0
+        for _ = 1, 2500 do
+            s.n = s.n + 1
+            if s.n > 300000 then return true end
+            local id, name = Try(C_ToyBox.GetToyInfo, s.n)
+            if id then out.toys[#out.toys + 1] = Line(s.n, name, (PlayerHasToy and PlayerHasToy(s.n)) and 1 or 0, items[s.n] and 1 or 0) end
+        end
+    end)
+
+    -- currencies and reputations by ID
+    step("currencies and reputations", function(s)
+        s.n = s.n or 0
+        for _ = 1, 200 do
+            s.n = s.n + 1
+            if s.n > 4000 then return true end
+            local c = C_CurrencyInfo and Try(C_CurrencyInfo.GetCurrencyInfo, s.n)
+            if c and c.name and c.name ~= "" then
+                out.currencies[#out.currencies + 1] = Line(s.n, c.name, c.quantity or 0, c.maxQuantity or 0, c.discovered and 1 or 0)
+            end
+            local fd = C_Reputation and Try(C_Reputation.GetFactionDataByID, s.n)
+            if fd and fd.name and fd.name ~= "" then
+                local major = C_Reputation.IsMajorFaction and Try(C_Reputation.IsMajorFaction, s.n)
+                out.factions[#out.factions + 1] = Line(s.n, fd.name, fd.reaction or "", (fd.currentStanding or 0) - (fd.currentReactionThreshold or 0),
+                    (fd.nextReactionThreshold or 0) - (fd.currentReactionThreshold or 0), fd.isHeader and 1 or 0, "", major and 1 or 0)
+            end
+        end
+    end)
+
+    -- renown factions and their rewards, for every expansion that has them
+    step("renown", function()
+        local seen = {}
+        for exp = 8, 12 do
+            for _, fid in ipairs(C_MajorFactions and Try(C_MajorFactions.GetMajorFactionIDs, exp) or {}) do
+                if not seen[fid] then
+                    seen[fid] = true
+                    local d = Try(C_MajorFactions.GetMajorFactionData, fid) or {}
+                    local levels = Try(C_MajorFactions.GetRenownLevels, fid) or {}
+                    local per = {}
+                    for _, lv in ipairs(levels) do
+                        local names = {}
+                        for _, rw in ipairs(Try(C_MajorFactions.GetRenownRewardsForLevel, fid, lv.level) or {}) do
+                            names[#names + 1] = Clean(rw.name or rw.description or (rw.itemID and ("item " .. rw.itemID)) or "?")
+                        end
+                        if #names > 0 then per[#per + 1] = lv.level .. "=" .. table.concat(names, ";") end
+                    end
+                    out.renown[#out.renown + 1] = Line(fid, d.name, d.renownLevel or 0, #levels, d.isUnlocked and 1 or 0) .. "\t" .. table.concat(per, "|")
                 end
             end
-            return
         end
-        self:SetScript("OnUpdate", nil)
-        done()
+        return true
+    end)
+
+    -- maps: the book's zones, their continents and every child map
+    step("maps", function()
+        local function addMap(id, exp)
+            if not id or mapSet[id] then return end
+            local info = Try(C_Map.GetMapInfo, id)
+            if not info then return end
+            mapSet[id] = true
+            mapIDs[#mapIDs + 1] = id
+            out.maps[#out.maps + 1] = Line(id, info.name, info.mapType or "", info.parentMapID or "", exp)
+            for _, ch in ipairs(Try(C_Map.GetMapChildrenInfo, id, nil, true) or {}) do addMap(ch.mapID, exp) end
+        end
+        for _, z in ipairs(ns.ZONES or {}) do
+            for _, m in ipairs(z.maps or { z.map }) do
+                local info = Try(C_Map.GetMapInfo, m)
+                if info and info.parentMapID then addMap(info.parentMapID, z.exp or "midnight") end
+                addMap(m, z.exp or "midnight")
+            end
+        end
+        return true
+    end)
+
+    -- per map: dungeon entrances, flight points, map markers and quest lines (a few maps a frame)
+    step("map details", function(s)
+        s.i = s.i or 0
+        for _ = 1, 4 do
+            s.i = s.i + 1
+            local m = mapIDs[s.i]
+            if not m then return true end
+            local function xy(p) if p then return string.format("%.2f", p.x * 100), string.format("%.2f", p.y * 100) end return "", "" end
+            for _, e in ipairs(C_EncounterJournal and Try(C_EncounterJournal.GetDungeonEntrancesForMap, m) or {}) do
+                local x, y = xy(e.position)
+                out.entrances[#out.entrances + 1] = Line(m, e.journalInstanceID, e.name, x, y)
+            end
+            for _, n in ipairs(C_TaxiMap and Try(C_TaxiMap.GetTaxiNodesForMap, m) or {}) do
+                local x, y = xy(n.position)
+                out.taxi[#out.taxi + 1] = Line(m, n.nodeID, n.name, x, y, n.state or "")
+            end
+            for _, poi in ipairs(C_AreaPoiInfo and Try(C_AreaPoiInfo.GetAreaPOIForMap, m) or {}) do
+                local info = Try(C_AreaPoiInfo.GetAreaPOIInfo, m, poi)
+                if info then
+                    local x, y = xy(info.position)
+                    out.pois[#out.pois + 1] = Line(m, poi, info.name, x, y, info.description)
+                end
+            end
+            if C_QuestLine then Try(C_QuestLine.RequestQuestLinesForMap, m) end
+        end
+    end)
+
+    -- quest lines: asked for above; read them after a short wait so the server has answered
+    step("quest lines", function(s)
+        s.wait = s.wait or (GetTime() + 10)
+        if GetTime() < s.wait then return false end
+        for _, m in ipairs(mapIDs) do
+            for _, ql in ipairs(C_QuestLine and Try(C_QuestLine.GetAvailableQuestLines, m) or {}) do
+                local qs = Try(C_QuestLine.GetQuestLineQuests, ql.questLineID) or {}
+                for _, q in ipairs(qs) do addQuest(q, "questline " .. ql.questLineID) end
+                out.questlines[#out.questlines + 1] = Line(m, ql.questLineID, ql.questLineName, table.concat(qs, ","))
+            end
+        end
+        return true
+    end)
+
+    -- campaigns and their chapters
+    step("campaigns", function()
+        for _, cid in ipairs(C_CampaignInfo and Try(C_CampaignInfo.GetAvailableCampaigns) or {}) do
+            local info = Try(C_CampaignInfo.GetCampaignInfo, cid) or {}
+            local chapters = {}
+            for _, ch in ipairs(Try(C_CampaignInfo.GetChapterIDs, cid) or {}) do
+                local ci = Try(C_CampaignInfo.GetCampaignChapterInfo, ch)
+                chapters[#chapters + 1] = ch .. "=" .. Clean(ci and ci.name or "?")
+            end
+            out.campaigns[#out.campaigns + 1] = Line(cid, info.name) .. "\t" .. table.concat(chapters, "|")
+        end
+        return true
+    end)
+
+    -- the Adventure Guide: every tier's dungeons and raids with their bosses (one tier a frame)
+    step("adventure guide", function(s)
+        if not (EJ_GetNumTiers and EJ_SelectTier) then return true end
+        if not s.tiers then s.tiers, s.t, s.saved = EJ_GetNumTiers(), 0, EJ_GetCurrentTier and EJ_GetCurrentTier() end
+        s.t = s.t + 1
+        if s.t > s.tiers then
+            if s.saved then pcall(EJ_SelectTier, s.saved) end
+            return true
+        end
+        pcall(EJ_SelectTier, s.t)
+        local tierName = Try(EJ_GetTierInfo, s.t) or s.t
+        for _, raid in ipairs({ false, true }) do
+            local j = 1
+            while j < 80 do
+                local iid, name, _, _, _, _, _, mapID = Try(EJ_GetInstanceByIndex, j, raid)
+                if not iid then break end
+                local bosses, k = {}, 1
+                while k < 40 do
+                    local bname, _, eid = Try(EJ_GetEncounterInfoByIndex, k, iid)
+                    if not bname then break end
+                    bosses[#bosses + 1] = tostring(eid) .. "=" .. Clean(bname)
+                    k = k + 1
+                end
+                out.journal[#out.journal + 1] = Line(tierName, iid, name, raid and 1 or 0, mapID or "") .. "\t" .. table.concat(bosses, "|")
+                j = j + 1
+            end
+        end
+    end)
+
+    -- quests: completed ones, the book's own, the quest lines' and every ID in the recent range. Titles load from the
+    -- server, so ask first, wait a minute, then read.
+    local questList
+    step("quests: asking the server", function(s)
+        if not questList then
+            for _, q in ipairs(C_QuestLog.GetAllCompletedQuestIDs and Try(C_QuestLog.GetAllCompletedQuestIDs) or {}) do
+                if q >= QUEST_RANGE[1] then addQuest(q, "completed") end
+            end
+            for q in pairs(BookQuests()) do addQuest(q, "book") end
+            for q = QUEST_RANGE[1], QUEST_RANGE[2] do addQuest(q, "range") end
+            questList, s.i = {}, 0
+            for q in pairs(questSeen) do questList[#questList + 1] = q end
+            table.sort(questList)
+            print(PREFIX .. string.format("  %d quest IDs to look up; this is the slow part.", #questList))
+        end
+        for _ = 1, 40 do
+            s.i = s.i + 1
+            local q = questList[s.i]
+            if not q then
+                s.waitUntil = s.waitUntil or (GetTime() + 60)
+                return GetTime() > s.waitUntil
+            end
+            if not Try(C_QuestLog.GetTitleForQuestID, q) then Try(C_QuestLog.RequestLoadQuestByID, q) end
+            if s.i % 5000 == 0 then print(PREFIX .. string.format("  asked for %d of %d", s.i, #questList)) end
+        end
+    end)
+    step("quests: reading titles", function(s)
+        s.i = s.i or 0
+        for _ = 1, 400 do
+            s.i = s.i + 1
+            local q = questList and questList[s.i]
+            if not q then return true end
+            local title = Try(C_QuestLog.GetTitleForQuestID, q)
+            local done = Try(C_QuestLog.IsQuestFlaggedCompleted, q)
+            -- range IDs without a title aren't real quests; the others are kept even without one
+            if title or questSeen[q] ~= "range" then
+                out.quests[#out.quests + 1] = Line(q, title or "", done and 1 or 0, questSeen[q])
+            end
+        end
+    end)
+
+    print(PREFIX .. "reading everything the game knows; this takes several minutes. Keep playing normally.")
+    Run(steps, function(seconds)
+        ns.db.dump = out
+        running = false
+        local parts = {}
+        for _, k in ipairs({ "ach", "mounts", "pets", "toys", "sets", "quests", "questlines", "maps", "journal" }) do
+            parts[#parts + 1] = #out[k] .. " " .. k
+        end
+        print(PREFIX .. string.format("done in %d minutes: %s. Type /reload so the game saves it, then tell Claude.",
+            math.floor(seconds / 60 + 0.5), table.concat(parts, ", ")))
     end)
 end
 
@@ -193,7 +471,7 @@ end
 function ns.AchievementDump(arg)
     if arg == "clear" then
         ns.db.dump = nil
-        print("|cffe6c35cCompletion|r: the saved achievement read is removed (after /reload).")
+        print(PREFIX .. "the saved read is removed (after /reload).")
         return
     end
     Start()
