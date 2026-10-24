@@ -5,7 +5,7 @@
 ## X-Website: romsics.com
 ## X-Contact: Discord: ozonysx
 ## X-Discord: https://discord.gg/V2YsKAcux5
-## Version: 1.5.7
+## Version: 1.6.0
 ## SavedVariables: CompletionDB
 ## SavedVariablesPerCharacter: CompletionCharDB
 ## IconTexture: Interface\Icons\inv_misc_book_16
@@ -15,6 +15,7 @@
 
 Data\Zones.lua
 Data\TWW\Zones.lua
+Data\Legacy\Zones.lua
 Data\Points.lua
 Data\TWW\Points.lua
 Data\Overrides.lua
@@ -30,12 +31,15 @@ Data\Research.lua
 Data\Achievements.lua
 Data\TWW\Achievements.lua
 Data\ExtraAchievements.lua
+Data\Legacy\Achievements.lua
 Data\AchPlacement.lua
+Data\General.lua
 Data\Difficulty.lua
 Data\Collections.lua
 Data\TWW\Collections.lua
 Data\CollectIDs.lua
 Data\TWW\WildPets.lua
+Data\Legacy\Collect.lua
 Data\Vendors.lua
 Data\VendorsExtra.lua
 Data\Sources.lua

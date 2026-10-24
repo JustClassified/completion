@@ -138,14 +138,28 @@ end
 
 local achCache, critCache = {}, {}
 local cacheStamp = -1
+-- An earned achievement never changes again: it and its criteria are kept for the session, so thousands of
+-- older ones aren't read again on every refresh.
+local doneAch, doneCrit = {}, {}
 
--- Empties both caches once ns.stamp has moved on.
+-- Empties both caches once ns.stamp has moved on (keeping the earned achievements).
+local achFn, critFn
 local function checkStamp()
     if cacheStamp ~= ns.stamp then
         cacheStamp = ns.stamp
+        -- someone replaced the game's functions (a hook, a test): the kept answers may be stale
+        if achFn ~= GetAchievementInfo or critFn ~= GetAchievementCriteriaInfo then
+            achFn, critFn = GetAchievementInfo, GetAchievementCriteriaInfo
+            doneAch, doneCrit = {}, {}
+        end
         achCache, critCache = {}, {}
+        for id, c in pairs(doneAch) do achCache[id] = c end
+        for id, c in pairs(doneCrit) do critCache[id] = c end
     end
 end
+
+-- Forgets the earned achievements kept for the session (tests that change the game's answers).
+function ns.ClearAchCache() doneAch, doneCrit = {}, {}; cacheStamp = -1 end
 
 -- Returns { name, done, desc, icon, points } or nil when the achievement doesn't exist.
 function ns.Ach(id)
@@ -156,6 +170,7 @@ function ns.Ach(id)
         local ok, aid, name, points, completed, _, _, _, desc, _, icon = pcall(GetAchievementInfo, id)
         if ok and aid then
             c = { name = name, done = completed and true or false, desc = desc, icon = icon, points = points }
+            if completed then doneAch[id] = c end
         else
             c = false
         end
@@ -191,6 +206,7 @@ function ns.Crits(id)
             end
         end
         critCache[id] = c
+        if doneAch[id] then doneCrit[id] = c end
     end
     return c
 end
@@ -542,9 +558,10 @@ function ns.TitleCollect(titleID)
     return "title", ok and (known and true or false) or nil
 end
 
--- A wild battle pet by species (no item teaches it). Hidden while the Wild battle pets option is off.
-function ns.SpeciesCollect(speciesID)
-    if ns.db and ns.db.settings.wildpets == false then return false end
+-- A battle pet by species (no item in the book teaches it). A wild one is hidden while the Wild battle pets option
+-- is off.
+function ns.SpeciesCollect(speciesID, wild)
+    if wild and ns.db and ns.db.settings.wildpets == false then return false end
     if not (C_PetJournal and C_PetJournal.GetNumCollectedInfo) then return "pet", nil end
     local okn, name, icon = pcall(C_PetJournal.GetPetInfoBySpeciesID, speciesID)
     local ok, have = pcall(C_PetJournal.GetNumCollectedInfo, speciesID)

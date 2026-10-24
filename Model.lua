@@ -208,7 +208,7 @@ end
 -- build: dungeons, raids, delves (live from the map)
 ------------------------------------------------------------------------
 
-local keywordTargets = {}   -- { key = normalized text, zone, container (or nil) }
+local keywordTargets = {}   -- bucket ("current" or an older expansion's key) -> { key = normalized text, zone, container (or nil) }
 local instanceZone = {}     -- normalized dungeon/raid/delve name -> zone
 local instanceItem = {}     -- normalized dungeon/raid/delve name -> its container item
 local placedInstance = {}   -- "i:name" / "d:name" -> true once filed in a zone (each only once)
@@ -218,7 +218,13 @@ local placedInstance = {}   -- "i:name" / "d:name" -> true once filed in a zone 
 local function AddKeyword(text, zone, container)
     local k = norm(text)
     if container and container.name and norm(container.name) == k then instanceZone[k] = zone; instanceItem[k] = container end
-    if #k >= 5 then keywordTargets[#keywordTargets + 1] = { key = k, zone = zone, container = container } end
+    if #k >= 5 then
+        -- filed by expansion: an older expansion's achievement only looks at its own pages' names
+        local bucket = zone.legacy and zone.exp or "current"
+        keywordTargets[bucket] = keywordTargets[bucket] or {}
+        local list = keywordTargets[bucket]
+        list[#list + 1] = { key = k, zone = zone, container = container }
+    end
 end
 
 -- Dungeon and raid entrances on the zone's maps, from the Encounter Journal. Boss names become
@@ -522,17 +528,22 @@ end
 
 -- Guesses where an achievement belongs from its category and text. Returns zone and container when
 -- exactly one instance is named, the zone alone when only one zone is, otherwise nil.
-local function MatchAch(id, catSub)
+local function MatchAch(id, catSub, exp)
+    -- an older expansion's achievement only matches its own pages, and its pages only its achievements: their zone
+    -- and dungeon names come back in later expansions (Nagrand, Shadowmoon Valley, Karazhan)
+    local legacy = exp and ns.LEGACY_EXP and ns.LEGACY_EXP[exp]
+    local function other(z) return (legacy or z.legacy) and z.exp ~= exp end
+    local keywords = keywordTargets[legacy and exp or "current"] or {}
     -- a sub-category named after a zone decides it outright
     if catSub then
         for _, z in ipairs(ns.ZONES) do
-            if norm(z.name) == norm(catSub) then return z end
+            if norm(z.name) == norm(catSub) and not other(z) then return z end
         end
     end
     local text = AchText(id)
     local hitC, hitZ = {}, {}
     local nC, nZ = 0, 0
-    for _, kw in ipairs(keywordTargets) do
+    for _, kw in ipairs(keywords) do
         if text:find(kw.key, 1, true) then
             if kw.container and not hitC[kw.container] then hitC[kw.container] = true; nC = nC + 1 end
             if not hitZ[kw.zone] then hitZ[kw.zone] = true; nZ = nZ + 1 end
@@ -700,13 +711,13 @@ local function BuildAchievements(midnight)
                 local c = instanceItem[norm(pl[3])]
                 -- in another language the instance has another name: its name in the achievement's text finds it
                 if not c then
-                    local mz, mc = MatchAch(t.id, nil)
+                    local mz, mc = MatchAch(t.id, nil, expOf[t.id])
                     if mc and mz == t.zone then c = mc end
                 end
                 if c and c.zone == t.zone then t.container = c end
             end
         else
-            t.zone, t.container = MatchAch(t.id, t.sub)
+            t.zone, t.container = MatchAch(t.id, t.sub, expOf[t.id])
             -- a zone hint from the data (Data/TWW/Points.lua) wins over a guess from the text, never over an instance
             local hint = ns.ACH_ZONE and ns.ACH_ZONE[t.id]
             if hint and not t.container and ns.zoneByKey[hint] then t.zone = ns.zoneByKey[hint] end
@@ -1125,8 +1136,35 @@ local function BuildWildPets()
         if zone then
             local spots = {}
             for _, p in ipairs(w[3]) do spots[#spots + 1] = { map = p[1], x = p[2], y = p[3] } end
-            AddCollect(zone, "sp" .. species, { speciesID = species, spots = spots,
+            AddCollect(zone, "sp" .. species, { speciesID = species, spots = spots, wild = true,
                 sourceText = "Wild battle pet: " .. w[2] .. ". Win a pet battle against it to catch it." })
+        end
+    end
+end
+
+-- The older expansions' mounts and pets (Data/Legacy/Collect.lua): by mount ID or species, on the page their journal
+-- source names. The source line is the journal's own.
+local function BuildLegacyCollect()
+    local mySide = UnitFactionGroup and UnitFactionGroup("player")
+    if C_MountJournal and C_MountJournal.GetMountInfoByID then
+        for mid, key in pairs(ns.LEGACY_MOUNTS or {}) do
+            local zone = ns.zoneByKey[key]
+            local r = { pcall(C_MountJournal.GetMountInfoByID, mid) }
+            local factionSpecific, faction, hide = r[9], r[10], r[11]
+            local wrongSide = factionSpecific and mySide and ((faction == 0 and mySide ~= "Horde") or (faction == 1 and mySide ~= "Alliance"))
+            if zone and r[1] and r[2] and not hide and not wrongSide then
+                local okx, _, _, source = pcall(C_MountJournal.GetMountInfoExtraByID, mid)
+                AddCollect(zone, "m" .. mid, { mountID = mid, sourceText = (SourceInfo(okx and source)) })
+            end
+        end
+    end
+    if C_PetJournal and C_PetJournal.GetPetInfoBySpeciesID then
+        for species, key in pairs(ns.LEGACY_PETS or {}) do
+            local zone = ns.zoneByKey[key]
+            local r = { pcall(C_PetJournal.GetPetInfoBySpeciesID, species) }
+            if zone and r[1] and r[2] then
+                AddCollect(zone, "sp" .. species, { speciesID = species, sourceText = (SourceInfo(r[6])) })
+            end
         end
     end
 end
@@ -1168,7 +1206,8 @@ function ns.Build()
     for _, z in ipairs(ns.ZONES) do
         BuildLore(z, "story", z.story)
         BuildLore(z, "side", z.side)
-        if not z.overview then BuildInstances(z); BuildDelves(z) end
+        -- an older expansion's overview takes the dungeons and raids no zone page has (its continent maps and list)
+        if not z.overview then BuildInstances(z); BuildDelves(z) elseif z.legacy then BuildInstances(z) end
     end
     EnsureDelves()
     AttachDelveChests(midnight)
@@ -1177,6 +1216,7 @@ function ns.Build()
     for _, z in ipairs(ns.ZONES) do BuildRep(z); BuildCollect(z) end
     BuildJournalCollect(midnight)
     BuildWildPets()
+    BuildLegacyCollect()
     BuildExtras(midnight)
     -- collectibles rewarded by an achievement follow that achievement's walkthrough
     local achByName, achById = {}, {}
@@ -1362,7 +1402,7 @@ local function EvalCollect(it)
     elseif it.mountID then t, owned, name = ns.MountCollect(it.mountID)
     elseif it.speciesID then
         local icon
-        t, owned, name, icon = ns.SpeciesCollect(it.speciesID)
+        t, owned, name, icon = ns.SpeciesCollect(it.speciesID, it.wild)
         it.icon = it.icon or icon
     elseif it.titleID then t, owned = ns.TitleCollect(it.titleID)
     elseif it.setID then t, owned, name = ns.SetCollect(it.setID)
@@ -1442,33 +1482,45 @@ function ns.EvaluateAll()
     local first = ns.firstEval
     ns.collectLoading = 0   -- collectibles still waiting for item data (counted by EvalCollect)
     local totals = {}
+    -- the older expansions' pages (thousands of rows) are read while the book is open, in their own zone, or once
+    -- a minute; in between they keep their last counts
+    local now = GetTime and GetTime() or 0
+    local legacyDue = first or (ns.IsShown and ns.IsShown()) or now - (ns.legacyEvalAt or -1e9) >= 60
+    if legacyDue then ns.legacyEvalAt = now end
+    local here = ns.PlayerZone and ns.PlayerZone()
     for _, z in ipairs(ns.ZONES) do
-        z.cur, z.max = 0, 0
-        for _, s in ipairs(ns.SECTIONS) do
-            local sec = z.sections[s.key]
-            sec.cur, sec.max = 0, 0
-            for _, it in ipairs(sec.items) do
-                Eval(it)
-                sec.cur, sec.max = sec.cur + (it.cur or 0), sec.max + (it.max or 0)
-                if s.uncounted then it.uncounted = true end
-                local watch = { it }
-                if it.kind == "container" then watch = it.children end
-                for _, w in ipairs(watch) do
-                    if (w.max or 0) > 0 then
-                        if w.done and prevDone[w.key] == false and not first and ns.Announceable(w) then
-                            newly[#newly + 1] = w
-                            ns.Log(z.key, Label(w))
+        if z.legacy and not legacyDue and z ~= here and z.max then
+            local t = totals[z.exp] or { cur = 0, max = 0 }
+            totals[z.exp] = t
+            t.cur, t.max = t.cur + z.cur, t.max + z.max
+        else
+            z.cur, z.max = 0, 0
+            for _, s in ipairs(ns.SECTIONS) do
+                local sec = z.sections[s.key]
+                sec.cur, sec.max = 0, 0
+                for _, it in ipairs(sec.items) do
+                    Eval(it)
+                    sec.cur, sec.max = sec.cur + (it.cur or 0), sec.max + (it.max or 0)
+                    if s.uncounted then it.uncounted = true end
+                    local watch = { it }
+                    if it.kind == "container" then watch = it.children end
+                    for _, w in ipairs(watch) do
+                        if (w.max or 0) > 0 then
+                            if w.done and prevDone[w.key] == false and not first and ns.Announceable(w) then
+                                newly[#newly + 1] = w
+                                ns.Log(z.key, Label(w))
+                            end
+                            prevDone[w.key] = w.done and true or false
                         end
-                        prevDone[w.key] = w.done and true or false
                     end
                 end
+                -- Other is shown with its own count but stays out of the zone and expansion totals
+                if not s.uncounted then z.cur, z.max = z.cur + sec.cur, z.max + sec.max end
             end
-            -- Other is shown with its own count but stays out of the zone and expansion totals
-            if not s.uncounted then z.cur, z.max = z.cur + sec.cur, z.max + sec.max end
+            local t = totals[z.exp] or { cur = 0, max = 0 }
+            totals[z.exp] = t
+            t.cur, t.max = t.cur + z.cur, t.max + z.max
         end
-        local t = totals[z.exp] or { cur = 0, max = 0 }
-        totals[z.exp] = t
-        t.cur, t.max = t.cur + z.cur, t.max + z.max
     end
     -- holiday pages count on their own, never toward Midnight
     if ns.EvaluateEvents then ns.EvaluateEvents(newly, first, prevDone) end

@@ -1670,9 +1670,17 @@ local function Matches(s) return type(s) == "string" and s:lower():find(searchTe
 local function ItemMatches(it)
     if Matches(it.liveName or it.name) then return true end
     if #searchText >= 3 and (it.kind == "ach" or it.kind == "lore" or it.kind == "container" or it.steps) then
-        for _, row in ipairs(ns.Children(it)) do
-            if Matches(row.name) or (row.item and Matches(row.item.name)) then return true end
+        -- the children's names, read once per build: with every expansion in the book a search would
+        -- otherwise rebuild thousands of child lists on every key press
+        if it.searchStamp ~= ns.buildStamp then
+            local names = {}
+            for _, row in ipairs(ns.Children(it)) do
+                if type(row.name) == "string" then names[#names + 1] = row.name:lower() end
+                if row.item and type(row.item.name) == "string" then names[#names + 1] = row.item.name:lower() end
+            end
+            it.searchText, it.searchStamp = table.concat(names, "\n"), ns.buildStamp
         end
+        return it.searchText:find(searchText, 1, true) ~= nil
     end
     return false
 end
