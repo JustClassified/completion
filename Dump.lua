@@ -89,14 +89,24 @@ local function InBook(id)
     return ""
 end
 
--- The items, mount IDs and pet species the book lists.
-local function BookCollect()
+-- Every collectible item the book lists: its item lists, every expansion's sets, collectibles, holiday items,
+-- and items on its rows (rare and treasure loot included).
+local function BookItems()
     local items = {}
     local function add(list) for _, id in ipairs(list or {}) do items[id] = true end end
     add(ns.MIDNIGHT_MOUNT_ITEMS); add(ns.MIDNIGHT_PET_ITEMS); add(ns.MIDNIGHT_TOY_ITEMS)
+    for _, set in ipairs(ns.COLLECT_SETS or {}) do add(set.mounts); add(set.pets); add(set.toys) end
     for id in pairs(ns.COLLECT_INFO or {}) do items[id] = true end
     for _, list in pairs(ns.EVENT_ITEMS or {}) do for _, e in ipairs(list) do if e.i then items[e.i] = true end end end
-    for _, it in pairs(ns.items or {}) do if it.itemID then items[it.itemID] = true end end
+    for _, it in pairs(ns.items or {}) do
+        if it.itemID then items[it.itemID] = true end
+        for _, l in ipairs(it.loot or {}) do if l[1] then items[l[1]] = true end end
+    end
+    return items
+end
+
+-- The mount IDs and pet species of the book's items (needs the items loaded first).
+local function BookCollect(items)
     local mounts, species = {}, {}
     for id in pairs(items) do
         local m = C_MountJournal and Try(C_MountJournal.GetMountFromItem, id)
@@ -106,7 +116,7 @@ local function BookCollect()
             if r[1] and r[14] then species[r[14]] = id end
         end
     end
-    return items, mounts, species
+    return mounts, species
 end
 
 -- Every quest ID the book's data knows.
@@ -145,7 +155,7 @@ end
 -- the steps
 ------------------------------------------------------------------------
 
-local function Start()
+local function Start(onlyCollect)
     if running then print(PREFIX .. "the read is already running."); return end
     running = true
     shown = nil
@@ -158,13 +168,39 @@ local function Start()
         columns = COLUMNS,
     }
     for k in pairs(COLUMNS) do out[k] = {} end
-    local items, bookMounts, bookSpecies = BookCollect()
+    local items = BookItems()
+    local bookMounts, bookSpecies = {}, {}
     local mapIDs, mapSet = {}, {}
     local questSeen = {}
     local function addQuest(id, source) if id and not questSeen[id] then questSeen[id] = source end end
 
     local steps = {}
-    local function step(name, run) steps[#steps + 1] = { name = name, run = run } end
+    local COLLECT_STEPS = { ["loading the book's items"] = true, ["mounts, sets, heirlooms, illusions, titles"] = true,
+        ["battle pet species"] = true, ["toys"] = true }
+    local function step(name, run)
+        if onlyCollect and not COLLECT_STEPS[name] then return end
+        steps[#steps + 1] = { name = name, run = run }
+    end
+
+    -- the book's items must be loaded before the game can tell which mount or pet each one teaches
+    step("loading the book's items", function(s)
+        if not s.list then
+            s.list, s.i = {}, 0
+            for id in pairs(items) do s.list[#s.list + 1] = id end
+            print(PREFIX .. string.format("  %d items", #s.list))
+        end
+        for _ = 1, 30 do
+            s.i = s.i + 1
+            local id = s.list[s.i]
+            if not id then
+                s.wait = s.wait or (GetTime() + 20)
+                if GetTime() < s.wait then return false end
+                bookMounts, bookSpecies = BookCollect(items)
+                return true
+            end
+            if C_Item and C_Item.RequestLoadItemDataByID then pcall(C_Item.RequestLoadItemDataByID, id) end
+        end
+    end)
 
     -- achievements, a few categories per frame, each series walked both ways
     step("achievements", function(s)
@@ -455,23 +491,28 @@ local function Start()
 
     print(PREFIX .. "reading everything the game knows; this takes about half an hour. Keep playing normally (or stand still).")
     Run(steps, function(seconds)
+        if onlyCollect and ns.db.dump then
+            for _, k in ipairs({ "mounts", "pets", "toys", "sets", "heirlooms", "illusions", "titles" }) do ns.db.dump[k] = out[k] end
+            ns.db.dump.collectBuilt = out.built
+            out = ns.db.dump
+        end
         ns.db.dump = out
         running = false
         local parts = {}
         for _, k in ipairs({ "ach", "mounts", "pets", "toys", "sets", "quests", "questlines", "maps", "journal" }) do
-            parts[#parts + 1] = #out[k] .. " " .. k
+            parts[#parts + 1] = #(out[k] or {}) .. " " .. k
         end
         print(PREFIX .. string.format("done in %d minutes: %s. Type /reload so the game saves it, then tell Claude.",
             math.floor(seconds / 60 + 0.5), table.concat(parts, ", ")))
     end)
 end
 
--- /comp dump [clear]
+-- /comp dump [collect | clear]
 function ns.AchievementDump(arg)
     if arg == "clear" then
         ns.db.dump = nil
         print(PREFIX .. "the saved read is removed (after /reload).")
         return
     end
-    Start()
+    Start(arg == "collect")
 end
