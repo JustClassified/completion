@@ -18,6 +18,7 @@ Data\TWW\Zones.lua
 Data\Legacy\Zones.lua
 Data\Points.lua
 Data\TWW\Points.lua
+Data\Legacy\Points.lua
 Data\Overrides.lua
 Data\TreasureText.lua
 Data\RareText.lua
@@ -41,6 +42,7 @@ Data\TWW\Collections.lua
 Data\CollectIDs.lua
 Data\TWW\WildPets.lua
 Data\Legacy\Collect.lua
+Data\Legacy\Quests.lua
 Data\Vendors.lua
 Data\VendorsExtra.lua
 Data\Sources.lua

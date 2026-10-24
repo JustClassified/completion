@@ -106,6 +106,18 @@ function ns.QuestDone(id)
     return false
 end
 
+-- Done for this character, from the game's list of completed quests (read once per refresh): for the thousands of
+-- older zone quests, one call instead of one per quest.
+local completedStamp, completed = -1, {}
+function ns.QuestDoneFast(id)
+    if completedStamp ~= ns.stamp then
+        completedStamp, completed = ns.stamp, {}
+        local ok, list = pcall(C_QuestLog and C_QuestLog.GetAllCompletedQuestIDs)
+        for _, q in ipairs(ok and type(list) == "table" and list or {}) do completed[q] = true end
+    end
+    return completed[id] == true
+end
+
 -- True while the quest is in the player's quest log.
 function ns.QuestActive(id)
     if not id or not (C_QuestLog and C_QuestLog.IsOnQuest) then return false end

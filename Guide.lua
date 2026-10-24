@@ -749,6 +749,13 @@ function ns.Resolve(it, childKey)
         return t
     end
     if it.kind == "ach" then return ns.ResolveAchParts(it, t) end
+    -- an older zone's quest: where it's picked up or done, when the game or the data knows
+    if it.kind == "quest" then
+        local pos, how = ns.QuestPos(it.q)
+        t.spot = pos or Nearest(it.spots or {})
+        t.text = (how == "objective" and "On: " or "Pick up: ") .. ns.QuestTitle(it.q, it.name)
+        return t
+    end
     if it.kind == "collect" then
         t.spot = Nearest(it.spots or {})
         t.text = it.sourceText

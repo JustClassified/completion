@@ -107,7 +107,7 @@ local function BuildPoint(p, fallbackZone)
         key = string.format("p:%d:%s:%s:%s", p.m, tostring(p.q or p.c or ""), tostring(p.x or ""), tostring(p.y or "")),
         kind = "point", pkind = p.k, name = name, a = p.a, c = p.c, q = p.q, npc = p.npc, prof = p.prof,
         fish = p.fish, wq = p.wq, note = ov.note or p.note, tips = ov.tips, loot = ov.loot or p.loot, sl = p.sl,
-        side = ov.side,
+        side = ov.side, untracked = p.u,
         spots = {},
     }
     if p.x then it.spots[1] = { map = p.m, x = p.x, y = p.y } end
@@ -1230,6 +1230,21 @@ local function BuildGeneralCollect()
     end
 end
 
+-- The older zones' quests (Data/Legacy/Quests.lua): { questID, name, side (1 Alliance, 2 Horde), class mask } per
+-- quest, as side quests of their page, with the start spot when the book knows it.
+local function BuildLegacyQuests()
+    for key, list in pairs(ns.LEGACY_QUESTS or {}) do
+        local zone = ns.zoneByKey[key]
+        if zone then
+            for _, e in ipairs(list) do
+                local st = ns.QUEST_START and ns.QUEST_START[e[1]]
+                AddItem(zone, "side", { key = "q:" .. e[1], kind = "quest", q = e[1], name = e[2], side = e[3] ~= 0 and e[3] or nil,
+                                        cls = e[4], group = "Quests", spots = st and { { map = st[1], x = st[2], y = st[3] } } or {} })
+            end
+        end
+    end
+end
+
 ------------------------------------------------------------------------
 -- build
 ------------------------------------------------------------------------
@@ -1278,6 +1293,7 @@ function ns.Build()
     BuildJournalCollect(midnight)
     BuildWildPets()
     BuildLegacyCollect()
+    BuildLegacyQuests()
     BuildGeneralCollect()
     BuildExtras(midnight)
     -- collectibles rewarded by an achievement follow that achievement's walkthrough
@@ -1352,6 +1368,30 @@ local function EvalPoint(it)
     -- so kills from before the addon was installed (or on another day) can't be seen any other way.
     if not done and it.pkind == "rare" and not it.a and ns.db.settings.rareByLoot and ns.AllLootCollected(it) then done = true end
     if not done and it.a and it.c and ns.AchDone(it.a) then done = true end
+    -- an older rare the game keeps no record of: listed with its spots and loot, but it can't count
+    if it.untracked then
+        it.done, it.max, it.cur = done, 0, 0
+        it.sub = not done and "not tracked by the game" or nil
+        return
+    end
+    it.done, it.max, it.cur = done, 1, done and 1 or 0
+end
+
+-- An older zone's quest (Data/Legacy/Quests.lua): done when the game says so; another faction's or class's is hidden.
+local mySideNum, myClassBit
+local function EvalQuest(it)
+    if mySideNum == nil then
+        local f = UnitFactionGroup and UnitFactionGroup("player")
+        mySideNum = f == "Alliance" and 1 or (f == "Horde" and 2 or 0)
+        local _, _, classID = UnitClass and UnitClass("player")
+        myClassBit = classID and 2 ^ (classID - 1) or 0
+    end
+    if (it.side and it.side ~= mySideNum and mySideNum ~= 0) or (it.cls and myClassBit > 0 and math.floor(it.cls / myClassBit) % 2 == 0) then
+        it.max, it.cur, it.done, it.hidden = 0, 0, false, true
+        return
+    end
+    it.hidden = nil
+    local done = ns.QuestDoneFast(it.q)
     it.done, it.max, it.cur = done, 1, done and 1 or 0
 end
 
@@ -1513,7 +1553,8 @@ Eval = function(it)
     elseif k == "container" then EvalContainer(it)
     elseif k == "rep" then EvalRep(it)
     elseif k == "set" then EvalSet(it)
-    elseif k == "collect" then EvalCollect(it) end
+    elseif k == "collect" then EvalCollect(it)
+    elseif k == "quest" then EvalQuest(it) end
 end
 ns.Eval = Eval
 
@@ -1549,11 +1590,13 @@ function ns.EvaluateAll()
     -- the older expansions' pages (thousands of rows) are read while the book is open, in their own zone, or once
     -- a minute; in between they keep their last counts
     local now = GetTime and GetTime() or 0
-    local legacyDue = first or (ns.IsShown and ns.IsShown()) or now - (ns.legacyEvalAt or -1e9) >= 60
+    -- while the book is open, the older expansion it shows is read every time and the others once a minute
+    local legacyDue = first or now - (ns.legacyEvalAt or -1e9) >= 60
     if legacyDue then ns.legacyEvalAt = now end
     local here = ns.PlayerZone and ns.PlayerZone()
+    local viewing = ns.IsShown and ns.IsShown() and ns.cdb and ns.cdb.lastExpansion
     for _, z in ipairs(ns.ZONES) do
-        if z.legacy and not legacyDue and z ~= here and z.max then
+        if z.legacy and not legacyDue and z ~= here and z.exp ~= viewing and z.max then
             local t = totals[z.exp] or { cur = 0, max = 0 }
             totals[z.exp] = t
             t.cur, t.max = t.cur + z.cur, t.max + z.max
