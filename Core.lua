@@ -542,6 +542,17 @@ function ns.TitleCollect(titleID)
     return "title", ok and (known and true or false) or nil
 end
 
+-- A wild battle pet by species (no item teaches it). Hidden while the Wild battle pets option is off.
+function ns.SpeciesCollect(speciesID)
+    if ns.db and ns.db.settings.wildpets == false then return false end
+    if not (C_PetJournal and C_PetJournal.GetNumCollectedInfo) then return "pet", nil end
+    local okn, name, icon = pcall(C_PetJournal.GetPetInfoBySpeciesID, speciesID)
+    local ok, have = pcall(C_PetJournal.GetNumCollectedInfo, speciesID)
+    local owned
+    if ok and have then owned = have > 0 end
+    return "pet", owned, okn and name or nil, okn and icon or nil
+end
+
 -- A whole transmog set by set ID.
 function ns.SetCollect(setID)
     if not (C_TransmogSets and C_TransmogSets.GetSetInfo) then return "set", nil end

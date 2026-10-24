@@ -4,7 +4,9 @@
 --   appearance sets (with pieces collected), heirlooms, weapon illusions, titles, currencies, reputations and renown
 --   rewards, every map in the game (child maps, dungeon entrances, flight points, map markers, quest lines),
 --   campaigns and their chapters, the Adventure Guide (every instance and boss), and quests (every completed one,
---   quest lines, the book's own, and every quest title from ID 1 to 99999), for every expansion since Classic.
+--   quest lines and the book's own), for every expansion since Classic.
+-- /comp dump quests also asks for every quest title from ID 1 to 99999 (about 100,000 requests, paced): only when an
+-- author really needs it.
 -- Each section is a list of tab-separated lines; dump.columns names the columns of each section.
 -- It reads only: no setting, filter or CVar is changed (the Adventure Guide's selected tier is put back afterwards).
 -- The work is spread over many frames and takes about half an hour (mostly quest titles); chat shows each step. /comp dump clear removes it.
@@ -142,7 +144,7 @@ end
 -- Every quest ID the book's data knows.
 local function BookQuests()
     local q = {}
-    for id in pairs(ns.QUEST_STARTS or {}) do q[id] = true end
+    for id in pairs(ns.QUEST_START or {}) do q[id] = true end
     for id in pairs(ns.QUEST_NOTES or {}) do q[id] = true end
     for _, it in pairs(ns.items or {}) do
         if type(it.q) == "number" then q[it.q] = true end
@@ -175,7 +177,7 @@ end
 -- the steps
 ------------------------------------------------------------------------
 
-local function Start(onlyCollect)
+local function Start(onlyCollect, allQuests)
     if running then print(PREFIX .. "the read is already running."); return end
     running = true
     shown = nil
@@ -479,7 +481,7 @@ local function Start(onlyCollect)
                 addQuest(q, "completed")
             end
             for q in pairs(BookQuests()) do addQuest(q, "book") end
-            for q = QUEST_RANGE[1], QUEST_RANGE[2] do addQuest(q, "range") end
+            if allQuests then for q = QUEST_RANGE[1], QUEST_RANGE[2] do addQuest(q, "range") end end
             questList, s.i = {}, 0
             for q in pairs(questSeen) do questList[#questList + 1] = q end
             table.sort(questList)
@@ -511,7 +513,7 @@ local function Start(onlyCollect)
         end
     end)
 
-    print(PREFIX .. "reading everything the game knows; this takes about half an hour. Keep playing normally (or stand still).")
+    print(PREFIX .. "reading everything the game knows; this takes a few minutes (half an hour with quests). Keep playing normally (or stand still).")
     Run(steps, function(seconds)
         if onlyCollect and ns.db.dump then
             for _, k in ipairs({ "mounts", "pets", "toys", "sets", "heirlooms", "illusions", "titles", "unmatched" }) do ns.db.dump[k] = out[k] end
@@ -529,12 +531,12 @@ local function Start(onlyCollect)
     end)
 end
 
--- /comp dump [collect | clear]
+-- /comp dump [collect | quests | clear]
 function ns.AchievementDump(arg)
     if arg == "clear" then
         ns.db.dump = nil
         print(PREFIX .. "the saved read is removed (after /reload).")
         return
     end
-    Start(arg == "collect")
+    Start(arg == "collect", arg == "quests")
 end

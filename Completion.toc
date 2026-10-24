@@ -24,6 +24,7 @@ Data\ExtraLoot.lua
 Data\Lore.lua
 Data\LoreExtra.lua
 Data\QuestStarts.lua
+Data\QuestStartsExtra.lua
 Data\QuestNotes.lua
 Data\Research.lua
 Data\Achievements.lua
@@ -34,6 +35,7 @@ Data\Difficulty.lua
 Data\Collections.lua
 Data\TWW\Collections.lua
 Data\CollectIDs.lua
+Data\TWW\WildPets.lua
 Data\Vendors.lua
 Data\VendorsExtra.lua
 Data\Sources.lua

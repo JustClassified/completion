@@ -712,6 +712,9 @@ local function ItemTooltip(owner, it, row)
         if not (ok and spellID and pcall(GameTooltip.SetMountBySpellID, GameTooltip, spellID)) then
             GameTooltip:AddLine(it.name or "?", 1, 1, 1)
         end
+    elseif it.kind == "collect" and it.speciesID then
+        GameTooltip:AddLine(it.name or "?", 1, 1, 1)
+        GameTooltip:AddLine("Wild battle pet", 0.6, 0.8, 1)
     elseif it.kind == "ach" and it.id and GameTooltip.SetHyperlink and GetAchievementLink then
         local ok, link = pcall(GetAchievementLink, it.id)
         if ok and link then GameTooltip:SetHyperlink(link) else GameTooltip:AddLine(it.name or "?", 1, 1, 1) end

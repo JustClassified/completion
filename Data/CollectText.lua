@@ -152,6 +152,7 @@ ns.COLLECT_OUT = {
     [280541] = "shop",
     [280581] = "shop",
     [280599] = "shop",
+    [284572] = "shop",
     [257502] = "pvp",
     [257504] = "pvp",
     [260228] = "pvp",
@@ -396,6 +397,5 @@ ns.COLLECT_INFO = {
     [282417] = { k = "secret", zone = "eversong", how = "Free the Ensorcelled Cryptid trapped in an arcane bubble in Silvermoon City: click it and keep channeling while dodging, until all 100 stacks are gone. Then click J'imothy within a minute.", at = { { 2393, 28.75, 46.69 }, { 2393, 51.32, 53.75 }, { 2393, 58.3, 41.9 } }, tips = { "The third spot is on the lower level.", "It works once per character: afterwards J'imothy can't be clicked.", "You can do it alone or with other players." } },
     [283363] = { k = "delve", zone = "eversong", a = 63715, mythic = true, how = "Defeat Kindo'jan in his Labyrinth on Tier 11 with no other players in your party, during Season 2; the mount comes with the feat Let Me Solo Him: Kindo'jan.", tips = { "Kindo'jan's door opens once you have cleared all nine chambers of a run on Tier 8 or higher." } },
     [284159] = { k = "raid", zone = "coiled", mythic = true, how = "Can drop from Kith'ix in The Unbinding of Kith'ix on Mythic.", tips = { "Paladins also get a new glyph from it." } },
-    [284572] = { k = "secret", zone = "midnight" },
     [286643] = { k = "quest", zone = "eversong", q = 98836, note = "The last quest of the Labyrinth's introduction, which starts with The Labyrinth from Kul'amara the Fierce.", tips = { "Using it inside the Labyrinth ends your run and takes you out." } },
 }

@@ -18,6 +18,5 @@ ns.RESEARCH = {
     -- Midnight collectibles still being checked (Tools/db/collect.py SOON)
     ["i:264413"] = "Its Season 1 source (Nulling Nullaeus) has ended; whether it still drops is being checked.",
     ["i:263871"] = "Where this toy comes from is being researched.",
-    ["i:284572"] = "A hunter toy from patch 12.1.5; where it comes from is being researched.",
     ["i:270061"] = "Only one player report explains this pet so far; it's being checked.",
 }

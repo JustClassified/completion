@@ -1117,6 +1117,20 @@ local function BuildJournalCollect(midnight)
     end
 end
 
+-- The War Within's wild battle pets (Data/TWW/WildPets.lua): caught in a pet battle, so no item; each on the page
+-- where it is most common, with its spawn spots in every zone it lives in.
+local function BuildWildPets()
+    for species, w in pairs(ns.WILD_PETS or {}) do
+        local zone = ns.zoneByKey[w[1]]
+        if zone then
+            local spots = {}
+            for _, p in ipairs(w[3]) do spots[#spots + 1] = { map = p[1], x = p[2], y = p[3] } end
+            AddCollect(zone, "sp" .. species, { speciesID = species, spots = spots,
+                sourceText = "Wild battle pet: " .. w[2] .. ". Win a pet battle against it to catch it." })
+        end
+    end
+end
+
 ------------------------------------------------------------------------
 -- build
 ------------------------------------------------------------------------
@@ -1162,6 +1176,7 @@ function ns.Build()
     BuildAchievements(midnight)
     for _, z in ipairs(ns.ZONES) do BuildRep(z); BuildCollect(z) end
     BuildJournalCollect(midnight)
+    BuildWildPets()
     BuildExtras(midnight)
     -- collectibles rewarded by an achievement follow that achievement's walkthrough
     local achByName, achById = {}, {}
@@ -1345,6 +1360,10 @@ local function EvalCollect(it)
         t, owned = ns.ItemCollect(it.itemID, it.flag)
         name = ns.ItemName(it.itemID)
     elseif it.mountID then t, owned, name = ns.MountCollect(it.mountID)
+    elseif it.speciesID then
+        local icon
+        t, owned, name, icon = ns.SpeciesCollect(it.speciesID)
+        it.icon = it.icon or icon
     elseif it.titleID then t, owned = ns.TitleCollect(it.titleID)
     elseif it.setID then t, owned, name = ns.SetCollect(it.setID)
     elseif it.sourceID then t, owned, name = ns.SourceCollect(it.sourceID) end

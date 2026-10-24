@@ -171,6 +171,8 @@ function ns.BuildAbout(R, Header, Text, titleFont, pageW)
               function() return s().hidedone end, function(v) s().hidedone = v; ns.RefreshUI() end },
             { "Count appearances", "Transmog appearances your class can learn count toward Collectibles.",
               function() return s().transmog end, function(v) s().transmog = v; if ns.Evaluate then ns.Evaluate() end end },
+            { "Wild battle pets", "The War Within's wild pets, caught in pet battles, count toward Collectibles, with their spawn spots on the map.",
+              function() return s().wildpets ~= false end, function(v) s().wildpets = v; if ns.Evaluate then ns.Evaluate() end end },
             { "Sound on completion", "Play a sound when something is finished.",
               function() return s().sound end, function(v) s().sound = v end },
             { "Chat messages", "Print a line in chat when something is finished.",

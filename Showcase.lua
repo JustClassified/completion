@@ -37,8 +37,8 @@ function ns.ModelInfo(it)
     if t == "mount" then
         local d = MountDisplay(MountIDFor(it))
         if d then return { kind = "display", id = d } end
-    elseif t == "pet" and it.itemID then
-        local r = ns.PetFromItem(it.itemID)
+    elseif t == "pet" and (it.itemID or it.speciesID) then
+        local r = it.itemID and ns.PetFromItem(it.itemID) or { pcall(C_PetJournal.GetPetInfoBySpeciesID, it.speciesID) }
         if r[1] and r[13] and r[13] > 0 then return { kind = "display", id = r[13] } end
         if r[1] and r[5] then return { kind = "creature", id = r[5] } end
     elseif t == "appearance" and it.itemID then
