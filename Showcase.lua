@@ -22,10 +22,7 @@ end
 -- The item's own mountID (renown rewards), or the mount its item teaches.
 local function MountIDFor(it)
     if it.mountID then return it.mountID end
-    if it.itemID and C_MountJournal and C_MountJournal.GetMountFromItem then
-        local ok, mid = pcall(C_MountJournal.GetMountFromItem, it.itemID)
-        if ok then return mid end
-    end
+    return it.itemID and ns.MountFromItem(it.itemID)
 end
 
 -- What the viewer shows for a collectible or a rare / world boss with an NPC ID:
@@ -40,8 +37,8 @@ function ns.ModelInfo(it)
     if t == "mount" then
         local d = MountDisplay(MountIDFor(it))
         if d then return { kind = "display", id = d } end
-    elseif t == "pet" and it.itemID and C_PetJournal and C_PetJournal.GetPetInfoByItemID then
-        local r = { pcall(C_PetJournal.GetPetInfoByItemID, it.itemID) }
+    elseif t == "pet" and it.itemID then
+        local r = ns.PetFromItem(it.itemID)
         if r[1] and r[13] and r[13] > 0 then return { kind = "display", id = r[13] } end
         if r[1] and r[5] then return { kind = "creature", id = r[5] } end
     elseif t == "appearance" and it.itemID then

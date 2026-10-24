@@ -850,8 +850,8 @@ local function AddCollect(zone, key, it)
         if not mountItem then
             mountItem = {}
             for _, item in ipairs(ns.MIDNIGHT_MOUNT_ITEMS or {}) do
-                local ok, mid = pcall(C_MountJournal.GetMountFromItem, item)
-                if ok and mid then mountItem[mid] = item end
+                local mid = ns.MountFromItem(item)
+                if mid then mountItem[mid] = item end
             end
         end
         it.itemID = mountItem[it.mountID]
@@ -1082,10 +1082,10 @@ local function BuildJournalCollect(midnight)
             if iz and (iz.exp == set.exp or (iz.exp == "pvp" and set.exp == "midnight")) then zone = iz end
             AddCollect(zone or VendorZone(VendorsFor(it.itemID)) or SourceZone(it.itemID) or home, key, it)
         end
-        if C_MountJournal and C_MountJournal.GetMountFromItem then
+        if C_MountJournal and C_MountJournal.GetMountInfoByID then
             for _, itemID in ipairs(set.mounts or {}) do
-                local ok, mid = pcall(C_MountJournal.GetMountFromItem, itemID)
-                if ok and mid then
+                local mid = ns.MountFromItem(itemID)
+                if mid then
                     local r = { pcall(C_MountJournal.GetMountInfoByID, mid) }
                     local name, factionSpecific, faction, hide = r[2], r[9], r[10], r[11]
                     local wrongSide = factionSpecific and mySide and ((faction == 0 and mySide ~= "Horde") or (faction == 1 and mySide ~= "Alliance"))
@@ -1100,9 +1100,9 @@ local function BuildJournalCollect(midnight)
                 end
             end
         end
-        if C_PetJournal and C_PetJournal.GetPetInfoByItemID then
+        if C_PetJournal then
             for _, itemID in ipairs(set.pets or {}) do
-                local r = { pcall(C_PetJournal.GetPetInfoByItemID, itemID) }
+                local r = ns.PetFromItem(itemID)
                 if r[1] and r[2] and r[12] ~= false then
                     local text, zone, excluded, inst, pvp = SourceInfo(r[6])
                     if not excluded and (not pvp or PvPSourceOK(itemID)) then

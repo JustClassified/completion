@@ -334,6 +334,30 @@ function ns.ItemIcon(id)
     return icon
 end
 
+-- The mount journal ID an item teaches. The game only answers for items it has loaded, so the
+-- book's own items come from the checked table first (Data/CollectIDs.lua).
+function ns.MountFromItem(itemID)
+    local mid = itemID and ns.ITEM_MOUNT and ns.ITEM_MOUNT[itemID]
+    if mid then return mid end
+    if itemID and C_MountJournal and C_MountJournal.GetMountFromItem then
+        local ok, m = pcall(C_MountJournal.GetMountFromItem, itemID)
+        if ok then return m end
+    end
+end
+
+-- GetPetInfoByItemID's returns packed as { ok, name, icon, petType, creatureID, source, description,
+-- isWild, canBattle, tradable, unique, obtainable, displayID, speciesID }. Same table lookup first.
+function ns.PetFromItem(itemID)
+    if not C_PetJournal then return { false } end
+    local sp = itemID and ns.ITEM_SPECIES and ns.ITEM_SPECIES[itemID]
+    if sp and C_PetJournal.GetPetInfoBySpeciesID then
+        local r = { pcall(C_PetJournal.GetPetInfoBySpeciesID, sp) }
+        if r[1] and r[2] then r[14] = sp; return r end
+    end
+    if not (itemID and C_PetJournal.GetPetInfoByItemID) then return { false } end
+    return { pcall(C_PetJournal.GetPetInfoByItemID, itemID) }
+end
+
 -- Returns owned, name for a mount journal ID; nil when the journal doesn't know it.
 local function MountOwned(mountID)
     if not (mountID and C_MountJournal and C_MountJournal.GetMountInfoByID) then return end
@@ -344,8 +368,7 @@ end
 -- Returns owned, name for an item that teaches a battle pet; nil when the item isn't a pet.
 -- r[14] is the species ID (13th return, after pcall's ok).
 local function PetOwned(itemID)
-    if not (C_PetJournal and C_PetJournal.GetPetInfoByItemID) then return end
-    local r = { pcall(C_PetJournal.GetPetInfoByItemID, itemID) }
+    local r = ns.PetFromItem(itemID)
     if not r[1] then return end
     local speciesID = r[14]
     if not speciesID or not C_PetJournal.GetNumCollectedInfo then return end
@@ -480,10 +503,7 @@ function ns.ItemCollectRaw(itemID, flag)
         elseif flag == "t" then t = "toy"
         elseif flag == "d" then t = "decor"
         else
-            if C_MountJournal and C_MountJournal.GetMountFromItem then
-                local ok, mid = pcall(C_MountJournal.GetMountFromItem, itemID)
-                if ok and mid then t = "mount" end
-            end
+            if ns.MountFromItem(itemID) then t = "mount" end
             if not t and ToyOwned(itemID) ~= nil then t = "toy" end
             if not t and PetOwned(itemID) ~= nil then t = "pet" end
             if not t then
@@ -500,8 +520,7 @@ function ns.ItemCollectRaw(itemID, flag)
     if not t then return false end
     if t == "appearance" and not ns.db.settings.transmog then return false end
     if t == "mount" then
-        local ok, mid = pcall(C_MountJournal.GetMountFromItem, itemID)
-        return t, MountOwned(ok and mid)
+        return t, MountOwned(ns.MountFromItem(itemID))
     elseif t == "pet" then return t, PetOwned(itemID)
     elseif t == "toy" then return t, ToyOwned(itemID)
     elseif t == "decor" then return t, DecorOwned(itemID)

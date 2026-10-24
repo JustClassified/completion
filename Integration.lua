@@ -124,12 +124,10 @@ local function Index()
     for _, z in ipairs(ns.ZONES) do
         for _, it in ipairs(z.sections.collect.items) do
             if it.mountID then byMount[it.mountID] = byMount[it.mountID] or it end
-            if it.itemID and C_MountJournal and C_MountJournal.GetMountFromItem then
-                local ok, mid = pcall(C_MountJournal.GetMountFromItem, it.itemID)
-                if ok and mid then byMount[mid] = byMount[mid] or it end
-            end
-            if it.itemID and C_PetJournal and C_PetJournal.GetPetInfoByItemID then
-                local r = { pcall(C_PetJournal.GetPetInfoByItemID, it.itemID) }
+            local mid = it.itemID and ns.MountFromItem(it.itemID)
+            if mid then byMount[mid] = byMount[mid] or it end
+            if it.itemID then
+                local r = ns.PetFromItem(it.itemID)
                 local species = r[1] and r[14]
                 if species then byPet[species] = byPet[species] or it end
             end

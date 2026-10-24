@@ -110,17 +110,15 @@ end
 local function BookCollect(items)
     local mounts, species = {}, {}
     for id in pairs(items) do
-        local m = C_MountJournal and Try(C_MountJournal.GetMountFromItem, id)
+        local m = ns.MountFromItem(id)
         -- second way: the item's spell, then the mount that spell teaches
         if not m and C_Item and C_Item.GetItemSpell and C_MountJournal.GetMountFromSpell then
             local _, spell = Try(C_Item.GetItemSpell, id)
             if spell then m = Try(C_MountJournal.GetMountFromSpell, spell) end
         end
         if m then mounts[m] = id end
-        if C_PetJournal and C_PetJournal.GetPetInfoByItemID then
-            local r = { pcall(C_PetJournal.GetPetInfoByItemID, id) }
-            if r[1] and r[14] then species[r[14]] = id end
-        end
+        local r = ns.PetFromItem(id)
+        if r[1] and r[14] then species[r[14]] = id end
     end
     return mounts, species
 end

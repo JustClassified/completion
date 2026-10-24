@@ -33,6 +33,7 @@ Data\AchPlacement.lua
 Data\Difficulty.lua
 Data\Collections.lua
 Data\TWW\Collections.lua
+Data\CollectIDs.lua
 Data\Vendors.lua
 Data\VendorsExtra.lua
 Data\Sources.lua
