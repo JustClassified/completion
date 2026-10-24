@@ -81,10 +81,20 @@ local function Start()
             local okN, n = pcall(GetCategoryNumAchievements, cat, true)
             for k = 1, (okN and n or 0) do
                 local okA, id = pcall(GetAchievementInfo, cat, k)
-                if okA and id and not seen[id] then
-                    seen[id] = true
-                    local line = AchLine(id, cat)
-                    if line then out.ach[#out.ach + 1] = line end
+                if okA and id then
+                    -- a series shows only one step: walk the chain both ways for the rest
+                    local chain = { id }
+                    local p = GetPreviousAchievement and GetPreviousAchievement(id)
+                    while p and not seen[p] and #chain < 30 do table.insert(chain, 1, p); p = GetPreviousAchievement(p) end
+                    local n2 = GetNextAchievement and GetNextAchievement(id)
+                    while n2 and not seen[n2] and #chain < 60 do chain[#chain + 1] = n2; n2 = GetNextAchievement(n2) end
+                    for _, cid in ipairs(chain) do
+                        if not seen[cid] then
+                            seen[cid] = true
+                            local line = AchLine(cid, cat)
+                            if line then out.ach[#out.ach + 1] = line end
+                        end
+                    end
                 end
             end
         end

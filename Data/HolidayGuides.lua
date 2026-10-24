@@ -806,3 +806,135 @@ do
           note = "Jepetto Joybuzz in Silvermoon City sells the Nap Mat toy for one Well-loved Figurine (choose the figurine as an orphan's reward)." },
     })
 end
+
+------------------------------------------------------------------------
+-- WoW's Anniversary (new page, checked 2026-10-24): every November in Tanaris, outside the Caverns of Time. The
+-- 22nd runs 17 November to 8 December 2026. The achievements are the ones from the 20th and 21st anniversaries.
+------------------------------------------------------------------------
+do
+    local TANARIS, AZSHARA, DUSKWOOD, HINTERLANDS, BLASTED, ASHENVALE, FERALAS = 71, 76, 47, 26, 17, 63, 69
+    ns.EVENT_DEFS[#ns.EVENT_DEFS + 1] = {
+        key = "anniversary", id = 1808, ids = { 1500, 1501 }, name = "WoW's Anniversary", short = "Anniversary", iconAch = 40870,
+        lootText = "From the anniversary vendors in Tanaris (Timewarped Badges) or the anniversary world bosses.",
+        calendar = { "Anniversary" }, hub = TANARIS,
+        dates = { { { 2026, 11, 17, 10 }, { 2026, 12, 8, 10 } } },
+        desc = "Celebration grounds outside the Caverns of Time: games, stories, world bosses and a Blackrock Depths raid.",
+        intro = "Three weeks each November. Most activities run on the hour at the grounds in Tanaris; the world bosses "
+            .. "and the Blackrock Depths raid give the biggest rewards. Azeroth's Greatest Detective gives a title.",
+        steps = {
+            { "The celebration grounds", group = "Get started", at = { TANARIS, 63.0, 50.5 },
+              note = "Outside the Caverns of Time in Tanaris. Portals in the capitals' portal rooms take you to the Caverns of Time." },
+            { "Fashion Frenzy", group = "Every hour", ach = 40987, at = { TANARIS, 63.4, 49.1 },
+              note = "Starts 10 minutes past the hour: dress to the theme (a free outfit change), then vote with the ribbon." },
+            { "Lorewalker Cho's stories", group = "Every hour", ach = 40993, at = { TANARIS, 64.1, 51.8 },
+              note = "Half past the hour. React with the buttons he offers; throwing things at the stage can be repeated." },
+            { "Mount Mania", group = "Every hour", ach = 40985, note = "Copy the host's mount, close to the stage." },
+            { "Balloons", group = "Any time", ach = 40990, at = { TANARIS, 64.2, 50.0 }, note = "Isaandrae sends out the balloons." },
+            { "Pet Corner", group = "Any time", ach = 40989, at = { TANARIS, 62.0, 50.1 }, note = "The Pet Box gives the Pet Mirror." },
+            { "Vista portals", group = "Any time", ach = 40988, at = { TANARIS, 62.4, 49.4 }, note = "Three blue portals to other zones; they change every day." },
+            { "World bosses", group = "Every day", daily = true, ach = { 40995, 40997 }, note = "One loot per boss each day." },
+        },
+    }
+    local G1, G2 = "Azeroth's Greatest Detective (meta)", "More achievements"
+    ns.EVENT_ACHS = ns.EVENT_ACHS or {}
+    ns.EVENT_ACHS.anniversary = {
+        { 40870, 0, G1 }, { 40871, 0, G1 }, { 40872, 0, G1 }, { 40873, 0, G1 }, { 40979, 0, G1 },
+        { 40995, 0, G2 }, { 40994, 0, G2 }, { 40997, 0, G2 }, { 40996, 0, G2 }, { 40999, 0, G2 }, { 41015, 0, G2 },
+        { 41000, 0, G2 }, { 40998, 0, G2 }, { 40977, 0, G2 }, { 41013, 0, G2 }, { 41033, 0, G2 },
+        { 40987, 0, G2 }, { 40984, 0, G2 }, { 40985, 0, G2 }, { 40986, 0, G2 }, { 40989, 0, G2 }, { 40661, 0, G2 },
+        { 40990, 0, G2 }, { 40991, 0, G2 }, { 40992, 0, G2 }, { 40993, 0, G2 }, { 40988, 0, G2 },
+    }
+
+    local GROUNDS = { t = "Go to the celebration grounds outside the Caverns of Time in Tanaris during the anniversary.", at = { TANARIS, 63.0, 50.5 } }
+    local function here(rest) local out = { GROUNDS } for _, x in ipairs(rest) do out[#out + 1] = x end return out end
+    S[40995] = {
+        { t = "Defeat each of the six old world bosses while the anniversary is on (one loot each day):" },
+        { t = "Azuregos in Azshara.", at = { AZSHARA, 49.2, 83.0 } },
+        { t = "Lord Kazzak in the Blasted Lands.", at = { BLASTED, 32.3, 49.6 } },
+        { t = "Lethon in the Hinterlands.", at = { HINTERLANDS, 63.6, 27.2 } },
+        { t = "Emeriss in Duskwood.", at = { DUSKWOOD, 44.8, 39.7 } },
+        { t = "Taerar in Ashenvale.", at = { ASHENVALE, 93.8, 40.6 } },
+        { t = "Ysondre in Feralas.", at = { FERALAS, 50.6, 12.1 } },
+    }
+    N[40995] = "If Lord Kazzak doesn't show, talk to Zidormi at the north of the Blasted Lands (48.2, 7.2) to see the zone before the invasion."
+    S[40994] = { S[40995][1], S[40995][2], S[40995][3], S[40995][4], S[40995][5], S[40995][6], S[40995][7] }
+    S[40994][1] = { t = "Defeat any one of the six old world bosses while the anniversary is on:" }
+    S[40997] = {
+        { t = "Defeat the three anniversary world bosses in Tanaris while the event is on:" },
+        { t = "Doomwalker, by the celebration grounds.", at = { TANARIS, 62.7, 50.0 } },
+        { t = "Sha of Anger, in the west of Tanaris.", at = { TANARIS, 33.6, 55.5 } },
+        { t = "Archavon the Stone Watcher, in the north of Tanaris.", at = { TANARIS, 45.6, 29.4 } },
+    }
+    S[40996] = { { t = "Defeat any one of the three anniversary world bosses in Tanaris:" }, S[40997][2], S[40997][3], S[40997][4] }
+    N[40997] = "Archavon can drop the Grand Black War Mammoth and the Sha of Anger the Heavenly Onyx Cloud Serpent."
+    local BRD = { t = "Talk to Moira by the Dark Iron Mole Machine at the grounds and queue for the Blackrock Depths anniversary raid (Raid Finder works)." }
+    S[40999] = here({ BRD, { t = "Defeat every boss the achievement lists, wing by wing. Phalanx is in the Grim Guzzler part of the second wing: go around the big circle." } })
+    S[41015] = here({ BRD, { t = "After bosses and some big enemies die, a small glowing orb (a Temporal Missive from Moira) appears: click it. Find all thirteen across the three wings." } })
+    N[41015] = "Anyone can click a missive and everyone nearby gets credit; it comes back after about ten seconds."
+    N[40999] = "In 2025 only Raid Finder was offered; it counts."
+    local TW = { t = "Queue for Classic Timewalking in the Dungeon Finder during the anniversary." }
+    S[41000] = { TW, { t = "Finish all six: the Deadmines, both Dire Maul wings (Warpwood Quarters, Capital Gardens), Zul'Farrak and both Stratholme sides. You can't choose, so keep queueing." } }
+    S[40998] = { TW, { t = "Finish any one Classic Timewalking dungeon." } }
+    S[40977] = here({ { t = "Take Chromie's Codex quest at the grounds and queue for the scenario The Codex of Chromie: follow Chromie through the Gates of Ahn'Qiraj, about five minutes." } })
+    local T2 = { t = "Buy an Eternal Tier 2 armor ensemble from Traeya in the middle of the grounds (Timewarped Badges).", at = { TANARIS, 63.0, 50.8 } }
+    S[41013] = { T2 }
+    S[41033] = { T2, { t = "Buy a second one. Any class's set counts, and you can sell it back for a full refund after the achievement." } }
+    S[40987] = here({ { t = "At 10 minutes past the hour, join the Fashion Frenzy at the stage. Change into the theme when asked, then take a ribbon from the table and give it to another player.", at = { TANARIS, 63.4, 49.1 } } })
+    S[40984] = here({ { t = "Give 20 ribbons over one or more Fashion Frenzies: each ribbon has five votes." , at = { TANARIS, 63.4, 49.1 } } })
+    S[40985] = here({ { t = "Join Mount Mania by the stage: when the host shows a mount, summon the same one. Stay close to the stage or it doesn't count." } })
+    S[40986] = here({ { t = "Match 20 mounts in Mount Mania; matches add up over several sessions." } })
+    N[40985] = "A macro that copies your target's mount helps: target the host."; N[40986] = N[40985]
+    S[40989] = here({ { t = "Click the Pet Box at Pet Corner for a Pet Mirror and use it: you look like your pet.", at = { TANARIS, 62.0, 50.1 } } })
+    N[40989] = "Only the Pet Mirror from the box works, not other pet-disguise toys."
+    S[40661] = here({ { t = "As a pet (Pet Mirror from the Pet Box), pick up Zoomy Treats on the ground: each gives four seconds of zoomies. Chain them for more than 20 seconds.", at = { TANARIS, 62.0, 50.1 } } })
+    N[40661] = "Find three or four treats close together; they come back quickly."
+    S[40990] = here({ { t = "Isaandrae near the Caverns of Time entrance sends out balloons: grab one and ride it for about half a minute.", at = { TANARIS, 64.2, 50.0 } } })
+    S[40991] = here({ { t = "Ride all four balloons from Isaandrae: gold, bronze, dark blue and light blue.", at = { TANARIS, 64.2, 50.0 } } })
+    S[40992] = here({ { t = "At half past the hour, watch Lorewalker Cho's story and react with the buttons he offers: 50 reactions in all.", at = { TANARIS, 64.1, 51.8 } } })
+    N[40992] = "Throwing things at the stage can be pressed again and again."
+    S[40993] = here({ { t = "Listen to all three of Lorewalker Cho's stories: the Heroes of the Scarab Wall, the Tragedy of Thassarian and the Mercy of Baine Bloodhoof. He picks one each time.", at = { TANARIS, 64.1, 51.8 } } })
+    S[40988] = here({ { t = "Take the vista portals at the grounds: each sends you to a zone the achievement lists. Visit ten.", at = { TANARIS, 62.4, 49.4 } } })
+    N[40988] = "The three portals change every day, so it takes a few days."
+    local ALYX = { t = "Talk to Alyx in the big main tent at the grounds: she runs Guest Relations. New quests open every day during the event.", at = { TANARIS, 63.0, 50.3 } }
+    S[40872] = here({ ALYX, { t = "Do the Guest Relations story: four chapters, one after another as they open." } })
+    S[40871] = here({ ALYX, { t = "Solve each hidden local story (the achievement names them): each starts from a clue at the grounds and sends you around the world." } })
+    S[40873] = here({ ALYX, { t = "Find and return 6 Celebration Crates: their clues come from the Guest Relations stories (the first is a ransom note on the board behind Alyx)." } })
+    S[40979] = here({ ALYX, { t = "Find and return every Celebration Crate." } })
+    N[40871] = { "Players report some clues didn't show at first in 2025; check again the next day.", "The clues are puzzles that change little from year to year." }
+    N[40873] = "Some crates were missing in 2025 (Hyjal, Azsuna) according to players; check back later in the event."
+    N[40870] = "Two of the four Guest Relations achievements give the title Azeroth's Greatest Detective."
+
+    local BOSS = "During the anniversary: "
+    ns.EVENT_ITEMS = ns.EVENT_ITEMS or {}
+    ns.EVENT_ITEMS.anniversary = ns.EVENT_ITEMS.anniversary or {}
+    AddItems("anniversary", {
+        { 43959, BOSS .. "can drop from Archavon the Stone Watcher in Tanaris." },
+        { 87771, BOSS .. "can drop from the Sha of Anger in Tanaris." },
+        { 172022, "The reward of the Korrak's Revenge battleground quest (Alliance), during the anniversary." },
+        { 172023, "The reward of the Korrak's Revenge battleground quest (Horde), during the anniversary." },
+        { 231906, "The reward of I Saved the Party and All I Got Were These Lousy Hats (the Guest Relations story)." },
+    })
+end
+
+------------------------------------------------------------------------
+-- Turbulent Timeways (new page, checked 2026-10-24): a Timewalking event that comes back from time to time; the
+-- calendar says when. Its achievement only counts while the event runs.
+------------------------------------------------------------------------
+do
+    ns.EVENT_DEFS[#ns.EVENT_DEFS + 1] = {
+        key = "timeways", id = 1425, name = "Turbulent Timeways", short = "Timeways", iconAch = 61463,
+        lootText = "From Timewalking dungeons during the event.",
+        calendar = { "Turbulent Timeways" },
+        desc = "A run of Timewalking weeks: a different expansion's dungeons each week.",
+        intro = "Each week of the event opens a different expansion's Timewalking. Finishing four Timewalking dungeons in a row "
+            .. "turns Knowledge of Timeways into Mastery of Timeways. The calendar shows when the event is back.",
+        steps = {
+            { "Mastery of Timeways", group = "Every week", ach = 61463,
+              note = "Queue for Timewalking in the Dungeon Finder. Four dungeons give four stacks of Knowledge of Timeways, which become Mastery of Timeways." },
+        },
+    }
+    ns.EVENT_ACHS.timeways = { { 61463, 0, "More achievements" } }
+    S[61463] = { { t = "While Turbulent Timeways is on, queue for Timewalking in the Dungeon Finder and finish four dungeons: Knowledge of Timeways becomes Mastery of Timeways." },
+                 { t = "Get Mastery of Timeways in four different weeks of the event." } }
+    N[61463] = { "The event lasts only a few weeks, so start in its first week.", "Players reported in 2026 that progress sometimes didn't count a week: track it in the achievement window to check." }
+end
