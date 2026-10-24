@@ -435,6 +435,7 @@ local function Start(onlyCollect)
             while j < 80 do
                 local iid, name, _, _, _, _, _, mapID = Try(EJ_GetInstanceByIndex, j, raid)
                 if not iid then break end
+                pcall(EJ_SelectInstance, iid)
                 local bosses, k = {}, 1
                 while k < 40 do
                     local bname, _, eid = Try(EJ_GetEncounterInfoByIndex, k, iid)

@@ -23,7 +23,9 @@ local EXTRA = {
         ["Pet Battles"] = { 40155, 40156, 40157, 40158, 41541, 41544, 41545, 41547, 41549, 41550 },
         PvP = { 40210, 40216, 40468, 40607, 40615,
             -- Battleground Blitz (found by the in-game read, 2026-10-24)
-            19411, 19416, 40217 },
+            19411, 19416, 40217,
+            -- the rest of the Blitz series (the second read follows series steps)
+            19412, 19413, 19417, 19418, 40219, 40220, 40221 },
         Professions = { 19408 },
         Fishing = { 40484, 40485, 40487, 40489, 40490, 40491, 40495, 40497, 40499 },
         Collections = { 40469, 41525 },
