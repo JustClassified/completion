@@ -2,18 +2,19 @@
 -- saved variables (CompletionDB.dump), so the book's data can be checked against the game itself:
 --   achievements (with criteria, series steps and where the book shows each), mounts, battle pet species, toys,
 --   appearance sets (with pieces collected), heirlooms, weapon illusions, titles, currencies, reputations and renown
---   rewards, every Midnight and War Within map (child maps, dungeon entrances, flight points, map markers, quest lines),
---   campaigns and their chapters, the Adventure Guide (every instance and boss), and quests (completed, quest lines,
---   the book's own, and every quest title in the War Within and Midnight ID range).
+--   rewards, every map in the game (child maps, dungeon entrances, flight points, map markers, quest lines),
+--   campaigns and their chapters, the Adventure Guide (every instance and boss), and quests (every completed one,
+--   quest lines, the book's own, and every quest title from ID 1 to 99999), for every expansion since Classic.
 -- Each section is a list of tab-separated lines; dump.columns names the columns of each section.
 -- It reads only: no setting, filter or CVar is changed (the Adventure Guide's selected tier is put back afterwards).
--- The work is spread over many frames and takes several minutes; chat shows each step. /comp dump clear removes it.
+-- The work is spread over many frames and takes about half an hour (mostly quest titles); chat shows each step. /comp dump clear removes it.
 
 local _, ns = ...
 
 local running = false
 local PREFIX = "|cffe6c35cCompletion|r: "
-local QUEST_RANGE = { 78000, 99999 }   -- The War Within and Midnight quest IDs
+local QUEST_RANGE = { 1, 99999 }       -- every quest ID from Classic to Midnight
+local ASK_PER_FRAME = 8                  -- quest title requests per frame, gentle on the server
 
 local COLUMNS = {
     cats = "categoryID, parentID, name",
@@ -308,7 +309,7 @@ local function Start()
         return true
     end)
 
-    -- maps: the book's zones, their continents and every child map
+    -- maps: every map in the game, from the top of the map tree down, then the book's zones in case one isn't linked
     step("maps", function()
         local function addMap(id, exp)
             if not id or mapSet[id] then return end
@@ -319,13 +320,11 @@ local function Start()
             out.maps[#out.maps + 1] = Line(id, info.name, info.mapType or "", info.parentMapID or "", exp)
             for _, ch in ipairs(Try(C_Map.GetMapChildrenInfo, id, nil, true) or {}) do addMap(ch.mapID, exp) end
         end
+        addMap(946, "")   -- the Cosmic map holds every world
         for _, z in ipairs(ns.ZONES or {}) do
-            for _, m in ipairs(z.maps or { z.map }) do
-                local info = Try(C_Map.GetMapInfo, m)
-                if info and info.parentMapID then addMap(info.parentMapID, z.exp or "midnight") end
-                addMap(m, z.exp or "midnight")
-            end
+            for _, m in ipairs(z.maps or { z.map }) do addMap(m, z.exp or "midnight") end
         end
+        print(PREFIX .. string.format("  %d maps", #mapIDs))
         return true
     end)
 
@@ -419,7 +418,7 @@ local function Start()
     step("quests: asking the server", function(s)
         if not questList then
             for _, q in ipairs(C_QuestLog.GetAllCompletedQuestIDs and Try(C_QuestLog.GetAllCompletedQuestIDs) or {}) do
-                if q >= QUEST_RANGE[1] then addQuest(q, "completed") end
+                addQuest(q, "completed")
             end
             for q in pairs(BookQuests()) do addQuest(q, "book") end
             for q = QUEST_RANGE[1], QUEST_RANGE[2] do addQuest(q, "range") end
@@ -428,15 +427,15 @@ local function Start()
             table.sort(questList)
             print(PREFIX .. string.format("  %d quest IDs to look up; this is the slow part.", #questList))
         end
-        for _ = 1, 40 do
+        for _ = 1, ASK_PER_FRAME do
             s.i = s.i + 1
             local q = questList[s.i]
             if not q then
-                s.waitUntil = s.waitUntil or (GetTime() + 60)
+                s.waitUntil = s.waitUntil or (GetTime() + 90)
                 return GetTime() > s.waitUntil
             end
             if not Try(C_QuestLog.GetTitleForQuestID, q) then Try(C_QuestLog.RequestLoadQuestByID, q) end
-            if s.i % 5000 == 0 then print(PREFIX .. string.format("  asked for %d of %d", s.i, #questList)) end
+            if s.i % 10000 == 0 then print(PREFIX .. string.format("  asked for %d of %d quests", s.i, #questList)) end
         end
     end)
     step("quests: reading titles", function(s)
@@ -454,7 +453,7 @@ local function Start()
         end
     end)
 
-    print(PREFIX .. "reading everything the game knows; this takes several minutes. Keep playing normally.")
+    print(PREFIX .. "reading everything the game knows; this takes about half an hour. Keep playing normally (or stand still).")
     Run(steps, function(seconds)
         ns.db.dump = out
         running = false
