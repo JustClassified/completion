@@ -52,6 +52,8 @@ ns.MIDNIGHT_TOY_ITEMS = {
     263198, 259335, 258135, 259899, 274730, 260170, 258136, 258129, 274967, 258840, 256141,
     -- 12.1.5: Aqir vendor, the Labyrinth of Kindo'jan, the Kith'ix raid and campaign
     275039, 280820, 280821, 280822, 280823, 280825, 281136, 281615, 284159, 286643,
+    -- found by the in-game read (2026-10-24)
+    284572,
 }
 
 -- Source text that means "not obtainable by playing": left out of the count.
