@@ -70,6 +70,7 @@ Data\Events.lua
 Data\EventGuides.lua
 Data\HolidayGuides.lua
 Data\BrawlGuides.lua
+Data\Books.lua
 Core.lua
 Model.lua
 Guide.lua

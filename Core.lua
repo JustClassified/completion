@@ -59,6 +59,9 @@ function ns.InitDB()
         ns.db.settings.hardmodes = true
         ns.db.settings.listDefaults = true
     end
+    -- a book that is switched off (Data/Books.lua) can't be the one the window opens on
+    local last = ns.cdb.lastExpansion
+    if last and ns.BOOKS_ON and not ns.BOOKS_ON[last] then ns.cdb.lastExpansion, ns.cdb.lastZone = "midnight", nil end
 end
 
 -- Adds an entry to the top of the character's adventure log; older entries past the cap are dropped.
