@@ -943,7 +943,7 @@ local function PlacePins(zone)
     end
     for key in pairs(wanted) do
         for _, it in ipairs(zone.sections[key].items) do
-            if (not it.done or ns.FarmWanted(it)) and not it.hidden then
+            if (not it.done or ns.FarmWanted(it) or (it.pkind == "rare" and ns.PatrolFarming and ns.PatrolFarming())) and not it.hidden then
                 if it.kind == "point" then
                     for _, s in ipairs(it.spots) do add(it, nil, s, it.pkind) end
                 elseif it.kind == "ach" then

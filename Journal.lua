@@ -206,6 +206,9 @@ local function SetupFilterDrop()
         elseif z and sec and not z.overview and not z.event and ns.PlanRouteForSection then
             root:CreateDivider()
             root:CreateButton("Route: a loop through what is left here", function() ns.PlanRouteForSection(z, sec); Refresh() end)
+            if sec == "rare" and ns.StartFarmPatrol then
+                root:CreateButton("Farm route: every rare, killed or not", function() ns.StartFarmPatrol(z); Refresh() end)
+            end
         end
         if z and z.map and OpenWorldMap then
             root:CreateButton("Show on the world map", function() pcall(OpenWorldMap, z.map) end)
@@ -776,7 +779,7 @@ local function PlacePins(z)
     for key in pairs(wanted) do
         local sec = z.sections[key]
         for _, it in ipairs(sec and sec.items or {}) do
-            if (not it.done or ns.FarmWanted(it)) and not it.hidden then
+            if (not it.done or ns.FarmWanted(it) or (it.pkind == "rare" and ns.PatrolFarming and ns.PatrolFarming())) and not it.hidden then
                 if it.kind == "point" then
                     for _, sp in ipairs(it.spots) do add(it, nil, sp, it.pkind) end
                 elseif it.kind == "ach" then

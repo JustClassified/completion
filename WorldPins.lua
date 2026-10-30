@@ -256,7 +256,7 @@ function ns.PinEntries(mapID)
             for _, k in ipairs(ns.PIN_KINDS) do
                 local secKey = k[1]
                 for _, it in ipairs(ns.PinOn(secKey) and zone.sections[secKey].items or {}) do
-                    if (not it.done or ns.FarmWanted(it)) and not it.hidden then
+                    if (not it.done or ns.FarmWanted(it) or (it.pkind == "rare" and ns.PatrolFarming and ns.PatrolFarming())) and not it.hidden then
                         if it.kind == "point" then
                             for _, sp in ipairs(it.spots) do add(it, nil, sp, it.pkind) end
                         elseif it.kind == "ach" then

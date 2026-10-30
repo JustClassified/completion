@@ -926,7 +926,9 @@ function ns.UpdateTarget(force)
             end
         end
     end
-    if it and it.done and not child and not (ns.FarmWanted and ns.FarmWanted(it)) then it = nil end
+    -- a done target is let go, unless its loot is still wanted or a farm patrol is visiting it
+    if it and it.done and not child and not (ns.FarmWanted and ns.FarmWanted(it))
+        and not (ns.PatrolFarming and ns.PatrolFarming() and it.pkind == "rare") then it = nil end
     if not it then
         ns.cdb.target = nil
         arrow.res = nil

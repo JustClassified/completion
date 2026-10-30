@@ -8,6 +8,7 @@
 -- today) are part of the loop too.
 -- When every rare has been checked the loop starts over, so you can just keep flying. World bosses are not
 -- part of the patrol. Tracking anything that isn't a rare (or starting a route) ends it.
+-- A farm patrol (ns.StartFarmPatrol) loops through every rare of the zone, killed or not, for farming drops.
 
 local _, ns = ...
 
@@ -26,11 +27,19 @@ end
 -- True while a rare patrol runs.
 function ns.PatrolActive() return patrol ~= nil end
 
--- The rares still needed in the patrol's zone.
+-- True while a farm patrol runs (every rare, killed or not).
+function ns.PatrolFarming() return patrol ~= nil and patrol.all == true end
+
+-- True when the patrol still visits this rare: one you still need, or any rare on a farm patrol.
+local function Wanted(it)
+    return patrol and (patrol.all or ns.StillWanted(it))
+end
+
+-- The rares the patrol visits in its zone.
 local function Candidates()
     local out = {}
     for _, it in ipairs(patrol.zone.sections.rare.items) do
-        if IsPatrolRare(it) and ns.StillWanted(it) and not it.hidden then out[#out + 1] = it end
+        if IsPatrolRare(it) and Wanted(it) and not it.hidden then out[#out + 1] = it end
     end
     return out
 end
@@ -56,7 +65,7 @@ local function Choose(exclude)
         wipe(patrol.skipped)   -- every rare checked: start the loop over
         best = pick(false)
     end
-    return best or (exclude and ns.StillWanted(exclude) and exclude) or nil
+    return best or (exclude and Wanted(exclude) and exclude) or nil
 end
 
 -- Points the arrow at a rare without ending the patrol.
@@ -89,11 +98,29 @@ function ns.PatrolOnTrack(it)
     end
 end
 
+-- A farm patrol: a loop through every rare of the zone, killed or not, for farming their drops. It runs
+-- like the rare patrol and never runs out. Returns false when the zone has no rare with a spot.
+function ns.StartFarmPatrol(zone)
+    if not zone then ns.Print("Open a zone first.") return false end
+    if ns.StopRoute and ns.RouteActive and ns.RouteActive() then ns.StopRoute() end
+    patrol = { zone = zone, skipped = {}, alerted = {}, all = true }
+    local first = Choose(nil)
+    if not first then
+        patrol = nil
+        ns.Print("No rare with a known spot in " .. (zone.short or zone.name) .. ".")
+        return false
+    end
+    ns.Print("Farm patrol in " .. (zone.short or zone.name) .. ": every rare, killed or not. The arrow moves on when "
+        .. "one isn't up and turns to any rare that comes up. Track something else to stop.")
+    Go(first)
+    return true
+end
+
 -- Called by ns.TrackNext (a rare killed, or a right-click on the arrow): the nearest rare left.
 function ns.PatrolNext()
     if not patrol then return false end
     local cur = ns.TargetItem()
-    if cur and IsPatrolRare(cur) and ns.StillWanted(cur) then patrol.skipped[cur.key] = GetTime() end
+    if cur and IsPatrolRare(cur) and Wanted(cur) then patrol.skipped[cur.key] = GetTime() end
     local nx = Choose(cur)
     if nx then Go(nx) else ns.Print("Every rare in " .. (patrol.zone.short or "this zone") .. " is killed."); Stop(true); ns.Track(nil) end
     return true
@@ -103,8 +130,9 @@ end
 function ns.PatrolLabel()
     if not patrol then return "" end
     local t = ns.TargetItem()
-    if t and patrol.near == t.key then return "|cffff9040[Patrol: checking]|r " end
-    return "|cffff9040[Patrol]|r "
+    local name = patrol.all and "Farm" or "Patrol"
+    if t and patrol.near == t.key then return "|cffff9040[" .. name .. ": checking]|r " end
+    return "|cffff9040[" .. name .. "]|r "
 end
 
 -- The alert for a rare that just came up: raid-warning text in the middle of the screen, its sound, a chat line.
@@ -126,7 +154,7 @@ local function Tick()
     for k in pairs(patrol.alerted) do if not ns.upNow[k] then patrol.alerted[k] = nil end end
     for key in pairs(ns.upNow) do
         local it = ns.items[key]
-        if IsPatrolRare(it) and it.zone == patrol.zone and ns.StillWanted(it) then
+        if IsPatrolRare(it) and it.zone == patrol.zone and Wanted(it) then
             if not patrol.alerted[key] then
                 patrol.alerted[key] = true
                 Alert(it)
@@ -143,7 +171,7 @@ local function Tick()
         return
     end
     if not IsPatrolRare(t) then return end
-    if not ns.StillWanted(t) then ns.PatrolNext(); return end
+    if not Wanted(t) then ns.PatrolNext(); return end
     -- close to its spawn: give it a moment to show up, then move on
     local res = ns.Resolve(t)
     local pinst, pwx, pwy = ns.PlayerWorld()

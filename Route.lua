@@ -268,6 +268,12 @@ function ns.PlanRouteForSection(zone, secKey)
     -- inside a delve, the Delves page plans a route through its chests instead of the entrances
     local inside = secKey == "delve" and ns.CurrentDelve()
     if inside then ns.PlanDelveRoute(inside) return end
+    -- every rare is killed: a farm patrol through all of them instead
+    if secKey == "rare" and ns.StartFarmPatrol then
+        local open = {}
+        StopsFor(zone, "rare", open)
+        if #open == 0 then ns.StartFarmPatrol(zone) return end
+    end
     local name
     for _, s in ipairs(ns.SECTIONS) do if s.key == secKey then name = s.name end end
     ns.PlanRoute(zone, { secKey }, name, secKey)

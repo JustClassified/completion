@@ -271,6 +271,11 @@ local function Slash(msg)
         local z = ns.zoneByKey[ns.cdb.lastZone or ""] or ns.PlayerZone()
         if not z or z.overview then ns.Print("Routes are per zone: open a zone page first.") return end
         if ns.cdb.lastSection then ns.PlanRouteForSection(z, ns.cdb.lastSection) else ns.PlanRouteForPins(z) end
+    elseif cmd == "farm" then
+        -- /comp farm: a farm patrol through every rare of the zone you are in (or the open page), killed or not
+        local z = ns.PlayerZone() or ns.zoneByKey[ns.cdb.lastZone or ""]
+        if not z or z.overview then ns.Print("Farming is per zone: stand in a zone or open its page first.") return end
+        ns.StartFarmPatrol(z)
     elseif cmd == "week" or cmd == "warband" then
         ns.showPage, ns.showAbout = cmd, false
         ns.Toggle(true); ns.RefreshUI()
@@ -321,7 +326,7 @@ local function Slash(msg)
     else
         ns.Print("/comp - open or close the book")
         print("  zone <name>, missing, next, clear, arrow, pin, pins <kind|all|none|only kind>, hidedone, transmog,")
-        print("  route [stop], watch [clear], tracker, report, week, warband, follow, sound, announce, minimap, scale <n>, arrowscale <n>, reset,")
+        print("  route [stop], farm, watch [clear], tracker, report, week, warband, follow, sound, announce, minimap, scale <n>, arrowscale <n>, reset,")
         print("  clearlog, rebuild, audit, debug")
     end
 end
