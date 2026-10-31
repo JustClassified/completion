@@ -1579,11 +1579,15 @@ local function Label(it)
     return (pre and (pre .. ": ") or "") .. (it.name or "?")
 end
 
--- Re-reads everything. Returns the items that just flipped to done (empty on the first pass).
+-- Most things that can really finish in one evaluation (a treasure, its criterion and the achievement).
+local BURST = 5
+
+-- Re-reads everything. Returns the items that just flipped to done (empty on the first pass, and when more than
+-- BURST flip at once: that is data arriving late, not play).
 function ns.EvaluateAll()
     if not ns.built then return {} end
     ns.Bump()
-    local newly = {}
+    local newly, logs = {}, {}
     local first = ns.firstEval
     ns.collectLoading = 0   -- collectibles still waiting for item data (counted by EvalCollect)
     local totals = {}
@@ -1615,7 +1619,7 @@ function ns.EvaluateAll()
                         if (w.max or 0) > 0 then
                             if w.done and prevDone[w.key] == false and not first and ns.Announceable(w) then
                                 newly[#newly + 1] = w
-                                ns.Log(z.key, Label(w))
+                                logs[#logs + 1] = { z.key, Label(w) }
                             end
                             prevDone[w.key] = w.done and true or false
                         end
@@ -1630,7 +1634,13 @@ function ns.EvaluateAll()
         end
     end
     -- holiday pages count on their own, never toward Midnight
-    if ns.EvaluateEvents then ns.EvaluateEvents(newly, first, prevDone) end
+    if ns.EvaluateEvents then ns.EvaluateEvents(newly, first, prevDone, logs) end
+    -- more than a few at once is the client filling in its data (after a loading screen), not play: stay quiet
+    if #newly > BURST then
+        newly = {}
+    else
+        for _, l in ipairs(logs) do ns.Log(l[1], l[2]) end
+    end
     -- keep the Midnight page's own counts; its headline is the whole expansion (see ZoneTotals)
     for _, ov in pairs(ns.overviews or {}) do ov.ownCur, ov.ownMax = ov.cur, ov.max end
     ns.totals = totals

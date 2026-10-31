@@ -361,16 +361,28 @@ ns.EVENT_DEFS = {
         dates = { { { 2026, 11, 1, 0 }, { 2026, 11, 3, 23 } }, { { 2027, 11, 1, 0 }, { 2027, 11, 3, 23 } } },
         desc = "Three days by the graveyards of the capitals: dance with Catrina and bake for the spirits.",
         intro = "Bring Simple Flour and Ice Cold Milk before you go: the spirit wants Bread of the Dead, and the recipe "
-            .. "only needs cooking skill 1. The contender costumes are toys you can use all year for the duel achievements.",
+            .. "only needs cooking skill 1. Everything Chapman sells is only on sale these three days. The contender "
+            .. "costumes are warband toys you can use all year for the three duel achievements.",
         steps = {
-            { "Dance with Catrina", group = "At the graveyard", ach = 3456, npc = 34383,
-              note = "Target Catrina by your capital's graveyard and /dance." },
-            { "Bake Bread of the Dead", group = "At the graveyard", npc = 34382,
-              note = "Buy the recipe and an Orange Marigold from Chapman next to Catrina. Bread of the Dead needs Simple Flour and Ice Cold Milk." },
+            { "Bring flour and milk", group = "Before you go", own = 46831,
+              note = "Buy Simple Flour from a cooking supplies vendor and Ice Cold Milk from an innkeeper: one of each makes one bread. Never learned Cooking? Any cooking trainer teaches it." },
+            { "Dance with Catrina", group = "At the graveyard", ach = 3456,
+              at = { A = { { 84, 47.0, 25.4 }, { 27, 61.0, 36.8 }, { 97, 47.8, 55.8 }, { 627, 34.6, 38.8 }, { 125, 34.4, 38.4 }, { 108, 40.0, 22.0 } },
+                     H = { { 1, 47.2, 17.8 }, { 88, 56.6, 18.0 }, { 627, 34.6, 38.8 }, { 125, 34.4, 38.4 }, { 108, 40.0, 22.0 } } },
+              note = "Catrina and Chapman stand by the graveyard of every capital, in both Dalarans and outside Shattrath. Target Catrina and type /dance: you become a skeleton for twelve hours." },
+            { "Buy the recipe and a marigold", group = "At the graveyard", npc = 34382, own = 46831, item = 46718,
+              note = "From Chapman: Recipe: Bread of the Dead (20 silver; learn it) and an Orange Marigold (10 copper). The Marigold Petal Offering Bowl (1 copper) does the same and works again every year." },
+            { "Bake Bread of the Dead", group = "At the graveyard", npc = 34382, own = 46831, item = 46691,
+              note = "Cook it at the ghostly cooking fire by Chapman. It's a holiday item and can't be mailed: bake it on the character who needs it." },
             { "The Grateful Dead", group = "At the graveyard", any = true, q = { A = { 13952, 14167, 14168, 14169, 14170, 27846, 14166, 14172, 14173 }, H = { 14174, 14175, 14176, 14177, 14171, 27841, 14166, 14172, 14173 } },
-              note = "Use the marigold at the graveyard to see the spirit and give it the bread. Rewards the Macabre Marionette pet (once)." },
-            { "Contender costumes", group = "All year", ach = 9426,
-              note = "Buy a contender's costume toy from Chapman, then defeat other costumed players: 1, 20 and 50 wins. Works outside the holiday too." },
+              at = { { 627, 34.0, 38.6 }, { 125, 34.6, 38.6 }, { 108, 39.8, 21.8 } },
+              note = "Use the marigold at the graveyard: a cheerful spirit appears with the quest. Give it the bread for the Macabre Marionette pet (once). Every race can do it in either Dalaran or outside Shattrath; your race's home graveyard has its own spirit too." },
+            { "Shop at Chapman", group = "Collect",
+              note = "Five contender's costumes (toys), the Whimsical Skull Mask and fifteen crowns, deathmasks and veils (100 gold each), the Bouquet of Orange Marigolds (1 copper) and the Cliffside Wylderdrake armor (50,000 gold). The Collectibles list ticks what you own." },
+            { "To The Afterlife", group = "Costume duels (all year)", ach = 9426,
+              note = "Buy a contender's costume, then duel a friend who wears one too, both in costume. Win once." },
+            { "Vientos!", group = "Costume duels (all year)", ach = 9427, note = "Win 20 costume duels." },
+            { "Calavera", group = "Costume duels (all year)", ach = 9428, note = "Win 50 costume duels." },
         },
     },
     ------------------------------------------------------------------------
@@ -890,11 +902,10 @@ do
                 "Players report the brew vendor in Orgrimmar or Ironforge also sells them if the mail stops." }
 
     ---------------- Day of the Dead ----------------
-    local CONTENDER = { "Buy a contender's costume from Chapman, the Day of the Dead vendor, and use it: you get an extra action to fight other players in a costume.",
-                        "Only killing blows on other costumed players count.",
-                        "Players team up and duel each other in costume; that's the quickest way." }
-    N[9427] = { "Defeat 20 contenders.", CONTENDER[1], CONTENDER[2], CONTENDER[3] }
-    N[9428] = { "Defeat 50 contenders.", CONTENDER[1], CONTENDER[2], CONTENDER[3] }
+    local CONTENDER = { "Buy a contender's costume from Chapman, the Day of the Dead vendor, and use it: you get an extra action bar to fight other players in a costume.",
+                        "Duel a friend while you both wear a costume: winning the duel counts and nobody dies." }
+    N[9427] = { "Win 20 costume duels.", CONTENDER[1], CONTENDER[2] }
+    N[9428] = { "Win 50 costume duels.", CONTENDER[1], CONTENDER[2] }
 
     ---------------- Feast of Winter Veil ----------------
     N[279] = "Do the daily You're a Mean One... in Ironforge or Orgrimmar; its follow-up returns Smokywood Pastures' stolen treats and earns the achievement."

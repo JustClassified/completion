@@ -388,6 +388,8 @@ f:SetScript("OnEvent", function(_, event, arg1)
         end)
         C_Timer.NewTicker(10, function() ChronicleTick(10) end)
     elseif event == "PLAYER_ENTERING_WORLD" or event == "ZONE_CHANGED_NEW_AREA" or event == "ZONE_CHANGED" then
+        -- after a loading screen or into a new zone the client fills in data for a while: no announcements
+        if event ~= "ZONE_CHANGED" then ns.quietUntil = math.max(ns.quietUntil or 0, Now() + 20) end
         ns.UpdatePlayerChain()
         for _, m in ipairs(ns.playerChain) do ns.AskQuestLines(m) end
         if event ~= "ZONE_CHANGED" and ns.db and ns.db.settings.follow and ns.IsShown() then

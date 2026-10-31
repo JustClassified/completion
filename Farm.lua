@@ -92,23 +92,31 @@ local function ResetKey()
 end
 
 -- Counts an attempt for every missing drop of a rare looted since the last check. Runs after each evaluation.
--- The first check of a session only records what is already looted, so a reload never counts twice.
+-- The first check of a session, and any check while the client is still filling in its data (after a loading
+-- screen), only records what is already looted, so a reload never counts a kill twice. More than a few rares at
+-- once is that same late data, not loot: recorded, not counted.
 function ns.CountAttempts()
     if not (ns.built and ns.db and ns.cdb) then return end
     ns.db.attempts = ns.db.attempts or {}
     ns.cdb.lootDay = ns.cdb.lootDay or {}
     local key = ResetKey()
+    local quiet = not scanned or (GetTime and GetTime() or 0) < (ns.quietUntil or 0)
+    local looted = {}
     for _, z in ipairs(ns.ZONES) do
         for _, it in ipairs(z.sections.rare.items) do
             if it.kind == "point" and it.q and ns.cdb.lootDay[it.q] ~= key and ns.QuestDone(it.q) then
                 local wants = ns.FarmWants(it)
-                if scanned and #wants > 0 then
-                    for _, w in ipairs(wants) do ns.db.attempts[w[1]] = (ns.db.attempts[w[1]] or 0) + 1 end
-                    ns.Print(string.format("Attempt counted for %s: %s.", it.liveName or it.name or "a rare",
-                        ns.ItemName(wants[1][1]) or "a missing drop"))
-                end
+                if not quiet and #wants > 0 then looted[#looted + 1] = { it, wants } end
                 ns.cdb.lootDay[it.q] = key
             end
+        end
+    end
+    if #looted <= 3 then
+        for _, l in ipairs(looted) do
+            local it, wants = l[1], l[2]
+            for _, w in ipairs(wants) do ns.db.attempts[w[1]] = (ns.db.attempts[w[1]] or 0) + 1 end
+            ns.Print(string.format("Attempt counted for %s: %s.", it.liveName or it.name or "a rare",
+                ns.ItemName(wants[1][1]) or "a missing drop"))
         end
     end
     scanned = true

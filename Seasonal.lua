@@ -429,8 +429,8 @@ end
 ns.EvalStep = EvalStep
 
 -- Re-reads every event page. Steps and quests are ticked but only achievements and collectibles count.
--- newly collects what just flipped to done (logged under the event, like a zone).
-function ns.EvaluateEvents(newly, first, prevDone)
+-- newly collects what just flipped to done (logged under the event, like a zone; into logs when given).
+function ns.EvaluateEvents(newly, first, prevDone, logs)
     for _, z in ipairs(ns.EVENT_ZONES) do
         z.cur, z.max = 0, 0
         for _, s in ipairs(SECTIONS) do
@@ -442,7 +442,8 @@ function ns.EvaluateEvents(newly, first, prevDone)
                 if (it.max or 0) > 0 and it.kind ~= "step" then
                     if it.done and prevDone[it.key] == false and not first and ns.Announceable(it) then
                         newly[#newly + 1] = it
-                        ns.Log(z.key, (s.key == "achv" and "Achievement: " or "Collected: ") .. (it.name or "?"))
+                        local line = (s.key == "achv" and "Achievement: " or "Collected: ") .. (it.name or "?")
+                        if logs then logs[#logs + 1] = { z.key, line } else ns.Log(z.key, line) end
                     end
                     prevDone[it.key] = it.done and true or false
                 end

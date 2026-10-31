@@ -697,19 +697,37 @@ do
 end
 
 ------------------------------------------------------------------------
--- Day of the Dead (checked 2026-10-22): Catrina and Chapman stand by the graveyards.
+-- Day of the Dead (checked 2026-10-31): Catrina and Chapman stand by the graveyard of every capital, in both
+-- Dalarans and outside Shattrath. Their spots replace the generated ones, which only held one city each. Not
+-- pinned until checked: the old Eversong Woods site (Midnight rebuilt Quel'Thalas) and the Ruins of Lordaeron one.
 ------------------------------------------------------------------------
 do
-    local GRAVE = { { side = "Alliance", t = "Catrina and Chapman by the Stormwind graveyard (also outside Ironforge, in Darnassus and on Azuremyst Isle).", at = { 84, 47.0, 26.0 } },
-                    { side = "Horde", t = "Catrina and Chapman by the graveyard outside Orgrimmar (also in Thunder Bluff, Eversong Woods and Tirisfal).", at = { DUROTAR, 47.2, 17.8 } } }
+    local STORMWIND, UNDERCITY, DALARAN_NR, DALARAN_BI = 84, 90, 125, 627
+    local SITES = { { STORMWIND, 47.0, 25.4 }, { DUN_MOROGH, 61.0, 36.8 }, { AZUREMYST, 47.8, 55.8 }, { DARNASSUS, 69.0, 40.4 },
+                    { DUROTAR, 47.2, 17.8 }, { THUNDER_BLUFF, 56.6, 18.0 }, { UNDERCITY, 67.8, 11.4 },
+                    { TEROKKAR, 40.0, 22.0 }, { DALARAN_NR, 34.4, 38.4 }, { DALARAN_BI, 34.6, 38.8 } }
+    local VENDOR = { { STORMWIND, 46.8, 26.0 }, { DUN_MOROGH, 61.0, 36.8 }, { AZUREMYST, 47.8, 55.8 }, { DARNASSUS, 69.6, 40.0 },
+                     { DUROTAR, 47.2, 17.8 }, { THUNDER_BLUFF, 56.4, 18.0 }, { UNDERCITY, 67.8, 11.2 },
+                     { TEROKKAR, 39.8, 22.0 }, { DALARAN_NR, 34.4, 38.6 }, { DALARAN_BI, 34.2, 39.4 } }
+    if ns.EVENT_NPC then
+        if ns.EVENT_NPC[34383] then ns.EVENT_NPC[34383].at = SITES end
+        if ns.EVENT_NPC[34382] then ns.EVENT_NPC[34382].at = VENDOR end
+    end
+
+    local GRAVE = { { side = "Alliance", t = "Go to the Stormwind graveyard (also outside Ironforge in Dun Morogh, on Azuremyst Isle, in both Dalarans and outside Shattrath).", at = { STORMWIND, 47.0, 25.4 } },
+                    { side = "Horde", t = "Go to the graveyard outside Orgrimmar in Durotar (also in Thunder Bluff, in both Dalarans and outside Shattrath).", at = { DUROTAR, 47.2, 17.8 } } }
     S[3456] = { GRAVE[1], GRAVE[2], { t = "Target Catrina and type /dance: you turn into a skeleton for twelve hours and get the achievement." } }
-    local CONTENDER = { t = "Buy a contender's costume toy from Chapman (10 gold) and use it: you get an action to fight other players in a costume." }
-    S[9426] = { GRAVE[1], GRAVE[2], CONTENDER, { t = "Defeat one other costumed player." } }
-    S[9427] = { GRAVE[1], GRAVE[2], CONTENDER, { t = "Defeat 20 other costumed players." } }
-    S[9428] = { GRAVE[1], GRAVE[2], CONTENDER, { t = "Defeat 50 other costumed players." } }
-    local DUEL = { "Only killing blows on other costumed players count.", "Players duel a friend inside an instance, both in costume: no corpse runs and no resurrection timer.", "The costumes are toys: once bought, they work all year." }
+    N[3456] = { "Darnassus and the Undercity have a site too, in their old versions: talk to Zidormi in Darkshore (48.8, 24.5) or Tirisfal Glades (69.4, 62.8) to see them." }
+    local CONTENDER = { t = "Buy a contender's costume toy from Chapman (100 gold) and use it: an extra action bar with three attacks appears." }
+    local FRIEND = { t = "Find a friend who has a costume too. Both of you use one, then duel." }
+    S[9426] = { GRAVE[1], GRAVE[2], CONTENDER, FRIEND, { t = "Win the duel once." } }
+    S[9427] = { CONTENDER, FRIEND, { t = "Win 20 costume duels." } }
+    S[9428] = { CONTENDER, FRIEND, { t = "Win 50 costume duels." } }
+    local DUEL = { "Winning a duel counts and nobody dies, so you can do it anywhere, all year: the costumes are warband toys.",
+                   "One of you stands still while the other punches, then swap, so both of you progress.",
+                   "The costume's stuns are buffs: right-click them off." }
     N[9426] = DUEL; N[9427] = DUEL; N[9428] = DUEL
-    AddItems("dead", { { 46831, "The reward of The Grateful Dead: use an Orange Marigold by your capital's graveyard and give the spirit Bread of the Dead (recipe from Chapman, cooking skill 1)." } })
+    AddItems("dead", { { 46831, "The reward of The Grateful Dead: use an Orange Marigold at a Day of the Dead graveyard and give the cheerful spirit Bread of the Dead (recipe from Chapman, cooking skill 1)." } })
 end
 
 ------------------------------------------------------------------------
